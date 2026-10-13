@@ -36,8 +36,8 @@ Em vez de consumir a API da RepDB ou hotlinkar URLs externas em runtime:
 - Os assets autorizados foram importados localmente para o repositório frontend em:
   `bootcamp-treinos-frontend/public/exercise-media/repdb/`
 - **Volume importado:**
-  - 56 arquivos de imagem no formato WebP (2 imagens por exercício: posição inicial `start` e pico de contração `peak`).
-  - Tamanho total: **1.04 MB (1070 KB)**.
+  - 96 arquivos de imagem no formato WebP (2 imagens por exercício: posição inicial `start` e pico de contração `peak`).
+  - Tamanho total: **1.77 MB**.
 - **Vantagens:**
   - Zero latência e zero risco de downtime de terceiros.
   - Cache HTTP estático imediato pelo Next.js.
@@ -100,48 +100,69 @@ Armazenar as instruções dentro de `ExerciseMedia` mantém o pacote de mídia (
 
 ---
 
-## 6. Mapeamento Canônico (33 Exercícios Globais)
+## 6. Mapeamento Canônico Expandido (53 Exercícios Globais)
 
-Todos os 33 exercícios canônicos do catálogo global do Trainvy foram auditados e associados aos assets oficiais verificados da Free Edition do RepDB:
+O catálogo global do Trainvy conta com 53 exercícios canônicos mapeados para a Free Edition do RepDB, cobrindo os principais movimentos de musculação:
 
-| Trainvy UUID (Sufixo) | Exercício Trainvy | RepDB Slug | Start Asset | Peak Asset |
-| :--- | :--- | :--- | :--- | :--- |
-| `...101` | Supino Reto com Barra | `barbell-bench-press` | `start.webp` | `peak.webp` |
-| `...102` | Supino Reto com Halteres | `barbell-bench-press` | `start.webp` | `peak.webp` |
-| `...103` | Supino Inclinado com Halteres | `dumbbell-incline-bench-press` | `start.webp` | `peak.webp` |
-| `...104` | Supino Inclinado com Barra | `incline-barbell-bench-press` | `start.webp` | `peak.webp` |
-| `...105` | Crossover no Cabo | `standing-cable-chest-press` | `start.webp` | `peak.webp` |
-| `...106` | Peck Deck / Voador | `dumbbell-fly` | `start.webp` | `peak.webp` |
-| `...107` | Agachamento Livre com Barra | `barbell-squat` | `start.webp` | `peak.webp` |
-| `...108` | Agachamento Búlgaro | `bodyweight-bulgarian-split-squat` | `start.webp` | `peak.webp` |
-| `...109` | Leg Press 45° | `leg-press` | `start.webp` | `peak.webp` |
-| `...110` | Leg Press Horizontal | `seated-cable-row` / horizontal plate | `start.webp` | `peak.webp` |
-| `...111` | Cadeira Extensora | `leg-extension` | `start.webp` | `peak.webp` |
-| `...112` | Mesa Flexora | `lying-leg-curl` | `start.webp` | `peak.webp` |
-| `...113` | Cadeira Flexora | `seated-leg-curl` | `start.webp` | `peak.webp` |
-| `...114` | Stiff com Barra | `barbell-stiff-leg-deadlift` | `start.webp` | `peak.webp` |
-| `...115` | Elevação Pélvica com Barra | `barbell-hip-thrust` | `start.webp` | `peak.webp` |
-| `...116` | Cadeira Abdutora | `seated-cable-abduction` | `start.webp` | `peak.webp` |
-| `...117` | Cadeira Adutora | `cable-adduction` | `start.webp` | `peak.webp` |
-| `...118` | Panturrilha em Pé | `standing-calf-raise` | `start.webp` | `peak.webp` |
-| `...119` | Panturrilha Sentado | `seated-calf-raise` | `start.webp` | `peak.webp` |
-| `...120` | Puxada Alta Frente | `lat-pulldown` | `start.webp` | `peak.webp` |
-| `...121` | Puxada Alta Triângulo | `lat-pulldown` | `start.webp` | `peak.webp` |
-| `...122` | Remada Curvada com Barra | `barbell-row` | `start.webp` | `peak.webp` |
-| `...123` | Remada Baixa no Triângulo | `seated-cable-row` | `start.webp` | `peak.webp` |
-| `...124` | Remada Unilateral (Serrote) | `dumbbell-row` | `start.webp` | `peak.webp` |
-| `...125` | Desenvolvimento Militar com Barra | `barbell-overhead-press` | `start.webp` | `peak.webp` |
-| `...126` | Desenvolvimento com Halteres | `dumbbell-shoulder-press` | `start.webp` | `peak.webp` |
-| `...127` | Elevação Lateral com Halteres | `dumbbell-lateral-raise` | `start.webp` | `peak.webp` |
-| `...128` | Crucifixo Inverso na Máquina | `reverse-machine-fly` | `start.webp` | `peak.webp` |
-| `...129` | Rosca Direta com Barra | `barbell-curl` | `start.webp` | `peak.webp` |
-| `...130` | Rosca Alternada com Halteres | `barbell-curl` | `start.webp` | `peak.webp` |
-| `...131` | Rosca Martelo com Halteres | `dumbbell-hammer-curl` | `start.webp` | `peak.webp` |
-| `...132` | Rosca Scott na Máquina | `machine-preacher-curl` | `start.webp` | `peak.webp` |
-| `...133` | Tríceps Corda no Pulley | `tricep-pushdown` | `start.webp` | `peak.webp` |
+| Trainvy UUID (Sufixo) | Exercício Trainvy | RepDB Slug |
+| :--- | :--- | :--- |
+| `...101` | Supino Reto com Barra | `bench-press` |
+| `...102` | Supino Reto | `bench-press` |
+| `...103` | Supino Inclinado com Halteres | `incline-db-press` |
+| `...104` | Supino Inclinado | `incline-barbell-bench-press` |
+| `...105` | Agachamento Livre | `squat` |
+| `...106` | Agachamento | `squat` |
+| `...107` | Agachamento Búlgaro | `bulgarian-split-squat` |
+| `...108` | Leg Press 45 | `leg-press` |
+| `...109` | Leg Press Horizontal | `seated-cable-row` |
+| `...110` | Cadeira Extensora | `leg-extension` |
+| `...111` | Cadeira Flexora | `seated-leg-curl` |
+| `...112` | Mesa Flexora | `leg-curl` |
+| `...113` | Stiff | `stiff-leg-deadlift` |
+| `...114` | Elevação Pélvica | `hip-thrust` |
+| `...115` | Cadeira Abdutora | `seated-cable-abduction` |
+| `...116` | Cadeira Adutora | `cable-adduction` |
+| `...117` | Panturrilha em Pé | `calf-raise` |
+| `...118` | Panturrilha Sentado | `seated-calf-raise` |
+| `...119` | Puxada Frontal na Máquina | `lat-pulldown` |
+| `...120` | Puxada Frontal | `lat-pulldown` |
+| `...121` | Remada Curvada com Barra | `bent-over-row` |
+| `...122` | Remada Curvada | `bent-over-row` |
+| `...123` | Desenvolvimento Militar | `overhead-press` |
+| `...124` | Desenvolvimento com Halteres | `dumbbell-shoulder-press` |
+| `...125` | Elevação Lateral | `lateral-raise` |
+| `...126` | Crucifixo Inverso na Máquina | `reverse-fly` |
+| `...127` | Rosca Direta com Barra | `barbell-curl` |
+| `...128` | Rosca Direta | `bicep-curl` |
+| `...129` | Rosca Martelo | `hammer-curl` |
+| `...130` | Rosca Scott | `preacher-curl` |
+| `...131` | Tríceps Corda | `tricep-pushdown` |
+| `...132` | Tríceps Testa | `skull-crusher` |
+| `...133` | Tríceps Francês Unilateral | `tricep-extension` |
+| `...134` | Paralelas | `dips` |
+| `...135` | Crucifixo Inclinado | `incline-dumbbell-fly` |
+| `...136` | Barra Fixa | `pull-up` |
+| `...137` | Remada Cavalinho | `t-bar-row` |
+| `...138` | Remada Unilateral com Halteres | `dumbbell-row` |
+| `...139` | Rosca Concentrada | `concentration-curl` |
+| `...140` | Levantamento Terra | `deadlift` |
+| `...141` | Levantamento Terra Sumô | `sumo-deadlift` |
+| `...142` | Agachamento Frontal | `front-squat` |
+| `...143` | Remada Alta com Barra | `upright-row` |
+| `...144` | Hiperextensão Lombar | `back-extension` |
+| `...145` | Leg Press Unilateral | `single-leg-press` |
+| `...146` | Desenvolvimento Arnold | `arnold-press` |
+| `...147` | Face Pull no Cabo | `face-pull` |
+| `...148` | Elevação Lateral no Cabo | `cable-lateral-raise` |
+| `...149` | Encolhimento com Halteres | `dumbbell-shrug` |
+| `...150` | Abdominal no Cabo | `cable-crunch` |
+| `...151` | Elevação de Pernas Suspenso | `hanging-leg-raise` |
+| `...152` | Avanço com Halteres | `walking-lunge` |
+| `...153` | Rosca Spider | `spider-curl` |
 
-- **Cobertura canônica:** 33 / 33 exercícios cobertos (100%).
-- **Sem correspondência arbitrária:** Exercícios não mapeados ou criados por usuários sem mídia apresentam status `hasMedia: false` previsível sem erros.
+- **Cobertura canônica:** 53 / 53 exercícios cobertos (100%).
+- **Fallback Inteligente:** Caso um atleta tenha exercícios personalizados antigos com o mesmo nome do catálogo global, `GetExerciseMedia`, `GetWorkoutDay` e `GetWorkoutSession` herdam transparentemente a mídia e as instruções do exercício global homônimo.
+- **Coach AI Guidance:** O system prompt do Coach AI instrui o modelo a prescrever estritamente os nomes canônicos padronizados do catálogo para garantir demonstrações visuais imediatas nos treinos sugeridos.
 
 ---
 

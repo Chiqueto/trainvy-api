@@ -42,12 +42,12 @@ describe("Task 4.X — Exercise Media Foundation (Backend)", () => {
   });
 
   describe("1. Mapeamento Canônico & Integridade (Item 4 e Item 18)", () => {
-    it("todos os 33 exercícios canônicos estão definidos no CANONICAL_MEDIA_CATALOG", () => {
-      expect(CANONICAL_MEDIA_CATALOG.length).toBe(33);
+    it("todos os exercícios canônicos estão definidos no CANONICAL_MEDIA_CATALOG", () => {
+      expect(CANONICAL_MEDIA_CATALOG.length).toBeGreaterThanOrEqual(33);
 
       for (const def of CANONICAL_MEDIA_CATALOG) {
         expect(def.exerciseId).toMatch(
-          /^00000000-0000-4000-8000-0000000001(0[1-9]|[1-2][0-9]|3[0-3])$/,
+          /^00000000-0000-4000-8000-0000000001[0-9]{2}$/,
         );
         expect(def.provider).toBe("REPDB");
         expect(def.mediaType).toBe("IMAGE_SEQUENCE");
@@ -77,15 +77,15 @@ describe("Task 4.X — Exercise Media Foundation (Backend)", () => {
 
     it("sincronização de mídia é idempotente (múltiplas execuções preservam dados)", async () => {
       const firstRun = await syncCanonicalMedia();
-      expect(firstRun.synced).toBe(33);
+      expect(firstRun.synced).toBe(CANONICAL_MEDIA_CATALOG.length);
       expect(firstRun.skipped).toBe(0);
 
       const secondRun = await syncCanonicalMedia();
-      expect(secondRun.synced).toBe(33);
+      expect(secondRun.synced).toBe(CANONICAL_MEDIA_CATALOG.length);
       expect(secondRun.skipped).toBe(0);
 
       const count = await prisma.exerciseMedia.count();
-      expect(count).toBeGreaterThanOrEqual(33);
+      expect(count).toBeGreaterThanOrEqual(CANONICAL_MEDIA_CATALOG.length);
     });
   });
 
@@ -221,6 +221,26 @@ describe("Task 4.X — Exercise Media Foundation (Backend)", () => {
 
       expect(exercises.length).toBe(1);
       expect(exercises[0].hasMedia).toBe(false);
+    });
+
+    it("GetExerciseMedia utiliza fallback inteligente para exercício personalizado de mesmo nome que o canônico global", async () => {
+      // Cria exercício personalizado com mesmo nome de um global
+      const customSupino = await prisma.exercise.create({
+        data: {
+          id: crypto.randomUUID(),
+          name: "Supino Reto com Barra",
+          ownerUserId: userA.id,
+        },
+      });
+
+      const media = await getExerciseMedia.execute({
+        userId: userA.id,
+        exerciseId: customSupino.id,
+      });
+
+      expect(media.hasMedia).toBe(true);
+      expect(media.startImagePath).toContain("bench-press-start.webp");
+      expect(media.endImagePath).toContain("bench-press-peak.webp");
     });
   });
 });

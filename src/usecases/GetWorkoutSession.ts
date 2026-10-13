@@ -56,6 +56,7 @@ export class GetWorkoutSession {
             exercise: {
               select: {
                 id: true,
+                name: true,
                 media: {
                   where: { isActive: true },
                   select: { id: true },
@@ -75,6 +76,23 @@ export class GetWorkoutSession {
       throw new NotFoundError("Workout session not found");
     }
 
+    const customExercisesWithoutDirectMedia = session.sessionExercises.filter(
+      (e) => e.exercise && e.exercise.media.length === 0,
+    );
+    const fallbackGlobalNames = new Set<string>();
+    if (customExercisesWithoutDirectMedia.length > 0) {
+      const globalsWithMedia = await prisma.exercise.findMany({
+        where: {
+          ownerUserId: null,
+          media: { some: { isActive: true } },
+        },
+        select: { name: true },
+      });
+      for (const g of globalsWithMedia) {
+        fallbackGlobalNames.add(g.name.trim().toLowerCase());
+      }
+    }
+
     return {
       id: session.id,
       origin: session.origin,
@@ -88,7 +106,9 @@ export class GetWorkoutSession {
         id: exercise.id,
         exerciseId: exercise.exerciseId ?? null,
         hasMedia: Boolean(
-          exercise.exercise?.media && exercise.exercise.media.length > 0,
+          (exercise.exercise?.media && exercise.exercise.media.length > 0) ||
+            (exercise.exercise?.name &&
+              fallbackGlobalNames.has(exercise.exercise.name.trim().toLowerCase())),
         ),
         exerciseNameSnapshot: exercise.exerciseNameSnapshot,
         order: exercise.order,

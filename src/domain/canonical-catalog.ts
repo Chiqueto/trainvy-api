@@ -220,6 +220,128 @@ export const CANONICAL_GLOBAL_CATALOG: readonly CanonicalGlobalExerciseDefinitio
     primary: [MuscleGroup.TRICEPS],
     secondary: [],
   },
+
+  // Expansão de Catálogo (Task 4.X Enhanced)
+  {
+    id: "00000000-0000-4000-8000-000000000134",
+    name: "Paralelas",
+    primary: [MuscleGroup.CHEST, MuscleGroup.TRICEPS],
+    secondary: [MuscleGroup.SHOULDERS],
+  },
+  {
+    id: "00000000-0000-4000-8000-000000000135",
+    name: "Crucifixo Inclinado",
+    primary: [MuscleGroup.CHEST],
+    secondary: [MuscleGroup.SHOULDERS],
+  },
+  {
+    id: "00000000-0000-4000-8000-000000000136",
+    name: "Barra Fixa",
+    primary: [MuscleGroup.BACK],
+    secondary: [MuscleGroup.BICEPS, MuscleGroup.CORE],
+  },
+  {
+    id: "00000000-0000-4000-8000-000000000137",
+    name: "Remada Cavalinho",
+    primary: [MuscleGroup.BACK],
+    secondary: [MuscleGroup.BICEPS, MuscleGroup.CORE],
+  },
+  {
+    id: "00000000-0000-4000-8000-000000000138",
+    name: "Remada Unilateral com Halteres",
+    primary: [MuscleGroup.BACK],
+    secondary: [MuscleGroup.BICEPS],
+  },
+  {
+    id: "00000000-0000-4000-8000-000000000139",
+    name: "Rosca Concentrada",
+    primary: [MuscleGroup.BICEPS],
+    secondary: [MuscleGroup.FOREARMS],
+  },
+  {
+    id: "00000000-0000-4000-8000-000000000140",
+    name: "Levantamento Terra",
+    primary: [MuscleGroup.HAMSTRINGS, MuscleGroup.GLUTES, MuscleGroup.BACK],
+    secondary: [MuscleGroup.QUADRICEPS, MuscleGroup.CORE, MuscleGroup.FOREARMS],
+  },
+  {
+    id: "00000000-0000-4000-8000-000000000141",
+    name: "Levantamento Terra Sumô",
+    primary: [MuscleGroup.GLUTES, MuscleGroup.ADDUCTORS, MuscleGroup.QUADRICEPS],
+    secondary: [MuscleGroup.HAMSTRINGS, MuscleGroup.BACK],
+  },
+  {
+    id: "00000000-0000-4000-8000-000000000142",
+    name: "Agachamento Frontal",
+    primary: [MuscleGroup.QUADRICEPS],
+    secondary: [MuscleGroup.GLUTES, MuscleGroup.CORE],
+  },
+  {
+    id: "00000000-0000-4000-8000-000000000143",
+    name: "Remada Alta com Barra",
+    primary: [MuscleGroup.SHOULDERS, MuscleGroup.BACK],
+    secondary: [MuscleGroup.BICEPS],
+  },
+  {
+    id: "00000000-0000-4000-8000-000000000144",
+    name: "Hiperextensão Lombar",
+    primary: [MuscleGroup.GLUTES, MuscleGroup.HAMSTRINGS],
+    secondary: [MuscleGroup.BACK],
+  },
+  {
+    id: "00000000-0000-4000-8000-000000000145",
+    name: "Leg Press Unilateral",
+    primary: [MuscleGroup.QUADRICEPS, MuscleGroup.GLUTES],
+    secondary: [MuscleGroup.HAMSTRINGS, MuscleGroup.CALVES],
+  },
+  {
+    id: "00000000-0000-4000-8000-000000000146",
+    name: "Desenvolvimento Arnold",
+    primary: [MuscleGroup.SHOULDERS],
+    secondary: [MuscleGroup.TRICEPS],
+  },
+  {
+    id: "00000000-0000-4000-8000-000000000147",
+    name: "Face Pull no Cabo",
+    primary: [MuscleGroup.SHOULDERS, MuscleGroup.BACK],
+    secondary: [MuscleGroup.TRICEPS],
+  },
+  {
+    id: "00000000-0000-4000-8000-000000000148",
+    name: "Elevação Lateral no Cabo",
+    primary: [MuscleGroup.SHOULDERS],
+    secondary: [],
+  },
+  {
+    id: "00000000-0000-4000-8000-000000000149",
+    name: "Encolhimento com Halteres",
+    primary: [MuscleGroup.BACK],
+    secondary: [MuscleGroup.FOREARMS],
+  },
+  {
+    id: "00000000-0000-4000-8000-000000000150",
+    name: "Abdominal no Cabo",
+    primary: [MuscleGroup.CORE],
+    secondary: [],
+  },
+  {
+    id: "00000000-0000-4000-8000-000000000151",
+    name: "Elevação de Pernas Suspenso",
+    primary: [MuscleGroup.CORE, MuscleGroup.HIP_ABDUCTORS],
+    secondary: [MuscleGroup.FOREARMS],
+  },
+  {
+    id: "00000000-0000-4000-8000-000000000152",
+    name: "Avanço com Halteres",
+    primary: [MuscleGroup.QUADRICEPS, MuscleGroup.GLUTES],
+    secondary: [MuscleGroup.HAMSTRINGS, MuscleGroup.CALVES],
+  },
+  {
+    id: "00000000-0000-4000-8000-000000000153",
+    name: "Rosca Spider",
+    primary: [MuscleGroup.BICEPS],
+    secondary: [MuscleGroup.FOREARMS],
+  },
 ] as const;
 
 export const CANONICAL_GLOBAL_BY_NAME = new Map<string, CanonicalGlobalExerciseDefinition>(

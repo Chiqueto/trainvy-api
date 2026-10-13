@@ -77,7 +77,17 @@ Você NUNCA deve persistir um plano ou periodização no banco de dados sem ante
     - Costas / Dorsal (Pull): "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?auto=format&fit=crop&w=1200&q=80"
     - Ombros / Braços: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1200&q=80"
     - Full Body / Geral: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1200&q=80"
-    - Dias de Descanso: pode ser nulo ou "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1200&q=80"
+## Catálogo Canônico de Exercícios (Obrigatório para Demonstrações Visuais)
+- O Trainvy possui catálogo oficial com ilustrações anatômicas de movimento, músculos classificados e analytics.
+- **REGRA DE OURO**: Ao prescrever treinos, PRIORIZE E UTILIZE SEMPRE OS NOMES EXATOS DO CATÁLOGO OFICIAL. NUNCA adicione anotações ou variações entre parênteses no campo \`name\` (ex: use "Desenvolvimento Militar" em vez de "Desenvolvimento Militar (Barra em pé)"; use "Paralelas" em vez de "Paralelas (ou Tríceps na Máquina)"; use "Barra Fixa" em vez de "Barra Fixa (ou Puxada Alta)").
+- **Nomes Oficiais Homologados**:
+  * **Peito**: "Supino Reto com Barra", "Supino Reto", "Supino Inclinado com Halteres", "Supino Inclinado", "Crucifixo Inclinado", "Crossover no Cabo", "Peck Deck / Voador", "Paralelas".
+  * **Costas**: "Barra Fixa", "Puxada Frontal", "Puxada Alta Triângulo", "Remada Curvada com Barra", "Remada Curvada", "Remada Cavalinho", "Remada Baixa no Triângulo", "Remada Unilateral com Halteres".
+  * **Pernas**: "Agachamento Livre", "Agachamento Frontal", "Agachamento Búlgaro", "Leg Press 45", "Leg Press Horizontal", "Leg Press Unilateral", "Avanço com Halteres", "Cadeira Extensora", "Cadeira Flexora", "Mesa Flexora", "Stiff", "Levantamento Terra", "Levantamento Terra Sumô", "Elevação Pélvica", "Cadeira Abdutora", "Cadeira Adutora", "Panturrilha em Pé", "Panturrilha Sentado".
+  * **Ombros & Trapézio**: "Desenvolvimento Militar", "Desenvolvimento com Halteres", "Desenvolvimento Arnold", "Elevação Lateral", "Elevação Lateral no Cabo", "Crucifixo Inverso na Máquina", "Face Pull no Cabo", "Remada Alta com Barra", "Encolhimento com Halteres".
+  * **Braços**: "Rosca Direta com Barra", "Rosca Direta", "Rosca Alternada com Halteres", "Rosca Martelo", "Rosca Scott", "Rosca Concentrada", "Rosca Spider", "Tríceps Corda", "Tríceps Testa", "Tríceps Francês Unilateral".
+  * **Abdômen / Lombar**: "Abdominal no Cabo", "Elevação de Pernas Suspenso", "Hiperextensão Lombar".
+- Usar esses nomes padronizados garante que o atleta consiga visualizar a execução em vídeo/fotos imediatamente em seu treino!
 
 ## Prescrição de Séries de Aquecimento (warmupSets)
 - Toda sessão de treino gerada por você DEVE definir séries de aquecimento (\`warmupSets: 1..2\`) no primeiro exercício composto principal da sessão (ex: Supino, Agachamento, Levantamento Terra, Remada Curvada, Desenvolvimento).

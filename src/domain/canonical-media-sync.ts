@@ -1,5 +1,6 @@
 import { Prisma } from "../generated/prisma/client.js";
 import { prisma } from "../lib/db.js";
+import { CANONICAL_GLOBAL_CATALOG } from "./canonical-catalog.js";
 import { CANONICAL_MEDIA_CATALOG } from "./canonical-media-catalog.js";
 
 export interface CanonicalMediaSyncReport {
@@ -21,28 +22,43 @@ export async function syncCanonicalMedia(
   const unmatchedExercises: string[] = [];
 
   for (const def of CANONICAL_MEDIA_CATALOG) {
-    // 1. Validar se o exercício canônico existe no banco
+    // 1. Validar se o exercício canônico existe no banco (por ID ou por nome canônico global)
+    let targetExerciseId = def.exerciseId;
     const exercise = await client.exercise.findUnique({
       where: { id: def.exerciseId },
     });
 
     if (!exercise) {
-      skipped++;
-      unmatchedExercises.push(def.exerciseId);
-      continue;
+      const canonicalDef = CANONICAL_GLOBAL_CATALOG.find((c) => c.id === def.exerciseId);
+      const fallbackGlobal = canonicalDef
+        ? await client.exercise.findFirst({
+            where: {
+              ownerUserId: null,
+              name: { equals: canonicalDef.name, mode: "insensitive" },
+            },
+          })
+        : null;
+
+      if (fallbackGlobal) {
+        targetExerciseId = fallbackGlobal.id;
+      } else {
+        skipped++;
+        unmatchedExercises.push(def.exerciseId);
+        continue;
+      }
     }
 
     // 2. Upsert idempotente na tabela ExerciseMedia
     await client.exerciseMedia.upsert({
       where: {
         exerciseId_provider_mediaType: {
-          exerciseId: def.exerciseId,
+          exerciseId: targetExerciseId,
           provider: def.provider,
           mediaType: def.mediaType,
         },
       },
       create: {
-        exerciseId: def.exerciseId,
+        exerciseId: targetExerciseId,
         provider: def.provider,
         providerExerciseId: def.providerExerciseId,
         mediaType: def.mediaType,
