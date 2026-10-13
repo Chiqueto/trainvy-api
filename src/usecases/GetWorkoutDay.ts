@@ -72,23 +72,6 @@ export class GetWorkoutDay {
       throw new NotFoundError("Workout day not found");
     }
 
-    const customExercisesWithoutDirectMedia = workoutDay.exercises.filter(
-      (e) => e.exercise && e.exercise.media.length === 0,
-    );
-    const fallbackGlobalNames = new Set<string>();
-    if (customExercisesWithoutDirectMedia.length > 0) {
-      const globalsWithMedia = await prisma.exercise.findMany({
-        where: {
-          ownerUserId: null,
-          media: { some: { isActive: true } },
-        },
-        select: { name: true },
-      });
-      for (const g of globalsWithMedia) {
-        fallbackGlobalNames.add(g.name.trim().toLowerCase());
-      }
-    }
-
     return {
       id: workoutDay.id,
       name: workoutDay.name,
@@ -100,9 +83,7 @@ export class GetWorkoutDay {
         id: exercise.id,
         exerciseId: exercise.exerciseId ?? null,
         hasMedia: Boolean(
-          (exercise.exercise?.media && exercise.exercise.media.length > 0) ||
-            (exercise.exercise?.name &&
-              fallbackGlobalNames.has(exercise.exercise.name.trim().toLowerCase())),
+          exercise.exercise?.media && exercise.exercise.media.length > 0,
         ),
         name: exercise.name,
         order: exercise.order,

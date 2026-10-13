@@ -218,6 +218,8 @@ describe("Task 1.8 — Treino Avulso & Catálogo de Exercícios", () => {
       });
 
       expect(added.id).toBeDefined();
+      expect(added.exerciseId).toBe(globalEx.id);
+      expect(typeof added.hasMedia).toBe("boolean");
       expect(added.exerciseNameSnapshot).toBe(globalEx.name);
       expect(added.order).toBe(1);
       expect(added.plannedSets).toBeNull();

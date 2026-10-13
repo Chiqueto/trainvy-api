@@ -109,41 +109,41 @@ O catálogo global do Trainvy conta com 53 exercícios canônicos mapeados para 
 | `...101` | Supino Reto com Barra | `bench-press` |
 | `...102` | Supino Reto | `bench-press` |
 | `...103` | Supino Inclinado com Halteres | `incline-db-press` |
-| `...104` | Supino Inclinado | `incline-barbell-bench-press` |
+| `...104` | Supino Inclinado | `incline-bench-press` |
 | `...105` | Agachamento Livre | `squat` |
 | `...106` | Agachamento | `squat` |
 | `...107` | Agachamento Búlgaro | `bulgarian-split-squat` |
 | `...108` | Leg Press 45 | `leg-press` |
-| `...109` | Leg Press Horizontal | `seated-cable-row` |
+| `...109` | Leg Press Horizontal | `horizontal-leg-press` |
 | `...110` | Cadeira Extensora | `leg-extension` |
 | `...111` | Cadeira Flexora | `seated-leg-curl` |
 | `...112` | Mesa Flexora | `leg-curl` |
 | `...113` | Stiff | `stiff-leg-deadlift` |
 | `...114` | Elevação Pélvica | `hip-thrust` |
-| `...115` | Cadeira Abdutora | `seated-cable-abduction` |
-| `...116` | Cadeira Adutora | `cable-adduction` |
-| `...117` | Panturrilha em Pé | `calf-raise` |
+| `...115` | Cadeira Abdutora | `hip-abduction` |
+| `...116` | Cadeira Adutora | `hip-adduction` |
+| `...117` | Panturrilha em Pé | `standing-calf-raise` |
 | `...118` | Panturrilha Sentado | `seated-calf-raise` |
 | `...119` | Puxada Frontal na Máquina | `lat-pulldown` |
 | `...120` | Puxada Frontal | `lat-pulldown` |
-| `...121` | Remada Curvada com Barra | `bent-over-row` |
-| `...122` | Remada Curvada | `bent-over-row` |
-| `...123` | Desenvolvimento Militar | `overhead-press` |
+| `...121` | Remada Curvada com Barra | `barbell-row` |
+| `...122` | Remada Curvada | `barbell-row` |
+| `...123` | Desenvolvimento Militar | `ohp` |
 | `...124` | Desenvolvimento com Halteres | `dumbbell-shoulder-press` |
 | `...125` | Elevação Lateral | `lateral-raise` |
-| `...126` | Crucifixo Inverso na Máquina | `reverse-fly` |
+| `...126` | Crucifixo Inverso na Máquina | `machine-reverse-fly` |
 | `...127` | Rosca Direta com Barra | `barbell-curl` |
-| `...128` | Rosca Direta | `bicep-curl` |
+| `...128` | Rosca Direta | `barbell-curl` |
 | `...129` | Rosca Martelo | `hammer-curl` |
 | `...130` | Rosca Scott | `preacher-curl` |
 | `...131` | Tríceps Corda | `tricep-pushdown` |
 | `...132` | Tríceps Testa | `skull-crusher` |
-| `...133` | Tríceps Francês Unilateral | `tricep-extension` |
+| `...133` | Tríceps Francês Unilateral | `single-arm-dumbbell-overhead-tricep-extension` |
 | `...134` | Paralelas | `dips` |
 | `...135` | Crucifixo Inclinado | `incline-dumbbell-fly` |
 | `...136` | Barra Fixa | `pull-up` |
 | `...137` | Remada Cavalinho | `t-bar-row` |
-| `...138` | Remada Unilateral com Halteres | `dumbbell-row` |
+| `...138` | Remada Unilateral com Halteres | `single-arm-db-row` |
 | `...139` | Rosca Concentrada | `concentration-curl` |
 | `...140` | Levantamento Terra | `deadlift` |
 | `...141` | Levantamento Terra Sumô | `sumo-deadlift` |
@@ -154,14 +154,14 @@ O catálogo global do Trainvy conta com 53 exercícios canônicos mapeados para 
 | `...146` | Desenvolvimento Arnold | `arnold-press` |
 | `...147` | Face Pull no Cabo | `face-pull` |
 | `...148` | Elevação Lateral no Cabo | `cable-lateral-raise` |
-| `...149` | Encolhimento com Halteres | `dumbbell-shrug` |
+| `...149` | Encolhimento com Halteres | `db-shrug` |
 | `...150` | Abdominal no Cabo | `cable-crunch` |
 | `...151` | Elevação de Pernas Suspenso | `hanging-leg-raise` |
 | `...152` | Avanço com Halteres | `walking-lunge` |
 | `...153` | Rosca Spider | `spider-curl` |
 
 - **Cobertura canônica:** 53 / 53 exercícios cobertos (100%).
-- **Fallback Inteligente:** Caso um atleta tenha exercícios personalizados antigos com o mesmo nome do catálogo global, `GetExerciseMedia`, `GetWorkoutDay` e `GetWorkoutSession` herdam transparentemente a mídia e as instruções do exercício global homônimo.
+- **Autoridade Canônica Estrita (Task 4.X.1):** O vínculo de demonstração visual baseia-se exclusivamente no `Exercise.id` canônico verificado. Fallbacks heurísticos automáticos por nome de exercício foram removidos para garantir precisão anatômica e evitar associações indevidas a exercícios personalizados de atletas.
 - **Coach AI Guidance:** O system prompt do Coach AI instrui o modelo a prescrever estritamente os nomes canônicos padronizados do catálogo para garantir demonstrações visuais imediatas nos treinos sugeridos.
 
 ---
@@ -170,12 +170,13 @@ O catálogo global do Trainvy conta com 53 exercícios canônicos mapeados para 
 
 1. **Download Seguro e Validação de Assets:**
    - Script: `bootcamp-treinos-api/src/scripts/import-repdb-assets.ts`
+   - Valida cabeçalho WebP (`RIFF/WEBP`), tamanho (mínimo 500 B, máximo 5 MB) e aplica escrita atômica via arquivo temporário.
    - Valida contra path-traversal e bloqueia terminantemente qualquer caminho de `premium-samples/`.
-   - Gera os arquivos no destino estático do frontend.
-2. **Sincronização no Banco de Dados:**
+   - Gera os arquivos no destino estático do frontend com suporte à variável `FRONTEND_MEDIA_DIR`.
+2. **Sincronização Aditiva no Banco de Dados (Task 4.X.1):**
    - Script: `bootcamp-treinos-api/src/scripts/seed-exercise-media.ts` (`npm run seed:media`).
    - Módulo: `bootcamp-treinos-api/src/domain/canonical-media-sync.ts`.
-   - Idempotente: executa `upsert` com base na chave composta `exerciseId_provider_mediaType`. Múltiplas execuções preservam os dados sem criar duplicatas.
+   - Estratégia Insert-Only: insere registros canônicos ausentes sem sobrescrever modificações operacionais manuais (desativações `isActive: false` e edições manuais de instruções são rigorosamente preservadas).
 
 ---
 
@@ -223,3 +224,26 @@ GET /exercises/:exerciseId/media
 - O enum `ExerciseMediaType` já prevê `GIF` e `VIDEO`.
 - A coluna `motionPath` no banco de dados e nos schemas Zod/OpenAPI está pronta para armazenar caminhos de vídeo MP4/WebM ou GIFs animados.
 - Critério para fornecedores futuros: pacote com permissão comercial explícita comprovada, hospedagem local autorizada e licença documentada.
+
+---
+
+## 11. Endurecimento Técnico e Segurança PWA (Task 4.X.1)
+
+- **Segurança do Service Worker (`public/sw.js`):**
+  - Cache versionado como `trainvy-static-v2`. Na ativação, purga rigorosamente qualquer cache legado `trainvy-` anterior (incluindo `trainvy-static-v1`), eliminando respostas HTML autenticadas anteriormente armazenadas.
+  - Estratégia Network-Only estrita para navegação HTML (`request.mode === 'navigate'`). Em caso de falha de conexão (offline), serve exclusivamente a tela genérica `public/offline.html`, garantindo zero vazamento de dados de treinos ou contas após logout.
+  - Bypass explícito sem cache para endpoints de API (`/api/*`), Better Auth (`/api/auth/*`), gateway Fastify (`/backend/*`), requisições RSC (`_rsc`, header `RSC: 1`) e Server Actions (`Next-Action`).
+  - Allowlist restrita para recursos estáticos: bundles versionados do Next.js (`/_next/static/*`), imagens WebP de exercícios (`/exercise-media/repdb/*`), fontes e ícones.
+- **Registro Resiliente do PWA (`app/_components/pwa/pwa-provider.tsx`):**
+  - Registro de Service Worker com verificação de `document.readyState === 'complete'`, garantindo registro imediato caso a hidratação ocorra após o evento `load`, com descarte de listeners no desmonte.
+- **Preservação de Mídia em Exercícios Adicionados em Treino (`workout-session-tracker.tsx`):**
+  - Preservação estrita dos campos `exerciseId`, `hasMedia` e `plannedWarmupSets` no estado local ao adicionar exercícios em sessões avulsas, permitindo abrir o diálogo "Ver execução" imediatamente sem recarregar a página.
+- **Autoridade Canônica sem Fallbacks por Nome:**
+  - `GetExerciseMedia`, `GetWorkoutDay` e `GetWorkoutSession` associam mídias exclusivamente com base no `Exercise.id` canônico, sem correspondências heurísticas textuais para exercícios customizados de atletas.
+- **Sincronização Idempotente Aditiva (Insert-Only):**
+  - `syncCanonicalMedia` insere registros canônicos ausentes e preserva modificações operacionais manuais (desativações `isActive: false` e edições manuais de instruções são mantidas intactas).
+- **Validação de Formato e Escrita Atômica de Imagens:**
+  - `import-repdb-assets.ts` valida cabeçalho WebP (`RIFF/WEBP`), limites de tamanho aceitáveis (500 B a 5 MB) e grava via arquivo temporário com renomeação atômica.
+- **Componente de Demonstração e Acessibilidade:**
+  - `ExerciseMediaPreview` suporta preferência por movimento reduzido (`prefers-reduced-motion`), reinicia estados limpamente ao alternar exercícios e exibe nota sobre posições ilustrativas de referência.
+  - `ExerciseExecutionDialog` limpa estados prévios imediatamente para evitar flash de dados do exercício anterior, descarta respostas assíncronas obsoletas e gerencia foco e fechamento acessível.

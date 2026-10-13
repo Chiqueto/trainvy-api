@@ -3,10 +3,14 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const FRONTEND_PUBLIC_DIR = path.resolve(
-  __dirname,
-  "../../../bootcamp-treinos-frontend/public/exercise-media/repdb",
-);
+
+// Permite parametrizar o diretório de destino via variável de ambiente, com fallback seguro relativo aos repositórios irmãos
+export const FRONTEND_PUBLIC_DIR =
+  process.env.FRONTEND_MEDIA_DIR ||
+  path.resolve(
+    __dirname,
+    "../../../bootcamp-treinos-frontend/public/exercise-media/repdb",
+  );
 
 // Lista verificada e restrita dos IDs do RepDB necessários para o Trainvy
 export const REPDB_AUTHORIZED_IDS = [
@@ -63,19 +67,40 @@ export const REPDB_AUTHORIZED_IDS = [
 const BASE_RAW_URL =
   "https://raw.githubusercontent.com/RepDB/exercise-dataset/main/images/flat";
 
-export async function importRepDbAssets(): Promise<{
+const MIN_WEBP_SIZE_BYTES = 500;
+const MAX_WEBP_SIZE_BYTES = 5 * 1024 * 1024; // 5 MB
+
+/**
+ * Valida se um buffer possui formato WebP íntegro e cabeçalho RIFF/WEBP válido.
+ */
+export function isValidWebPBuffer(buf: Buffer): boolean {
+  if (buf.length < 12) return false;
+  const isRiff = buf.toString("ascii", 0, 4) === "RIFF";
+  const isWebp = buf.toString("ascii", 8, 12) === "WEBP";
+  return isRiff && isWebp;
+}
+
+export async function importRepDbAssets(
+  targetDir: string = FRONTEND_PUBLIC_DIR,
+): Promise<{
   totalFiles: number;
   totalSizeBytes: number;
   destinationDir: string;
 }> {
-  if (!fs.existsSync(FRONTEND_PUBLIC_DIR)) {
-    fs.mkdirSync(FRONTEND_PUBLIC_DIR, { recursive: true });
+  if (!fs.existsSync(targetDir)) {
+    try {
+      fs.mkdirSync(targetDir, { recursive: true });
+    } catch (err) {
+      throw new Error(
+        `Não foi possível criar o diretório de destino de mídia "${targetDir}". Certifique-se de que o repositório frontend está acessível ou defina a variável FRONTEND_MEDIA_DIR. Detalhes: ${err}`,
+      );
+    }
   }
 
   let totalFiles = 0;
   let totalSizeBytes = 0;
 
-  console.log(`[RepDB Importer] Verificando assets em: ${FRONTEND_PUBLIC_DIR}`);
+  console.log(`[RepDB Importer] Verificando assets em: ${targetDir}`);
 
   for (const id of REPDB_AUTHORIZED_IDS) {
     // Validação estrita: proíbe path traversal e caminhos arbitrários
@@ -89,13 +114,30 @@ export async function importRepDbAssets(): Promise<{
     const poses = ["start", "peak"] as const;
     for (const pose of poses) {
       const fileName = `${id}-${pose}.webp`;
-      const localFilePath = path.join(FRONTEND_PUBLIC_DIR, fileName);
+      const localFilePath = path.join(targetDir, fileName);
 
+      // Se o arquivo local já existe, valida sua integridade
       if (fs.existsSync(localFilePath)) {
-        const stats = fs.statSync(localFilePath);
-        totalFiles++;
-        totalSizeBytes += stats.size;
-        continue;
+        try {
+          const stats = fs.statSync(localFilePath);
+          if (stats.size >= MIN_WEBP_SIZE_BYTES) {
+            const fd = fs.openSync(localFilePath, "r");
+            const headerBuf = Buffer.alloc(12);
+            fs.readSync(fd, headerBuf, 0, 12, 0);
+            fs.closeSync(fd);
+
+            if (isValidWebPBuffer(headerBuf)) {
+              totalFiles++;
+              totalSizeBytes += stats.size;
+              continue;
+            }
+          }
+          console.warn(
+            `[RepDB Importer] Arquivo local corrompido detectado (${fileName}), baixando novamente...`,
+          );
+        } catch (readErr) {
+          console.warn(`[RepDB Importer] Erro ao validar ${fileName}, baixando novamente...`, readErr);
+        }
       }
 
       const remoteUrl = `${BASE_RAW_URL}/${fileName}`;
@@ -111,7 +153,28 @@ export async function importRepDbAssets(): Promise<{
       const arrayBuffer = await response.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
 
-      fs.writeFileSync(localFilePath, buffer);
+      // Validação estrita de integridade e tamanho
+      if (!isValidWebPBuffer(buffer)) {
+        throw new Error(`O arquivo baixado ${fileName} não é um formato WebP válido (RIFF/WEBP ausente).`);
+      }
+      if (buffer.length < MIN_WEBP_SIZE_BYTES || buffer.length > MAX_WEBP_SIZE_BYTES) {
+        throw new Error(
+          `Tamanho de arquivo fora dos limites aceitáveis para ${fileName}: ${buffer.length} bytes (esperado entre ${MIN_WEBP_SIZE_BYTES} e ${MAX_WEBP_SIZE_BYTES}).`,
+        );
+      }
+
+      // Escrita atômica: salva em arquivo temporário antes de mover para o destino final
+      const tmpFilePath = `${localFilePath}.tmp.${process.pid}.${Date.now()}`;
+      try {
+        fs.writeFileSync(tmpFilePath, buffer);
+        fs.renameSync(tmpFilePath, localFilePath);
+      } catch (writeErr) {
+        if (fs.existsSync(tmpFilePath)) {
+          fs.unlinkSync(tmpFilePath);
+        }
+        throw writeErr;
+      }
+
       totalFiles++;
       totalSizeBytes += buffer.length;
     }
@@ -125,7 +188,7 @@ export async function importRepDbAssets(): Promise<{
   return {
     totalFiles,
     totalSizeBytes,
-    destinationDir: FRONTEND_PUBLIC_DIR,
+    destinationDir: targetDir,
   };
 }
 

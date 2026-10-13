@@ -3,21 +3,34 @@ import { prisma } from "../lib/db.js";
 import { CANONICAL_GLOBAL_CATALOG } from "./canonical-catalog.js";
 import { CANONICAL_MEDIA_CATALOG } from "./canonical-media-catalog.js";
 
+export interface CanonicalMediaSyncOptions {
+  /** Se true, sobrescreve assets e instruções de registros já existentes. Padrão: false (insert-only). */
+  forceUpdate?: boolean;
+}
+
 export interface CanonicalMediaSyncReport {
   totalDefined: number;
   synced: number;
+  created: number;
+  preserved: number;
   skipped: number;
   unmatchedExercises: string[];
 }
 
 /**
  * Sincroniza as mídias canônicas verificadas do Trainvy com o banco de dados.
- * Idempotente: atualiza registros existentes sem duplicar ou alterar dados de treino.
+ * Estratégia aditiva e segura:
+ * - Insere registros ausentes.
+ * - Por padrão (forceUpdate: false), NÃO sobrescreve registros existentes, preservando
+ *   desativações manuais (isActive: false) e edições operacionais de instruções.
  */
 export async function syncCanonicalMedia(
   client: Prisma.TransactionClient = prisma,
+  options?: CanonicalMediaSyncOptions,
 ): Promise<CanonicalMediaSyncReport> {
-  let synced = 0;
+  const forceUpdate = options?.forceUpdate ?? false;
+  let created = 0;
+  let preserved = 0;
   let skipped = 0;
   const unmatchedExercises: string[] = [];
 
@@ -48,8 +61,9 @@ export async function syncCanonicalMedia(
       }
     }
 
-    // 2. Upsert idempotente na tabela ExerciseMedia
-    await client.exerciseMedia.upsert({
+    // 2. Inicialização aditiva (Insert-only por padrão):
+    // Verifica se já existe registro para a chave única [exerciseId, provider, mediaType]
+    const existingMedia = await client.exerciseMedia.findUnique({
       where: {
         exerciseId_provider_mediaType: {
           exerciseId: targetExerciseId,
@@ -57,39 +71,51 @@ export async function syncCanonicalMedia(
           mediaType: def.mediaType,
         },
       },
-      create: {
-        exerciseId: targetExerciseId,
-        provider: def.provider,
-        providerExerciseId: def.providerExerciseId,
-        mediaType: def.mediaType,
-        startImagePath: def.startImagePath,
-        endImagePath: def.endImagePath,
-        motionPath: def.motionPath ?? null,
-        attributionName: def.attributionName,
-        attributionUrl: def.attributionUrl,
-        instructions: def.instructions as unknown as Prisma.InputJsonValue,
-        isActive: true,
-      },
-      update: {
-        provider: def.provider,
-        providerExerciseId: def.providerExerciseId,
-        mediaType: def.mediaType,
-        startImagePath: def.startImagePath,
-        endImagePath: def.endImagePath,
-        motionPath: def.motionPath ?? null,
-        attributionName: def.attributionName,
-        attributionUrl: def.attributionUrl,
-        instructions: def.instructions as unknown as Prisma.InputJsonValue,
-        isActive: true,
-      },
     });
 
-    synced++;
+    if (!existingMedia) {
+      await client.exerciseMedia.create({
+        data: {
+          exerciseId: targetExerciseId,
+          provider: def.provider,
+          providerExerciseId: def.providerExerciseId,
+          mediaType: def.mediaType,
+          startImagePath: def.startImagePath,
+          endImagePath: def.endImagePath,
+          motionPath: def.motionPath ?? null,
+          attributionName: def.attributionName,
+          attributionUrl: def.attributionUrl,
+          instructions: def.instructions as unknown as Prisma.InputJsonValue,
+          isActive: true,
+        },
+      });
+      created++;
+    } else if (forceUpdate) {
+      // Atualização explícita forçada, preservando apenas o isActive do registro
+      await client.exerciseMedia.update({
+        where: { id: existingMedia.id },
+        data: {
+          providerExerciseId: def.providerExerciseId,
+          startImagePath: def.startImagePath,
+          endImagePath: def.endImagePath,
+          motionPath: def.motionPath ?? null,
+          attributionName: def.attributionName,
+          attributionUrl: def.attributionUrl,
+          instructions: def.instructions as unknown as Prisma.InputJsonValue,
+        },
+      });
+      preserved++;
+    } else {
+      // Preservado sem sobrescrever edições operacionais
+      preserved++;
+    }
   }
 
   return {
     totalDefined: CANONICAL_MEDIA_CATALOG.length,
-    synced,
+    synced: created + preserved,
+    created,
+    preserved,
     skipped,
     unmatchedExercises,
   };

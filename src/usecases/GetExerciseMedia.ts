@@ -45,28 +45,7 @@ export class GetExerciseMedia {
       throw new NotFoundError("Exercise not found");
     }
 
-    let activeMedia = exercise.media[0];
-
-    // Fallback inteligente: se o exercício é customizado do usuário e não possui mídia própria,
-    // herda a mídia do exercício canônico global de mesmo nome (se houver mídia cadastrada para ele).
-    if (!activeMedia && exercise.ownerUserId !== null) {
-      const matchingGlobal = await prisma.exercise.findFirst({
-        where: {
-          ownerUserId: null,
-          name: { equals: exercise.name.trim(), mode: "insensitive" },
-        },
-        include: {
-          media: {
-            where: { isActive: true },
-            take: 1,
-          },
-        },
-      });
-
-      if (matchingGlobal?.media?.[0]) {
-        activeMedia = matchingGlobal.media[0];
-      }
-    }
+    const activeMedia = exercise.media[0];
 
     // Caso não possua mídia vinculada ou esteja inativa
     if (!activeMedia) {

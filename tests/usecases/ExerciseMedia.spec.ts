@@ -8,7 +8,11 @@ import { syncCanonicalMedia } from "../../src/domain/canonical-media-sync.js";
 import { syncCanonicalGlobalCatalog } from "../../src/domain/catalog-backfill.js";
 import { NotFoundError } from "../../src/errors/index.js";
 import { prisma } from "../../src/lib/db.js";
-import { importRepDbAssets, REPDB_AUTHORIZED_IDS } from "../../src/scripts/import-repdb-assets.js";
+import {
+  importRepDbAssets,
+  isValidWebPBuffer,
+  REPDB_AUTHORIZED_IDS,
+} from "../../src/scripts/import-repdb-assets.js";
 import { GetExerciseMedia } from "../../src/usecases/GetExerciseMedia.js";
 import { ListExercises } from "../../src/usecases/ListExercises.js";
 import {
@@ -97,6 +101,20 @@ describe("Task 4.X — Exercise Media Foundation (Backend)", () => {
         expect(id).not.toContain("\\");
         expect(id).not.toContain("premium");
       }
+    });
+
+    it("valida integridade do cabeçalho WebP (RIFF/WEBP) e rejeita buffers corrompidos", () => {
+      // Buffer WebP válido
+      const validWebP = Buffer.alloc(20);
+      validWebP.write("RIFF", 0, "ascii");
+      validWebP.writeUInt32LE(12, 4);
+      validWebP.write("WEBP", 8, "ascii");
+      expect(isValidWebPBuffer(validWebP)).toBe(true);
+
+      // Buffers inválidos
+      expect(isValidWebPBuffer(Buffer.from("PNG..."))).toBe(false);
+      expect(isValidWebPBuffer(Buffer.from("RIFF1234JPEG"))).toBe(false);
+      expect(isValidWebPBuffer(Buffer.alloc(8))).toBe(false);
     });
   });
 
@@ -223,7 +241,7 @@ describe("Task 4.X — Exercise Media Foundation (Backend)", () => {
       expect(exercises[0].hasMedia).toBe(false);
     });
 
-    it("GetExerciseMedia utiliza fallback inteligente para exercício personalizado de mesmo nome que o canônico global", async () => {
+    it("GetExerciseMedia exige ID canônico e NÃO herda mídia por correspondência textual para exercício personalizado de mesmo nome", async () => {
       // Cria exercício personalizado com mesmo nome de um global
       const customSupino = await prisma.exercise.create({
         data: {
@@ -238,9 +256,74 @@ describe("Task 4.X — Exercise Media Foundation (Backend)", () => {
         exerciseId: customSupino.id,
       });
 
-      expect(media.hasMedia).toBe(true);
-      expect(media.startImagePath).toContain("bench-press-start.webp");
-      expect(media.endImagePath).toContain("bench-press-peak.webp");
+      // Sob as regras da Task 4.X.1, ID canônico é autoridade estrita; fallbacks de nome não existem
+      expect(media.hasMedia).toBe(false);
+      expect(media.startImagePath).toBeNull();
+      expect(media.endImagePath).toBeNull();
+      expect(media.instructions).toBeNull();
+    });
+
+    it("retorna hasMedia: false para exercício com mídia desativada (isActive: false)", async () => {
+      const globalId = "00000000-0000-4000-8000-000000000101";
+
+      // Desativa temporariamente a mídia
+      await prisma.exerciseMedia.updateMany({
+        where: { exerciseId: globalId },
+        data: { isActive: false },
+      });
+
+      try {
+        const media = await getExerciseMedia.execute({
+          userId: userA.id,
+          exerciseId: globalId,
+        });
+
+        expect(media.hasMedia).toBe(false);
+        expect(media.startImagePath).toBeNull();
+      } finally {
+        // Restaura
+        await prisma.exerciseMedia.updateMany({
+          where: { exerciseId: globalId },
+          data: { isActive: true },
+        });
+      }
+    });
+
+    it("syncCanonicalMedia preserva edições manuais e mídia desativada (insert-only por padrão)", async () => {
+      const globalId = "00000000-0000-4000-8000-000000000102"; // Supino Reto
+
+      // Desativa e altera manualmente a instrução
+      await prisma.exerciseMedia.updateMany({
+        where: { exerciseId: globalId },
+        data: {
+          isActive: false,
+          instructions: {
+            description: "Instrução customizada manualmente pelo treinador.",
+            setup: "Setup custom.",
+            execution: "Execução custom.",
+            tips: "Dicas custom.",
+          },
+        },
+      });
+
+      // Executa sincronização insert-only padrão
+      const report = await syncCanonicalMedia();
+      expect(report.preserved).toBeGreaterThan(0);
+
+      // Verifica que o registro NÃO foi sobrescrito
+      const mediaInDb = await prisma.exerciseMedia.findFirst({
+        where: { exerciseId: globalId },
+      });
+      expect(mediaInDb?.isActive).toBe(false);
+      expect((mediaInDb?.instructions as { description?: string })?.description).toBe(
+        "Instrução customizada manualmente pelo treinador.",
+      );
+
+      // Restaura para os outros testes
+      await prisma.exerciseMedia.updateMany({
+        where: { exerciseId: globalId },
+        data: { isActive: true },
+      });
     });
   });
 });
