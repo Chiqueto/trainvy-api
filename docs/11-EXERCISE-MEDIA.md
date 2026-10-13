@@ -205,8 +205,11 @@ GET /exercises/:exerciseId/media
 ## 9. Componentização Frontend
 
 - `ExerciseMediaPreview`:
-  - Exibe abas interativas de "Posição Inicial" e "Pico de Contração".
-  - Suporta 1 imagem (exercícios estáticos / isometria), 2 imagens (sequência padrão) ou estado vazio ("Demonstração indisponível").
+  - **Animação Contínua em Loop (Fake Animation):** Alterna suavemente entre os quadros de posição inicial e pico de contração (intervalo de 1.2s com crossfade de 300ms), simulando o movimento natural de uma repetição de musculação.
+  - **Controles Intuitivos de Playback:** Botão dedicado "Pausar Loop / Animar Movimento", botão flutuante sobre o visor e clique direto na imagem para pausar ou retomar a repetição.
+  - **Inspeção Estática de Quadros:** Abas dedicadas "Posição Inicial" e "Pico de Contração" permitem pausar o loop imediatamente para inspecionar a postura desejada.
+  - **Barra de Ritmo e Badge Dinâmico:** Exibe indicador de fase (`1. Posição Inicial` ou `2. Pico de Contração`), tag `Loop` pulsante e barra de ritmo na base do player.
+  - Suporta 1 imagem (exercícios estáticos / isometria), 2 imagens (sequência com repetição animada) ou estado vazio ("Demonstração em preparação").
 - `ExerciseExecutionDialog`:
   - Modal/Drawer responsivo compatível com mobile (320px, 375px, 390px, 768px e Desktop).
   - Inclui abas para imagens e instruções anatômicas em 4 seções.
