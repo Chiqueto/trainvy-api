@@ -12,6 +12,7 @@ export interface ExerciseOutputDto {
   id: string;
   name: string;
   ownerUserId: string | null;
+  hasMedia: boolean;
   muscles: Array<{
     id: string;
     muscleGroup: MuscleGroup;
@@ -56,6 +57,11 @@ export class ListExercises {
         id: true,
         name: true,
         ownerUserId: true,
+        media: {
+          where: { isActive: true },
+          select: { id: true },
+          take: 1,
+        },
         muscles: {
           select: {
             id: true,
@@ -134,9 +140,17 @@ export class ListExercises {
           return a.name.localeCompare(b.name);
         });
 
+    const mappedExercises: ExerciseOutputDto[] = matchingExercises.map((ex) => ({
+      id: ex.id,
+      name: ex.name,
+      ownerUserId: ex.ownerUserId,
+      hasMedia: ex.media.length > 0,
+      muscles: ex.muscles,
+    }));
+
     return dto.limit === undefined
-      ? matchingExercises
-      : matchingExercises.slice(0, Math.max(0, dto.limit));
+      ? mappedExercises
+      : mappedExercises.slice(0, Math.max(0, dto.limit));
   }
 }
 

@@ -60,10 +60,12 @@ await app.register(historyRoutes, { prefix: "/history" });
 await app.ready();
 const swaggerSpec = app.swagger();
 
+import path from "node:path";
+
 const frontendDirectory = fileURLToPath(
   new URL("../../../bootcamp-treinos-frontend/", import.meta.url),
 );
-const frontendSwaggerPath = `${frontendDirectory}/swagger.json`;
+const frontendSwaggerPath = path.resolve(frontendDirectory, "swagger.json");
 fs.writeFileSync(
   frontendSwaggerPath,
   JSON.stringify(swaggerSpec, null, 2),

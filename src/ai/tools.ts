@@ -22,15 +22,7 @@ import { UpsertUserTrainData } from "../usecases/UpsertUserTrainData.js";
 
 
 
-const ALL_WEEK_DAYS = [
-  "MONDAY",
-  "TUESDAY",
-  "WEDNESDAY",
-  "THURSDAY",
-  "FRIDAY",
-  "SATURDAY",
-  "SUNDAY",
-] as const;
+
 
 export const aiExerciseSchema = z.object({
   order: z

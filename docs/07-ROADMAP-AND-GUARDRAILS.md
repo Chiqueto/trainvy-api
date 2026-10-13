@@ -58,10 +58,12 @@ Fronteiras e escopo previsto:
 ## Fase 4 — Identity & Commercial [EM ANDAMENTO]
 
 - [x] Task 4.1 — Identity & Commercial Foundation.
+- [x] Task 4.X — Exercise Media Foundation (Transversal: RepDB Free, imagens estáticas de execução, instruções PT-BR, custo R$ 0).
 - [ ] Task 4.2 — Admin Console (próxima; não iniciada).
 
 Identidade, planos, assinaturas, entitlements, intent OAuth, backfill e bootstrap operacional:
 [09 — Commercial Foundation](09-COMMERCIAL-FOUNDATION.md).
+[11 — Exercise Media](11-EXERCISE-MEDIA.md).
 Fase 4 não está marcada como pronta. Não há gating global, cobrança ou vínculo CoachAthlete.
 
 ## Backlog futuro — Biblioteca (antiga proposta de Fase 4)

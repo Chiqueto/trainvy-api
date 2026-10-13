@@ -1,6 +1,7 @@
 import z from "zod";
 
 import {
+  ExerciseMediaType,
   MuscleGroup,
   MuscleRole,
   SetType,
@@ -9,6 +10,7 @@ import {
 } from "../generated/prisma/enums.js";
 
 export const WorkoutSessionOriginSchema = z.enum(WorkoutSessionOrigin);
+export const ExerciseMediaTypeSchema = z.enum(ExerciseMediaType);
 
 export const GamificationTheme = {
   ALL: "ALL",
@@ -187,6 +189,8 @@ export const GetWorkoutDayResponseSchema = z.object({
   exercises: z.array(
     z.object({
       id: z.uuid(),
+      exerciseId: z.uuid().nullable().optional(),
+      hasMedia: z.boolean().optional(),
       name: z.string(),
       order: z.number(),
       workoutDayId: z.uuid(),
@@ -423,6 +427,8 @@ export const WorkoutSessionSetResponseSchema = z.object({
 
 export const WorkoutSessionExerciseResponseSchema = z.object({
   id: z.uuid(),
+  exerciseId: z.uuid().nullable().optional(),
+  hasMedia: z.boolean().optional(),
   exerciseNameSnapshot: z.string(),
   order: z.number().int(),
   plannedSets: z.number().int().nullable(),
@@ -477,7 +483,31 @@ export const ExerciseResponseSchema = z.object({
   id: z.uuid(),
   name: z.string(),
   ownerUserId: z.string().nullable(),
+  hasMedia: z.boolean().default(false),
   muscles: z.array(ExerciseMuscleResponseSchema).default([]),
+});
+
+export const ExerciseInstructionsSchema = z.object({
+  description: z.string(),
+  setup: z.string(),
+  execution: z.string(),
+  tips: z.string(),
+});
+
+export const ExerciseMediaParamsSchema = z.object({
+  exerciseId: z.uuid(),
+});
+
+export const ExerciseMediaResponseSchema = z.object({
+  exerciseId: z.uuid(),
+  hasMedia: z.boolean(),
+  mediaType: ExerciseMediaTypeSchema.nullable(),
+  startImagePath: z.string().nullable(),
+  endImagePath: z.string().nullable(),
+  motionPath: z.string().nullable(),
+  instructions: ExerciseInstructionsSchema.nullable(),
+  attributionName: z.string().nullable(),
+  attributionUrl: z.string().nullable(),
 });
 
 export const ListExercisesQuerySchema = z.object({

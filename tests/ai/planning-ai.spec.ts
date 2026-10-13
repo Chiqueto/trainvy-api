@@ -263,25 +263,24 @@ describe("Task 2.6 — IA de Planejamento V1 (Backend)", () => {
       expect(countAfter).toBe(countBefore);
     });
 
-    it("rejeita esquema de plano que não tenha exatamente 7 dias ou tenha dias repetidos", () => {
-      // 6 dias apenas
-      const sixDays = VALID_7_DAYS.slice(0, 6);
+    it("rejeita esquema de plano que não tenha entre 1 e 7 treinos na rotina", () => {
+      // 0 treinos
       expect(() =>
         aiWorkoutPlanInputSchema.parse({
-          name: "Plano Incompleto",
-          workoutDays: sixDays,
+          name: "Plano Vazio",
+          workoutDays: [],
         }),
       ).toThrow();
 
-      // 7 dias com duplicata (dois MONDAY)
-      const duplicateDays = [
-        ...VALID_7_DAYS.slice(0, 6),
-        { ...VALID_7_DAYS[0], name: "Monday duplicado" },
+      // Mais de 7 treinos
+      const eightDays = [
+        ...VALID_7_DAYS,
+        { ...VALID_7_DAYS[0], name: "Treino Extra" },
       ];
       expect(() =>
         aiWorkoutPlanInputSchema.parse({
-          name: "Plano Duplicado",
-          workoutDays: duplicateDays,
+          name: "Plano Excessivo",
+          workoutDays: eightDays,
         }),
       ).toThrow();
     });

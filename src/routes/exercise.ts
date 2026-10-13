@@ -7,12 +7,15 @@ import { auth } from "../lib/auth.js";
 import {
   CreateExerciseBodySchema,
   ErrorSchema,
+  ExerciseMediaParamsSchema,
+  ExerciseMediaResponseSchema,
   ExerciseResponseSchema,
   ListExercisesQuerySchema,
   UpdateExerciseMusclesBodySchema,
   UpdateExerciseMusclesParamsSchema,
 } from "../schemas/index.js";
 import { CreateExercise } from "../usecases/CreateExercise.js";
+import { GetExerciseMedia } from "../usecases/GetExerciseMedia.js";
 import { ListExercises } from "../usecases/ListExercises.js";
 import { UpdateExerciseMuscles } from "../usecases/UpdateExerciseMuscles.js";
 
@@ -171,6 +174,58 @@ export const exerciseRoutes: FastifyPluginAsyncZod = async (app) => {
           });
         }
 
+        if (error instanceof NotFoundError) {
+          return reply.status(404).send({
+            error: error.message,
+            code: "NOT_FOUND",
+          });
+        }
+
+        app.log.error(error);
+        return reply.status(500).send({
+          error: "Internal server error",
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }
+    },
+  });
+
+  // GET /exercises/:exerciseId/media
+  app.route({
+    method: "GET",
+    url: "/:exerciseId/media",
+    schema: {
+      operationId: "getExerciseMedia",
+      tags: ["Exercise"],
+      summary: "Get visual execution media and instructions for an exercise",
+      params: ExerciseMediaParamsSchema,
+      response: {
+        200: ExerciseMediaResponseSchema,
+        401: ErrorSchema,
+        404: ErrorSchema,
+        500: ErrorSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      try {
+        const session = await auth.api.getSession({
+          headers: fromNodeHeaders(request.headers),
+        });
+        if (!session) {
+          return reply.status(401).send({
+            error: "Unauthorized",
+            code: "UNAUTHORIZED",
+          });
+        }
+
+        const getExerciseMedia = new GetExerciseMedia();
+        const result = await getExerciseMedia.execute({
+          userId: session.user.id,
+          exerciseId: request.params.exerciseId,
+        });
+
+        return reply.status(200).send(result);
+      } catch (error) {
         if (error instanceof NotFoundError) {
           return reply.status(404).send({
             error: error.message,

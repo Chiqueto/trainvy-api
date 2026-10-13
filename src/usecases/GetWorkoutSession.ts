@@ -21,6 +21,8 @@ export interface WorkoutSetOutputDto {
 
 export interface SessionExerciseOutputDto {
   id: string;
+  exerciseId?: string | null;
+  hasMedia?: boolean;
   exerciseNameSnapshot: string;
   order: number;
   plannedWarmupSets?: number | null;
@@ -51,6 +53,16 @@ export class GetWorkoutSession {
         sessionExercises: {
           orderBy: { order: "asc" },
           include: {
+            exercise: {
+              select: {
+                id: true,
+                media: {
+                  where: { isActive: true },
+                  select: { id: true },
+                  take: 1,
+                },
+              },
+            },
             sets: {
               orderBy: { order: "asc" },
             },
@@ -74,6 +86,10 @@ export class GetWorkoutSession {
       completedAt: session.completedAt ? session.completedAt.toISOString() : null,
       sessionExercises: session.sessionExercises.map((exercise) => ({
         id: exercise.id,
+        exerciseId: exercise.exerciseId ?? null,
+        hasMedia: Boolean(
+          exercise.exercise?.media && exercise.exercise.media.length > 0,
+        ),
         exerciseNameSnapshot: exercise.exerciseNameSnapshot,
         order: exercise.order,
         plannedWarmupSets: exercise.plannedWarmupSets,

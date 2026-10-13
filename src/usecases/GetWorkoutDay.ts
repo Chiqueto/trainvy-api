@@ -19,6 +19,8 @@ interface OutputDto {
   weekDay: WeekDay;
   exercises: Array<{
     id: string;
+    exerciseId?: string | null;
+    hasMedia?: boolean;
     name: string;
     order: number;
     workoutDayId: string;
@@ -48,6 +50,18 @@ export class GetWorkoutDay {
       include: {
         exercises: {
           orderBy: { order: "asc" },
+          include: {
+            exercise: {
+              select: {
+                id: true,
+                media: {
+                  where: { isActive: true },
+                  select: { id: true },
+                  take: 1,
+                },
+              },
+            },
+          },
         },
         sessions: true,
       },
@@ -66,6 +80,10 @@ export class GetWorkoutDay {
       weekDay: workoutDay.weekDay,
       exercises: workoutDay.exercises.map((exercise) => ({
         id: exercise.id,
+        exerciseId: exercise.exerciseId ?? null,
+        hasMedia: Boolean(
+          exercise.exercise?.media && exercise.exercise.media.length > 0,
+        ),
         name: exercise.name,
         order: exercise.order,
         workoutDayId: exercise.workoutDayId,

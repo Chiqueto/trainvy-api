@@ -9,6 +9,8 @@
     "admin:grant": "tsx src/scripts/admin-role.ts grant",
     "admin:revoke": "tsx src/scripts/admin-role.ts revoke",
     "openapi:export": "tsx src/scripts/export_swagger.ts",
+    "seed:media": "tsx src/scripts/seed-exercise-media.ts",
+    "import:repdb": "tsx src/scripts/import-repdb-assets.ts",
     "migrate:test": "prisma migrate deploy --config prisma.test.config.ts",
     "migrate:deploy": "prisma migrate deploy",
     "test": "vitest run",

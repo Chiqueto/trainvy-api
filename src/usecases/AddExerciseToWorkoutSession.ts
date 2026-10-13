@@ -13,6 +13,8 @@ interface InputDto {
 
 interface OutputDto {
   id: string;
+  exerciseId?: string | null;
+  hasMedia?: boolean;
   exerciseNameSnapshot: string;
   order: number;
   plannedWarmupSets?: number | null;
@@ -47,6 +49,13 @@ export class AddExerciseToWorkoutSession {
 
     const exercise = await prisma.exercise.findUnique({
       where: { id: dto.exerciseId },
+      include: {
+        media: {
+          where: { isActive: true },
+          select: { id: true },
+          take: 1,
+        },
+      },
     });
 
     if (
@@ -80,6 +89,8 @@ export class AddExerciseToWorkoutSession {
 
     return {
       id: created.id,
+      exerciseId: created.exerciseId,
+      hasMedia: Boolean(exercise.media && exercise.media.length > 0),
       exerciseNameSnapshot: created.exerciseNameSnapshot,
       order: created.order,
       plannedWarmupSets: null,

@@ -56,6 +56,12 @@ enum MuscleRole {
   SECONDARY
 }
 
+enum ExerciseMediaType {
+  IMAGE_SEQUENCE
+  GIF
+  VIDEO
+}
+
 model User {
   id                  String           @id
   accountType         AccountType      @default(ATHLETE)
@@ -172,8 +178,32 @@ model Exercise {
   workoutExercises WorkoutExercise[]
   sessionExercises SessionExercise[]
   muscles          ExerciseMuscle[]
+  media            ExerciseMedia[]
 
   @@index([ownerUserId, name])
+}
+
+model ExerciseMedia {
+  id                 String            @id @default(uuid())
+  exerciseId         String
+  exercise           Exercise          @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  provider           String            // Ex: "REPDB"
+  providerExerciseId String            // Ex: "bench-press"
+  mediaType          ExerciseMediaType @default(IMAGE_SEQUENCE)
+  startImagePath     String?           // Ex: "/exercise-media/repdb/bench-press-start.webp"
+  endImagePath       String?           // Ex: "/exercise-media/repdb/bench-press-peak.webp"
+  motionPath         String?           // Futuros gifs/vídeos
+  description        String?
+  instructions       Json?
+  attributionName    String            @default("RepDB")
+  attributionUrl     String            @default("https://repdb.co")
+  isActive           Boolean           @default(true)
+  createdAt          DateTime          @default(now()) @db.Timestamptz()
+  updatedAt          DateTime          @updatedAt @db.Timestamptz()
+
+  @@unique([exerciseId, provider, mediaType])
+  @@index([exerciseId, isActive])
+  @@index([provider, providerExerciseId])
 }
 
 model ExerciseMuscle {

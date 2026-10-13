@@ -852,11 +852,12 @@ describe("Periodization Composition & Management (Task 2.3A)", () => {
 
       expect(res.success).toBe(true);
 
-      // Periodização foi removida
+      // Periodização foi marcada como excluída (soft-delete)
       const pInDb = await prisma.periodization.findUnique({
         where: { id: periodization.id },
       });
-      expect(pInDb).toBeNull();
+      expect(pInDb?.deletedAt).not.toBeNull();
+      expect(pInDb?.isActive).toBe(false);
 
       // WorkoutPlan permanece intacto no banco!
       const planInDb = await prisma.workoutPlan.findUnique({
@@ -866,20 +867,26 @@ describe("Periodization Composition & Management (Task 2.3A)", () => {
       expect(planInDb?.name).toBe("Plano Sobrevivente");
     });
 
-    it("25. Bloqueia exclusão de periodização já iniciada (PERIODIZATION_ALREADY_STARTED)", async () => {
+    it("25. Exclui periodização já iniciada desativando-a e marcando deletedAt", async () => {
       const user = await createTestUser();
       testUserIds.push(user.id);
 
       const periodization = await createTestPeriodization(user.id, {
         startedAt: new Date(),
+        isActive: true,
       });
 
-      await expect(
-        deletePeriodization.execute({
-          userId: user.id,
-          periodizationId: periodization.id,
-        }),
-      ).rejects.toThrow(PeriodizationAlreadyStartedError);
+      const res = await deletePeriodization.execute({
+        userId: user.id,
+        periodizationId: periodization.id,
+      });
+
+      expect(res.success).toBe(true);
+      const pInDb = await prisma.periodization.findUnique({
+        where: { id: periodization.id },
+      });
+      expect(pInDb?.deletedAt).not.toBeNull();
+      expect(pInDb?.isActive).toBe(false);
     });
   });
 
