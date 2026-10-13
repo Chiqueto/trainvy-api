@@ -94,6 +94,7 @@ model User {
   aiUsageDaily        AiUsageDaily[]
   aiRequestLogs       AiRequestLog[]
   feedbacks           Feedback[]
+  metricLogs          UserMetricLog[]
 
   @@unique([email])
   @@map("user")
@@ -593,4 +594,21 @@ model Feedback {
   @@index([userId, createdAt])
   @@index([createdAt])
 }
+
+model UserMetricLog {
+  id                  String   @id @default(uuid())
+  userId              String
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  weightInGrams       Int
+  heightInCentimeters Int?
+  age                 Int?
+  bodyFatPercentage   Int?
+  loggedAt            DateTime @default(now()) @db.Timestamptz()
+  createdAt           DateTime @default(now()) @db.Timestamptz()
+
+  @@index([userId, loggedAt(sort: Desc)])
+  @@index([createdAt])
+  @@map("user_metric_log")
+}
+
 

@@ -6,12 +6,14 @@ import { NotFoundError } from "../errors/index.js";
 import { auth } from "../lib/auth.js";
 import {
   ErrorSchema,
+  GetUserMetricsHistoryResponseSchema,
   GetUserTrainDataResponseSchema,
   UpdateGamificationThemeBodySchema,
   UpdateGamificationThemeResponseSchema,
   UserTrainDataBodySchema,
   UserTrainDataResponseSchema,
 } from "../schemas/index.js";
+import { GetUserMetricsHistory } from "../usecases/GetUserMetricsHistory.js";
 import { GetUserTrainData } from "../usecases/GetUserTrainData.js";
 import { UpdateGamificationTheme } from "../usecases/UpdateGamificationTheme.js";
 import { UpsertUserTrainData } from "../usecases/UpsertUserTrainData.js";
@@ -143,6 +145,47 @@ export const meRoutes = async (app: FastifyInstance) => {
         const result = await updateGamificationTheme.execute({
           userId: session.user.id,
           theme: request.body.theme,
+        });
+
+        return reply.status(200).send(result);
+      } catch (error) {
+        app.log.error(error);
+        return reply.status(500).send({
+          error: "Internal server error",
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: "GET",
+    url: "/metrics/history",
+    schema: {
+      operationId: "getUserMetricsHistory",
+      tags: ["Me"],
+      summary: "Get user body metrics history",
+      response: {
+        200: GetUserMetricsHistoryResponseSchema,
+        401: ErrorSchema,
+        500: ErrorSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      try {
+        const session = await auth.api.getSession({
+          headers: fromNodeHeaders(request.headers),
+        });
+        if (!session) {
+          return reply.status(401).send({
+            error: "Unauthorized",
+            code: "UNAUTHORIZED",
+          });
+        }
+
+        const getUserMetricsHistory = new GetUserMetricsHistory();
+        const result = await getUserMetricsHistory.execute({
+          userId: session.user.id,
         });
 
         return reply.status(200).send(result);

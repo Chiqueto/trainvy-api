@@ -21,16 +21,27 @@ interface OutputDto {
 
 export class UpsertUserTrainData {
   async execute(dto: InputDto): Promise<OutputDto> {
-    const user = await prisma.user.update({
-      where: { id: dto.userId },
-      data: {
-        weightInGrams: dto.weightInGrams,
-        heightInCentimeters: dto.heightInCentimeters,
-        age: dto.age,
-        bodyFatPercentage: dto.bodyFatPercentage,
-        ...(dto.gamificationTheme ? { gamificationTheme: dto.gamificationTheme } : {}),
-      },
-    });
+    const [user] = await prisma.$transaction([
+      prisma.user.update({
+        where: { id: dto.userId },
+        data: {
+          weightInGrams: dto.weightInGrams,
+          heightInCentimeters: dto.heightInCentimeters,
+          age: dto.age,
+          bodyFatPercentage: dto.bodyFatPercentage,
+          ...(dto.gamificationTheme ? { gamificationTheme: dto.gamificationTheme } : {}),
+        },
+      }),
+      prisma.userMetricLog.create({
+        data: {
+          userId: dto.userId,
+          weightInGrams: dto.weightInGrams,
+          heightInCentimeters: dto.heightInCentimeters,
+          age: dto.age,
+          bodyFatPercentage: dto.bodyFatPercentage,
+        },
+      }),
+    ]);
 
     return {
       userId: user.id,
@@ -42,5 +53,3 @@ export class UpsertUserTrainData {
     };
   }
 }
-
-

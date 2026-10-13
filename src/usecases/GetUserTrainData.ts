@@ -14,13 +14,22 @@ interface OutputDto {
   age: number;
   bodyFatPercentage: number;
   gamificationTheme: GamificationTheme;
+  previousWeightInGrams?: number | null;
+  previousBodyFatPercentage?: number | null;
+  weightDiffInGrams?: number | null;
+  bodyFatDiff?: number | null;
 }
-
 
 export class GetUserTrainData {
   async execute(dto: InputDto): Promise<OutputDto | null> {
     const user = await prisma.user.findUnique({
       where: { id: dto.userId },
+      include: {
+        metricLogs: {
+          orderBy: { loggedAt: "desc" },
+          take: 2,
+        },
+      },
     });
 
     if (!user) {
@@ -36,6 +45,21 @@ export class GetUserTrainData {
       return null;
     }
 
+    let previousWeightInGrams: number | null = null;
+    let previousBodyFatPercentage: number | null = null;
+    let weightDiffInGrams: number | null = null;
+    let bodyFatDiff: number | null = null;
+
+    if (user.metricLogs && user.metricLogs.length >= 2) {
+      const prev = user.metricLogs[1];
+      previousWeightInGrams = prev.weightInGrams;
+      previousBodyFatPercentage = prev.bodyFatPercentage ?? null;
+      weightDiffInGrams = user.weightInGrams - prev.weightInGrams;
+      if (user.bodyFatPercentage !== null && prev.bodyFatPercentage !== null && prev.bodyFatPercentage !== undefined) {
+        bodyFatDiff = user.bodyFatPercentage - prev.bodyFatPercentage;
+      }
+    }
+
     return {
       userId: user.id,
       userName: user.name,
@@ -44,8 +68,10 @@ export class GetUserTrainData {
       age: user.age,
       bodyFatPercentage: user.bodyFatPercentage,
       gamificationTheme: (user.gamificationTheme as GamificationTheme) || GamificationTheme.ALL,
+      previousWeightInGrams,
+      previousBodyFatPercentage,
+      weightDiffInGrams,
+      bodyFatDiff,
     };
-
   }
 }
-

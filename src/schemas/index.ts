@@ -351,8 +351,28 @@ export const GetUserTrainDataResponseSchema = z
     age: z.number(),
     bodyFatPercentage: z.number(),
     gamificationTheme: z.enum(GamificationTheme),
+    previousWeightInGrams: z.number().nullable().optional(),
+    previousBodyFatPercentage: z.number().nullable().optional(),
+    weightDiffInGrams: z.number().nullable().optional(),
+    bodyFatDiff: z.number().nullable().optional(),
   })
   .nullable();
+
+export const MetricLogItemSchema = z.object({
+  id: z.string(),
+  weightInGrams: z.number(),
+  weightKg: z.number(),
+  heightInCentimeters: z.number().nullable(),
+  age: z.number().nullable(),
+  bodyFatPercentage: z.number().nullable(),
+  loggedAt: z.string(),
+  weightDiffInGrams: z.number().nullable(),
+  weightDiffKg: z.number().nullable(),
+  bodyFatDiff: z.number().nullable(),
+});
+
+export const GetUserMetricsHistoryResponseSchema = z.array(MetricLogItemSchema);
+
 
 
 export const CreateWorkoutSetParamsSchema = z.object({
