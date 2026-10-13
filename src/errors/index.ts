@@ -228,5 +228,22 @@ export class InvalidDateRangeError extends Error {
   }
 }
 
+export class AiRateLimitError extends Error {
+  readonly code: string;
+  readonly statusCode = 429;
+  readonly resetAt?: string;
+
+  constructor(
+    message: string,
+    code = "AI_RATE_LIMIT_EXCEEDED",
+    resetAt?: string,
+  ) {
+    super(message);
+    this.name = "AiRateLimitError";
+    this.code = code;
+    this.resetAt = resetAt;
+  }
+}
+
 
 

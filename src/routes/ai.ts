@@ -7,9 +7,10 @@ import z from "zod";
 
 import { getSystemPrompt } from "../ai/system-prompt.js";
 import { getAiTools } from "../ai/tools.js";
-import { InvalidTimezoneError, NotFoundError } from "../errors/index.js";
+import { AiRateLimitError, InvalidTimezoneError, NotFoundError } from "../errors/index.js";
 import { auth } from "../lib/auth.js";
 import { prisma } from "../lib/db.js";
+import { CheckAndConsumeAiQuota } from "../usecases/CheckAndConsumeAiQuota.js";
 import {
   AiConversationParamsSchema,
   CreateAiConversationBodySchema,
@@ -74,6 +75,21 @@ export const aiRoutes = async (app: FastifyInstance) => {
 
       const userId = session.user.id;
       const userName = session.user.name;
+
+      // Proteção de cotas e rate limit persistente para o Beta
+      try {
+        const checkQuota = new CheckAndConsumeAiQuota();
+        await checkQuota.execute({ userId });
+      } catch (error) {
+        if (error instanceof AiRateLimitError) {
+          return reply.status(429).send({
+            error: error.message,
+            code: error.code,
+            resetAt: error.resetAt,
+          });
+        }
+        throw error;
+      }
       const {
         messages,
         conversationId: bodyConversationId,

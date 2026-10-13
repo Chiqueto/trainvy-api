@@ -1,0 +1,216 @@
+name: Trainvy Production Release Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_seeds:
+        description: 'Executar seeds operacionais idempotentes (commercial:bootstrap e seed:media)?'
+        required: true
+        type: boolean
+        default: true
+      confirm_production:
+        description: 'Digite "RELEASE-PROD" para confirmar a execução em produção'
+        required: true
+        type: string
+
+concurrency:
+  group: production-release
+  cancel-in-progress: false
+
+jobs:
+  # =========================================================================
+  # ETAPA 1: Quality Gates e Validação em Banco de Teste
+  # =========================================================================
+  validate-and-test:
+    name: 1. Quality Gates & Test Database Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout API
+        uses: actions/checkout@v4
+        with:
+          path: bootcamp-treinos-api
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: 'npm'
+          cache-dependency-path: bootcamp-treinos-api/package-lock.json
+
+      - name: Instalar dependências da API
+        working-directory: bootcamp-treinos-api
+        run: npm ci
+
+      - name: Gerar Prisma Client
+        working-directory: bootcamp-treinos-api
+        run: npx prisma generate
+
+      - name: TypeScript & Lint (API)
+        working-directory: bootcamp-treinos-api
+        run: |
+          npx tsc --noEmit
+          npx eslint src/
+
+      - name: Validar e aplicar migrations em Banco de Teste Isolado
+        working-directory: bootcamp-treinos-api
+        env:
+          TEST_DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
+        run: |
+          npm run migrate:test
+
+      - name: Executar Testes Automatizados (API)
+        working-directory: bootcamp-treinos-api
+        env:
+          TEST_DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
+        run: npm test
+
+  # =========================================================================
+  # ETAPA 2: Deploy de Produção (Exige confirmação e ambiente com proteção)
+  # =========================================================================
+  production-deploy:
+    name: 2. Production Migration & Deployment
+    needs: [validate-and-test]
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: ${{ steps.deploy-frontend.outputs.url || 'https://trainvy.app' }}
+    steps:
+      - name: Validar confirmação explícita
+        run: |
+          if [ "${{ github.event.inputs.confirm_production }}" != "RELEASE-PROD" ]; then
+            echo "::error::Confirmação inválida! Digite exatamente RELEASE-PROD para autorizar o release."
+            exit 1
+          fi
+
+      - name: Checkout API
+        uses: actions/checkout@v4
+        with:
+          path: bootcamp-treinos-api
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Instalar dependências da API
+        working-directory: bootcamp-treinos-api
+        run: npm ci
+
+      # ---------------------------------------------------------------------
+      # 2.1 Verificação de integridade do Banco de Produção
+      # ---------------------------------------------------------------------
+      - name: Verificar Status das Migrations em Produção
+        working-directory: bootcamp-treinos-api
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          echo "Verificando status de migrations pendentes..."
+          npx prisma migrate status
+
+      # ---------------------------------------------------------------------
+      # 2.2 Aplicação controlada de Migrations em Produção
+      # ---------------------------------------------------------------------
+      - name: Aplicar Migrations no Banco de Produção (Prisma Migrate Deploy)
+        working-directory: bootcamp-treinos-api
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          echo "Aplicando migrations em produção..."
+          npm run migrate:deploy
+
+      # ---------------------------------------------------------------------
+      # 2.3 Execução de Seeds Operacionais Idempotentes (Opcional)
+      # ---------------------------------------------------------------------
+      - name: Executar Seeds Idempotentes (Bootstrap Comercial & Mídias)
+        if: ${{ github.event.inputs.run_seeds == 'true' }}
+        working-directory: bootcamp-treinos-api
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          echo "Executando bootstrap comercial idempotente..."
+          npm run commercial:bootstrap
+          echo "Executando sincronização aditiva de mídias..."
+          npm run seed:media
+
+      # ---------------------------------------------------------------------
+      # 2.4 Publicação do Backend na Vercel via Vercel CLI
+      # ---------------------------------------------------------------------
+      - name: Deploy Backend na Vercel
+        id: deploy-backend
+        working-directory: bootcamp-treinos-api
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_BACKEND_PROJECT_ID }}
+        run: |
+          npm install -g vercel@latest
+          echo "Publicando Backend no Vercel (Production)..."
+          DEPLOY_URL=$(vercel deploy --prod --token=$VERCEL_TOKEN --yes)
+          echo "backend_url=$DEPLOY_URL" >> $GITHUB_OUTPUT
+          echo "Backend deploy finalizado: $DEPLOY_URL"
+
+      # ---------------------------------------------------------------------
+      # 2.5 Health Check do Backend
+      # ---------------------------------------------------------------------
+      - name: Validar Health Check do Backend
+        run: |
+          BACKEND_URL="${{ steps.deploy-backend.outputs.backend_url }}"
+          echo "Testando conectividade de $BACKEND_URL/swagger.json..."
+          for i in {1..10}; do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$BACKEND_URL/swagger.json" || true)
+            if [ "$STATUS" = "200" ]; then
+              echo "Health check do Backend OK (HTTP 200)!"
+              break
+            fi
+            echo "Aguardando backend responder (tentativa $i, status=$STATUS)..."
+            sleep 6
+          done
+
+      # ---------------------------------------------------------------------
+      # 2.6 Checkout e Publicação do Frontend
+      # ---------------------------------------------------------------------
+      - name: Checkout Frontend
+        uses: actions/checkout@v4
+        with:
+          repository: Chiqueto/bootcamp-treinos-frontend
+          path: bootcamp-treinos-frontend
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy Frontend na Vercel
+        id: deploy-frontend
+        working-directory: bootcamp-treinos-frontend
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_FRONTEND_PROJECT_ID }}
+        run: |
+          echo "Publicando Frontend no Vercel (Production)..."
+          DEPLOY_URL=$(vercel deploy --prod --token=$VERCEL_TOKEN --yes)
+          echo "url=$DEPLOY_URL" >> $GITHUB_OUTPUT
+          echo "Frontend deploy finalizado: $DEPLOY_URL"
+
+      # ---------------------------------------------------------------------
+      # 2.7 Health Check do Frontend
+      # ---------------------------------------------------------------------
+      - name: Validar Health Check do Frontend
+        run: |
+          FRONTEND_URL="${{ steps.deploy-frontend.outputs.url }}"
+          echo "Testando rota principal de $FRONTEND_URL..."
+          for i in {1..10}; do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$FRONTEND_URL/manifest.webmanifest" || true)
+            if [ "$STATUS" = "200" ]; then
+              echo "Health check do Frontend OK (HTTP 200)!"
+              break
+            fi
+            echo "Aguardando frontend responder (tentativa $i, status=$STATUS)..."
+            sleep 6
+          done
+
+      - name: Resumo do Release
+        run: |
+          echo "### 🚀 Trainvy Release Concluído com Sucesso!" >> $GITHUB_STEP_SUMMARY
+          echo "- **Data/Hora (UTC)**: $(date -u)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Backend**: ${{ steps.deploy-backend.outputs.backend_url }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Frontend**: ${{ steps.deploy-frontend.outputs.url }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Migrations Aplicadas**: Sim (prisma migrate deploy)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Seeds Operacionais**: ${{ github.event.inputs.run_seeds }}" >> $GITHUB_STEP_SUMMARY

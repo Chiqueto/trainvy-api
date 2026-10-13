@@ -18,6 +18,7 @@ import { adminRoutes } from "./routes/admin.js";
 import { aiRoutes } from "./routes/ai.js";
 import { commercialRoutes } from "./routes/commercial.js";
 import { exerciseRoutes } from "./routes/exercise.js";
+import { feedbackRoutes } from "./routes/feedback.js";
 import { historyRoutes } from "./routes/history.js";
 import { homeRoutes } from "./routes/home.js";
 import { meRoutes } from "./routes/me.js";
@@ -107,6 +108,7 @@ await app.register(exerciseRoutes, { prefix: "/exercises" });
 await app.register(historyRoutes, { prefix: "/history" });
 await app.register(workoutSessionRoutes);
 await app.register(commercialRoutes);
+await app.register(feedbackRoutes, { prefix: "/feedback" });
 await app.register(adminRoutes, { prefix: "/admin" });
 
 app.withTypeProvider<ZodTypeProvider>().route({

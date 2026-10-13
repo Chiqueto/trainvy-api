@@ -1095,6 +1095,22 @@ export type MuscleAnalyticsItem = z.infer<typeof MuscleAnalyticsItemSchema>;
 export type MuscleAnalyticsResponse = z.infer<typeof MuscleAnalyticsResponseSchema>;
 export type MuscleAnalyticsQuery = z.infer<typeof MuscleAnalyticsQuerySchema>;
 
+export const FeedbackCategorySchema = z.enum(["BUG", "SUGGESTION", "QUESTION", "OTHER"]);
+
+export const CreateFeedbackBodySchema = z.object({
+  category: FeedbackCategorySchema.default("SUGGESTION"),
+  message: z
+    .string()
+    .trim()
+    .min(5, "Mensagem deve conter ao menos 5 caracteres")
+    .max(2000, "Mensagem não pode exceder 2000 caracteres"),
+});
+
+export const CreateFeedbackResponseSchema = z.object({
+  success: z.boolean(),
+  id: z.string(),
+});
+
 
 
 

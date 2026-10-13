@@ -91,6 +91,9 @@ model User {
   periodizations      Periodization[]
   aiConversations     AiConversation[]
   aiToolExecutions    AiToolExecution[]
+  aiUsageDaily        AiUsageDaily[]
+  aiRequestLogs       AiRequestLog[]
+  feedbacks           Feedback[]
 
   @@unique([email])
   @@map("user")
@@ -547,5 +550,47 @@ model AdminAuditLog {
   @@index([targetUserId, createdAt])
   @@index([entityType, entityId])
   @@index([createdAt, id])
+}
+
+model AiUsageDaily {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date      String   // "YYYY-MM-DD" em UTC
+  count     Int      @default(0)
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  updatedAt DateTime @updatedAt @db.Timestamptz()
+
+  @@unique([userId, date])
+  @@index([date])
+}
+
+model AiRequestLog {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now()) @db.Timestamptz()
+
+  @@index([userId, createdAt])
+  @@index([createdAt])
+}
+
+enum FeedbackCategory {
+  BUG
+  SUGGESTION
+  QUESTION
+  OTHER
+}
+
+model Feedback {
+  id        String           @id @default(uuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category  FeedbackCategory @default(SUGGESTION)
+  message   String
+  createdAt DateTime         @default(now()) @db.Timestamptz()
+
+  @@index([userId, createdAt])
+  @@index([createdAt])
 }
 
