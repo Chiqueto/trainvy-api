@@ -147,17 +147,13 @@ Primeira opção: PostgreSQL + pgvector, evitando nova infraestrutura sem necess
 | `GOOGLE_GENERATIVE_AI_API_KEY` | `...` | Gemini API Key |
 | `NODE_ENV` | `production` | Ambiente de execução |
 
-## PWA — ALVO
+## PWA — IMPLEMENTADO
 
-```text
-manifest
-ícones
-display standalone
-metadata
-service worker quando necessário
-```
-
-Primeiro objetivo é instalabilidade; offline completo pode vir depois.
+- **Manifesto**: `app/manifest.ts` exportando `MetadataRoute.Manifest` com display `standalone`, orientação `portrait`, tema dark (`#09090b`), shortcuts para rotas principais (`/`, `/planning`, `/history`, `/stats`) e ícones de alta resolução (192x192 e 512x512, inclusive maskable).
+- **Service Worker**: `public/sw.js` com cache estático para fontes, ícones e mídias de exercícios (`/exercise-media/`), estratégia de navegação com fallback offline amigável e bypass estrito (network-only) para rotas dinâmicas `/api/` e autenticação.
+- **Provider & Hooks**: `app/_components/pwa/pwa-provider.tsx` com `useSyncExternalStore` para detecção reativa de modo standalone e iOS sem cascading renders, escuta do evento `beforeinstallprompt` e registro do SW em produção.
+- **UI & Instalação**: `app/_components/pwa/pwa-install-card.tsx` disponível em `/profile` com CTA de instalação em um clique para Android/Desktop/Chrome e guia passo a passo nativo para iOS ("Compartilhar -> Adicionar à Tela de Início").
+- **Metadata & Viewport**: `app/layout.tsx` configurado com `themeColor`, `viewportFit: cover`, `apple-touch-icon` e `appleWebApp: { capable: true, statusBarStyle: "black-translucent" }`.
 
 ## Observabilidade
 
