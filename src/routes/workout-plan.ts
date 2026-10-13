@@ -17,6 +17,7 @@ import {
   ListWorkoutPlansResponseSchema,
   StartWorkoutSessionParamsSchema,
   StartWorkoutSessionResponseSchema,
+  SuccessResponseSchema,
   UpdateWorkoutSessionBodySchema,
   UpdateWorkoutSessionParamsSchema,
   UpdateWorkoutSessionResponseSchema,
@@ -26,6 +27,7 @@ import {
 import { ActivateWorkoutPlan } from "../usecases/ActivateWorkoutPlan.js";
 import { CreateWorkoutPlan } from "../usecases/CreateWorkoutPlan.js";
 import { DeactivateWorkoutPlan } from "../usecases/DeactivateWorkoutPlan.js";
+import { DeleteWorkoutPlan } from "../usecases/DeleteWorkoutPlan.js";
 import { DuplicateWorkoutPlan } from "../usecases/DuplicateWorkoutPlan.js";
 import { GetWorkoutDay } from "../usecases/GetWorkoutDay.js";
 import { GetWorkoutPlan } from "../usecases/GetWorkoutPlan.js";
@@ -348,6 +350,57 @@ export const WorkoutPlanRoutes = async (app: FastifyInstance) => {
           return reply.status(409).send({
             error: error.message,
             code: (error as { code?: string }).code || "CONFLICT",
+          });
+        }
+
+        app.log.error(error);
+        return reply.status(500).send({
+          error: "Internal server error",
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: "DELETE",
+    url: "/:id",
+    schema: {
+      operationId: "deleteWorkoutPlan",
+      tags: ["Workout Plan"],
+      summary: "Delete a workout plan (soft delete)",
+      params: GetWorkoutPlanParamsSchema,
+      response: {
+        200: SuccessResponseSchema,
+        401: ErrorSchema,
+        404: ErrorSchema,
+        500: ErrorSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      try {
+        const session = await auth.api.getSession({
+          headers: fromNodeHeaders(request.headers),
+        });
+        if (!session) {
+          return reply.status(401).send({
+            error: "Unauthorized",
+            code: "UNAUTHORIZED",
+          });
+        }
+
+        const deleteWorkoutPlan = new DeleteWorkoutPlan();
+        const result = await deleteWorkoutPlan.execute({
+          userId: session.user.id,
+          workoutPlanId: request.params.id,
+        });
+
+        return reply.status(200).send(result);
+      } catch (error) {
+        if (error instanceof NotFoundError) {
+          return reply.status(404).send({
+            error: error.message,
+            code: "NOT_FOUND",
           });
         }
 

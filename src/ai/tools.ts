@@ -73,22 +73,26 @@ export const aiWorkoutDaySchema = z
       .string()
       .min(1)
       .describe(
-        "Nome descritivo do dia (ex: Superior A - Peito e Costas, ou Descanso)",
+        "Nome descritivo do treino (ex: Treino A - Peito e Tríceps, Treino B - Costas e Bíceps, etc.)",
       ),
     weekDay: z
       .enum(WeekDay)
+      .optional()
+      .default("MONDAY")
       .describe(
-        "Dia da semana (MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY)",
+        "Dia da semana de referência opcional (MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY)",
       ),
     isRest: z
       .boolean()
-      .describe("Se é dia de descanso (true) ou dia de treino (false)"),
+      .optional()
+      .default(false)
+      .describe("Se é dia de descanso (true) ou dia de treino (false). No modelo sequencial, gere apenas treinos reais (isRest: false)"),
     estimatedDurationInSeconds: z
       .number()
       .int()
       .min(0)
       .describe(
-        "Duração estimada em segundos (0 para dias de descanso, ex: 3600 para 60 min)",
+        "Duração estimada em segundos (ex: 3600 para 60 min, 0 para dias de descanso)",
       ),
     coverImageUrl: z
       .string()
@@ -140,29 +144,16 @@ export const aiWorkoutDaySchema = z
 
 export const aiWorkoutDaysArraySchema = z
   .array(aiWorkoutDaySchema)
-  .length(7, "O plano deve conter exatamente 7 dias.")
-  .refine(
-    (days) => {
-      const weekdays = days.map((d) => d.weekDay);
-      const unique = new Set(weekdays);
-      return (
-        unique.size === 7 &&
-        ALL_WEEK_DAYS.every((wd) => unique.has(wd as WeekDay))
-      );
-    },
-    {
-      message:
-        "O plano deve conter todos os 7 dias da semana (MONDAY a SUNDAY) sem repetição de dias.",
-    },
-  );
+  .min(1, "O plano deve conter pelo menos 1 treino na rotina.")
+  .max(7, "O plano deve conter no máximo 7 treinos na rotina.");
 
 export const aiWorkoutPlanInputSchema = z.object({
   name: z
     .string()
     .min(1)
-    .describe("Nome do plano de treino (ex: Hipertrofia Upper/Lower 4x)"),
+    .describe("Nome do plano de treino (ex: Hipertrofia ABC ou Upper/Lower 4x)"),
   workoutDays: aiWorkoutDaysArraySchema.describe(
-    "Array com exatamente 7 dias de treino (MONDAY a SUNDAY) cobrindo a semana inteira",
+    "Array com os treinos que compõem a rotina sequencial do plano (ex: Treino A, Treino B, Treino C...). Não inclua dias de descanso fictícios.",
   ),
 });
 

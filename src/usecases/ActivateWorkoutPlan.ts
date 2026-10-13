@@ -29,7 +29,7 @@ export class ActivateWorkoutPlan {
           },
         });
 
-        if (!plan || plan.userId !== dto.userId) {
+        if (!plan || plan.userId !== dto.userId || plan.deletedAt !== null) {
           throw new NotFoundError("Workout plan not found");
         }
 

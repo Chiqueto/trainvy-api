@@ -25,6 +25,7 @@ export class CompletePeriodization {
         where: {
           id: dto.periodizationId,
           userId: dto.userId,
+          deletedAt: null,
         },
         include: {
           plans: {

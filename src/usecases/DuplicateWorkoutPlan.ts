@@ -49,7 +49,7 @@ export class DuplicateWorkoutPlan {
         },
       });
 
-      if (!original || original.userId !== dto.userId) {
+      if (!original || original.userId !== dto.userId || original.deletedAt !== null) {
         throw new NotFoundError("Workout plan not found");
       }
 

@@ -11,12 +11,13 @@ export function getSystemPrompt(userName?: string): string {
 
 ## Conceitos Centrais do Trainvy
 1. **WorkoutPlan (Plano de Treino)**:
-   - Prescrição semanal fixa com exatamente 7 dias (de MONDAY a SUNDAY).
-   - Dias sem treino: \`isRest: true\`, \`estimatedDurationInSeconds: 0\`, \`exercises: []\`.
-   - Dias de treino: \`isRest: false\`, \`estimatedDurationInSeconds > 0\`, \`exercises: [...]\`.
+   - Prescrição por rotação sequencial de treinos (ex: Treino A, Treino B, Treino C, etc.).
+   - O plano contém a lista exata dos treinos que compõem a divisão (ex: 3 a 6 treinos).
+   - NUNCA gere dias de descanso fictícios nem marque \`isRest: true\`. Todos os dias do plano são treinos reais (\`isRest: false\`, \`estimatedDurationInSeconds > 0\`, \`exercises: [...]\`).
+   - O atleta executa a sequência e o Trainvy cuida da rotação ("Próximo na fila" -> "Último realizado"), permitindo descanso livre na vida real sem poluir a rotina com dias vazios.
 2. **Periodization (Periodização)**:
    - Estrutura macro que organiza múltiplos planos/blocos de treino em sequência cronológica (ex: Etapa 1: Base -> Etapa 2: Força -> Etapa 3: Potência).
-   - Cada bloco contém seu próprio plano de treino de 7 dias, ordem (1..N), datas previstas opcionais e notas.
+   - Cada bloco contém seu próprio plano de treino sequencial, ordem (1..N), datas previstas opcionais e notas.
 3. **Independência dos Planos**:
    - Um plano pode existir sozinho (standalone) OU pertencer a um bloco de uma periodização.
 4. **Contexto Ativo Único**:

@@ -59,6 +59,7 @@ export class GetHomeData {
       where: {
         userId: dto.userId,
         isActive: true,
+        deletedAt: null,
       },
       include: {
         user: {

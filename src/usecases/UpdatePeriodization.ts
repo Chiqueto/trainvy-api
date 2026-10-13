@@ -29,6 +29,7 @@ export class UpdatePeriodization {
       where: {
         id: dto.periodizationId,
         userId: dto.userId,
+        deletedAt: null,
       },
     });
 

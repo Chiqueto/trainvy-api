@@ -92,6 +92,7 @@ export class GetPlanningOverview {
       prisma.workoutPlan.findMany({
         where: {
           userId: dto.userId,
+          deletedAt: null,
         },
         include: {
           _count: {
@@ -105,6 +106,7 @@ export class GetPlanningOverview {
                 select: {
                   id: true,
                   name: true,
+                  deletedAt: true,
                 },
               },
             },
@@ -114,9 +116,15 @@ export class GetPlanningOverview {
       prisma.periodization.findMany({
         where: {
           userId: dto.userId,
+          deletedAt: null,
         },
         include: {
           plans: {
+            where: {
+              workoutPlan: {
+                deletedAt: null,
+              },
+            },
             orderBy: {
               order: "asc",
             },
@@ -137,7 +145,10 @@ export class GetPlanningOverview {
       let periodizationContext: PlanningWorkoutPlanSummaryDto["periodization"] =
         null;
 
-      if (wp.periodizationPlan) {
+      if (
+        wp.periodizationPlan &&
+        !wp.periodizationPlan.periodization.deletedAt
+      ) {
         let blockStatus: "PLANNED" | "ACTIVE" | "COMPLETED" = "PLANNED";
         if (wp.periodizationPlan.completedAt !== null) {
           blockStatus = "COMPLETED";

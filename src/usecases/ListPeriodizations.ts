@@ -24,6 +24,7 @@ export class ListPeriodizations {
     const periodizations = await prisma.periodization.findMany({
       where: {
         userId: dto.userId,
+        deletedAt: null,
       },
       orderBy: {
         createdAt: "desc",

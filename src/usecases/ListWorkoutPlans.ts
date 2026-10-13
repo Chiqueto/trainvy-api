@@ -37,6 +37,7 @@ export class ListWorkoutPlans {
     const workoutPlans = await prisma.workoutPlan.findMany({
       where: {
         userId: dto.userId,
+        deletedAt: null,
         ...(dto.active !== undefined ? { isActive: dto.active } : {}),
       },
       include: {

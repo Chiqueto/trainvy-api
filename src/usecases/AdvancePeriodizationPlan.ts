@@ -27,6 +27,7 @@ export class AdvancePeriodizationPlan {
         where: {
           id: dto.periodizationId,
           userId: dto.userId,
+          deletedAt: null,
         },
         include: {
           plans: {

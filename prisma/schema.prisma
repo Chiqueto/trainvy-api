@@ -91,17 +91,20 @@ model User {
 }
 
 model WorkoutPlan {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   name      String
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now()) @db.Timestamptz()
-  updatedAt DateTime @updatedAt @db.Timestamptz()
+  user      User      @relation(fields: [userId], references: [id])
+  isActive  Boolean   @default(true)
+  deletedAt DateTime? @db.Timestamptz()
+  createdAt DateTime  @default(now()) @db.Timestamptz()
+  updatedAt DateTime  @updatedAt @db.Timestamptz()
 
   workoutDays       WorkoutDay[]
   periodizationPlan PeriodizationPlan?
   workoutSessions   WorkoutSession[]
+
+  @@index([userId, deletedAt])
 }
 
 model Periodization {
@@ -114,12 +117,14 @@ model Periodization {
   isActive    Boolean   @default(false)
   startedAt   DateTime? @db.Timestamptz()
   completedAt DateTime? @db.Timestamptz()
+  deletedAt   DateTime? @db.Timestamptz()
   createdAt   DateTime  @default(now()) @db.Timestamptz()
   updatedAt   DateTime  @updatedAt @db.Timestamptz()
 
   plans       PeriodizationPlan[]
 
   @@index([userId, createdAt])
+  @@index([userId, deletedAt])
 }
 
 model PeriodizationPlan {

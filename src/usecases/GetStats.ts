@@ -106,6 +106,7 @@ export class GetStats {
       where: {
         userId: dto.userId,
         isActive: true,
+        deletedAt: null,
       },
       include: {
         workoutDays: {

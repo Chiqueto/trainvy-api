@@ -29,6 +29,7 @@ export class ActivatePeriodization {
           where: {
             id: dto.periodizationId,
             userId: dto.userId,
+            deletedAt: null,
           },
           include: {
             plans: {

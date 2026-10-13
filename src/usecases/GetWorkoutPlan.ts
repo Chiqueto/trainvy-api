@@ -30,6 +30,7 @@ export class GetWorkoutPlan {
       where: {
         id: dto.workoutPlanId,
         userId: dto.userId,
+        deletedAt: null,
       },
       include: {
         workoutDays: {

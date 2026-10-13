@@ -44,9 +44,15 @@ export class GetPeriodization {
       where: {
         id: dto.periodizationId,
         userId: dto.userId,
+        deletedAt: null,
       },
       include: {
         plans: {
+          where: {
+            workoutPlan: {
+              deletedAt: null,
+            },
+          },
           orderBy: {
             order: "asc",
           },

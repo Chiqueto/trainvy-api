@@ -42,6 +42,7 @@ export class AddWorkoutPlanToPeriodization {
       where: {
         id: dto.periodizationId,
         userId: dto.userId,
+        deletedAt: null,
       },
       include: {
         plans: {
@@ -66,6 +67,7 @@ export class AddWorkoutPlanToPeriodization {
       where: {
         id: dto.workoutPlanId,
         userId: dto.userId,
+        deletedAt: null,
       },
     });
 
