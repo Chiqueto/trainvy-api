@@ -81,3 +81,29 @@ Quando desejar promover uma nova versão para produção:
   - Todas as migrations do Trainvy são **aditivas** (novas tabelas, novas colunas anuláveis ou com default).
   - Nunca execute `prisma migrate reset` em produção.
   - Caso seja necessário reverter uma alteração de dados, utilize a ferramenta de **Branches** e **Time Travel** do Neon para restaurar o estado até o minuto anterior ao release.
+
+---
+
+## 6. Alternativa Direta: Build Command na Vercel (`npm run vercel:build`)
+
+Se você preferir que a própria Vercel aplique as migrations e seeds automaticamente a cada push na branch de produção (sem depender da GitHub Action):
+
+1. Deixamos implementado o script [`src/scripts/vercel-build.ts`](file:///c:/Users/luis-chiqueto/Documents/Proj/treinos/bootcamp-treinos-api/src/scripts/vercel-build.ts), acessível via:
+   ```json
+   "vercel:build": "tsx src/scripts/vercel-build.ts"
+   ```
+2. **Como ativar quando quiser**:
+   - Acesse o painel da Vercel do projeto da API.
+   - Vá em **Project Settings** -> **General** -> **Build & Development Settings**.
+   - Em **Build Command**, marque o switch de override e insira:
+     ```bash
+     npm run vercel:build
+     ```
+3. **Comportamento Seguro**:
+   - Se `$VERCEL_ENV === "production"`, ele executa:
+     1. `prisma migrate deploy`
+     2. `tsx src/scripts/commercial-bootstrap.ts` (idempotente)
+     3. `tsx src/scripts/seed-exercise-media.ts` (idempotente)
+     4. `prisma generate && tsc`
+   - Se for branch de **Preview** ou ambiente local, ele pula as migrations e seeds automaticamente e apenas compila o código (`prisma generate && tsc`), protegendo o banco contra alterações indevidas.
+
