@@ -1131,6 +1131,8 @@ export const CreateFeedbackResponseSchema = z.object({
   id: z.string(),
 });
 
+export * from "./coach-prescription.js";
+
 
 
 

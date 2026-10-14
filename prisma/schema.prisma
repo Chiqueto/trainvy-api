@@ -100,6 +100,8 @@ model User {
   revokedCoachAthletes    CoachAthlete[]    @relation("RevokedLinks")
   coachInvitations        CoachInvitation[] @relation("CoachInvitations")
   acceptedInvitations     CoachInvitation[] @relation("AthleteAcceptedInvitations")
+  coachPrescriptions      WorkoutPrescription[] @relation("CoachPrescriptions")
+  athletePrescriptions    WorkoutPrescription[] @relation("AthletePrescriptions")
 
   @@unique([email])
   @@map("user")
@@ -118,6 +120,7 @@ model WorkoutPlan {
   workoutDays       WorkoutDay[]
   periodizationPlan PeriodizationPlan?
   workoutSessions   WorkoutSession[]
+  acceptedPrescription WorkoutPrescription?
 
   @@index([userId, deletedAt])
 }
@@ -662,6 +665,37 @@ model CoachAthlete {
   revokedAt       DateTime?          @db.Timestamptz()
   revokedByUserId String?
   revokedByUser   User?              @relation("RevokedLinks", fields: [revokedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([coachId, status])
+  @@index([athleteId, status])
+  @@index([createdAt])
+}
+
+enum WorkoutPrescriptionStatus {
+  DRAFT
+  SENT
+  ACCEPTED
+  DECLINED
+  CANCELLED
+}
+
+model WorkoutPrescription {
+  id                    String                    @id @default(uuid())
+  coachId               String
+  coach                 User                      @relation("CoachPrescriptions", fields: [coachId], references: [id], onDelete: Cascade)
+  athleteId             String
+  athlete               User                      @relation("AthletePrescriptions", fields: [athleteId], references: [id], onDelete: Cascade)
+  status                WorkoutPrescriptionStatus @default(DRAFT)
+  name                  String
+  notes                 String?
+  payload               Json
+  version               Int                       @default(1)
+  acceptedWorkoutPlanId String?                   @unique
+  acceptedWorkoutPlan   WorkoutPlan?              @relation(fields: [acceptedWorkoutPlanId], references: [id], onDelete: SetNull)
+  sentAt                DateTime?                 @db.Timestamptz()
+  respondedAt           DateTime?                 @db.Timestamptz()
+  createdAt             DateTime                  @default(now()) @db.Timestamptz()
+  updatedAt             DateTime                  @updatedAt @db.Timestamptz()
 
   @@index([coachId, status])
   @@index([athleteId, status])
