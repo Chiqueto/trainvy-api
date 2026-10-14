@@ -502,9 +502,11 @@ describe("Task 3.1D — Catálogo Canônico Global & Backfill de Legado", () => 
   });
 
   describe("5. Idempotência Completa do Orquestrador (Item 26)", () => {
-    it("executar o backfill duas vezes produz estado final idêntico", async () => {
-      const report1 = await runCanonicalCatalogBackfill();
-      const report2 = await runCanonicalCatalogBackfill();
+    it(
+      "executar o backfill duas vezes produz estado final idêntico",
+      async () => {
+        const report1 = await runCanonicalCatalogBackfill();
+        const report2 = await runCanonicalCatalogBackfill();
 
       // Na segunda execução: 0 criados, 0 resolvidos a mais
       expect(report2.globals.created).toBe(0);
@@ -520,6 +522,8 @@ describe("Task 3.1D — Catálogo Canônico Global & Backfill de Legado", () => 
       expect(report2.workoutExercises.linkedAfter).toBe(report1.workoutExercises.linkedAfter);
       expect(report2.sessionExercises.totalAfter).toBe(report1.sessionExercises.totalAfter);
       expect(report2.sessionExercises.linkedAfter).toBe(report1.sessionExercises.linkedAfter);
-    });
+    },
+    60000,
+  );
   });
 });

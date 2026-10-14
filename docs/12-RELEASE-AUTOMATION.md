@@ -38,17 +38,23 @@ No repositório do GitHub (em **Settings** -> **Secrets and variables** -> **Act
 | `VERCEL_ORG_ID` | Identificador da Organização/Time na Vercel | Encontrado em `.vercel/project.json` ou Project Settings |
 | `VERCEL_BACKEND_PROJECT_ID` | ID do projeto da API na Vercel | Encontrado no dashboard do projeto da API |
 | `VERCEL_FRONTEND_PROJECT_ID` | ID do projeto do Frontend na Vercel | Encontrado no dashboard do projeto do Frontend |
+| `GH_PAT` / `CROSS_REPO_TOKEN` | Token do GitHub com permissão `repo` (leitura) | Necessário para a Action clonar `bootcamp-treinos-frontend` |
 
 ---
 
-## 3. Configuração Recomendada na Vercel
+## 3. Coexistência de Estratégias de Deploy & Prevenção de Concorrência
 
-Para evitar que um `git push` na branch principal tente publicar a aplicação na Vercel antes que a GitHub Action termine de aplicar as migrations no banco:
+Existem duas estratégias preparadas para deploy no Trainvy. **Nunca habilite ambas simultaneamente para branch de produção sem coordenação**:
 
-1. Acesse o projeto do **Backend** e do **Frontend** no dashboard da Vercel.
-2. Vá em **Settings** -> **Git**.
-3. Na seção **Ignored Build Step**, você pode configurar para ignorar deploys automáticos da branch `main` caso queira que toda publicação seja 100% orquestrada pela GitHub Action.
-4. Alternativamente, mantenha a integração Git sabendo que a Action `Trainvy Production Release Pipeline` faz o deploy explícito via `vercel deploy --prod --yes` e valida a ordem completa.
+### Estratégia A: Orquestração Central via GitHub Action (Recomendada para Beta)
+1. **Controle**: A Action executa testes contra `TEST_DATABASE_URL`, aguarda aprovação manual `RELEASE-PROD`, aplica migrations em produção, roda seeds idempotentes e realiza deploy ordenado do backend e frontend.
+2. **Configuração Vercel obrigatória**: No dashboard da Vercel (Backend e Frontend), em **Settings** -> **Git** -> **Ignored Build Step**, configure para ignorar deploys automáticos da branch `main` (`exit 0`). Isso impede que a Vercel inicie builds antes de migrations serem concluídas.
+3. **Autenticação cross-repo**: Cadastre o secret `GH_PAT` ou `CROSS_REPO_TOKEN` para permitir que o workflow clone o frontend.
+
+### Estratégia B: Build Command Direto na Vercel (`npm run vercel:build`)
+1. **Controle**: A Vercel executa `src/scripts/vercel-build.ts` a cada push na `main`, aplicando migrations automaticamente quando `$VERCEL_ENV === "production"`.
+2. **Prevenção de concorrência**: Se esta estratégia for adotada, **não execute** o pipeline do GitHub Action simultaneamente.
+3. **Proteção de Previews**: Builds de Preview (Pull Requests) pulam automaticamente migrations e seeds, apenas compilando código (`prisma generate && tsc`).
 
 ---
 

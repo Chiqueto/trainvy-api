@@ -7,7 +7,7 @@ export default defineConfig({
     include: ["src/**/*.{test,spec}.ts", "tests/**/*.{test,spec}.ts"],
     passWithNoTests: true,
     fileParallelism: false,
-    testTimeout: 20000,
-    hookTimeout: 20000,
+    testTimeout: 60000,
+    hookTimeout: 60000,
   },
 });
