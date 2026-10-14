@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { CoachAthleteError, hashInvitationToken } from "../../src/domain/coach-athlete.js";
+import { hashInvitationToken } from "../../src/domain/coach-athlete.js";
 import { prisma } from "../../src/lib/db.js";
 import { AcceptCoachInvitation } from "../../src/usecases/AcceptCoachInvitation.js";
 import { CancelCoachInvitation } from "../../src/usecases/CancelCoachInvitation.js";

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Fastify, { FastifyInstance } from "fastify";
 import {
   serializerCompiler,

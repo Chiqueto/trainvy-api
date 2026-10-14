@@ -19,6 +19,24 @@ export class CancelCoachInvitation {
 
     assertCoachCanManageAthletes(commercialContext);
 
+    // 1. Transição atômica estrita PENDING -> CANCELLED (evita race condition com aceite simultâneo)
+    const updateResult = await prisma.coachInvitation.updateMany({
+      where: {
+        id: invitationId,
+        coachId,
+        status: "PENDING",
+      },
+      data: {
+        status: "CANCELLED",
+        cancelledAt: new Date(),
+      },
+    });
+
+    if (updateResult.count > 0) {
+      return { success: true };
+    }
+
+    // 2. Se count === 0, investiga deterministamente o motivo da falha
     const invite = await prisma.coachInvitation.findUnique({
       where: { id: invitationId },
     });
@@ -31,6 +49,11 @@ export class CancelCoachInvitation {
       );
     }
 
+    if (invite.status === "CANCELLED") {
+      // Idempotência garantida
+      return { success: true, alreadyCancelled: true };
+    }
+
     if (invite.status === "ACCEPTED") {
       throw new CoachAthleteError(
         "CANNOT_CANCEL_ACCEPTED_INVITATION",
@@ -39,17 +62,14 @@ export class CancelCoachInvitation {
       );
     }
 
-    if (invite.status === "CANCELLED") {
-      return { success: true };
+    const now = new Date();
+    if (invite.expiresAt < now) {
+      throw new CoachAthleteError(
+        "INVITATION_EXPIRED",
+        400,
+        "Este convite já expirou.",
+      );
     }
-
-    await prisma.coachInvitation.update({
-      where: { id: invitationId },
-      data: {
-        status: "CANCELLED",
-        cancelledAt: new Date(),
-      },
-    });
 
     return { success: true };
   }

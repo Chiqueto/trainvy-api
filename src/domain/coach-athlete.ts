@@ -1,4 +1,5 @@
 import crypto from "node:crypto";
+
 import { getEntitlementLimit, hasEntitlement } from "./commercial.js";
 
 export class CoachAthleteError extends Error {
@@ -58,4 +59,25 @@ export function assertCoachCanManageAthletes(context: CoachCommercialContext): v
 export function getCoachAthleteLimit(context: CoachCommercialContext): number | null | undefined {
   // @ts-expect-error key type conversion
   return getEntitlementLimit(context, "MANAGE_ATHLETES");
+}
+
+export function assertAthleteCanAcceptInvitation(athlete: {
+  accountType: string;
+  accountSetupCompletedAt: Date | null;
+}): void {
+  if (!athlete.accountSetupCompletedAt) {
+    throw new CoachAthleteError(
+      "ACCOUNT_SETUP_REQUIRED",
+      400,
+      "Conclua a configuração inicial do seu perfil antes de aceitar um convite de treinador.",
+    );
+  }
+
+  if (athlete.accountType !== "ATHLETE") {
+    throw new CoachAthleteError(
+      "ONLY_ATHLETES_CAN_ACCEPT",
+      403,
+      "Apenas contas de atleta podem aceitar convites de assessoria nesta fase.",
+    );
+  }
 }

@@ -10,7 +10,6 @@ import { getAiTools } from "../ai/tools.js";
 import { AiRateLimitError, InvalidTimezoneError, NotFoundError } from "../errors/index.js";
 import { auth } from "../lib/auth.js";
 import { prisma } from "../lib/db.js";
-import { CheckAndConsumeAiQuota } from "../usecases/CheckAndConsumeAiQuota.js";
 import {
   AiConversationParamsSchema,
   CreateAiConversationBodySchema,
@@ -20,6 +19,7 @@ import {
   ListAiConversationsResponseSchema,
   SuccessResponseSchema,
 } from "../schemas/index.js";
+import { CheckAndConsumeAiQuota } from "../usecases/CheckAndConsumeAiQuota.js";
 import { CreateAiConversation } from "../usecases/CreateAiConversation.js";
 import { DeleteAiConversation } from "../usecases/DeleteAiConversation.js";
 import { GetAiConversation } from "../usecases/GetAiConversation.js";

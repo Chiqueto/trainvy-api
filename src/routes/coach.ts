@@ -36,6 +36,23 @@ function fail(error: unknown, request: FastifyRequest, reply: FastifyReply) {
     });
   }
 
+  // Intercepta erros conhecidos do Prisma (ex: P2002 Unique, P2034 Serialization/Write conflict)
+  if (typeof error === "object" && error !== null && "code" in error) {
+    const prismaCode = (error as { code: string }).code;
+    if (prismaCode === "P2002") {
+      return reply.status(409).send({
+        error: "Conflito de unicidade ao processar o relacionamento.",
+        code: "UNIQUE_CONSTRAINT_VIOLATION",
+      });
+    }
+    if (prismaCode === "P2034") {
+      return reply.status(409).send({
+        error: "Conflito de concorrência. Por favor, tente novamente.",
+        code: "CONCURRENCY_CONFLICT",
+      });
+    }
+  }
+
   request.log.error(error);
   return reply.status(500).send({
     error: "Erro interno no processamento do relacionamento.",

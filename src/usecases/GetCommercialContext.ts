@@ -2,11 +2,20 @@ import {
   CommercialError,
   subscriptionGrantsAccess,
 } from "../domain/commercial.js";
+import { Prisma } from "../generated/prisma/client.js";
 import { prisma } from "../lib/db.js";
 
 export class GetCommercialContext {
-  async execute({ userId, now = new Date() }: { userId: string; now?: Date }) {
-    const user = await prisma.user.findUnique({
+  async execute({
+    userId,
+    now = new Date(),
+    client = prisma,
+  }: {
+    userId: string;
+    now?: Date;
+    client?: Prisma.TransactionClient | typeof prisma;
+  }) {
+    const user = await client.user.findUnique({
       where: { id: userId },
       include: {
         subscription: {
