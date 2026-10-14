@@ -12,6 +12,7 @@ import {
 
 import { adminRoutes } from "../routes/admin.js";
 import { aiRoutes } from "../routes/ai.js";
+import { coachRoutes } from "../routes/coach.js";
 import { commercialRoutes } from "../routes/commercial.js";
 import { exerciseRoutes } from "../routes/exercise.js";
 import { historyRoutes } from "../routes/history.js";
@@ -52,6 +53,7 @@ await app.register(statsRoutes, { prefix: "/stats" });
 await app.register(meRoutes, { prefix: "/me" });
 await app.register(aiRoutes, { prefix: "/ai" });
 await app.register(commercialRoutes);
+await app.register(coachRoutes);
 await app.register(adminRoutes, { prefix: "/admin" });
 await app.register(exerciseRoutes, { prefix: "/exercises" });
 await app.register(workoutSessionRoutes);

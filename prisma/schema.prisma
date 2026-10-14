@@ -95,6 +95,11 @@ model User {
   aiRequestLogs       AiRequestLog[]
   feedbacks           Feedback[]
   metricLogs          UserMetricLog[]
+  coachAthletesAsCoach    CoachAthlete[]    @relation("CoachLinks")
+  coachAthletesAsAthlete  CoachAthlete[]    @relation("AthleteLinks")
+  revokedCoachAthletes    CoachAthlete[]    @relation("RevokedLinks")
+  coachInvitations        CoachInvitation[] @relation("CoachInvitations")
+  acceptedInvitations     CoachInvitation[] @relation("AthleteAcceptedInvitations")
 
   @@unique([email])
   @@map("user")
@@ -609,6 +614,58 @@ model UserMetricLog {
   @@index([userId, loggedAt(sort: Desc)])
   @@index([createdAt])
   @@map("user_metric_log")
+}
+
+enum CoachAthleteStatus {
+  ACTIVE
+  REVOKED
+}
+
+enum CoachInvitationStatus {
+  PENDING
+  ACCEPTED
+  CANCELLED
+  EXPIRED
+}
+
+model CoachInvitation {
+  id                  String                @id @default(uuid())
+  coachId             String
+  coach               User                  @relation("CoachInvitations", fields: [coachId], references: [id], onDelete: Cascade)
+  tokenHash           String                @unique
+  status              CoachInvitationStatus @default(PENDING)
+  expiresAt           DateTime              @db.Timestamptz()
+  acceptedAt          DateTime?             @db.Timestamptz()
+  acceptedByAthleteId String?
+  acceptedByAthlete   User?                 @relation("AthleteAcceptedInvitations", fields: [acceptedByAthleteId], references: [id], onDelete: SetNull)
+  cancelledAt         DateTime?             @db.Timestamptz()
+  createdAt           DateTime              @default(now()) @db.Timestamptz()
+  updatedAt           DateTime              @updatedAt @db.Timestamptz()
+  coachAthlete        CoachAthlete?
+
+  @@index([coachId, status])
+  @@index([expiresAt])
+  @@index([createdAt])
+}
+
+model CoachAthlete {
+  id              String             @id @default(uuid())
+  coachId         String
+  coach           User               @relation("CoachLinks", fields: [coachId], references: [id], onDelete: Cascade)
+  athleteId       String
+  athlete         User               @relation("AthleteLinks", fields: [athleteId], references: [id], onDelete: Cascade)
+  status          CoachAthleteStatus @default(ACTIVE)
+  invitationId    String?            @unique
+  invitation      CoachInvitation?   @relation(fields: [invitationId], references: [id], onDelete: SetNull)
+  createdAt       DateTime           @default(now()) @db.Timestamptz()
+  updatedAt       DateTime           @updatedAt @db.Timestamptz()
+  revokedAt       DateTime?          @db.Timestamptz()
+  revokedByUserId String?
+  revokedByUser   User?              @relation("RevokedLinks", fields: [revokedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([coachId, status])
+  @@index([athleteId, status])
+  @@index([createdAt])
 }
 
 

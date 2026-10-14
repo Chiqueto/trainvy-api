@@ -16,6 +16,7 @@ import { auth, authBaseUrl, trustedOrigins } from "./lib/auth.js";
 import { env } from "./lib/env.js";
 import { adminRoutes } from "./routes/admin.js";
 import { aiRoutes } from "./routes/ai.js";
+import { coachRoutes } from "./routes/coach.js";
 import { commercialRoutes } from "./routes/commercial.js";
 import { exerciseRoutes } from "./routes/exercise.js";
 import { feedbackRoutes } from "./routes/feedback.js";
@@ -108,6 +109,7 @@ await app.register(exerciseRoutes, { prefix: "/exercises" });
 await app.register(historyRoutes, { prefix: "/history" });
 await app.register(workoutSessionRoutes);
 await app.register(commercialRoutes);
+await app.register(coachRoutes);
 await app.register(feedbackRoutes, { prefix: "/feedback" });
 await app.register(adminRoutes, { prefix: "/admin" });
 
