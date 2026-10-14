@@ -41,6 +41,20 @@ export const ListCoachAthletesResponseSchema = z.object({
   limit: z.number().int().nullable(),
 });
 
+export const GetCoachAthleteParamsSchema = z.object({
+  athleteId: z.string(),
+});
+
+export const GetCoachAthleteDetailsResponseSchema = z.object({
+  linkId: z.string(),
+  athleteId: z.string(),
+  name: z.string(),
+  email: z.string(),
+  image: z.string().nullable(),
+  acceptedAt: z.string(),
+  status: z.string(),
+});
+
 export const RevokeCoachAthleteParamsSchema = z.object({
   linkId: z.string(),
 });

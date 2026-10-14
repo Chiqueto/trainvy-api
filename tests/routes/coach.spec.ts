@@ -201,6 +201,40 @@ describe("Coach & Athlete HTTP Routes", () => {
     expect(body.athletes[0].athleteId).toBe(athleteUser.id);
   });
 
+  it("GET /coach/athletes/:athleteId — treinador consulta detalhes do aluno ativo", async () => {
+    vi.spyOn(auth.api, "getSession").mockResolvedValueOnce({
+      user: coachUser,
+      session: { id: "s1", userId: coachUser.id } as any,
+    } as any);
+
+    const response = await app.inject({
+      method: "GET",
+      url: `/coach/athletes/${athleteUser.id}`,
+    });
+
+    expect(response.statusCode).toBe(200);
+    const body = response.json();
+    expect(body.athleteId).toBe(athleteUser.id);
+    expect(body.name).toBe(athleteUser.name);
+    expect(body.email).toBe(athleteUser.email);
+    expect(body.status).toBe("ACTIVE");
+    expect(body.acceptedAt).toBeDefined();
+  });
+
+  it("GET /coach/athletes/:athleteId — 404 para aluno inexistente ou não vinculado (IDOR defense)", async () => {
+    vi.spyOn(auth.api, "getSession").mockResolvedValueOnce({
+      user: coachUser,
+      session: { id: "s1", userId: coachUser.id } as any,
+    } as any);
+
+    const response = await app.inject({
+      method: "GET",
+      url: `/coach/athletes/${crypto.randomUUID()}`,
+    });
+
+    expect(response.statusCode).toBe(404);
+  });
+
   it("DELETE /me/coach-relationship/:linkId — atleta encerra vínculo com sucesso", async () => {
     // Pega o link atual
     const link = await prisma.coachAthlete.findFirst({
@@ -225,5 +259,19 @@ describe("Coach & Athlete HTTP Routes", () => {
       where: { id: link!.id },
     });
     expect(linkAfter?.status).toBe("REVOKED");
+  });
+
+  it("GET /coach/athletes/:athleteId — retorna 404 imediatamente após encerramento do vínculo", async () => {
+    vi.spyOn(auth.api, "getSession").mockResolvedValueOnce({
+      user: coachUser,
+      session: { id: "s1", userId: coachUser.id } as any,
+    } as any);
+
+    const response = await app.inject({
+      method: "GET",
+      url: `/coach/athletes/${athleteUser.id}`,
+    });
+
+    expect(response.statusCode).toBe(404);
   });
 });

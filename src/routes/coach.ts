@@ -11,6 +11,8 @@ import {
   CreateCoachInvitationBodySchema,
   CreateCoachInvitationResponseSchema,
   GetAthleteCoachRelationshipResponseSchema,
+  GetCoachAthleteDetailsResponseSchema,
+  GetCoachAthleteParamsSchema,
   GetInvitationPreviewParamsSchema,
   GetInvitationPreviewResponseSchema,
   ListCoachAthletesResponseSchema,
@@ -23,6 +25,7 @@ import { AcceptCoachInvitation } from "../usecases/AcceptCoachInvitation.js";
 import { CancelCoachInvitation } from "../usecases/CancelCoachInvitation.js";
 import { CreateCoachInvitation } from "../usecases/CreateCoachInvitation.js";
 import { GetAthleteCoachRelationship } from "../usecases/GetAthleteCoachRelationship.js";
+import { GetCoachAthleteDetails } from "../usecases/GetCoachAthleteDetails.js";
 import { GetInvitationPreview } from "../usecases/GetInvitationPreview.js";
 import { ListCoachAthletes } from "../usecases/ListCoachAthletes.js";
 import { ListCoachInvitations } from "../usecases/ListCoachInvitations.js";
@@ -201,6 +204,43 @@ export const coachRoutes: FastifyPluginAsyncZod = async (app) => {
 
         const useCase = new ListCoachAthletes();
         const result = await useCase.execute({ coachId: session.user.id });
+        return reply.status(200).send(result);
+      } catch (error) {
+        return fail(error, request, reply);
+      }
+    },
+  );
+
+  // 4.1 Obter detalhes básicos do aluno vinculado (Coach)
+  app.get(
+    "/coach/athletes/:athleteId",
+    {
+      schema: {
+        operationId: "getCoachAthleteDetails",
+        tags: ["Coach"],
+        summary: "Obter detalhes básicos de um aluno ativo vinculado",
+        params: GetCoachAthleteParamsSchema,
+        response: {
+          200: GetCoachAthleteDetailsResponseSchema,
+          ...standardErrors,
+        },
+      },
+    },
+    async (request, reply) => {
+      try {
+        const session = await auth.api.getSession({
+          headers: fromNodeHeaders(request.headers),
+        });
+        if (!session?.user) {
+          return reply.status(401).send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+        }
+
+        const useCase = new GetCoachAthleteDetails();
+        const result = await useCase.execute({
+          coachId: session.user.id,
+          athleteId: request.params.athleteId,
+        });
+
         return reply.status(200).send(result);
       } catch (error) {
         return fail(error, request, reply);
