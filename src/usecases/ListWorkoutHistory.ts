@@ -9,6 +9,7 @@ interface InputDto {
   cursor?: string;
   limit?: number;
   origin?: "PLANNED" | "FREE";
+  minCompletedAt?: Date;
 }
 
 export interface HistoryTimelineItemDto {
@@ -40,8 +41,14 @@ export class ListWorkoutHistory {
 
     const where: Prisma.WorkoutSessionWhereInput = {
       athleteId: dto.userId,
-      completedAt: { not: null },
+      completedAt: dto.minCompletedAt
+        ? { not: null, gte: dto.minCompletedAt }
+        : { not: null },
     };
+
+    if (dto.minCompletedAt) {
+      where.AND = [{ completedAt: { gte: dto.minCompletedAt } }];
+    }
 
     if (dto.origin) {
       where.origin = dto.origin as WorkoutSessionOrigin;

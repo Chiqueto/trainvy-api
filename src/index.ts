@@ -18,6 +18,7 @@ import { adminRoutes } from "./routes/admin.js";
 import { aiRoutes } from "./routes/ai.js";
 import { coachRoutes } from "./routes/coach.js";
 import { coachPrescriptionRoutes } from "./routes/coach-prescription.js";
+import { coachProgressRoutes } from "./routes/coach-progress.js";
 import { commercialRoutes } from "./routes/commercial.js";
 import { exerciseRoutes } from "./routes/exercise.js";
 import { feedbackRoutes } from "./routes/feedback.js";
@@ -112,6 +113,7 @@ await app.register(workoutSessionRoutes);
 await app.register(commercialRoutes);
 await app.register(coachRoutes);
 await app.register(coachPrescriptionRoutes);
+await app.register(coachProgressRoutes);
 await app.register(feedbackRoutes, { prefix: "/feedback" });
 await app.register(adminRoutes, { prefix: "/admin" });
 

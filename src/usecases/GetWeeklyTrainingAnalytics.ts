@@ -6,6 +6,7 @@ import {
   validateIanaTimezone,
 } from "../domain/analytics-dates.js";
 import { InvalidDateRangeError } from "../errors/index.js";
+import { Prisma } from "../generated/prisma/client.js";
 import { prisma } from "../lib/db.js";
 import {
   WeeklyAnalyticsItem,
@@ -18,6 +19,7 @@ export interface GetWeeklyTrainingAnalyticsInput {
   startDate?: string;
   endDate?: string;
   weeksCount?: number;
+  minCompletedAt?: Date;
 }
 
 interface WeeklyAggregateRow {
@@ -85,6 +87,7 @@ export class GetWeeklyTrainingAnalytics {
           AND ws."completedAt" IS NOT NULL
           AND ws."completedAt" >= (${windowStartDate}::timestamp AT TIME ZONE ${validTz})
           AND ws."completedAt" < ((${windowEndDate}::timestamp + INTERVAL '1 day') AT TIME ZONE ${validTz})
+          ${input.minCompletedAt ? Prisma.sql`AND ws."completedAt" >= ${input.minCompletedAt}` : Prisma.empty}
       ),
       sessions_summary AS (
         SELECT

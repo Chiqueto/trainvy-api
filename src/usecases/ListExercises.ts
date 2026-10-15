@@ -6,6 +6,7 @@ interface InputDto {
   query?: string;
   limit?: number;
   onlyWithHistory?: boolean;
+  minCompletedAt?: Date;
 }
 
 export interface ExerciseOutputDto {
@@ -27,7 +28,9 @@ export class ListExercises {
       where: {
         workoutSession: {
           athleteId: dto.userId,
-          completedAt: { not: null },
+          completedAt: dto.minCompletedAt
+            ? { not: null, gte: dto.minCompletedAt }
+            : { not: null },
         },
         exerciseId: { not: null },
       },

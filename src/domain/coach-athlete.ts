@@ -81,3 +81,36 @@ export function assertAthleteCanAcceptInvitation(athlete: {
     );
   }
 }
+
+export function assertAthleteSharingConsent(link: {
+  status: string;
+  evolutionShared: boolean;
+}): void {
+  if (link.status !== "ACTIVE") {
+    throw new CoachAthleteError(
+      "ATHLETE_NOT_FOUND",
+      404,
+      "Aluno não encontrado ou vínculo inativo com este treinador.",
+    );
+  }
+
+  if (!link.evolutionShared) {
+    throw new CoachAthleteError(
+      "SHARING_NOT_AUTHORIZED",
+      403,
+      "Este aluno ainda não autorizou o compartilhamento do histórico de treinos.",
+    );
+  }
+}
+
+export function resolveSharingTemporalFloor(link: {
+  includePreviousHistory: boolean;
+  evolutionSharedAt: Date | null;
+  createdAt: Date;
+}): Date | undefined {
+  if (link.includePreviousHistory) {
+    return undefined;
+  }
+  return link.evolutionSharedAt ?? link.createdAt;
+}
+

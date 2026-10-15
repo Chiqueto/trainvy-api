@@ -8,6 +8,7 @@ import { prisma } from "../lib/db.js";
 interface InputDto {
   userId: string;
   sessionId: string;
+  minCompletedAt?: Date;
 }
 
 export interface HistorySetDetailDto {
@@ -68,7 +69,9 @@ export class GetWorkoutHistorySession {
       where: {
         id: dto.sessionId,
         athleteId: dto.userId,
-        completedAt: { not: null }, // Apenas sessões concluídas pertencem ao histórico
+        completedAt: dto.minCompletedAt
+          ? { not: null, gte: dto.minCompletedAt }
+          : { not: null },
       },
       include: {
         sessionExercises: {

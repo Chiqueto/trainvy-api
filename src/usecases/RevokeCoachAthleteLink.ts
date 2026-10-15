@@ -43,6 +43,8 @@ export class RevokeCoachAthleteLink {
         status: "REVOKED",
         revokedAt: new Date(),
         revokedByUserId: userId,
+        evolutionShared: false,
+        evolutionRevokedAt: new Date(),
       },
     });
 

@@ -666,6 +666,12 @@ model CoachAthlete {
   revokedByUserId String?
   revokedByUser   User?              @relation("RevokedLinks", fields: [revokedByUserId], references: [id], onDelete: SetNull)
 
+  // Task 6.3: Consentimento explícito e escopo temporal para acompanhamento de evolução
+  evolutionShared         Boolean            @default(false)
+  includePreviousHistory  Boolean            @default(false)
+  evolutionSharedAt       DateTime?          @db.Timestamptz()
+  evolutionRevokedAt      DateTime?          @db.Timestamptz()
+
   @@index([coachId, status])
   @@index([athleteId, status])
   @@index([createdAt])

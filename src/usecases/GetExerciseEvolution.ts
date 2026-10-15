@@ -15,6 +15,7 @@ export interface GetExerciseEvolutionInput {
   exerciseId: string;
   cursor?: string;
   limit?: number;
+  minCompletedAt?: Date;
 }
 
 export interface ExerciseEvolutionMuscle {
@@ -180,6 +181,7 @@ export class GetExerciseEvolution {
       JOIN "WorkoutSession" ws ON ws.id = se."workoutSessionId"
       WHERE ws."athleteId" = ${input.userId}
         AND ws."completedAt" IS NOT NULL
+        ${input.minCompletedAt ? Prisma.sql`AND ws."completedAt" >= ${input.minCompletedAt}` : Prisma.empty}
         AND s.type = 'WORKING'
         AND s."completedAt" IS NOT NULL
         AND s."weightInGrams" IS NOT NULL
@@ -210,6 +212,7 @@ export class GetExerciseEvolution {
       FROM "WorkoutSession" ws
       WHERE ws."athleteId" = ${input.userId}
         AND ws."completedAt" IS NOT NULL
+        ${input.minCompletedAt ? Prisma.sql`AND ws."completedAt" >= ${input.minCompletedAt}` : Prisma.empty}
         AND EXISTS (
           SELECT 1
           FROM "SessionExercise" se
