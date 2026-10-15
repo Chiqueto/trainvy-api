@@ -144,6 +144,7 @@ export const coachPrescriptionRoutes: FastifyPluginAsyncZod = async (app) => {
           prescriptionId: request.params.id,
           name: request.body.name,
           notes: request.body.notes,
+          expectedVersion: request.body.version,
           workoutDays: request.body.workoutDays,
         });
 

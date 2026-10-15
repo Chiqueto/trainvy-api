@@ -44,12 +44,57 @@ export class CreateWorkoutPrescriptionDraft {
     });
     assertCoachCanPrescribe(commercialContext);
 
+    const trimmedName = dto.name?.trim();
+    if (!trimmedName) {
+      throw new CoachPrescriptionError(
+        "INVALID_PRESCRIPTION_PAYLOAD",
+        400,
+        "Nome da prescrição é obrigatório.",
+      );
+    }
+
+    if (!Array.isArray(dto.workoutDays) || dto.workoutDays.length === 0) {
+      throw new CoachPrescriptionError(
+        "INVALID_PRESCRIPTION_PAYLOAD",
+        400,
+        "A prescrição deve conter pelo menos um dia.",
+      );
+    }
+
+    // Validar dias e exercícios
+    for (const [dayIndex, day] of dto.workoutDays.entries()) {
+      if (!day.name || !day.name.trim()) {
+        throw new CoachPrescriptionError(
+          "INVALID_PRESCRIPTION_PAYLOAD",
+          400,
+          `O dia ${dayIndex + 1} deve ter um nome válido.`,
+        );
+      }
+      if (!day.isRest && Array.isArray(day.exercises)) {
+        for (const [exIndex, ex] of day.exercises.entries()) {
+          if (!ex.name || !ex.name.trim()) {
+            throw new CoachPrescriptionError(
+              "INVALID_PRESCRIPTION_PAYLOAD",
+              400,
+              `O exercício ${exIndex + 1} do dia "${day.name}" deve ter um nome válido.`,
+            );
+          }
+          if (ex.sets < 1 || ex.reps < 1 || ex.restTimeInSeconds < 0) {
+            throw new CoachPrescriptionError(
+              "INVALID_PRESCRIPTION_PAYLOAD",
+              400,
+              `Configuração inválida para o exercício "${ex.name}".`,
+            );
+          }
+        }
+      }
+    }
+
     // Vínculo ativo obrigatório
     const link = await prisma.coachAthlete.findFirst({
       where: {
         coachId: dto.coachId,
         athleteId: dto.athleteId,
-        status: "ACTIVE",
       },
     });
 
@@ -57,13 +102,21 @@ export class CreateWorkoutPrescriptionDraft {
       throw new CoachPrescriptionError(
         "COACH_ATHLETE_LINK_NOT_FOUND",
         404,
-        "Vínculo ativo com este aluno não foi encontrado.",
+        "Vínculo com este aluno não foi encontrado.",
+      );
+    }
+
+    if (link.status !== "ACTIVE") {
+      throw new CoachPrescriptionError(
+        "COACH_ATHLETE_LINK_REVOKED",
+        403,
+        "O vínculo com este aluno foi revogado.",
       );
     }
 
     const payload = {
       workoutDays: dto.workoutDays.map((day, index) => ({
-        name: day.name,
+        name: day.name.trim(),
         order: day.order ?? index,
         weekDay: day.weekDay ?? "MONDAY",
         isRest: day.isRest,
@@ -71,7 +124,7 @@ export class CreateWorkoutPrescriptionDraft {
         coverImageUrl: day.coverImageUrl ?? null,
         exercises: day.exercises.map((ex, exIndex) => ({
           order: ex.order ?? exIndex,
-          name: ex.name,
+          name: ex.name.trim(),
           sets: ex.sets,
           warmupSets: ex.warmupSets ?? 0,
           reps: ex.reps,
@@ -84,9 +137,10 @@ export class CreateWorkoutPrescriptionDraft {
       data: {
         coachId: dto.coachId,
         athleteId: dto.athleteId,
-        name: dto.name,
+        name: trimmedName,
         notes: dto.notes ?? null,
         status: "DRAFT",
+        version: 1,
         payload,
       },
       include: {

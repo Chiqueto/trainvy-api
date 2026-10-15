@@ -34,14 +34,21 @@ export class RevokeCoachAthleteLink {
       return { success: true, alreadyRevoked: true };
     }
 
-    await prisma.coachAthlete.update({
-      where: { id: linkId },
+    const updateResult = await prisma.coachAthlete.updateMany({
+      where: {
+        id: linkId,
+        status: "ACTIVE",
+      },
       data: {
         status: "REVOKED",
         revokedAt: new Date(),
         revokedByUserId: userId,
       },
     });
+
+    if (updateResult.count === 0) {
+      return { success: true, alreadyRevoked: true };
+    }
 
     return { success: true, alreadyRevoked: false };
   }

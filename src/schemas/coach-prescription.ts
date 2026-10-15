@@ -77,6 +77,7 @@ export const CreatePrescriptionDraftBodySchema = z.object({
 export const UpdatePrescriptionDraftBodySchema = z.object({
   name: z.string().trim().min(1, "Nome do planejamento é obrigatório").max(100),
   notes: z.string().trim().max(1000).optional().nullable(),
+  version: z.number().int().positive().optional(),
   workoutDays: z
     .array(WorkoutDayDraftSchema)
     .min(1, "O planejamento deve conter pelo menos 1 dia"),

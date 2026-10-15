@@ -17,7 +17,9 @@ export class AcceptWorkoutPrescription {
   }) {
     return await prisma.$transaction(
       async (tx) => {
-        // 1. Buscar a prescrição e verificar pertencimento
+        // 1. Bloqueio pessimista de linha no PostgreSQL para serializar aceites concorrentes
+        await tx.$queryRaw`SELECT id FROM "WorkoutPrescription" WHERE id = ${prescriptionId} FOR UPDATE`;
+
         const prescription = await tx.workoutPrescription.findUnique({
           where: { id: prescriptionId },
           include: {
@@ -35,7 +37,7 @@ export class AcceptWorkoutPrescription {
           );
         }
 
-        // Idempotência para aceite já concluído
+        // 2. Idempotência perfeita para aceite já concluído
         if (prescription.status === "ACCEPTED" && prescription.acceptedWorkoutPlanId) {
           const existingPlan = await tx.workoutPlan.findUnique({
             where: { id: prescription.acceptedWorkoutPlanId },
@@ -64,7 +66,22 @@ export class AcceptWorkoutPrescription {
           };
         }
 
-        // 2. Verificar se o status atual permite aceite
+        if (prescription.status === "CANCELLED") {
+          throw new CoachPrescriptionError(
+            "PRESCRIPTION_ALREADY_CANCELLED",
+            409,
+            "Esta prescrição foi cancelada pelo treinador.",
+          );
+        }
+
+        if (prescription.status === "DECLINED") {
+          throw new CoachPrescriptionError(
+            "PRESCRIPTION_ALREADY_DECLINED",
+            409,
+            "Esta prescrição foi recusada anteriormente.",
+          );
+        }
+
         if (prescription.status !== "SENT") {
           throw new CoachPrescriptionError(
             "PRESCRIPTION_NOT_PENDING",
@@ -73,7 +90,7 @@ export class AcceptWorkoutPrescription {
           );
         }
 
-        // 3. Verificar se o vínculo Coach-Athlete ainda está ativo
+        // 3. Verificar se o vínculo Coach-Athlete ainda está ativo no exato momento do aceite
         const activeLink = await tx.coachAthlete.findFirst({
           where: {
             coachId: prescription.coachId,
@@ -90,65 +107,13 @@ export class AcceptWorkoutPrescription {
           );
         }
 
-        // 4. Bloqueio atômico de concorrência: transicionar de SENT para ACCEPTED
-        const updateResult = await tx.workoutPrescription.updateMany({
-          where: {
-            id: prescription.id,
-            status: "SENT",
-          },
-          data: {
-            status: "ACCEPTED",
-            respondedAt: new Date(),
-          },
-        });
-
-        if (updateResult.count === 0) {
-          // Outra requisição concorrente já alterou o estado
-          const refreshed = await tx.workoutPrescription.findUnique({
-            where: { id: prescription.id },
-          });
-
-          if (refreshed?.status === "ACCEPTED" && refreshed.acceptedWorkoutPlanId) {
-            const plan = await tx.workoutPlan.findUnique({
-              where: { id: refreshed.acceptedWorkoutPlanId },
-            });
-            return {
-              success: true,
-              prescription: {
-                id: refreshed.id,
-                coachId: refreshed.coachId,
-                athleteId: refreshed.athleteId,
-                status: refreshed.status,
-                name: refreshed.name,
-                notes: refreshed.notes,
-                version: refreshed.version,
-                acceptedWorkoutPlanId: refreshed.acceptedWorkoutPlanId,
-                sentAt: refreshed.sentAt?.toISOString() ?? null,
-                respondedAt: refreshed.respondedAt?.toISOString() ?? null,
-                createdAt: refreshed.createdAt.toISOString(),
-                updatedAt: refreshed.updatedAt.toISOString(),
-                coach: prescription.coach,
-                payload: refreshed.payload as unknown as PrescriptionPayload,
-              },
-              workoutPlanId: refreshed.acceptedWorkoutPlanId,
-              workoutPlanName: plan?.name ?? refreshed.name,
-            };
-          }
-
-          throw new CoachPrescriptionError(
-            "CONCURRENT_ACCEPTANCE_CONFLICT",
-            409,
-            "Conflito de concorrência ao aceitar a prescrição. Tente novamente.",
-          );
-        }
-
-        // 5. Extrair dias e exercícios do payload snapshot
+        // 4. Extrair dias e exercícios do payload snapshot
         const rawPayload = prescription.payload as unknown as {
           workoutDays: PrescriptionDayPayload[];
         };
         const workoutDays = rawPayload.workoutDays ?? [];
 
-        // 6. Resolução canônica de exercícios (isolamento por usuário)
+        // 5. Resolução canônica de exercícios (isolamento por usuário)
         const allExerciseNames = workoutDays.flatMap((day) =>
           day.exercises.map((e) => e.name),
         );
@@ -158,8 +123,8 @@ export class AcceptWorkoutPrescription {
           tx,
         });
 
-        // 7. Criar o WorkoutPlan de propriedade do ATLETA
-        // REQUISITO CRÍTICO: isActive = false (nunca auto-ativar, atleta ativa voluntariamente)
+        // 6. Criar o WorkoutPlan de propriedade exclusiva do ATLETA
+        // REQUISITO CRÍTICO: isActive = false (nunca auto-ativar, preserva planejamento ativo existente)
         const newPlan = await tx.workoutPlan.create({
           data: {
             id: crypto.randomUUID(),
@@ -191,11 +156,18 @@ export class AcceptWorkoutPrescription {
           },
         });
 
-        // 8. Vincular o plano gerado à prescrição aceita
+        // 7. Atualizar a prescrição para ACCEPTED e associar o plano criado
         const finalPrescription = await tx.workoutPrescription.update({
           where: { id: prescription.id },
           data: {
+            status: "ACCEPTED",
             acceptedWorkoutPlanId: newPlan.id,
+            respondedAt: new Date(),
+          },
+          include: {
+            coach: {
+              select: { id: true, name: true, image: true },
+            },
           },
         });
 
@@ -214,7 +186,7 @@ export class AcceptWorkoutPrescription {
             respondedAt: finalPrescription.respondedAt?.toISOString() ?? null,
             createdAt: finalPrescription.createdAt.toISOString(),
             updatedAt: finalPrescription.updatedAt.toISOString(),
-            coach: prescription.coach,
+            coach: finalPrescription.coach,
             payload: finalPrescription.payload as unknown as PrescriptionPayload,
           },
           workoutPlanId: newPlan.id,
