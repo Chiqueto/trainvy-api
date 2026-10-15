@@ -172,7 +172,7 @@ jobs:
       - name: Checkout Frontend
         uses: actions/checkout@v4
         with:
-          repository: Chiqueto/bootcamp-treinos-frontend
+          repository: Chiqueto/trainvy-frontend
           path: bootcamp-treinos-frontend
           token: ${{ secrets.GH_PAT || secrets.CROSS_REPO_TOKEN || secrets.GITHUB_TOKEN }}
 
