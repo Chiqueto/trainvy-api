@@ -34,6 +34,22 @@ export const aiExerciseSchema = z.object({
     .string()
     .min(1)
     .describe("Nome do exercício (ex: Supino Reto com Barra)"),
+  alternative1Name: z
+    .string()
+    .nullable()
+    .optional()
+    .describe(
+      "Nome da primeira alternativa equivalente (ex: Supino com Halteres)",
+    ),
+  alternative2Name: z
+    .string()
+    .nullable()
+    .optional()
+    .describe(
+      "Nome da segunda alternativa equivalente (ex: Supino Máquina Articulada)",
+    ),
+  alternative1ExerciseId: z.string().uuid().nullable().optional(),
+  alternative2ExerciseId: z.string().uuid().nullable().optional(),
   warmupSets: z
     .number()
     .int()

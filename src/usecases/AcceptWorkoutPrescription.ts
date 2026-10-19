@@ -4,6 +4,7 @@ import {
   PrescriptionDayPayload,
   PrescriptionPayload,
 } from "../domain/coach-prescription.js";
+import { normalizeAndValidateAlternatives } from "../domain/exercise-alternatives.js";
 import { WeekDay } from "../generated/prisma/enums.js";
 import { prisma } from "../lib/db.js";
 
@@ -115,7 +116,11 @@ export class AcceptWorkoutPrescription {
 
         // 5. Resolução canônica de exercícios (isolamento por usuário)
         const allExerciseNames = workoutDays.flatMap((day) =>
-          day.exercises.map((e) => e.name),
+          day.exercises.flatMap((e) =>
+            [e.name, e.alternative1ExerciseName, e.alternative2ExerciseName].filter(
+              (n): n is string => !!n && n.trim().length > 0,
+            ),
+          ),
         );
         const canonicalExerciseMap = await resolveCanonicalExerciseMap({
           userId: athleteId,
@@ -141,15 +146,46 @@ export class AcceptWorkoutPrescription {
                   workoutDay.estimatedDurationInSeconds,
                 coverImageUrl: workoutDay.coverImageUrl ?? null,
                 exercises: {
-                  create: workoutDay.exercises.map((exercise, exIndex) => ({
-                    order: exercise.order ?? exIndex,
-                    name: exercise.name,
-                    sets: exercise.sets,
-                    warmupSets: exercise.warmupSets ?? 0,
-                    reps: exercise.reps,
-                    restTimeInSeconds: exercise.restTimeInSeconds,
-                    exerciseId: canonicalExerciseMap.get(exercise.name) ?? null,
-                  })),
+                  create: workoutDay.exercises.map((exercise, exIndex) => {
+                    const resolvedMainId =
+                      exercise.exerciseId ??
+                      canonicalExerciseMap.get(exercise.name) ??
+                      null;
+
+                    const resolvedAlt1Id =
+                      exercise.alternative1ExerciseId ??
+                      (exercise.alternative1ExerciseName
+                        ? canonicalExerciseMap.get(exercise.alternative1ExerciseName)
+                        : null) ??
+                      null;
+
+                    const resolvedAlt2Id =
+                      exercise.alternative2ExerciseId ??
+                      (exercise.alternative2ExerciseName
+                        ? canonicalExerciseMap.get(exercise.alternative2ExerciseName)
+                        : null) ??
+                      null;
+
+                    const { alternative1ExerciseId, alternative2ExerciseId } =
+                      normalizeAndValidateAlternatives({
+                        mainExerciseId: resolvedMainId,
+                        mainExerciseName: exercise.name,
+                        alternative1ExerciseId: resolvedAlt1Id,
+                        alternative2ExerciseId: resolvedAlt2Id,
+                      });
+
+                    return {
+                      order: exercise.order ?? exIndex,
+                      name: exercise.name,
+                      sets: exercise.sets,
+                      warmupSets: exercise.warmupSets ?? 0,
+                      reps: exercise.reps,
+                      restTimeInSeconds: exercise.restTimeInSeconds,
+                      exerciseId: resolvedMainId,
+                      alternative1ExerciseId,
+                      alternative2ExerciseId,
+                    };
+                  }),
                 },
               })),
             },

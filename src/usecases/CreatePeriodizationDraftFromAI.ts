@@ -1,4 +1,5 @@
 import { resolveCanonicalExerciseMap } from "../domain/canonical-exercise.js";
+import { normalizeAndValidateAlternatives } from "../domain/exercise-alternatives.js";
 import { ValidationError } from "../errors/index.js";
 import { WeekDay } from "../generated/prisma/enums.js";
 import { prisma } from "../lib/db.js";
@@ -24,6 +25,11 @@ export interface CreatePeriodizationDraftFromAIInput {
           sets: number;
           reps: number;
           restTimeInSeconds: number;
+          exerciseId?: string | null;
+          alternative1ExerciseId?: string | null;
+          alternative2ExerciseId?: string | null;
+          alternative1Name?: string | null;
+          alternative2Name?: string | null;
         }>;
       }>;
     };
@@ -185,7 +191,13 @@ export class CreatePeriodizationDraftFromAI {
       });
 
       const allExerciseNames = dto.blocks.flatMap((b) =>
-        b.plan.workoutDays.flatMap((wd) => wd.exercises.map((e) => e.name)),
+        b.plan.workoutDays.flatMap((wd) =>
+          wd.exercises.flatMap((e) =>
+            [e.name, e.alternative1Name, e.alternative2Name].filter(
+              (n): n is string => !!n && n.trim().length > 0,
+            ),
+          ),
+        ),
       );
       const canonicalExerciseMap = await resolveCanonicalExerciseMap({
         userId: dto.userId,
@@ -214,19 +226,50 @@ export class CreatePeriodizationDraftFromAI {
                 estimatedDurationInSeconds: wd.estimatedDurationInSeconds,
                 coverImageUrl: wd.coverImageUrl || null,
                 exercises: {
-                  create: wd.exercises.map((ex) => ({
-                    id: crypto.randomUUID(),
-                    name: ex.name.trim(),
-                    order: ex.order,
-                    warmupSets: ex.warmupSets ?? 0,
-                    sets: ex.sets,
-                    reps: ex.reps,
-                    restTimeInSeconds: ex.restTimeInSeconds,
-                    exerciseId:
+                  create: wd.exercises.map((ex) => {
+                    const resolvedMainId =
+                      ex.exerciseId ??
                       canonicalExerciseMap.get(ex.name.trim()) ??
                       canonicalExerciseMap.get(ex.name) ??
-                      null,
-                  })),
+                      null;
+
+                    const resolvedAlt1Id =
+                      ex.alternative1ExerciseId ??
+                      (ex.alternative1Name
+                        ? canonicalExerciseMap.get(ex.alternative1Name.trim()) ??
+                          canonicalExerciseMap.get(ex.alternative1Name)
+                        : null) ??
+                      null;
+
+                    const resolvedAlt2Id =
+                      ex.alternative2ExerciseId ??
+                      (ex.alternative2Name
+                        ? canonicalExerciseMap.get(ex.alternative2Name.trim()) ??
+                          canonicalExerciseMap.get(ex.alternative2Name)
+                        : null) ??
+                      null;
+
+                    const { alternative1ExerciseId, alternative2ExerciseId } =
+                      normalizeAndValidateAlternatives({
+                        mainExerciseId: resolvedMainId,
+                        mainExerciseName: ex.name,
+                        alternative1ExerciseId: resolvedAlt1Id,
+                        alternative2ExerciseId: resolvedAlt2Id,
+                      });
+
+                    return {
+                      id: crypto.randomUUID(),
+                      name: ex.name.trim(),
+                      order: ex.order,
+                      warmupSets: ex.warmupSets ?? 0,
+                      sets: ex.sets,
+                      reps: ex.reps,
+                      restTimeInSeconds: ex.restTimeInSeconds,
+                      exerciseId: resolvedMainId,
+                      alternative1ExerciseId,
+                      alternative2ExerciseId,
+                    };
+                  }),
                 },
               })),
             },

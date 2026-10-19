@@ -3,6 +3,11 @@ import z from "zod";
 export const WorkoutExerciseDraftSchema = z.object({
   name: z.string().trim().min(1, "Nome do exercício é obrigatório"),
   order: z.number().int().min(0),
+  exerciseId: z.string().uuid().nullable().optional(),
+  alternative1ExerciseId: z.string().uuid().nullable().optional(),
+  alternative1ExerciseName: z.string().nullable().optional(),
+  alternative2ExerciseId: z.string().uuid().nullable().optional(),
+  alternative2ExerciseName: z.string().nullable().optional(),
   sets: z.number().int().min(1, "Mínimo de 1 série"),
   warmupSets: z.number().int().min(0).default(0),
   reps: z.number().int().min(1, "Mínimo de 1 repetição"),
@@ -86,6 +91,11 @@ export const UpdatePrescriptionDraftBodySchema = z.object({
 export const PrescriptionExerciseItemSchema = z.object({
   name: z.string(),
   order: z.number(),
+  exerciseId: z.string().nullable().optional(),
+  alternative1ExerciseId: z.string().nullable().optional(),
+  alternative1ExerciseName: z.string().nullable().optional(),
+  alternative2ExerciseId: z.string().nullable().optional(),
+  alternative2ExerciseName: z.string().nullable().optional(),
   sets: z.number(),
   warmupSets: z.number(),
   reps: z.number(),

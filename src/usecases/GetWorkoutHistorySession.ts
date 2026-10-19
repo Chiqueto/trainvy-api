@@ -29,6 +29,14 @@ export interface HistoryExerciseDetailDto {
   exerciseNameSnapshot: string;
   order: number;
   notes: string | null;
+  plannedExerciseId?: string | null;
+  plannedExerciseNameSnapshot?: string | null;
+  alternative1ExerciseId?: string | null;
+  alternative1ExerciseNameSnapshot?: string | null;
+  alternative2ExerciseId?: string | null;
+  alternative2ExerciseNameSnapshot?: string | null;
+  wasSubstituted: boolean;
+  substitutedAt?: string | null;
   planned: {
     warmupSets: number | null;
     workingSets: number | null;
@@ -128,6 +136,18 @@ export class GetWorkoutHistorySession {
         exerciseNameSnapshot: exercise.exerciseNameSnapshot,
         order: exercise.order,
         notes: exercise.notes ?? null,
+        plannedExerciseId: exercise.plannedExerciseId ?? null,
+        plannedExerciseNameSnapshot: exercise.plannedExerciseNameSnapshot ?? null,
+        alternative1ExerciseId: exercise.alternative1ExerciseId ?? null,
+        alternative1ExerciseNameSnapshot:
+          exercise.alternative1ExerciseNameSnapshot ?? null,
+        alternative2ExerciseId: exercise.alternative2ExerciseId ?? null,
+        alternative2ExerciseNameSnapshot:
+          exercise.alternative2ExerciseNameSnapshot ?? null,
+        wasSubstituted: exercise.wasSubstituted,
+        substitutedAt: exercise.substitutedAt
+          ? exercise.substitutedAt.toISOString()
+          : null,
         planned: {
           warmupSets: exercise.plannedWarmupSets ?? null,
           workingSets: exercise.plannedSets ?? null,

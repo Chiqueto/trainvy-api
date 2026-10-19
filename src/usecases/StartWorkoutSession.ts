@@ -25,6 +25,14 @@ interface OutputDto {
     exerciseId: string | null;
     exerciseNameSnapshot: string;
     order: number;
+    plannedExerciseId?: string | null;
+    plannedExerciseNameSnapshot?: string | null;
+    alternative1ExerciseId?: string | null;
+    alternative1ExerciseNameSnapshot?: string | null;
+    alternative2ExerciseId?: string | null;
+    alternative2ExerciseNameSnapshot?: string | null;
+    wasSubstituted: boolean;
+    substitutedAt?: string | null;
     plannedWarmupSets?: number | null;
     plannedSets: number | null;
     plannedReps: number | null;
@@ -56,6 +64,14 @@ export class StartWorkoutSession {
           where: { id: dto.workoutDayId, workoutPlanId: dto.workoutPlanId },
           include: {
             exercises: {
+              include: {
+                alternative1Exercise: {
+                  select: { id: true, name: true },
+                },
+                alternative2Exercise: {
+                  select: { id: true, name: true },
+                },
+              },
               orderBy: { order: "asc" },
             },
           },
@@ -100,6 +116,16 @@ export class StartWorkoutSession {
               exerciseId: exercise.exerciseId ?? null,
               exerciseNameSnapshot: exercise.name,
               order: exercise.order,
+              plannedExerciseId: exercise.exerciseId ?? null,
+              plannedExerciseNameSnapshot: exercise.name,
+              alternative1ExerciseId: exercise.alternative1ExerciseId ?? null,
+              alternative1ExerciseNameSnapshot:
+                exercise.alternative1Exercise?.name ?? null,
+              alternative2ExerciseId: exercise.alternative2ExerciseId ?? null,
+              alternative2ExerciseNameSnapshot:
+                exercise.alternative2Exercise?.name ?? null,
+              wasSubstituted: false,
+              substitutedAt: null,
               plannedWarmupSets: exercise.warmupSets,
               plannedSets: exercise.sets,
               plannedReps: exercise.reps,
@@ -146,6 +172,18 @@ export class StartWorkoutSession {
             exerciseId: created.exerciseId,
             exerciseNameSnapshot: created.exerciseNameSnapshot,
             order: created.order,
+            plannedExerciseId: created.plannedExerciseId,
+            plannedExerciseNameSnapshot: created.plannedExerciseNameSnapshot,
+            alternative1ExerciseId: created.alternative1ExerciseId,
+            alternative1ExerciseNameSnapshot:
+              created.alternative1ExerciseNameSnapshot,
+            alternative2ExerciseId: created.alternative2ExerciseId,
+            alternative2ExerciseNameSnapshot:
+              created.alternative2ExerciseNameSnapshot,
+            wasSubstituted: created.wasSubstituted,
+            substitutedAt: created.substitutedAt
+              ? created.substitutedAt.toISOString()
+              : null,
             plannedWarmupSets: created.plannedWarmupSets,
             plannedSets: created.plannedSets,
             plannedReps: created.plannedReps,

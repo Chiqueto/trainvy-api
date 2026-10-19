@@ -24,6 +24,11 @@ export interface PrescriptionExercisePayload {
   warmupSets: number;
   reps: number;
   restTimeInSeconds: number;
+  exerciseId?: string | null;
+  alternative1ExerciseId?: string | null;
+  alternative1ExerciseName?: string | null;
+  alternative2ExerciseId?: string | null;
+  alternative2ExerciseName?: string | null;
 }
 
 export interface PrescriptionDayPayload {

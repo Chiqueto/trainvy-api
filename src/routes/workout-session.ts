@@ -23,6 +23,8 @@ import {
   GetWorkoutSessionParamsSchema,
   GetWorkoutSessionResponseSchema,
   StartFreeWorkoutSessionResponseSchema,
+  SubstituteSessionExerciseBodySchema,
+  SubstituteSessionExerciseParamsSchema,
   UpdateWorkoutSetBodySchema,
   UpdateWorkoutSetParamsSchema,
   WorkoutSessionExerciseResponseSchema,
@@ -37,6 +39,7 @@ import { GetActiveWorkoutSession } from "../usecases/GetActiveWorkoutSession.js"
 import { GetWorkoutSession } from "../usecases/GetWorkoutSession.js";
 import { RemoveExerciseFromWorkoutSession } from "../usecases/RemoveExerciseFromWorkoutSession.js";
 import { StartFreeWorkoutSession } from "../usecases/StartFreeWorkoutSession.js";
+import { SubstituteSessionExercise } from "../usecases/SubstituteSessionExercise.js";
 import { UpdateWorkoutSet } from "../usecases/UpdateWorkoutSet.js";
 
 export const workoutSessionRoutes: FastifyPluginAsyncZod = async (app) => {
@@ -617,6 +620,77 @@ export const workoutSessionRoutes: FastifyPluginAsyncZod = async (app) => {
         const result = await removeExercise.execute({
           userId: session.user.id,
           sessionExerciseId: request.params.sessionExerciseId,
+        });
+
+        return reply.status(200).send(result);
+      } catch (error) {
+        if (error instanceof NotFoundError) {
+          return reply.status(404).send({
+            error: error.message,
+            code: "NOT_FOUND",
+          });
+        }
+
+        if (error instanceof WorkoutSessionAlreadyCompletedError) {
+          return reply.status(409).send({
+            error: error.message,
+            code: "WORKOUT_SESSION_ALREADY_COMPLETED",
+          });
+        }
+
+        if (error instanceof ValidationError) {
+          return reply.status(400).send({
+            error: error.message,
+            code: "VALIDATION_ERROR",
+          });
+        }
+
+        app.log.error(error);
+        return reply.status(500).send({
+          error: "Internal server error",
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }
+    },
+  });
+
+  // PATCH /workout-sessions/:sessionId/exercises/:sessionExerciseId/substitute
+  app.route({
+    method: "PATCH",
+    url: "/workout-sessions/:sessionId/exercises/:sessionExerciseId/substitute",
+    schema: {
+      operationId: "substituteSessionExercise",
+      tags: ["Workout Session"],
+      summary: "Substitute an exercise during an active workout session",
+      params: SubstituteSessionExerciseParamsSchema,
+      body: SubstituteSessionExerciseBodySchema,
+      response: {
+        200: WorkoutSessionExerciseResponseSchema,
+        400: ErrorSchema,
+        401: ErrorSchema,
+        404: ErrorSchema,
+        409: ErrorSchema,
+        500: ErrorSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      try {
+        const session = await auth.api.getSession({
+          headers: fromNodeHeaders(request.headers),
+        });
+        if (!session) {
+          return reply.status(401).send({
+            error: "Unauthorized",
+            code: "UNAUTHORIZED",
+          });
+        }
+
+        const substituteExercise = new SubstituteSessionExercise();
+        const result = await substituteExercise.execute({
+          userId: session.user.id,
+          sessionId: request.params.sessionId,
+          sessionExerciseId: request.params.sessionExerciseId,
+          newExerciseId: request.body.newExerciseId,
         });
 
         return reply.status(200).send(result);
