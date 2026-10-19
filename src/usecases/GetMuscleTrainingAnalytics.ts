@@ -3,6 +3,7 @@ import {
   validateDateRange,
   validateIanaTimezone,
 } from "../domain/analytics-dates.js";
+import { Prisma } from "../generated/prisma/client.js";
 import { prisma } from "../lib/db.js";
 import { MuscleAnalyticsResponse } from "../schemas/index.js";
 
@@ -11,6 +12,7 @@ export interface GetMuscleTrainingAnalyticsInput {
   tz: string;
   startDate: string;
   endDate: string;
+  minCompletedAt?: Date;
 }
 
 interface TotalsRow {
@@ -45,6 +47,7 @@ export class GetMuscleTrainingAnalytics {
             AND ws."completedAt" IS NOT NULL
             AND ws."completedAt" >= (${windowStartDate}::timestamp AT TIME ZONE ${validTz})
             AND ws."completedAt" < ((${windowEndDate}::timestamp + INTERVAL '1 day') AT TIME ZONE ${validTz})
+            ${input.minCompletedAt ? Prisma.sql`AND ws."completedAt" >= ${input.minCompletedAt}` : Prisma.empty}
         ),
         working_sets AS (
           SELECT
@@ -70,6 +73,7 @@ export class GetMuscleTrainingAnalytics {
             AND ws."completedAt" IS NOT NULL
             AND ws."completedAt" >= (${windowStartDate}::timestamp AT TIME ZONE ${validTz})
             AND ws."completedAt" < ((${windowEndDate}::timestamp + INTERVAL '1 day') AT TIME ZONE ${validTz})
+            ${input.minCompletedAt ? Prisma.sql`AND ws."completedAt" >= ${input.minCompletedAt}` : Prisma.empty}
         )
         SELECT
           em."muscleGroup"::text AS "muscleGroup",

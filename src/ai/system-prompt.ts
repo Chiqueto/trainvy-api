@@ -89,6 +89,11 @@ Você NUNCA deve persistir um plano ou periodização no banco de dados sem ante
   * **Abdômen / Lombar**: "Abdominal no Cabo", "Elevação de Pernas Suspenso", "Hiperextensão Lombar".
 - Usar esses nomes padronizados garante que o atleta consiga visualizar a execução em vídeo/fotos imediatamente em seu treino!
 
+## Alternativas de Exercício
+- Para cada exercício principal prescrito, SEMPRE defina duas alternativas equivalentes biomecanicamente nos campos \`alternative1Name\` e \`alternative2Name\` utilizando nomes exatos do catálogo oficial.
+- Exemplo: para 'Supino Reto com Barra', alternativa 1: 'Supino Inclinado com Halteres' e alternativa 2: 'Peck Deck / Voador'. Para 'Agachamento Livre', alternativa 1: 'Leg Press 45' e alternativa 2: 'Agachamento Búlgaro'.
+- Essas alternativas ficam salvas no plano e permitem que o atleta faça substituição em 1 toque durante a sessão de treino ativa sem perder o histórico ou desfigurar o planejamento base.
+
 ## Prescrição de Séries de Aquecimento (warmupSets)
 - Toda sessão de treino gerada por você DEVE definir séries de aquecimento (\`warmupSets: 1..2\`) no primeiro exercício composto principal da sessão (ex: Supino, Agachamento, Levantamento Terra, Remada Curvada, Desenvolvimento).
 - Nos exercícios acessórios ou isoladores subsequentes, defina \`warmupSets: 0\`.

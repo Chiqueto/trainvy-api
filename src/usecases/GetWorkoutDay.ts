@@ -24,6 +24,10 @@ interface OutputDto {
     name: string;
     order: number;
     workoutDayId: string;
+    alternative1ExerciseId?: string | null;
+    alternative1Exercise?: { id: string; name: string } | null;
+    alternative2ExerciseId?: string | null;
+    alternative2Exercise?: { id: string; name: string } | null;
     warmupSets: number;
     sets: number;
     reps: number;
@@ -62,6 +66,18 @@ export class GetWorkoutDay {
                 },
               },
             },
+            alternative1Exercise: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+            alternative2Exercise: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
           },
         },
         sessions: true,
@@ -88,6 +104,10 @@ export class GetWorkoutDay {
         name: exercise.name,
         order: exercise.order,
         workoutDayId: exercise.workoutDayId,
+        alternative1ExerciseId: exercise.alternative1ExerciseId ?? null,
+        alternative1Exercise: exercise.alternative1Exercise ?? null,
+        alternative2ExerciseId: exercise.alternative2ExerciseId ?? null,
+        alternative2Exercise: exercise.alternative2Exercise ?? null,
         warmupSets: exercise.warmupSets,
         sets: exercise.sets,
         reps: exercise.reps,

@@ -32,6 +32,11 @@ export const ErrorSchema = z.object({
 export const WorkoutExerciseSchema = z.object({
   order: z.number().min(0),
   name: z.string().trim().min(1),
+  exerciseId: z.string().uuid().nullable().optional(),
+  alternative1ExerciseId: z.string().uuid().nullable().optional(),
+  alternative1Name: z.string().trim().min(1).nullable().optional(),
+  alternative2ExerciseId: z.string().uuid().nullable().optional(),
+  alternative2Name: z.string().trim().min(1).nullable().optional(),
   sets: z.number().min(1),
   warmupSets: z.number().int().min(0).default(0),
   reps: z.number().min(1),
@@ -118,6 +123,14 @@ export const SessionExerciseResponseSchema = z.object({
   exerciseId: z.uuid().nullable(),
   exerciseNameSnapshot: z.string(),
   order: z.number(),
+  plannedExerciseId: z.uuid().nullable().optional(),
+  plannedExerciseNameSnapshot: z.string().nullable().optional(),
+  alternative1ExerciseId: z.uuid().nullable().optional(),
+  alternative1ExerciseNameSnapshot: z.string().nullable().optional(),
+  alternative2ExerciseId: z.uuid().nullable().optional(),
+  alternative2ExerciseNameSnapshot: z.string().nullable().optional(),
+  wasSubstituted: z.boolean().default(false),
+  substitutedAt: z.string().nullable().optional(),
   plannedSets: z.number().nullable(),
   plannedWarmupSets: z.number().nullable().optional(),
   plannedReps: z.number().nullable(),
@@ -194,6 +207,16 @@ export const GetWorkoutDayResponseSchema = z.object({
       name: z.string(),
       order: z.number(),
       workoutDayId: z.uuid(),
+      alternative1ExerciseId: z.uuid().nullable().optional(),
+      alternative1Exercise: z
+        .object({ id: z.uuid(), name: z.string() })
+        .nullable()
+        .optional(),
+      alternative2ExerciseId: z.uuid().nullable().optional(),
+      alternative2Exercise: z
+        .object({ id: z.uuid(), name: z.string() })
+        .nullable()
+        .optional(),
       sets: z.number(),
       warmupSets: z.number().default(0),
       reps: z.number(),
@@ -451,6 +474,14 @@ export const WorkoutSessionExerciseResponseSchema = z.object({
   hasMedia: z.boolean().optional(),
   exerciseNameSnapshot: z.string(),
   order: z.number().int(),
+  plannedExerciseId: z.uuid().nullable().optional(),
+  plannedExerciseNameSnapshot: z.string().nullable().optional(),
+  alternative1ExerciseId: z.uuid().nullable().optional(),
+  alternative1ExerciseNameSnapshot: z.string().nullable().optional(),
+  alternative2ExerciseId: z.uuid().nullable().optional(),
+  alternative2ExerciseNameSnapshot: z.string().nullable().optional(),
+  wasSubstituted: z.boolean().default(false),
+  substitutedAt: z.string().nullable().optional(),
   plannedSets: z.number().int().nullable(),
   plannedWarmupSets: z.number().int().nullable().optional(),
   plannedReps: z.number().int().nullable(),
@@ -562,6 +593,15 @@ export const AddSessionExerciseBodySchema = z.object({
 
 export const DeleteSessionExerciseParamsSchema = z.object({
   sessionExerciseId: z.uuid(),
+});
+
+export const SubstituteSessionExerciseParamsSchema = z.object({
+  sessionId: z.uuid(),
+  sessionExerciseId: z.uuid(),
+});
+
+export const SubstituteSessionExerciseBodySchema = z.object({
+  newExerciseId: z.uuid(),
 });
 
 export const PeriodizationStatusSchema = z.enum([
@@ -937,6 +977,14 @@ export const HistoryExerciseDetailSchema = z.object({
   exerciseNameSnapshot: z.string(),
   order: z.number().int(),
   notes: z.string().nullable(),
+  plannedExerciseId: z.uuid().nullable().optional(),
+  plannedExerciseNameSnapshot: z.string().nullable().optional(),
+  alternative1ExerciseId: z.uuid().nullable().optional(),
+  alternative1ExerciseNameSnapshot: z.string().nullable().optional(),
+  alternative2ExerciseId: z.uuid().nullable().optional(),
+  alternative2ExerciseNameSnapshot: z.string().nullable().optional(),
+  wasSubstituted: z.boolean().default(false),
+  substitutedAt: z.string().nullable().optional(),
   planned: z.object({
     warmupSets: z.number().int().nullable(),
     workingSets: z.number().int().nullable(),

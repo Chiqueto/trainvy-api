@@ -25,6 +25,14 @@ export interface SessionExerciseOutputDto {
   hasMedia?: boolean;
   exerciseNameSnapshot: string;
   order: number;
+  plannedExerciseId?: string | null;
+  plannedExerciseNameSnapshot?: string | null;
+  alternative1ExerciseId?: string | null;
+  alternative1ExerciseNameSnapshot?: string | null;
+  alternative2ExerciseId?: string | null;
+  alternative2ExerciseNameSnapshot?: string | null;
+  wasSubstituted: boolean;
+  substitutedAt?: string | null;
   plannedWarmupSets?: number | null;
   plannedSets: number | null;
   plannedReps: number | null;
@@ -93,6 +101,18 @@ export class GetWorkoutSession {
         ),
         exerciseNameSnapshot: exercise.exerciseNameSnapshot,
         order: exercise.order,
+        plannedExerciseId: exercise.plannedExerciseId ?? null,
+        plannedExerciseNameSnapshot: exercise.plannedExerciseNameSnapshot ?? null,
+        alternative1ExerciseId: exercise.alternative1ExerciseId ?? null,
+        alternative1ExerciseNameSnapshot:
+          exercise.alternative1ExerciseNameSnapshot ?? null,
+        alternative2ExerciseId: exercise.alternative2ExerciseId ?? null,
+        alternative2ExerciseNameSnapshot:
+          exercise.alternative2ExerciseNameSnapshot ?? null,
+        wasSubstituted: exercise.wasSubstituted,
+        substitutedAt: exercise.substitutedAt
+          ? exercise.substitutedAt.toISOString()
+          : null,
         plannedWarmupSets: exercise.plannedWarmupSets,
         plannedSets: exercise.plannedSets,
         plannedReps: exercise.plannedReps,

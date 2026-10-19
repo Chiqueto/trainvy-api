@@ -187,10 +187,15 @@ model Exercise {
   createdAt   DateTime @default(now()) @db.Timestamptz()
   updatedAt   DateTime @updatedAt @db.Timestamptz()
 
-  workoutExercises WorkoutExercise[]
-  sessionExercises SessionExercise[]
-  muscles          ExerciseMuscle[]
-  media            ExerciseMedia[]
+  workoutExercises             WorkoutExercise[] @relation("WorkoutExerciseMain")
+  workoutExercisesAlternative1 WorkoutExercise[] @relation("WorkoutExerciseAlternative1")
+  workoutExercisesAlternative2 WorkoutExercise[] @relation("WorkoutExerciseAlternative2")
+  sessionExercises             SessionExercise[] @relation("SessionExerciseMain")
+  sessionExercisesPlanned      SessionExercise[] @relation("SessionExercisePlanned")
+  sessionExercisesAlternative1 SessionExercise[] @relation("SessionExerciseAlternative1")
+  sessionExercisesAlternative2 SessionExercise[] @relation("SessionExerciseAlternative2")
+  muscles                      ExerciseMuscle[]
+  media                        ExerciseMedia[]
 
   @@index([ownerUserId, name])
 }
@@ -246,11 +251,17 @@ model WorkoutExercise {
   createdAt         DateTime   @default(now()) @db.Timestamptz()
   updatedAt         DateTime   @updatedAt @db.Timestamptz()
 
-  exerciseId       String?
-  exercise         Exercise?         @relation(fields: [exerciseId], references: [id], onDelete: SetNull)
-  sessionExercises SessionExercise[]
+  exerciseId                 String?
+  exercise                   Exercise?         @relation("WorkoutExerciseMain", fields: [exerciseId], references: [id], onDelete: SetNull)
+  alternative1ExerciseId     String?
+  alternative1Exercise       Exercise?         @relation("WorkoutExerciseAlternative1", fields: [alternative1ExerciseId], references: [id], onDelete: SetNull)
+  alternative2ExerciseId     String?
+  alternative2Exercise       Exercise?         @relation("WorkoutExerciseAlternative2", fields: [alternative2ExerciseId], references: [id], onDelete: SetNull)
+  sessionExercises           SessionExercise[]
 
   @@index([exerciseId])
+  @@index([alternative1ExerciseId])
+  @@index([alternative2ExerciseId])
 }
 
 model WorkoutSession {
@@ -285,10 +296,25 @@ model SessionExercise {
   sourceWorkoutExercise   WorkoutExercise? @relation(fields: [sourceWorkoutExerciseId], references: [id], onDelete: SetNull)
 
   exerciseId              String?
-  exercise                Exercise?        @relation(fields: [exerciseId], references: [id], onDelete: SetNull)
+  exercise                Exercise?        @relation("SessionExerciseMain", fields: [exerciseId], references: [id], onDelete: SetNull)
 
   exerciseNameSnapshot    String
   order                   Int
+
+  plannedExerciseId              String?
+  plannedExercise                Exercise?        @relation("SessionExercisePlanned", fields: [plannedExerciseId], references: [id], onDelete: SetNull)
+  plannedExerciseNameSnapshot    String?
+
+  alternative1ExerciseId         String?
+  alternative1Exercise           Exercise?        @relation("SessionExerciseAlternative1", fields: [alternative1ExerciseId], references: [id], onDelete: SetNull)
+  alternative1ExerciseNameSnapshot String?
+
+  alternative2ExerciseId         String?
+  alternative2Exercise           Exercise?        @relation("SessionExerciseAlternative2", fields: [alternative2ExerciseId], references: [id], onDelete: SetNull)
+  alternative2ExerciseNameSnapshot String?
+
+  wasSubstituted                 Boolean          @default(false)
+  substitutedAt                  DateTime?        @db.Timestamptz()
 
   plannedSets              Int?
   plannedWarmupSets        Int?
@@ -304,6 +330,9 @@ model SessionExercise {
   @@index([workoutSessionId, order])
   @@index([exerciseId])
   @@index([exerciseId, workoutSessionId])
+  @@index([plannedExerciseId])
+  @@index([alternative1ExerciseId])
+  @@index([alternative2ExerciseId])
 }
 
 model WorkoutSet {
@@ -665,6 +694,12 @@ model CoachAthlete {
   revokedAt       DateTime?          @db.Timestamptz()
   revokedByUserId String?
   revokedByUser   User?              @relation("RevokedLinks", fields: [revokedByUserId], references: [id], onDelete: SetNull)
+
+  // Task 6.3: Consentimento explícito e escopo temporal para acompanhamento de evolução
+  evolutionShared         Boolean            @default(false)
+  includePreviousHistory  Boolean            @default(false)
+  evolutionSharedAt       DateTime?          @db.Timestamptz()
+  evolutionRevokedAt      DateTime?          @db.Timestamptz()
 
   @@index([coachId, status])
   @@index([athleteId, status])

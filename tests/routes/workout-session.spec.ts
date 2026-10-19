@@ -381,4 +381,61 @@ describe("WorkoutSession & WorkoutSet HTTP Routes", () => {
     expect(delRes.statusCode).toBe(200);
     expect(delRes.json().success).toBe(true);
   });
+
+  it("PATCH /workout-sessions/:sessionId/exercises/:sessionExerciseId/substitute — substitui exercício (200)", async () => {
+    mockAuthUser(userA);
+
+    const newExercise = await createTestExercise({
+      name: "Supino Inclinado com Halteres",
+      ownerUserId: null,
+    });
+
+    const response = await app.inject({
+      method: "PATCH",
+      url: `/workout-sessions/${sessionA.id}/exercises/${sessionExerciseA1.id}/substitute`,
+      payload: {
+        newExerciseId: newExercise.id,
+      },
+    });
+
+    expect(response.statusCode).toBe(200);
+    const body = response.json();
+    expect(body.wasSubstituted).toBe(true);
+    expect(body.exerciseId).toBe(newExercise.id);
+    expect(body.exerciseNameSnapshot).toBe(newExercise.name);
+    expect(body.plannedExerciseNameSnapshot).toBe("Supino Reto");
+  });
+
+  it("PATCH /workout-sessions/:sessionId/exercises/:sessionExerciseId/substitute — retorna 404 para sessão de outro usuário (IDOR)", async () => {
+    mockAuthUser(userB);
+
+    const newExercise = await createTestExercise({
+      name: "Crucifixo",
+      ownerUserId: null,
+    });
+
+    const response = await app.inject({
+      method: "PATCH",
+      url: `/workout-sessions/${sessionA.id}/exercises/${sessionExerciseA1.id}/substitute`,
+      payload: {
+        newExerciseId: newExercise.id,
+      },
+    });
+
+    expect(response.statusCode).toBe(404);
+  });
+
+  it("PATCH /workout-sessions/:sessionId/exercises/:sessionExerciseId/substitute — retorna 401 se desautenticado", async () => {
+    vi.spyOn(auth.api, "getSession").mockResolvedValue(null);
+
+    const response = await app.inject({
+      method: "PATCH",
+      url: `/workout-sessions/${sessionA.id}/exercises/${sessionExerciseA1.id}/substitute`,
+      payload: {
+        newExerciseId: crypto.randomUUID(),
+      },
+    });
+
+    expect(response.statusCode).toBe(401);
+  });
 });

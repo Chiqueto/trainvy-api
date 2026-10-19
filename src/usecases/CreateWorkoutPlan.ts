@@ -1,4 +1,5 @@
 import { resolveCanonicalExerciseMap } from "../domain/canonical-exercise.js";
+import { normalizeAndValidateAlternatives } from "../domain/exercise-alternatives.js";
 import {
   ActivePeriodizationError,
   ConflictError,
@@ -26,6 +27,11 @@ interface InputDto {
       warmupSets?: number;
       reps: number;
       restTimeInSeconds: number;
+      exerciseId?: string | null;
+      alternative1ExerciseId?: string | null;
+      alternative2ExerciseId?: string | null;
+      alternative1Name?: string | null;
+      alternative2Name?: string | null;
     }>;
   }>;
 }
@@ -48,6 +54,9 @@ interface OutputDto {
       warmupSets: number;
       reps: number;
       restTimeInSeconds: number;
+      exerciseId?: string | null;
+      alternative1ExerciseId?: string | null;
+      alternative2ExerciseId?: string | null;
     }>;
   }>;
 }
@@ -84,7 +93,11 @@ export class CreateWorkoutPlan {
         }
 
         const allExerciseNames = dto.workoutDays.flatMap((day) =>
-          day.exercises.map((e) => e.name),
+          day.exercises.flatMap((e) =>
+            [e.name, e.alternative1Name, e.alternative2Name].filter(
+              (n): n is string => !!n && n.trim().length > 0,
+            ),
+          ),
         );
         const canonicalExerciseMap = await resolveCanonicalExerciseMap({
           userId: dto.userId,
@@ -107,15 +120,49 @@ export class CreateWorkoutPlan {
                 estimatedDurationInSeconds: workoutDay.estimatedDurationInSeconds,
                 coverImageUrl: workoutDay.coverImageUrl ?? null,
                 exercises: {
-                  create: workoutDay.exercises.map((exercise) => ({
-                    order: exercise.order,
-                    name: exercise.name,
-                    sets: exercise.sets,
-                    warmupSets: exercise.warmupSets ?? 0,
-                    reps: exercise.reps,
-                    restTimeInSeconds: exercise.restTimeInSeconds,
-                    exerciseId: canonicalExerciseMap.get(exercise.name) ?? null,
-                  })),
+                  create: workoutDay.exercises.map((exercise) => {
+                    const resolvedMainId =
+                      exercise.exerciseId ??
+                      canonicalExerciseMap.get(exercise.name.trim()) ??
+                      canonicalExerciseMap.get(exercise.name) ??
+                      null;
+
+                    const resolvedAlt1Id =
+                      exercise.alternative1ExerciseId ??
+                      (exercise.alternative1Name
+                        ? canonicalExerciseMap.get(exercise.alternative1Name.trim()) ??
+                          canonicalExerciseMap.get(exercise.alternative1Name)
+                        : null) ??
+                      null;
+
+                    const resolvedAlt2Id =
+                      exercise.alternative2ExerciseId ??
+                      (exercise.alternative2Name
+                        ? canonicalExerciseMap.get(exercise.alternative2Name.trim()) ??
+                          canonicalExerciseMap.get(exercise.alternative2Name)
+                        : null) ??
+                      null;
+
+                    const { alternative1ExerciseId, alternative2ExerciseId } =
+                      normalizeAndValidateAlternatives({
+                        mainExerciseId: resolvedMainId,
+                        mainExerciseName: exercise.name,
+                        alternative1ExerciseId: resolvedAlt1Id,
+                        alternative2ExerciseId: resolvedAlt2Id,
+                      });
+
+                    return {
+                      order: exercise.order,
+                      name: exercise.name,
+                      sets: exercise.sets,
+                      warmupSets: exercise.warmupSets ?? 0,
+                      reps: exercise.reps,
+                      restTimeInSeconds: exercise.restTimeInSeconds,
+                      exerciseId: resolvedMainId,
+                      alternative1ExerciseId,
+                      alternative2ExerciseId,
+                    };
+                  }),
                 },
               })),
             },
@@ -160,6 +207,9 @@ export class CreateWorkoutPlan {
               warmupSets: exercise.warmupSets,
               reps: exercise.reps,
               restTimeInSeconds: exercise.restTimeInSeconds,
+              exerciseId: exercise.exerciseId,
+              alternative1ExerciseId: exercise.alternative1ExerciseId,
+              alternative2ExerciseId: exercise.alternative2ExerciseId,
             })),
           })),
         };

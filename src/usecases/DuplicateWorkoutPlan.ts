@@ -28,6 +28,8 @@ interface OutputDto {
       reps: number;
       restTimeInSeconds: number;
       exerciseId: string | null;
+      alternative1ExerciseId?: string | null;
+      alternative2ExerciseId?: string | null;
     }>;
   }>;
 }
@@ -81,6 +83,8 @@ export class DuplicateWorkoutPlan {
                   reps: ex.reps,
                   restTimeInSeconds: ex.restTimeInSeconds,
                   exerciseId: ex.exerciseId, // Preserva vínculo canônico sem duplicar Exercise
+                  alternative1ExerciseId: ex.alternative1ExerciseId,
+                  alternative2ExerciseId: ex.alternative2ExerciseId,
                 })),
               },
             })),
@@ -119,6 +123,8 @@ export class DuplicateWorkoutPlan {
             reps: ex.reps,
             restTimeInSeconds: ex.restTimeInSeconds,
             exerciseId: ex.exerciseId,
+            alternative1ExerciseId: ex.alternative1ExerciseId,
+            alternative2ExerciseId: ex.alternative2ExerciseId,
           })),
         })),
       };
