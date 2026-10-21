@@ -187,6 +187,7 @@ model Exercise {
   ownerUserId String?
   ownerUser   User?    @relation(fields: [ownerUserId], references: [id], onDelete: Cascade)
   name        String
+  isUnilateral Boolean @default(false)
   createdAt   DateTime @default(now()) @db.Timestamptz()
   updatedAt   DateTime @updatedAt @db.Timestamptz()
 
