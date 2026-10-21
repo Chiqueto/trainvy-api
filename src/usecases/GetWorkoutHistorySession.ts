@@ -21,6 +21,9 @@ export interface HistorySetDetailDto {
   durationInSeconds: number | null;
   notes: string | null;
   completedAt: string;
+  exerciseId?: string | null;
+  exerciseNameSnapshot?: string | null;
+  proposalId?: string | null;
 }
 
 export interface HistoryExerciseDetailDto {
@@ -128,6 +131,9 @@ export class GetWorkoutHistorySession {
         durationInSeconds: set.durationInSeconds,
         notes: set.notes,
         completedAt: set.completedAt!.toISOString(),
+        exerciseId: set.exerciseId,
+        exerciseNameSnapshot: set.exerciseNameSnapshot,
+        proposalId: set.proposalId,
       }));
 
       return {

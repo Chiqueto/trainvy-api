@@ -37,6 +37,7 @@ interface InputDto {
   userId: string;
   title?: string | null;
   initialMessageText?: string | null;
+  workoutSessionId?: string | null;
 }
 
 export class CreateAiConversation {
@@ -50,12 +51,14 @@ export class CreateAiConversation {
       data: {
         userId: dto.userId,
         title,
+        workoutSessionId: dto.workoutSessionId ?? null,
       },
     });
 
     return {
       id: conversation.id,
       title: conversation.title,
+      workoutSessionId: conversation.workoutSessionId,
       createdAt: conversation.createdAt.toISOString(),
       updatedAt: conversation.updatedAt.toISOString(),
     };

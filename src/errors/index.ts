@@ -245,5 +245,42 @@ export class AiRateLimitError extends Error {
   }
 }
 
+export class ProposalOutdatedError extends ConflictError {
+  constructor(
+    message = "A proposta está desatualizada devido a alterações recentes no treino ou exercício.",
+    code = "CONTEXT_REVISION_MISMATCH",
+  ) {
+    super(message, code);
+    this.name = "ProposalOutdatedError";
+  }
+}
 
+export class ProposalAlreadyProcessedError extends ConflictError {
+  constructor(
+    message = "A proposta já foi confirmada ou descartada.",
+    code = "PROPOSAL_ALREADY_PROCESSED",
+  ) {
+    super(message, code);
+    this.name = "ProposalAlreadyProcessedError";
+  }
+}
 
+export class ProposalExpiredError extends ConflictError {
+  constructor(
+    message = "A proposta expirou e não pode mais ser confirmada.",
+    code = "PROPOSAL_EXPIRED",
+  ) {
+    super(message, code);
+    this.name = "ProposalExpiredError";
+  }
+}
+
+export class IdempotencyConflictError extends ConflictError {
+  constructor(
+    message = "A proposta já foi confirmada com um conjunto diferente de séries.",
+    code = "IDEMPOTENCY_CONFLICT",
+  ) {
+    super(message, code);
+    this.name = "IdempotencyConflictError";
+  }
+}

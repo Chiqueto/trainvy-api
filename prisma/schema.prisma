@@ -102,6 +102,9 @@ model User {
   acceptedInvitations     CoachInvitation[] @relation("AthleteAcceptedInvitations")
   coachPrescriptions      WorkoutPrescription[] @relation("CoachPrescriptions")
   athletePrescriptions    WorkoutPrescription[] @relation("AthletePrescriptions")
+  aiTrainingHistoryAccess Boolean          @default(false)
+  aiTrainingHistoryConsentAt DateTime?     @db.Timestamptz()
+  workoutSetProposals     WorkoutSetProposal[]
 
   @@unique([email])
   @@map("user")
@@ -196,6 +199,8 @@ model Exercise {
   sessionExercisesAlternative2 SessionExercise[] @relation("SessionExerciseAlternative2")
   muscles                      ExerciseMuscle[]
   media                        ExerciseMedia[]
+  workoutSets                  WorkoutSet[]      @relation("WorkoutSetExercise")
+  workoutSetProposals          WorkoutSetProposal[]
 
   @@index([ownerUserId, name])
 }
@@ -281,6 +286,8 @@ model WorkoutSession {
   updatedAt               DateTime             @updatedAt @db.Timestamptz()
 
   sessionExercises        SessionExercise[]
+  proposals               WorkoutSetProposal[]
+  aiConversations         AiConversation[]
 
   @@index([athleteId, startedAt])
   @@index([athleteId, completedAt])
@@ -325,6 +332,9 @@ model SessionExercise {
   createdAt               DateTime         @default(now()) @db.Timestamptz()
   updatedAt               DateTime         @updatedAt @db.Timestamptz()
 
+  revision                Int              @default(1)
+  proposals               WorkoutSetProposal[]
+
   sets                    WorkoutSet[]
 
   @@index([workoutSessionId, order])
@@ -336,26 +346,35 @@ model SessionExercise {
 }
 
 model WorkoutSet {
-  id                String          @id @default(uuid())
-  sessionExerciseId String
-  sessionExercise   SessionExercise @relation(fields: [sessionExerciseId], references: [id], onDelete: Cascade)
+  id                   String              @id @default(uuid())
+  sessionExerciseId    String
+  sessionExercise      SessionExercise     @relation(fields: [sessionExerciseId], references: [id], onDelete: Cascade)
 
-  order             Int
-  type              SetType         @default(WORKING)
+  exerciseId           String?
+  exercise             Exercise?           @relation("WorkoutSetExercise", fields: [exerciseId], references: [id], onDelete: SetNull)
+  exerciseNameSnapshot String?
 
-  weightInGrams     Int?
-  reps              Int?
-  rir               Int?
-  durationInSeconds Int?
+  proposalId           String?
+  proposal             WorkoutSetProposal? @relation(fields: [proposalId], references: [id], onDelete: SetNull)
 
-  notes             String?
-  completedAt       DateTime?       @db.Timestamptz()
+  order                Int
+  type                 SetType             @default(WORKING)
 
-  createdAt         DateTime        @default(now()) @db.Timestamptz()
-  updatedAt         DateTime        @updatedAt @db.Timestamptz()
+  weightInGrams        Int?
+  reps                 Int?
+  rir                  Int?
+  durationInSeconds    Int?
+
+  notes                String?
+  completedAt          DateTime?           @db.Timestamptz()
+
+  createdAt            DateTime            @default(now()) @db.Timestamptz()
+  updatedAt            DateTime            @updatedAt @db.Timestamptz()
 
   @@index([sessionExerciseId, order])
   @@index([sessionExerciseId, type, completedAt])
+  @@index([exerciseId])
+  @@index([proposalId])
 }
 
 model Session {
@@ -414,9 +433,13 @@ model AiConversation {
   createdAt DateTime    @default(now()) @db.Timestamptz()
   updatedAt DateTime    @updatedAt @db.Timestamptz()
 
+  workoutSessionId String?
+  workoutSession   WorkoutSession? @relation(fields: [workoutSessionId], references: [id], onDelete: Cascade)
+
   messages  AiMessage[]
 
   @@index([userId, updatedAt(sort: Desc)])
+  @@index([workoutSessionId])
 }
 
 model AiMessage {
@@ -735,6 +758,49 @@ model WorkoutPrescription {
   @@index([coachId, status])
   @@index([athleteId, status])
   @@index([createdAt])
+}
+
+enum WorkoutSetProposalStatus {
+  PENDING
+  CONFIRMED
+  DISCARDED
+  INVALIDATED
+  SUPERSEDED
+}
+
+model WorkoutSetProposal {
+  id                            String                   @id @default(uuid())
+  userId                        String
+  user                          User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workoutSessionId              String
+  workoutSession                WorkoutSession           @relation(fields: [workoutSessionId], references: [id], onDelete: Cascade)
+  sessionExerciseId             String
+  sessionExercise               SessionExercise          @relation(fields: [sessionExerciseId], references: [id], onDelete: Cascade)
+
+  targetExerciseId              String?
+  targetExercise                Exercise?                @relation(fields: [targetExerciseId], references: [id], onDelete: SetNull)
+  targetExerciseNameSnapshot    String
+  targetSessionExerciseRevision Int
+
+  status                        WorkoutSetProposalStatus @default(PENDING)
+  invalidationReason            String?
+
+  suggestedSets                 Json
+  confirmedSets                 Json?
+
+  idempotencyKey                String?                  @unique
+  expiresAt                     DateTime                 @db.Timestamptz()
+  confirmedAt                   DateTime?                @db.Timestamptz()
+  discardedAt                   DateTime?                @db.Timestamptz()
+
+  createdAt                     DateTime                 @default(now()) @db.Timestamptz()
+  updatedAt                     DateTime                 @updatedAt @db.Timestamptz()
+
+  workoutSets                   WorkoutSet[]
+
+  @@index([workoutSessionId, status])
+  @@index([sessionExerciseId, status])
+  @@index([userId, status])
 }
 
 

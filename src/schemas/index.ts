@@ -7,10 +7,12 @@ import {
   SetType,
   WeekDay,
   WorkoutSessionOrigin,
+  WorkoutSetProposalStatus,
 } from "../generated/prisma/enums.js";
 
 export const WorkoutSessionOriginSchema = z.enum(WorkoutSessionOrigin);
 export const ExerciseMediaTypeSchema = z.enum(ExerciseMediaType);
+export const WorkoutSetProposalStatusSchema = z.enum(WorkoutSetProposalStatus);
 
 export const GamificationTheme = {
   ALL: "ALL",
@@ -423,6 +425,9 @@ export const WorkoutSetResponseSchema = z.object({
   durationInSeconds: z.number().int().nullable(),
   notes: z.string().nullable(),
   completedAt: z.string().nullable(),
+  exerciseId: z.uuid().nullable().optional(),
+  exerciseNameSnapshot: z.string().nullable().optional(),
+  proposalId: z.uuid().nullable().optional(),
 });
 
 export const UpdateWorkoutSetParamsSchema = z.object({
@@ -466,6 +471,9 @@ export const WorkoutSessionSetResponseSchema = z.object({
   durationInSeconds: z.number().int().nullable(),
   notes: z.string().nullable(),
   completedAt: z.string().nullable(),
+  exerciseId: z.uuid().nullable().optional(),
+  exerciseNameSnapshot: z.string().nullable().optional(),
+  proposalId: z.uuid().nullable().optional(),
 });
 
 export const WorkoutSessionExerciseResponseSchema = z.object({
@@ -474,6 +482,7 @@ export const WorkoutSessionExerciseResponseSchema = z.object({
   hasMedia: z.boolean().optional(),
   exerciseNameSnapshot: z.string(),
   order: z.number().int(),
+  revision: z.number().int().default(1),
   plannedExerciseId: z.uuid().nullable().optional(),
   plannedExerciseNameSnapshot: z.string().nullable().optional(),
   alternative1ExerciseId: z.uuid().nullable().optional(),
@@ -969,6 +978,9 @@ export const HistorySetDetailSchema = z.object({
   durationInSeconds: z.number().int().nullable(),
   notes: z.string().nullable(),
   completedAt: z.string(),
+  exerciseId: z.uuid().nullable().optional(),
+  exerciseNameSnapshot: z.string().nullable().optional(),
+  proposalId: z.uuid().nullable().optional(),
 });
 
 export const HistoryExerciseDetailSchema = z.object({
@@ -1180,6 +1192,88 @@ export const CreateFeedbackResponseSchema = z.object({
 });
 
 export * from "./coach-prescription.js";
+
+// ==========================================
+// Task 6.5: In-Session AI Assistant & Set Proposals
+// ==========================================
+
+export const ProposedSetInputSchema = z.object({
+  type: z.enum(SetType).default("WORKING"),
+  weightKg: z.number().min(0).max(1000).nullable().optional(),
+  reps: z.number().int().min(0).max(500).nullable().optional(),
+  rir: z.number().int().min(0).max(10).nullable().optional(),
+  durationInSeconds: z.number().int().min(0).max(86400).nullable().optional(),
+  notes: z.string().max(500).nullable().optional(),
+});
+export type ProposedSetInput = z.infer<typeof ProposedSetInputSchema>;
+
+export const WorkoutSetProposalSchema = z.object({
+  id: z.uuid(),
+  userId: z.string(),
+  workoutSessionId: z.uuid(),
+  sessionExerciseId: z.uuid(),
+  targetExerciseId: z.uuid().nullable().optional(),
+  targetExerciseNameSnapshot: z.string(),
+  targetSessionExerciseRevision: z.number().int(),
+  status: WorkoutSetProposalStatusSchema,
+  invalidationReason: z.string().nullable().optional(),
+  suggestedSets: z.array(ProposedSetInputSchema),
+  confirmedSets: z.array(ProposedSetInputSchema).nullable().optional(),
+  idempotencyKey: z.string().nullable().optional(),
+  expiresAt: z.string(),
+  confirmedAt: z.string().nullable().optional(),
+  discardedAt: z.string().nullable().optional(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+export type WorkoutSetProposalDto = z.infer<typeof WorkoutSetProposalSchema>;
+
+export const ListWorkoutSetProposalsParamsSchema = z.object({
+  sessionId: z.uuid(),
+});
+
+export const ListWorkoutSetProposalsResponseSchema = z.object({
+  proposals: z.array(WorkoutSetProposalSchema),
+});
+
+export const ConfirmWorkoutSetProposalParamsSchema = z.object({
+  sessionId: z.uuid(),
+  proposalId: z.uuid(),
+});
+
+export const ConfirmWorkoutSetProposalBodySchema = z.object({
+  idempotencyKey: z.string().max(100).optional(),
+  sets: z.array(ProposedSetInputSchema).min(1, "A proposta deve conter ao menos uma série"),
+});
+
+export const ConfirmWorkoutSetProposalResponseSchema = z.object({
+  success: z.boolean(),
+  proposal: WorkoutSetProposalSchema,
+  createdSets: z.array(WorkoutSessionSetResponseSchema),
+});
+
+export const DiscardWorkoutSetProposalParamsSchema = z.object({
+  sessionId: z.uuid(),
+  proposalId: z.uuid(),
+});
+
+export const DiscardWorkoutSetProposalBodySchema = z.object({
+  reason: z.string().max(255).optional(),
+});
+
+export const DiscardWorkoutSetProposalResponseSchema = z.object({
+  success: z.boolean(),
+  proposal: WorkoutSetProposalSchema,
+});
+
+export const UserAiConsentResponseSchema = z.object({
+  aiTrainingHistoryAccess: z.boolean(),
+  aiTrainingHistoryConsentAt: z.string().nullable(),
+});
+
+export const UpdateUserAiConsentBodySchema = z.object({
+  aiTrainingHistoryAccess: z.boolean(),
+});
 
 
 

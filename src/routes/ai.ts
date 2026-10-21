@@ -5,8 +5,8 @@ import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
 
-import { getSystemPrompt } from "../ai/system-prompt.js";
-import { getAiTools } from "../ai/tools.js";
+import { getInSessionSystemPrompt, getSystemPrompt } from "../ai/system-prompt.js";
+import { getAiTools, getSessionAiTools } from "../ai/tools.js";
 import { AiRateLimitError, InvalidTimezoneError, NotFoundError } from "../errors/index.js";
 import { auth } from "../lib/auth.js";
 import { prisma } from "../lib/db.js";
@@ -18,13 +18,17 @@ import {
   GetAiConversationResponseSchema,
   ListAiConversationsResponseSchema,
   SuccessResponseSchema,
+  UpdateUserAiConsentBodySchema,
+  UserAiConsentResponseSchema,
 } from "../schemas/index.js";
 import { CheckAndConsumeAiQuota } from "../usecases/CheckAndConsumeAiQuota.js";
 import { CreateAiConversation } from "../usecases/CreateAiConversation.js";
 import { DeleteAiConversation } from "../usecases/DeleteAiConversation.js";
 import { GetAiConversation } from "../usecases/GetAiConversation.js";
+import { GetUserAiConsent } from "../usecases/GetUserAiConsent.js";
 import { ListAiConversations } from "../usecases/ListAiConversations.js";
 import { SaveAiMessages } from "../usecases/SaveAiMessages.js";
+import { UpdateUserAiConsent } from "../usecases/UpdateUserAiConsent.js";
 
 function getFirstUserMessageText(messages: UIMessage[]): string | null {
   for (const msg of messages) {
@@ -45,6 +49,40 @@ function getFirstUserMessageText(messages: UIMessage[]): string | null {
   return null;
 }
 
+function sanitizeMessagesForRevokedHistory(messages: UIMessage[]): UIMessage[] {
+  const historyToolNames = new Set([
+    "getWeeklyTrainingAnalytics",
+    "getMuscleTrainingAnalytics",
+    "getExerciseEvolution",
+    "getWorkoutHistorySession",
+    "listWorkoutHistory",
+  ]);
+
+  return messages.map((msg) => {
+    if (!Array.isArray(msg.parts)) return msg;
+    const sanitizedParts = msg.parts.map((part: any) => {
+      if (
+        part.type === "tool-invocation" &&
+        part.toolInvocation &&
+        historyToolNames.has(part.toolInvocation.toolName)
+      ) {
+        return {
+          ...part,
+          toolInvocation: {
+            ...part.toolInvocation,
+            result: {
+              notice:
+                "O acesso ao histórico de treinos anteriores foi revogado pelo atleta sob as preferências de privacidade da conta.",
+            },
+          },
+        };
+      }
+      return part;
+    });
+    return { ...msg, parts: sanitizedParts };
+  });
+}
+
 export const aiRoutes = async (app: FastifyInstance) => {
   // 1. Chat with AI Coach: POST /ai
   app.withTypeProvider<ZodTypeProvider>().route({
@@ -55,11 +93,15 @@ export const aiRoutes = async (app: FastifyInstance) => {
       summary: "Chat with AI Coach (Trainvy)",
       querystring: z.object({
         conversationId: z.string().uuid().optional(),
+        workoutSessionId: z.string().uuid().optional(),
+        sessionExerciseId: z.string().uuid().optional(),
       }),
       body: z.object({
         messages: z.array(z.any()),
         conversationId: z.string().uuid().optional(),
         timezone: z.string().max(255).optional(),
+        workoutSessionId: z.string().uuid().optional(),
+        sessionExerciseId: z.string().uuid().optional(),
       }),
     },
     handler: async (request, reply) => {
@@ -90,61 +132,182 @@ export const aiRoutes = async (app: FastifyInstance) => {
         }
         throw error;
       }
+
       const {
-        messages,
+        messages: incomingMessages,
         conversationId: bodyConversationId,
         timezone,
+        workoutSessionId: bodySessionId,
+        sessionExerciseId: bodyExerciseId,
       } = request.body as {
         messages: UIMessage[];
         conversationId?: string;
         timezone?: string;
+        workoutSessionId?: string;
+        sessionExerciseId?: string;
       };
 
-      let tools;
-      try {
-        tools = getAiTools(userId, { timezone });
-      } catch (error) {
-        if (error instanceof InvalidTimezoneError) {
-          return reply.status(400).send({
-            error: error.message,
-            code: "INVALID_TIMEZONE",
-          });
-        }
-        throw error;
-      }
+      const querySessionId = request.query.workoutSessionId;
+      const queryExerciseId = request.query.sessionExerciseId;
+      const workoutSessionId = bodySessionId || querySessionId;
+      const sessionExerciseId = bodyExerciseId || queryExerciseId;
 
       const queryConversationId = request.query.conversationId;
       const requestedConversationId = bodyConversationId || queryConversationId;
 
+      // Consulta de consentimento LGPD do atleta
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        select: { aiTrainingHistoryAccess: true },
+      });
+      const hasHistoryConsent = user?.aiTrainingHistoryAccess ?? false;
+
+      // Se o atleta revogou o consentimento, sanitiza mensagens anteriores para não reenviar histórico vazado
+      const messages = hasHistoryConsent
+        ? incomingMessages
+        : sanitizeMessagesForRevokedHistory(incomingMessages);
+
+      let tools: any;
+      let systemPrompt: string;
       let conversationId = requestedConversationId;
 
-      if (conversationId) {
-        const existing = await prisma.aiConversation.findFirst({
+      if (workoutSessionId) {
+        // Validação estrita de ownership da sessão de treino
+        const sessionRecord = await prisma.workoutSession.findFirst({
           where: {
-            id: conversationId,
-            userId,
+            id: workoutSessionId,
+            athleteId: userId,
           },
+          select: { id: true },
         });
 
-        if (!existing) {
+        if (!sessionRecord) {
           return reply.status(404).send({
-            error: "Conversa não encontrada.",
+            error: "Sessão de treino não encontrada.",
             code: "NOT_FOUND",
           });
         }
+
+        // Validação do exercício na sessão, se fornecido
+        if (sessionExerciseId) {
+          const exerciseRecord = await prisma.sessionExercise.findFirst({
+            where: {
+              id: sessionExerciseId,
+              workoutSessionId,
+            },
+            select: { id: true },
+          });
+
+          if (!exerciseRecord) {
+            return reply.status(404).send({
+              error: "Exercício não encontrado nesta sessão de treino.",
+              code: "NOT_FOUND",
+            });
+          }
+        }
+
+        // Vinculação e isolamento imutável da conversa com a sessão
+        if (conversationId) {
+          const existing = await prisma.aiConversation.findFirst({
+            where: {
+              id: conversationId,
+              userId,
+              workoutSessionId,
+            },
+          });
+
+          if (!existing) {
+            return reply.status(404).send({
+              error: "Conversa não encontrada ou não pertence a esta sessão de treino.",
+              code: "NOT_FOUND",
+            });
+          }
+        } else {
+          // Busca conversa ativa pré-existente para a sessão ou cria uma nova
+          const existingSessionConv = await prisma.aiConversation.findFirst({
+            where: {
+              userId,
+              workoutSessionId,
+            },
+            orderBy: { createdAt: "desc" },
+          });
+
+          if (existingSessionConv) {
+            conversationId = existingSessionConv.id;
+          } else {
+            const initialText = getFirstUserMessageText(messages);
+            const createConversation = new CreateAiConversation();
+            const created = await createConversation.execute({
+              userId,
+              initialMessageText: initialText,
+              workoutSessionId,
+              title: "Assistente de Treino",
+            });
+            conversationId = created.id;
+          }
+        }
+
+        try {
+          tools = getSessionAiTools(userId, {
+            workoutSessionId,
+            sessionExerciseId,
+            timezone,
+          });
+        } catch (error) {
+          if (error instanceof InvalidTimezoneError) {
+            return reply.status(400).send({
+              error: error.message,
+              code: "INVALID_TIMEZONE",
+            });
+          }
+          throw error;
+        }
+
+        systemPrompt = getInSessionSystemPrompt(userName);
       } else {
-        const initialText = getFirstUserMessageText(messages);
-        const createConversation = new CreateAiConversation();
-        const created = await createConversation.execute({
-          userId,
-          initialMessageText: initialText,
-        });
-        conversationId = created.id;
+        // Chat geral fora do treino
+        if (conversationId) {
+          const existing = await prisma.aiConversation.findFirst({
+            where: {
+              id: conversationId,
+              userId,
+            },
+          });
+
+          if (!existing) {
+            return reply.status(404).send({
+              error: "Conversa não encontrada.",
+              code: "NOT_FOUND",
+            });
+          }
+        } else {
+          const initialText = getFirstUserMessageText(messages);
+          const createConversation = new CreateAiConversation();
+          const created = await createConversation.execute({
+            userId,
+            initialMessageText: initialText,
+          });
+          conversationId = created.id;
+        }
+
+        try {
+          tools = getAiTools(userId, { timezone });
+        } catch (error) {
+          if (error instanceof InvalidTimezoneError) {
+            return reply.status(400).send({
+              error: error.message,
+              code: "INVALID_TIMEZONE",
+            });
+          }
+          throw error;
+        }
+
+        systemPrompt = getSystemPrompt(userName);
       }
 
       const result = streamText({
         model: google("gemini-2.5-flash"),
-        system: getSystemPrompt(userName),
+        system: systemPrompt,
         messages: await convertToModelMessages(messages),
         stopWhen: stepCountIs(10),
         tools,
@@ -319,6 +482,96 @@ export const aiRoutes = async (app: FastifyInstance) => {
         const result = await deleteConversation.execute({
           userId: session.user.id,
           conversationId: request.params.id,
+        });
+
+        return reply.status(200).send(result);
+      } catch (error) {
+        if (error instanceof NotFoundError) {
+          return reply.status(404).send({
+            error: error.message,
+            code: "NOT_FOUND",
+          });
+        }
+        throw error;
+      }
+    },
+  });
+
+  // 6. Get AI Consent: GET /ai/consent
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: "GET",
+    url: "/consent",
+    schema: {
+      tags: ["AI"],
+      summary: "Get AI history training access consent status (LGPD)",
+      response: {
+        200: UserAiConsentResponseSchema,
+        401: ErrorSchema,
+        404: ErrorSchema,
+        500: ErrorSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const session = await auth.api.getSession({
+        headers: fromNodeHeaders(request.headers),
+      });
+
+      if (!session) {
+        return reply
+          .status(401)
+          .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+      }
+
+      try {
+        const getConsent = new GetUserAiConsent();
+        const result = await getConsent.execute({
+          userId: session.user.id,
+        });
+
+        return reply.status(200).send(result);
+      } catch (error) {
+        if (error instanceof NotFoundError) {
+          return reply.status(404).send({
+            error: error.message,
+            code: "NOT_FOUND",
+          });
+        }
+        throw error;
+      }
+    },
+  });
+
+  // 7. Update AI Consent: PATCH /ai/consent
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: "PATCH",
+    url: "/consent",
+    schema: {
+      tags: ["AI"],
+      summary: "Update AI history training access consent status (LGPD)",
+      body: UpdateUserAiConsentBodySchema,
+      response: {
+        200: UserAiConsentResponseSchema,
+        401: ErrorSchema,
+        404: ErrorSchema,
+        500: ErrorSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const session = await auth.api.getSession({
+        headers: fromNodeHeaders(request.headers),
+      });
+
+      if (!session) {
+        return reply
+          .status(401)
+          .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+      }
+
+      try {
+        const updateConsent = new UpdateUserAiConsent();
+        const result = await updateConsent.execute({
+          userId: session.user.id,
+          aiTrainingHistoryAccess: request.body.aiTrainingHistoryAccess,
         });
 
         return reply.status(200).send(result);

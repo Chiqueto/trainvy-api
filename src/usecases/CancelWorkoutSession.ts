@@ -13,26 +13,32 @@ interface OutputDto {
 
 export class CancelWorkoutSession {
   async execute(dto: InputDto): Promise<OutputDto> {
-    const session = await prisma.workoutSession.findUnique({
-      where: { id: dto.sessionId },
+    return await prisma.$transaction(async (tx) => {
+      const lockedSessions = await tx.$queryRaw<Array<{ id: string; athleteId: string; completedAt: Date | null }>>`
+        SELECT id, "athleteId", "completedAt"
+        FROM "WorkoutSession"
+        WHERE id = ${dto.sessionId}
+        FOR UPDATE
+      `;
+
+      const session = lockedSessions[0];
+      if (!session || session.athleteId !== dto.userId) {
+        throw new NotFoundError("Workout session not found");
+      }
+
+      if (session.completedAt !== null) {
+        throw new ConflictError("Cannot cancel an already completed workout session");
+      }
+
+      // Exclui a sessão e seus registros em cascata
+      await tx.workoutSession.delete({
+        where: { id: dto.sessionId },
+      });
+
+      return {
+        success: true,
+        sessionId: dto.sessionId,
+      };
     });
-
-    if (!session || session.athleteId !== dto.userId) {
-      throw new NotFoundError("Workout session not found");
-    }
-
-    if (session.completedAt !== null) {
-      throw new ConflictError("Cannot cancel an already completed workout session");
-    }
-
-    // Exclui a sessão e seus registros em cascata
-    await prisma.workoutSession.delete({
-      where: { id: dto.sessionId },
-    });
-
-    return {
-      success: true,
-      sessionId: dto.sessionId,
-    };
   }
 }

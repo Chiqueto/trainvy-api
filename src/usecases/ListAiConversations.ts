@@ -2,11 +2,13 @@ import { prisma } from "../lib/db.js";
 
 interface InputDto {
   userId: string;
+  workoutSessionId?: string | null;
 }
 
 export interface AiConversationSummaryDto {
   id: string;
   title: string;
+  workoutSessionId?: string | null;
   createdAt: string;
   updatedAt: string;
   messagesCount: number;
@@ -14,10 +16,18 @@ export interface AiConversationSummaryDto {
 
 export class ListAiConversations {
   async execute(dto: InputDto): Promise<AiConversationSummaryDto[]> {
+    const whereClause: { userId: string; workoutSessionId?: string | null } = {
+      userId: dto.userId,
+    };
+
+    if (dto.workoutSessionId !== undefined) {
+      whereClause.workoutSessionId = dto.workoutSessionId;
+    } else {
+      whereClause.workoutSessionId = null;
+    }
+
     const conversations = await prisma.aiConversation.findMany({
-      where: {
-        userId: dto.userId,
-      },
+      where: whereClause,
       orderBy: {
         updatedAt: "desc",
       },

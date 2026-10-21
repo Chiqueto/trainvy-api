@@ -3,8 +3,12 @@ import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 
 import {
   ConflictError,
+  IdempotencyConflictError,
   NotFoundError,
   PendingWorkoutSetsError,
+  ProposalAlreadyProcessedError,
+  ProposalExpiredError,
+  ProposalOutdatedError,
   ValidationError,
   WorkoutSessionAlreadyCompletedError,
 } from "../errors/index.js";
@@ -14,14 +18,22 @@ import {
   AddSessionExerciseParamsSchema,
   CancelWorkoutSessionResponseSchema,
   CompleteWorkoutSessionResponseSchema,
+  ConfirmWorkoutSetProposalBodySchema,
+  ConfirmWorkoutSetProposalParamsSchema,
+  ConfirmWorkoutSetProposalResponseSchema,
   CreateWorkoutSetBodySchema,
   CreateWorkoutSetParamsSchema,
   DeleteSessionExerciseParamsSchema,
   DeleteWorkoutSetParamsSchema,
   DeleteWorkoutSetResponseSchema,
+  DiscardWorkoutSetProposalBodySchema,
+  DiscardWorkoutSetProposalParamsSchema,
+  DiscardWorkoutSetProposalResponseSchema,
   ErrorSchema,
   GetWorkoutSessionParamsSchema,
   GetWorkoutSessionResponseSchema,
+  ListWorkoutSetProposalsParamsSchema,
+  ListWorkoutSetProposalsResponseSchema,
   StartFreeWorkoutSessionResponseSchema,
   SubstituteSessionExerciseBodySchema,
   SubstituteSessionExerciseParamsSchema,
@@ -33,10 +45,13 @@ import {
 import { AddExerciseToWorkoutSession } from "../usecases/AddExerciseToWorkoutSession.js";
 import { CancelWorkoutSession } from "../usecases/CancelWorkoutSession.js";
 import { CompleteWorkoutSession } from "../usecases/CompleteWorkoutSession.js";
+import { ConfirmWorkoutSetProposal } from "../usecases/ConfirmWorkoutSetProposal.js";
 import { CreateWorkoutSet } from "../usecases/CreateWorkoutSet.js";
 import { DeleteWorkoutSet } from "../usecases/DeleteWorkoutSet.js";
+import { DiscardWorkoutSetProposal } from "../usecases/DiscardWorkoutSetProposal.js";
 import { GetActiveWorkoutSession } from "../usecases/GetActiveWorkoutSession.js";
 import { GetWorkoutSession } from "../usecases/GetWorkoutSession.js";
+import { ListWorkoutSetProposals } from "../usecases/ListWorkoutSetProposals.js";
 import { RemoveExerciseFromWorkoutSession } from "../usecases/RemoveExerciseFromWorkoutSession.js";
 import { StartFreeWorkoutSession } from "../usecases/StartFreeWorkoutSession.js";
 import { SubstituteSessionExercise } from "../usecases/SubstituteSessionExercise.js";
@@ -713,6 +728,222 @@ export const workoutSessionRoutes: FastifyPluginAsyncZod = async (app) => {
           return reply.status(400).send({
             error: error.message,
             code: "VALIDATION_ERROR",
+          });
+        }
+
+        app.log.error(error);
+        return reply.status(500).send({
+          error: "Internal server error",
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }
+    },
+  });
+
+  // GET /workout-sessions/:sessionId/set-proposals
+  app.route({
+    method: "GET",
+    url: "/workout-sessions/:sessionId/set-proposals",
+    schema: {
+      operationId: "listWorkoutSetProposals",
+      tags: ["Workout Session"],
+      summary: "List set proposals for a workout session",
+      params: ListWorkoutSetProposalsParamsSchema,
+      response: {
+        200: ListWorkoutSetProposalsResponseSchema,
+        401: ErrorSchema,
+        404: ErrorSchema,
+        500: ErrorSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      try {
+        const session = await auth.api.getSession({
+          headers: fromNodeHeaders(request.headers),
+        });
+        if (!session) {
+          return reply.status(401).send({
+            error: "Unauthorized",
+            code: "UNAUTHORIZED",
+          });
+        }
+
+        const listProposals = new ListWorkoutSetProposals();
+        const result = await listProposals.execute({
+          userId: session.user.id,
+          sessionId: request.params.sessionId,
+        });
+
+        return reply.status(200).send(result);
+      } catch (error) {
+        if (error instanceof NotFoundError) {
+          return reply.status(404).send({
+            error: error.message,
+            code: "NOT_FOUND",
+          });
+        }
+
+        app.log.error(error);
+        return reply.status(500).send({
+          error: "Internal server error",
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }
+    },
+  });
+
+  // POST /workout-sessions/:sessionId/set-proposals/:proposalId/confirm
+  app.route({
+    method: "POST",
+    url: "/workout-sessions/:sessionId/set-proposals/:proposalId/confirm",
+    schema: {
+      operationId: "confirmWorkoutSetProposal",
+      tags: ["Workout Session"],
+      summary: "Confirm and persist proposed workout sets with lock order and revision validation",
+      params: ConfirmWorkoutSetProposalParamsSchema,
+      body: ConfirmWorkoutSetProposalBodySchema,
+      response: {
+        200: ConfirmWorkoutSetProposalResponseSchema,
+        400: ErrorSchema,
+        401: ErrorSchema,
+        404: ErrorSchema,
+        409: ErrorSchema,
+        500: ErrorSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      try {
+        const session = await auth.api.getSession({
+          headers: fromNodeHeaders(request.headers),
+        });
+        if (!session) {
+          return reply.status(401).send({
+            error: "Unauthorized",
+            code: "UNAUTHORIZED",
+          });
+        }
+
+        const confirmProposal = new ConfirmWorkoutSetProposal();
+        const result = await confirmProposal.execute({
+          userId: session.user.id,
+          sessionId: request.params.sessionId,
+          proposalId: request.params.proposalId,
+          sets: request.body.sets,
+          idempotencyKey: request.body.idempotencyKey,
+        });
+
+        return reply.status(200).send(result);
+      } catch (error) {
+        if (error instanceof NotFoundError) {
+          return reply.status(404).send({
+            error: error.message,
+            code: "NOT_FOUND",
+          });
+        }
+
+        if (error instanceof ValidationError) {
+          return reply.status(400).send({
+            error: error.message,
+            code: "VALIDATION_ERROR",
+          });
+        }
+
+        if (error instanceof ProposalOutdatedError) {
+          return reply.status(409).send({
+            error: error.message,
+            code: error.code || "CONTEXT_REVISION_MISMATCH",
+          });
+        }
+
+        if (error instanceof ProposalAlreadyProcessedError) {
+          return reply.status(409).send({
+            error: error.message,
+            code: error.code || "PROPOSAL_ALREADY_PROCESSED",
+          });
+        }
+
+        if (error instanceof ProposalExpiredError) {
+          return reply.status(409).send({
+            error: error.message,
+            code: error.code || "PROPOSAL_EXPIRED",
+          });
+        }
+
+        if (error instanceof IdempotencyConflictError) {
+          return reply.status(409).send({
+            error: error.message,
+            code: error.code || "IDEMPOTENCY_CONFLICT",
+          });
+        }
+
+        if (error instanceof WorkoutSessionAlreadyCompletedError) {
+          return reply.status(409).send({
+            error: error.message,
+            code: "WORKOUT_SESSION_ALREADY_COMPLETED",
+          });
+        }
+
+        app.log.error(error);
+        return reply.status(500).send({
+          error: "Internal server error",
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }
+    },
+  });
+
+  // POST /workout-sessions/:sessionId/set-proposals/:proposalId/discard
+  app.route({
+    method: "POST",
+    url: "/workout-sessions/:sessionId/set-proposals/:proposalId/discard",
+    schema: {
+      operationId: "discardWorkoutSetProposal",
+      tags: ["Workout Session"],
+      summary: "Discard a proposed workout set",
+      params: DiscardWorkoutSetProposalParamsSchema,
+      body: DiscardWorkoutSetProposalBodySchema,
+      response: {
+        200: DiscardWorkoutSetProposalResponseSchema,
+        400: ErrorSchema,
+        401: ErrorSchema,
+        404: ErrorSchema,
+        409: ErrorSchema,
+        500: ErrorSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      try {
+        const session = await auth.api.getSession({
+          headers: fromNodeHeaders(request.headers),
+        });
+        if (!session) {
+          return reply.status(401).send({
+            error: "Unauthorized",
+            code: "UNAUTHORIZED",
+          });
+        }
+
+        const discardProposal = new DiscardWorkoutSetProposal();
+        const result = await discardProposal.execute({
+          userId: session.user.id,
+          sessionId: request.params.sessionId,
+          proposalId: request.params.proposalId,
+          reason: request.body.reason,
+        });
+
+        return reply.status(200).send(result);
+      } catch (error) {
+        if (error instanceof NotFoundError) {
+          return reply.status(404).send({
+            error: error.message,
+            code: "NOT_FOUND",
+          });
+        }
+
+        if (error instanceof ProposalAlreadyProcessedError) {
+          return reply.status(409).send({
+            error: error.message,
+            code: error.code || "PROPOSAL_ALREADY_PROCESSED",
           });
         }
 

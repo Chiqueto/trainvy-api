@@ -19,6 +19,8 @@ import { GetWorkoutPlan } from "../usecases/GetWorkoutPlan.js";
 import { ListExercises } from "../usecases/ListExercises.js";
 import { ListWorkoutHistory } from "../usecases/ListWorkoutHistory.js";
 import { UpsertUserTrainData } from "../usecases/UpsertUserTrainData.js";
+import { GetSessionAiContext } from "../usecases/GetSessionAiContext.js";
+import { ProposeSessionSets } from "../usecases/ProposeSessionSets.js";
 
 
 
@@ -729,6 +731,156 @@ export function getAiTools(userId: string, context: AiToolsContext = {}) {
           );
           throw error;
         }
+      },
+    }),
+  };
+}
+
+export interface SessionAiToolsContext {
+  workoutSessionId: string;
+  sessionExerciseId?: string;
+  timezone?: string;
+}
+
+export function getSessionAiTools(
+  userId: string,
+  context: SessionAiToolsContext,
+) {
+  return {
+    getSessionAiContext: tool({
+      description:
+        "Consulta o contexto completo e fidedigno da sessão de treino atual no banco de dados: nome do treino, exercícios prescritos na sessão com suas respectivas alternativas biomecânicas (Task 6.4), prescrição de aquecimento e séries de trabalho, séries já executadas/registradas pelo atleta e, se expressamente autorizado nas preferências, histórico recente da última sessão para o exercício em foco. Chame esta ferramenta para saber o estado real do treino.",
+      inputSchema: z.object({}),
+      execute: async () => {
+        const getContext = new GetSessionAiContext();
+        return await getContext.execute({
+          userId,
+          sessionId: context.workoutSessionId,
+          sessionExerciseId: context.sessionExerciseId,
+        });
+      },
+    }),
+
+    proposeSessionSets: tool({
+      description:
+        "Cria uma proposta estruturada de séries para um exercício na sessão ativa. Esta ferramenta NÃO grava WorkoutSet no banco de dados; ela apenas persiste uma proposta em status PENDING e exibe um cartão interativo na interface do atleta para revisão, edição e confirmação explícita. NUNCA assuma valores ambíguos: se for halteres, pergunte se o peso é por halter ou somado antes de chamar esta tool.",
+      inputSchema: z.object({
+        sessionExerciseId: z
+          .string()
+          .uuid()
+          .describe("ID do SessionExercise ao qual as séries pertencem"),
+        sets: z
+          .array(
+            z.object({
+              type: z
+                .enum(["WARMUP", "WORKING"])
+                .default("WORKING")
+                .describe("Tipo da série: WARMUP (aquecimento) ou WORKING (válida/trabalho)"),
+              weightKg: z
+                .number()
+                .min(0)
+                .max(1000)
+                .nullable()
+                .optional()
+                .describe("Carga em kg (ex: 20 ou 22.5). Não use gramas aqui."),
+              reps: z
+                .number()
+                .int()
+                .min(0)
+                .max(500)
+                .nullable()
+                .optional()
+                .describe("Número de repetições realizadas"),
+              rir: z
+                .number()
+                .int()
+                .min(0)
+                .max(10)
+                .nullable()
+                .optional()
+                .describe("Repetições em reserva (0 a 10) se informadas"),
+              durationInSeconds: z
+                .number()
+                .int()
+                .min(0)
+                .max(86400)
+                .nullable()
+                .optional()
+                .describe("Duração em segundos para isometrias/pranchas"),
+              notes: z
+                .string()
+                .max(500)
+                .nullable()
+                .optional()
+                .describe("Observações sobre a execução"),
+            }),
+          )
+          .min(1, "A proposta deve conter ao menos 1 série")
+          .max(20, "Máximo de 20 séries por proposta"),
+        clarificationProvided: z
+          .boolean()
+          .describe(
+            "Confirmação de que não restam dúvidas sobre carga (total vs cada halter), repetições ou exercício",
+          ),
+      }),
+      execute: async (input, { toolCallId }) => {
+        if (toolCallId) {
+          const memoryKey = `${userId}:${toolCallId}`;
+          const cached = executedToolCallsCache.get(memoryKey);
+          if (cached) return cached;
+
+          const existingExecution = await prisma.aiToolExecution.findUnique({
+            where: {
+              userId_toolCallId: {
+                userId,
+                toolCallId,
+              },
+            },
+          });
+
+          if (existingExecution) {
+            const cachedResult = existingExecution.result;
+            executedToolCallsCache.set(memoryKey, cachedResult);
+            return cachedResult;
+          }
+        }
+
+        const proposeSessionSets = new ProposeSessionSets();
+        const proposal = await proposeSessionSets.execute({
+          userId,
+          sessionId: context.workoutSessionId,
+          sessionExerciseId: input.sessionExerciseId,
+          sets: input.sets,
+          idempotencyKey: toolCallId,
+        });
+
+        const result = {
+          status: "PROPOSAL_CREATED",
+          proposalId: proposal.id,
+          sessionExerciseId: proposal.sessionExerciseId,
+          exerciseName: proposal.targetExerciseNameSnapshot,
+          sets: proposal.suggestedSets,
+          message:
+            "Proposta de séries criada com sucesso! Um cartão editável foi gerado na tela do atleta. Oriente o atleta a conferir os valores no cartão e clicar no botão 'Confirmar' para registrar as séries no treino.",
+        };
+
+        if (toolCallId) {
+          try {
+            await prisma.aiToolExecution.create({
+              data: {
+                userId,
+                toolCallId,
+                toolName: "proposeSessionSets",
+                result: result as unknown as Prisma.InputJsonValue,
+              },
+            });
+          } catch {
+            // ignore unique race
+          }
+          executedToolCallsCache.set(`${userId}:${toolCallId}`, result);
+        }
+
+        return result;
       },
     }),
   };

@@ -17,6 +17,9 @@ export interface WorkoutSetOutputDto {
   durationInSeconds: number | null;
   notes: string | null;
   completedAt: string | null;
+  exerciseId?: string | null;
+  exerciseNameSnapshot?: string | null;
+  proposalId?: string | null;
 }
 
 export interface SessionExerciseOutputDto {
@@ -25,6 +28,7 @@ export interface SessionExerciseOutputDto {
   hasMedia?: boolean;
   exerciseNameSnapshot: string;
   order: number;
+  revision?: number;
   plannedExerciseId?: string | null;
   plannedExerciseNameSnapshot?: string | null;
   alternative1ExerciseId?: string | null;
@@ -101,6 +105,7 @@ export class GetWorkoutSession {
         ),
         exerciseNameSnapshot: exercise.exerciseNameSnapshot,
         order: exercise.order,
+        revision: exercise.revision,
         plannedExerciseId: exercise.plannedExerciseId ?? null,
         plannedExerciseNameSnapshot: exercise.plannedExerciseNameSnapshot ?? null,
         alternative1ExerciseId: exercise.alternative1ExerciseId ?? null,
@@ -128,6 +133,9 @@ export class GetWorkoutSession {
           durationInSeconds: set.durationInSeconds,
           notes: set.notes,
           completedAt: set.completedAt ? set.completedAt.toISOString() : null,
+          exerciseId: set.exerciseId,
+          exerciseNameSnapshot: set.exerciseNameSnapshot,
+          proposalId: set.proposalId,
         })),
       })),
     };

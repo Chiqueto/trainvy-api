@@ -52,7 +52,7 @@ export class GetMuscleTrainingAnalytics {
         working_sets AS (
           SELECT
             s.id AS set_id,
-            se."exerciseId" AS exercise_id
+            COALESCE(s."exerciseId", se."exerciseId") AS exercise_id
           FROM sessions_in_range sir
           INNER JOIN "SessionExercise" se ON se."workoutSessionId" = sir.id
           INNER JOIN "WorkoutSet" s ON s."sessionExerciseId" = se.id
@@ -82,7 +82,7 @@ export class GetMuscleTrainingAnalytics {
         FROM sessions_in_range sir
         INNER JOIN "SessionExercise" se ON se."workoutSessionId" = sir.id
         INNER JOIN "WorkoutSet" s ON s."sessionExerciseId" = se.id
-        INNER JOIN "ExerciseMuscle" em ON em."exerciseId" = se."exerciseId"
+        INNER JOIN "ExerciseMuscle" em ON em."exerciseId" = COALESCE(s."exerciseId", se."exerciseId")
         WHERE s.type = 'WORKING' AND s."completedAt" IS NOT NULL
         GROUP BY em."muscleGroup";
       `,

@@ -186,10 +186,10 @@ export class GetExerciseEvolution {
         AND s."completedAt" IS NOT NULL
         AND s."weightInGrams" IS NOT NULL
         AND (
-          se."exerciseId" = ${targetExercise.id}
+          COALESCE(s."exerciseId", se."exerciseId") = ${targetExercise.id}
           ${
             enableLegacyFallback
-              ? Prisma.sql`OR (se."exerciseId" IS NULL AND LOWER(TRIM(se."exerciseNameSnapshot")) = LOWER(TRIM(${targetExercise.name})))`
+              ? Prisma.sql`OR (COALESCE(s."exerciseId", se."exerciseId") IS NULL AND LOWER(TRIM(COALESCE(s."exerciseNameSnapshot", se."exerciseNameSnapshot"))) = LOWER(TRIM(${targetExercise.name})))`
               : Prisma.empty
           }
         )
@@ -216,12 +216,14 @@ export class GetExerciseEvolution {
         AND EXISTS (
           SELECT 1
           FROM "SessionExercise" se
+          JOIN "WorkoutSet" s ON s."sessionExerciseId" = se.id
           WHERE se."workoutSessionId" = ws.id
+            AND s.type = 'WORKING' AND s."completedAt" IS NOT NULL
             AND (
-              se."exerciseId" = ${targetExercise.id}
+              COALESCE(s."exerciseId", se."exerciseId") = ${targetExercise.id}
               ${
                 enableLegacyFallback
-                  ? Prisma.sql`OR (se."exerciseId" IS NULL AND LOWER(TRIM(se."exerciseNameSnapshot")) = LOWER(TRIM(${targetExercise.name})))`
+                  ? Prisma.sql`OR (COALESCE(s."exerciseId", se."exerciseId") IS NULL AND LOWER(TRIM(COALESCE(s."exerciseNameSnapshot", se."exerciseNameSnapshot"))) = LOWER(TRIM(${targetExercise.name})))`
                   : Prisma.empty
               }
             )
@@ -284,6 +286,7 @@ export class GetExerciseEvolution {
         workoutSessionId: { in: pageSessionIds },
         OR: [
           { exerciseId: targetExercise.id },
+          { sets: { some: { exerciseId: targetExercise.id } } },
           ...(enableLegacyFallback
             ? [
                 {
@@ -337,10 +340,20 @@ export class GetExerciseEvolution {
       > = [];
       for (const se of matchingSEs) {
         for (const s of se.sets) {
-          allWorkingSets.push({
-            ...s,
-            sessionExerciseOrder: se.order,
-          });
+          const effectiveExId = s.exerciseId ?? se.exerciseId;
+          const isTarget =
+            effectiveExId === targetExercise.id ||
+            (enableLegacyFallback &&
+              !effectiveExId &&
+              (s.exerciseNameSnapshot ?? se.exerciseNameSnapshot).trim().toLowerCase() ===
+                targetExercise.name.trim().toLowerCase());
+
+          if (isTarget) {
+            allWorkingSets.push({
+              ...s,
+              sessionExerciseOrder: se.order,
+            });
+          }
         }
       }
 
