@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "dev": "tsx --watch src/index.ts .env",
-    "build": "prisma generate && tsc",
+    "build": "tsx src/scripts/vercel-build.ts",
     "vercel:build": "tsx src/scripts/vercel-build.ts",
     "commercial:bootstrap": "tsx src/scripts/commercial-bootstrap.ts",
     "admin:grant": "tsx src/scripts/admin-role.ts grant",
