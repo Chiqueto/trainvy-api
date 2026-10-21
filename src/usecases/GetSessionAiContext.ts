@@ -17,6 +17,7 @@ export interface SessionAiContextOutput {
     id: string;
     exerciseId: string | null;
     name: string;
+    isUnilateral: boolean;
     order: number;
     wasSubstituted: boolean;
     substitutedAt: string | null;
@@ -70,6 +71,9 @@ export class GetSessionAiContext {
         sessionExercises: {
           orderBy: { order: "asc" },
           include: {
+            exercise: {
+              select: { isUnilateral: true },
+            },
             sets: {
               orderBy: { order: "asc" },
             },
@@ -141,6 +145,7 @@ export class GetSessionAiContext {
           id: ex.id,
           exerciseId: ex.exerciseId,
           name: ex.exerciseNameSnapshot,
+          isUnilateral: Boolean(ex.exercise?.isUnilateral),
           order: ex.order,
           wasSubstituted: ex.wasSubstituted,
           substitutedAt: ex.substitutedAt ? ex.substitutedAt.toISOString() : null,
