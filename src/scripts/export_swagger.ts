@@ -17,6 +17,7 @@ import { coachPrescriptionRoutes } from "../routes/coach-prescription.js";
 import { coachProgressRoutes } from "../routes/coach-progress.js";
 import { commercialRoutes } from "../routes/commercial.js";
 import { exerciseRoutes } from "../routes/exercise.js";
+import { feedbackRoutes } from "../routes/feedback.js";
 import { historyRoutes } from "../routes/history.js";
 import { homeRoutes } from "../routes/home.js";
 import { meRoutes } from "../routes/me.js";
@@ -25,6 +26,7 @@ import { planningRoutes } from "../routes/planning.js";
 import { statsRoutes } from "../routes/stats.js";
 import { WorkoutPlanRoutes } from "../routes/workout-plan.js";
 import { workoutSessionRoutes } from "../routes/workout-session.js";
+import { workoutSessionRecoveryRoutes } from "../routes/workout-session-recovery.js";
 
 const app = Fastify();
 app.setValidatorCompiler(validatorCompiler);
@@ -61,6 +63,8 @@ await app.register(coachProgressRoutes);
 await app.register(adminRoutes, { prefix: "/admin" });
 await app.register(exerciseRoutes, { prefix: "/exercises" });
 await app.register(workoutSessionRoutes);
+await app.register(workoutSessionRecoveryRoutes);
+await app.register(feedbackRoutes, { prefix: "/feedback" });
 await app.register(historyRoutes, { prefix: "/history" });
 
 await app.ready();

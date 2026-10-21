@@ -60,7 +60,10 @@ export interface GetWorkoutHistorySessionOutputDto {
   origin: "PLANNED" | "FREE";
   startedAt: string;
   completedAt: string;
-  durationInSeconds: number;
+  durationInSeconds: number | null;
+  sessionDate?: string | null;
+  timePrecision?: "EXACT_TIME" | "DATE_ONLY";
+  isRetroactive?: boolean;
   workoutPlanId: string | null;
   workoutPlanNameSnapshot: string | null;
   workoutDayNameSnapshot: string | null;
@@ -105,10 +108,10 @@ export class GetWorkoutHistorySession {
       throw new NotFoundError("Workout session not found");
     }
 
-    const durationInSeconds = computeSessionDurationInSeconds(
-      session.startedAt,
-      session.completedAt,
-    );
+    const durationInSeconds =
+      session.timePrecision === "DATE_ONLY"
+        ? null
+        : computeSessionDurationInSeconds(session.startedAt, session.completedAt);
 
     let totalWorkingSets = 0;
     let totalWarmupSets = 0;
@@ -171,6 +174,11 @@ export class GetWorkoutHistorySession {
       startedAt: session.startedAt.toISOString(),
       completedAt: session.completedAt.toISOString(),
       durationInSeconds,
+      sessionDate: session.sessionDate
+        ? session.sessionDate.toISOString().split("T")[0]
+        : null,
+      timePrecision: session.timePrecision as "EXACT_TIME" | "DATE_ONLY",
+      isRetroactive: session.isRetroactive,
       workoutPlanId: session.workoutPlanId ?? null,
       workoutPlanNameSnapshot: session.workoutPlanNameSnapshot ?? null,
       workoutDayNameSnapshot: session.workoutDayNameSnapshot ?? null,

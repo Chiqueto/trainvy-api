@@ -17,7 +17,10 @@ export interface HistoryTimelineItemDto {
   origin: "PLANNED" | "FREE";
   startedAt: string;
   completedAt: string;
-  durationInSeconds: number;
+  durationInSeconds: number | null;
+  sessionDate?: string | null;
+  timePrecision?: "EXACT_TIME" | "DATE_ONLY";
+  isRetroactive?: boolean;
   workoutPlanId: string | null;
   workoutPlanNameSnapshot: string | null;
   workoutDayNameSnapshot: string | null;
@@ -80,6 +83,9 @@ export class ListWorkoutHistory {
         origin: true,
         startedAt: true,
         completedAt: true,
+        sessionDate: true,
+        timePrecision: true,
+        isRetroactive: true,
         workoutPlanId: true,
         workoutPlanNameSnapshot: true,
         workoutDayNameSnapshot: true,
@@ -158,10 +164,14 @@ export class ListWorkoutHistory {
         totalLoadVolumeGrams: 0,
       };
 
-      const durationInSeconds = computeSessionDurationInSeconds(
-        session.startedAt,
-        session.completedAt!,
-      );
+      const durationInSeconds =
+        session.timePrecision === "DATE_ONLY"
+          ? null
+          : computeSessionDurationInSeconds(session.startedAt, session.completedAt!);
+
+      const sessionDateStr = session.sessionDate
+        ? session.sessionDate.toISOString().split("T")[0]
+        : null;
 
       return {
         id: session.id,
@@ -169,6 +179,9 @@ export class ListWorkoutHistory {
         startedAt: session.startedAt.toISOString(),
         completedAt: session.completedAt!.toISOString(),
         durationInSeconds,
+        sessionDate: sessionDateStr,
+        timePrecision: session.timePrecision as "EXACT_TIME" | "DATE_ONLY",
+        isRetroactive: session.isRetroactive,
         workoutPlanId: session.workoutPlanId ?? null,
         workoutPlanNameSnapshot: session.workoutPlanNameSnapshot ?? null,
         workoutDayNameSnapshot: session.workoutDayNameSnapshot ?? null,

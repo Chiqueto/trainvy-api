@@ -104,7 +104,7 @@ export const exerciseRoutes: FastifyPluginAsyncZod = async (app) => {
           !request.query.onlyWithHistory &&
           request.headers["if-none-match"] === etag
         ) {
-          return reply.status(304).send();
+          return reply.status(304).send(undefined as any);
         }
 
         const listExercises = new ListExercises();

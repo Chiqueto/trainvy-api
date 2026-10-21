@@ -291,7 +291,7 @@ export const aiRoutes = async (app: FastifyInstance) => {
         }
 
         try {
-          tools = getAiTools(userId, { timezone });
+          tools = getAiTools(userId, { timezone, conversationId });
         } catch (error) {
           if (error instanceof InvalidTimezoneError) {
             return reply.status(400).send({

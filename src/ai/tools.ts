@@ -21,6 +21,7 @@ import { ListWorkoutHistory } from "../usecases/ListWorkoutHistory.js";
 import { UpsertUserTrainData } from "../usecases/UpsertUserTrainData.js";
 import { GetSessionAiContext } from "../usecases/GetSessionAiContext.js";
 import { ProposeSessionSets } from "../usecases/ProposeSessionSets.js";
+import { CreateForgottenWorkoutDraft } from "../usecases/CreateForgottenWorkoutDraft.js";
 
 
 
@@ -223,6 +224,7 @@ export function clearToolCallsCache() {
 
 export interface AiToolsContext {
   timezone?: string;
+  conversationId?: string;
 }
 
 const TIMEZONE_REQUIRED_RESULT = {
@@ -507,6 +509,63 @@ export function getAiTools(userId: string, context: AiToolsContext = {}) {
           classifiedWorkingSets: result.classifiedWorkingSets,
           unclassifiedWorkingSets: result.unclassifiedWorkingSets,
           muscles: result.muscles,
+        };
+      },
+    }),
+
+    proposeForgottenWorkoutDraft: tool({
+      description:
+        "Cria um rascunho de recuperação de treino esquecido/passado relatado pelo atleta no chat. Não grava sessões de treino reais (WorkoutSession). Não invente horários: se o atleta souber apenas o dia, omita startedAt e completedAt. Os IDs dos exercícios devem ser obtidos pelo searchExercises. O atleta precisará revisar e confirmar explicitamente na interface.",
+      inputSchema: z.object({
+        date: z.string().describe("Data do treino no formato YYYY-MM-DD no fuso do atleta"),
+        title: z.string().describe("Título do treino esquecido (ex: 'Treino de Peito e Tríceps')"),
+        workoutPlanId: z.string().uuid().optional().describe("ID do plano apenas se o atleta referenciou um existente"),
+        workoutDayId: z.string().uuid().optional().describe("ID do dia apenas se o atleta referenciou um dia existente"),
+        startedAt: z.string().optional().describe("Horário de início ISO apenas se o atleta informou horário real"),
+        completedAt: z.string().optional().describe("Horário de término ISO apenas se o atleta informou horário real"),
+        exercises: z
+          .array(
+            z.object({
+              order: z.number().int().min(1),
+              exerciseId: z.string().uuid().describe("ID do exercício obtido via searchExercises"),
+              sets: z
+                .array(
+                  z.object({
+                    order: z.number().int().min(1),
+                    type: z.enum(["WARMUP", "WORKING"]).default("WORKING"),
+                    weightKg: z.number().min(0).describe("Carga em kg"),
+                    reps: z.number().int().min(1).describe("Número de repetições"),
+                    rir: z.number().int().min(0).max(10).optional().describe("RIR apenas se informado explicitamente"),
+                  }),
+                )
+                .min(1, "Ao menos uma série necessária por exercício"),
+            }),
+          )
+          .min(1, "Ao menos um exercício necessário"),
+      }),
+      execute: async (params) => {
+        const createDraft = new CreateForgottenWorkoutDraft();
+        const draft = await createDraft.execute({
+          userId,
+          conversationId: context.conversationId,
+          timezone: timezone || "America/Sao_Paulo",
+          date: params.date,
+          title: params.title,
+          workoutPlanId: params.workoutPlanId,
+          workoutDayId: params.workoutDayId,
+          startedAt: params.startedAt,
+          completedAt: params.completedAt,
+          exercises: params.exercises.map((e) => ({
+            ...e,
+            exerciseNameSnapshot: "",
+          })),
+        });
+
+        return {
+          status: "DRAFT_CREATED",
+          draftId: draft.id,
+          message: `Rascunho de recuperação de treino criado com sucesso para o dia ${draft.sessionDate}. Informe ao atleta que um card de revisão foi gerado na interface para conferência e confirmação.`,
+          draft,
         };
       },
     }),

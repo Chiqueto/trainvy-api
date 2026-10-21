@@ -2,8 +2,10 @@ import z from "zod";
 
 import {
   ExerciseMediaType,
+  ForgottenWorkoutDraftStatus,
   MuscleGroup,
   MuscleRole,
+  SessionTimePrecision,
   SetType,
   WeekDay,
   WorkoutSessionOrigin,
@@ -11,6 +13,8 @@ import {
 } from "../generated/prisma/enums.js";
 
 export const WorkoutSessionOriginSchema = z.enum(WorkoutSessionOrigin);
+export const SessionTimePrecisionSchema = z.enum(SessionTimePrecision);
+export const ForgottenWorkoutDraftStatusSchema = z.enum(ForgottenWorkoutDraftStatus);
 export const ExerciseMediaTypeSchema = z.enum(ExerciseMediaType);
 export const WorkoutSetProposalStatusSchema = z.enum(WorkoutSetProposalStatus);
 
@@ -960,7 +964,10 @@ export const HistoryTimelineItemSchema = z.object({
   origin: HistorySessionOriginSchema,
   startedAt: z.string(),
   completedAt: z.string(),
-  durationInSeconds: z.number().int().min(0),
+  durationInSeconds: z.number().int().min(0).nullable(),
+  sessionDate: z.string().nullable().optional(),
+  timePrecision: SessionTimePrecisionSchema.optional(),
+  isRetroactive: z.boolean().default(false).optional(),
   workoutPlanId: z.uuid().nullable(),
   workoutPlanNameSnapshot: z.string().nullable(),
   workoutDayNameSnapshot: z.string().nullable(),
@@ -1030,7 +1037,10 @@ export const GetWorkoutHistorySessionResponseSchema = z.object({
   origin: HistorySessionOriginSchema,
   startedAt: z.string(),
   completedAt: z.string(),
-  durationInSeconds: z.number().int().min(0),
+  durationInSeconds: z.number().int().min(0).nullable(),
+  sessionDate: z.string().nullable().optional(),
+  timePrecision: SessionTimePrecisionSchema.optional(),
+  isRetroactive: z.boolean().default(false).optional(),
   workoutPlanId: z.uuid().nullable(),
   workoutPlanNameSnapshot: z.string().nullable(),
   workoutDayNameSnapshot: z.string().nullable(),
@@ -1287,6 +1297,160 @@ export const UserAiConsentResponseSchema = z.object({
 export const UpdateUserAiConsentBodySchema = z.object({
   aiTrainingHistoryAccess: z.boolean(),
 });
+
+// ==========================================
+// Task 6.5B — Forgotten Workout Recovery Schemas
+// ==========================================
+
+export const ForgottenWorkoutSetSchema = z.object({
+  order: z.number().int().min(1),
+  type: z.enum(["WARMUP", "WORKING"]).default("WORKING"),
+  weightKg: z.number().min(0, "Carga deve ser maior ou igual a zero"),
+  reps: z.number().int().min(1, "Repetições deve ser maior ou igual a 1"),
+  rir: z.number().int().min(0).max(10).nullable().optional(),
+});
+export type ForgottenWorkoutSet = z.infer<typeof ForgottenWorkoutSetSchema>;
+
+export const ForgottenWorkoutExerciseInputSchema = z.object({
+  order: z.number().int().min(1).optional(),
+  exerciseId: z.string().uuid(),
+  exerciseNameSnapshot: z.string().min(1).optional(),
+  sets: z.array(ForgottenWorkoutSetSchema).min(1, "Cada exercício deve conter ao menos uma série"),
+});
+export type ForgottenWorkoutExerciseInput = z.infer<typeof ForgottenWorkoutExerciseInputSchema>;
+
+export const ForgottenWorkoutExerciseSchema = z.object({
+  order: z.number().int().min(1),
+  exerciseId: z.string().uuid(),
+  exerciseNameSnapshot: z.string().min(1),
+  sets: z.array(ForgottenWorkoutSetSchema).min(1, "Cada exercício deve conter ao menos uma série"),
+});
+export type ForgottenWorkoutExercise = z.infer<typeof ForgottenWorkoutExerciseSchema>;
+
+export const ForgottenWorkoutDraftSchema = z.object({
+  id: z.string().uuid(),
+  userId: z.string(),
+  conversationId: z.string().uuid().nullable().optional(),
+  revision: z.number().int(),
+  status: ForgottenWorkoutDraftStatusSchema,
+  sessionDate: z.string(), // "YYYY-MM-DD"
+  timePrecision: SessionTimePrecisionSchema,
+  startedAt: z.string().nullable().optional(),
+  completedAt: z.string().nullable().optional(),
+  timezone: z.string(),
+  workoutPlanId: z.string().uuid().nullable().optional(),
+  workoutDayId: z.string().uuid().nullable().optional(),
+  title: z.string(),
+  origin: WorkoutSessionOriginSchema,
+  proposedExercises: z.array(ForgottenWorkoutExerciseSchema),
+  confirmedSessionId: z.string().uuid().nullable().optional(),
+  idempotencyKey: z.string().nullable().optional(),
+  expiresAt: z.string(),
+  confirmedAt: z.string().nullable().optional(),
+  discardedAt: z.string().nullable().optional(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+export type ForgottenWorkoutDraftDto = z.infer<typeof ForgottenWorkoutDraftSchema>;
+
+export const WorkoutRecoveryConflictSessionSchema = z.object({
+  id: z.string().uuid(),
+  sessionDate: z.string().nullable().optional(),
+  startedAt: z.string(),
+  completedAt: z.string().nullable().optional(),
+  workoutPlanNameSnapshot: z.string().nullable().optional(),
+  workoutDayNameSnapshot: z.string().nullable().optional(),
+  workoutDayId: z.string().nullable().optional(),
+  timePrecision: SessionTimePrecisionSchema.optional(),
+  isRetroactive: z.boolean().optional(),
+});
+
+export const WorkoutRecoveryConflictDetailsSchema = z.object({
+  hasConflict: z.boolean(),
+  reason: z.string().nullable().optional(),
+  conflictingSessions: z.array(WorkoutRecoveryConflictSessionSchema),
+});
+export type WorkoutRecoveryConflictDetails = z.infer<typeof WorkoutRecoveryConflictDetailsSchema>;
+
+export const CreateForgottenWorkoutDraftBodySchema = z.object({
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Data deve estar no formato YYYY-MM-DD"),
+  timezone: z.string().min(1, "Timezone IANA é obrigatório"),
+  title: z.string().min(1, "Título é obrigatório").max(100),
+  conversationId: z.string().uuid().optional(),
+  workoutPlanId: z.string().uuid().optional(),
+  workoutDayId: z.string().uuid().optional(),
+  startedAt: z.string().datetime({ offset: true }).optional(),
+  completedAt: z.string().datetime({ offset: true }).optional(),
+  exercises: z.array(ForgottenWorkoutExerciseInputSchema).min(1, "Rascunho deve conter ao menos um exercício"),
+  idempotencyKey: z.string().max(100).optional(),
+});
+export type CreateForgottenWorkoutDraftBody = z.infer<typeof CreateForgottenWorkoutDraftBodySchema>;
+
+export const UpdateForgottenWorkoutDraftParamsSchema = z.object({
+  draftId: z.string().uuid(),
+});
+
+export const UpdateForgottenWorkoutDraftBodySchema = z.object({
+  clientRevision: z.number().int().min(1),
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Data deve estar no formato YYYY-MM-DD").optional(),
+  timezone: z.string().min(1).optional(),
+  title: z.string().min(1).max(100).optional(),
+  workoutPlanId: z.string().uuid().nullable().optional(),
+  workoutDayId: z.string().uuid().nullable().optional(),
+  startedAt: z.string().datetime({ offset: true }).nullable().optional(),
+  completedAt: z.string().datetime({ offset: true }).nullable().optional(),
+  exercises: z.array(ForgottenWorkoutExerciseInputSchema).min(1).optional(),
+});
+export type UpdateForgottenWorkoutDraftBody = z.infer<typeof UpdateForgottenWorkoutDraftBodySchema>;
+
+export const GetForgottenWorkoutDraftParamsSchema = z.object({
+  draftId: z.string().uuid(),
+});
+
+export const GetForgottenWorkoutDraftResponseSchema = z.object({
+  draft: ForgottenWorkoutDraftSchema,
+  conflicts: WorkoutRecoveryConflictDetailsSchema,
+});
+export type GetForgottenWorkoutDraftResponse = z.infer<typeof GetForgottenWorkoutDraftResponseSchema>;
+
+export const ConfirmForgottenWorkoutRecoveryParamsSchema = z.object({
+  draftId: z.string().uuid(),
+});
+
+export const ConfirmForgottenWorkoutRecoveryBodySchema = z.object({
+  clientRevision: z.number().int().min(1),
+  idempotencyKey: z.string().max(100).optional(),
+  confirmConflict: z.boolean().optional().default(false),
+});
+export type ConfirmForgottenWorkoutRecoveryBody = z.infer<typeof ConfirmForgottenWorkoutRecoveryBodySchema>;
+
+export const ConfirmForgottenWorkoutRecoveryResponseSchema = z.object({
+  success: z.boolean(),
+  sessionId: z.string().uuid(),
+  draft: ForgottenWorkoutDraftSchema,
+});
+
+export const DiscardForgottenWorkoutDraftParamsSchema = z.object({
+  draftId: z.string().uuid(),
+});
+
+export const DiscardForgottenWorkoutDraftBodySchema = z.object({
+  reason: z.string().max(255).optional(),
+});
+
+export const DiscardForgottenWorkoutDraftResponseSchema = z.object({
+  success: z.boolean(),
+  draft: ForgottenWorkoutDraftSchema,
+});
+
+export const ListActiveForgottenWorkoutDraftsQuerySchema = z.object({
+  conversationId: z.string().uuid().optional(),
+});
+
+export const ListActiveForgottenWorkoutDraftsResponseSchema = z.object({
+  drafts: z.array(ForgottenWorkoutDraftSchema),
+});
+
 
 
 

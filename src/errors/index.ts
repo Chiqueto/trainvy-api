@@ -8,6 +8,26 @@ export class NotFoundError extends Error {
   }
 }
 
+export class ForbiddenError extends Error {
+  readonly code: string;
+
+  constructor(message: string, code = "FORBIDDEN") {
+    super(message);
+    this.name = "ForbiddenError";
+    this.code = code;
+  }
+}
+
+export class BadRequestError extends Error {
+  readonly code: string;
+
+  constructor(message: string, code = "BAD_REQUEST") {
+    super(message);
+    this.name = "BadRequestError";
+    this.code = code;
+  }
+}
+
 export class WorkoutPlanNotActiveError extends Error {
   constructor(message: string) {
     super(message);

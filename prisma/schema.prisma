@@ -33,6 +33,18 @@ enum WorkoutSessionOrigin {
   FREE
 }
 
+enum SessionTimePrecision {
+  EXACT_TIME
+  DATE_ONLY
+}
+
+enum ForgottenWorkoutDraftStatus {
+  DRAFT
+  CONFIRMED
+  DISCARDED
+  EXPIRED
+}
+
 enum MuscleGroup {
   CHEST
   BACK
@@ -63,48 +75,49 @@ enum ExerciseMediaType {
 }
 
 model User {
-  id                  String           @id
-  accountType         AccountType      @default(ATHLETE)
-  systemRole          SystemRole       @default(USER)
-  accountSetupCompletedAt DateTime?    @db.Timestamptz()
-  subscription        Subscription?
-  billingCustomers    BillingCustomer[]
-  adminAuditActions   AdminAuditLog[] @relation("AuditActor")
-  adminAuditTargets   AdminAuditLog[] @relation("AuditTarget")
-  workoutPlans        WorkoutPlan[]
-  name                String
-  email               String
-  emailVerified       Boolean          @default(false)
-  image               String?
-  createdAt           DateTime         @default(now())
-  updatedAt           DateTime         @updatedAt
-  sessions            Session[]
-  accounts            Account[]
-  weightInGrams       Int?
-  heightInCentimeters Int?
-  age                 Int?
-  bodyFatPercentage   Int? // 100 representa 100%
-  gamificationTheme   String           @default("ALL")
-  createdExercises    Exercise[]
+  id                      String            @id
+  accountType             AccountType       @default(ATHLETE)
+  systemRole              SystemRole        @default(USER)
+  accountSetupCompletedAt DateTime?         @db.Timestamptz()
+  subscription            Subscription?
+  billingCustomers        BillingCustomer[]
+  adminAuditActions       AdminAuditLog[]   @relation("AuditActor")
+  adminAuditTargets       AdminAuditLog[]   @relation("AuditTarget")
+  workoutPlans            WorkoutPlan[]
+  name                    String
+  email                   String
+  emailVerified           Boolean           @default(false)
+  image                   String?
+  createdAt               DateTime          @default(now())
+  updatedAt               DateTime          @updatedAt
+  sessions                Session[]
+  accounts                Account[]
+  weightInGrams           Int?
+  heightInCentimeters     Int?
+  age                     Int?
+  bodyFatPercentage       Int? // 100 representa 100%
+  gamificationTheme       String            @default("ALL")
+  createdExercises        Exercise[]
 
-  workoutSessions     WorkoutSession[]
-  periodizations      Periodization[]
-  aiConversations     AiConversation[]
-  aiToolExecutions    AiToolExecution[]
-  aiUsageDaily        AiUsageDaily[]
-  aiRequestLogs       AiRequestLog[]
-  feedbacks           Feedback[]
-  metricLogs          UserMetricLog[]
-  coachAthletesAsCoach    CoachAthlete[]    @relation("CoachLinks")
-  coachAthletesAsAthlete  CoachAthlete[]    @relation("AthleteLinks")
-  revokedCoachAthletes    CoachAthlete[]    @relation("RevokedLinks")
-  coachInvitations        CoachInvitation[] @relation("CoachInvitations")
-  acceptedInvitations     CoachInvitation[] @relation("AthleteAcceptedInvitations")
-  coachPrescriptions      WorkoutPrescription[] @relation("CoachPrescriptions")
-  athletePrescriptions    WorkoutPrescription[] @relation("AthletePrescriptions")
-  aiTrainingHistoryAccess Boolean          @default(false)
-  aiTrainingHistoryConsentAt DateTime?     @db.Timestamptz()
-  workoutSetProposals     WorkoutSetProposal[]
+  workoutSessions            WorkoutSession[]
+  periodizations             Periodization[]
+  aiConversations            AiConversation[]
+  aiToolExecutions           AiToolExecution[]
+  aiUsageDaily               AiUsageDaily[]
+  aiRequestLogs              AiRequestLog[]
+  feedbacks                  Feedback[]
+  metricLogs                 UserMetricLog[]
+  coachAthletesAsCoach       CoachAthlete[]          @relation("CoachLinks")
+  coachAthletesAsAthlete     CoachAthlete[]          @relation("AthleteLinks")
+  revokedCoachAthletes       CoachAthlete[]          @relation("RevokedLinks")
+  coachInvitations           CoachInvitation[]       @relation("CoachInvitations")
+  acceptedInvitations        CoachInvitation[]       @relation("AthleteAcceptedInvitations")
+  coachPrescriptions         WorkoutPrescription[]   @relation("CoachPrescriptions")
+  athletePrescriptions       WorkoutPrescription[]   @relation("AthletePrescriptions")
+  aiTrainingHistoryAccess    Boolean                 @default(false)
+  aiTrainingHistoryConsentAt DateTime?               @db.Timestamptz()
+  workoutSetProposals        WorkoutSetProposal[]
+  forgottenWorkoutDrafts     ForgottenWorkoutDraft[]
 
   @@unique([email])
   @@map("user")
@@ -120,10 +133,11 @@ model WorkoutPlan {
   createdAt DateTime  @default(now()) @db.Timestamptz()
   updatedAt DateTime  @updatedAt @db.Timestamptz()
 
-  workoutDays       WorkoutDay[]
-  periodizationPlan PeriodizationPlan?
-  workoutSessions   WorkoutSession[]
-  acceptedPrescription WorkoutPrescription?
+  workoutDays            WorkoutDay[]
+  periodizationPlan      PeriodizationPlan?
+  workoutSessions        WorkoutSession[]
+  acceptedPrescription   WorkoutPrescription?
+  forgottenWorkoutDrafts ForgottenWorkoutDraft[]
 
   @@index([userId, deletedAt])
 }
@@ -142,7 +156,7 @@ model Periodization {
   createdAt   DateTime  @default(now()) @db.Timestamptz()
   updatedAt   DateTime  @updatedAt @db.Timestamptz()
 
-  plans       PeriodizationPlan[]
+  plans PeriodizationPlan[]
 
   @@index([userId, createdAt])
   @@index([userId, deletedAt])
@@ -167,40 +181,41 @@ model PeriodizationPlan {
 }
 
 model WorkoutDay {
-  id                         String            @id @default(uuid())
+  id                         String                  @id @default(uuid())
   name                       String
   workoutPlanId              String
-  workoutPlan                WorkoutPlan       @relation(fields: [workoutPlanId], references: [id])
-  isRest                     Boolean           @default(false)
+  workoutPlan                WorkoutPlan             @relation(fields: [workoutPlanId], references: [id])
+  isRest                     Boolean                 @default(false)
   estimatedDurationInSeconds Int
   coverImageUrl              String?
-  weekDay                    WeekDay           @default(MONDAY)
-  order                      Int               @default(0)
+  weekDay                    WeekDay                 @default(MONDAY)
+  order                      Int                     @default(0)
   exercises                  WorkoutExercise[]
-  createdAt                  DateTime          @default(now()) @db.Timestamptz()
-  updatedAt                  DateTime          @updatedAt @db.Timestamptz()
+  createdAt                  DateTime                @default(now()) @db.Timestamptz()
+  updatedAt                  DateTime                @updatedAt @db.Timestamptz()
   sessions                   WorkoutSession[]
+  forgottenWorkoutDrafts     ForgottenWorkoutDraft[]
 }
 
 model Exercise {
-  id          String   @id @default(uuid())
-  ownerUserId String?
-  ownerUser   User?    @relation(fields: [ownerUserId], references: [id], onDelete: Cascade)
-  name        String
-  isUnilateral Boolean @default(false)
-  createdAt   DateTime @default(now()) @db.Timestamptz()
-  updatedAt   DateTime @updatedAt @db.Timestamptz()
+  id           String   @id @default(uuid())
+  ownerUserId  String?
+  ownerUser    User?    @relation(fields: [ownerUserId], references: [id], onDelete: Cascade)
+  name         String
+  isUnilateral Boolean  @default(false)
+  createdAt    DateTime @default(now()) @db.Timestamptz()
+  updatedAt    DateTime @updatedAt @db.Timestamptz()
 
-  workoutExercises             WorkoutExercise[] @relation("WorkoutExerciseMain")
-  workoutExercisesAlternative1 WorkoutExercise[] @relation("WorkoutExerciseAlternative1")
-  workoutExercisesAlternative2 WorkoutExercise[] @relation("WorkoutExerciseAlternative2")
-  sessionExercises             SessionExercise[] @relation("SessionExerciseMain")
-  sessionExercisesPlanned      SessionExercise[] @relation("SessionExercisePlanned")
-  sessionExercisesAlternative1 SessionExercise[] @relation("SessionExerciseAlternative1")
-  sessionExercisesAlternative2 SessionExercise[] @relation("SessionExerciseAlternative2")
+  workoutExercises             WorkoutExercise[]    @relation("WorkoutExerciseMain")
+  workoutExercisesAlternative1 WorkoutExercise[]    @relation("WorkoutExerciseAlternative1")
+  workoutExercisesAlternative2 WorkoutExercise[]    @relation("WorkoutExerciseAlternative2")
+  sessionExercises             SessionExercise[]    @relation("SessionExerciseMain")
+  sessionExercisesPlanned      SessionExercise[]    @relation("SessionExercisePlanned")
+  sessionExercisesAlternative1 SessionExercise[]    @relation("SessionExerciseAlternative1")
+  sessionExercisesAlternative2 SessionExercise[]    @relation("SessionExerciseAlternative2")
   muscles                      ExerciseMuscle[]
   media                        ExerciseMedia[]
-  workoutSets                  WorkoutSet[]      @relation("WorkoutSetExercise")
+  workoutSets                  WorkoutSet[]         @relation("WorkoutSetExercise")
   workoutSetProposals          WorkoutSetProposal[]
 
   @@index([ownerUserId, name])
@@ -210,12 +225,12 @@ model ExerciseMedia {
   id                 String            @id @default(uuid())
   exerciseId         String
   exercise           Exercise          @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
-  provider           String            // Ex: "REPDB"
-  providerExerciseId String            // Ex: "bench-press"
+  provider           String // Ex: "REPDB"
+  providerExerciseId String // Ex: "bench-press"
   mediaType          ExerciseMediaType @default(IMAGE_SEQUENCE)
-  startImagePath     String?           // Ex: "/exercise-media/repdb/bench-press-start.webp"
-  endImagePath       String?           // Ex: "/exercise-media/repdb/bench-press-peak.webp"
-  motionPath         String?           // Futuros gifs/vídeos
+  startImagePath     String? // Ex: "/exercise-media/repdb/bench-press-start.webp"
+  endImagePath       String? // Ex: "/exercise-media/repdb/bench-press-peak.webp"
+  motionPath         String? // Futuros gifs/vídeos
   description        String?
   instructions       Json?
   attributionName    String            @default("RepDB")
@@ -230,15 +245,15 @@ model ExerciseMedia {
 }
 
 model ExerciseMuscle {
-  id          String      @id @default(uuid())
+  id String @id @default(uuid())
 
-  exerciseId  String
-  exercise    Exercise    @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  exerciseId String
+  exercise   Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
 
   muscleGroup MuscleGroup
   role        MuscleRole
 
-  createdAt   DateTime    @default(now()) @db.Timestamptz()
+  createdAt DateTime @default(now()) @db.Timestamptz()
 
   @@unique([exerciseId, muscleGroup])
   @@index([muscleGroup, role])
@@ -257,13 +272,13 @@ model WorkoutExercise {
   createdAt         DateTime   @default(now()) @db.Timestamptz()
   updatedAt         DateTime   @updatedAt @db.Timestamptz()
 
-  exerciseId                 String?
-  exercise                   Exercise?         @relation("WorkoutExerciseMain", fields: [exerciseId], references: [id], onDelete: SetNull)
-  alternative1ExerciseId     String?
-  alternative1Exercise       Exercise?         @relation("WorkoutExerciseAlternative1", fields: [alternative1ExerciseId], references: [id], onDelete: SetNull)
-  alternative2ExerciseId     String?
-  alternative2Exercise       Exercise?         @relation("WorkoutExerciseAlternative2", fields: [alternative2ExerciseId], references: [id], onDelete: SetNull)
-  sessionExercises           SessionExercise[]
+  exerciseId             String?
+  exercise               Exercise?         @relation("WorkoutExerciseMain", fields: [exerciseId], references: [id], onDelete: SetNull)
+  alternative1ExerciseId String?
+  alternative1Exercise   Exercise?         @relation("WorkoutExerciseAlternative1", fields: [alternative1ExerciseId], references: [id], onDelete: SetNull)
+  alternative2ExerciseId String?
+  alternative2Exercise   Exercise?         @relation("WorkoutExerciseAlternative2", fields: [alternative2ExerciseId], references: [id], onDelete: SetNull)
+  sessionExercises       SessionExercise[]
 
   @@index([exerciseId])
   @@index([alternative1ExerciseId])
@@ -286,57 +301,64 @@ model WorkoutSession {
   createdAt               DateTime             @default(now()) @db.Timestamptz()
   updatedAt               DateTime             @updatedAt @db.Timestamptz()
 
-  sessionExercises        SessionExercise[]
-  proposals               WorkoutSetProposal[]
-  aiConversations         AiConversation[]
+  sessionDate     DateTime?              @db.Date
+  timePrecision   SessionTimePrecision   @default(EXACT_TIME)
+  isRetroactive   Boolean                @default(false)
+  recoveryDraftId String?                @unique
+  recoveryDraft   ForgottenWorkoutDraft? @relation("SessionRecoveryDraft", fields: [recoveryDraftId], references: [id], onDelete: SetNull)
+
+  sessionExercises SessionExercise[]
+  proposals        WorkoutSetProposal[]
+  aiConversations  AiConversation[]
 
   @@index([athleteId, startedAt])
   @@index([athleteId, completedAt])
+  @@index([athleteId, sessionDate])
   @@index([workoutPlanId])
 }
 
 model SessionExercise {
-  id                      String           @id @default(uuid())
-  workoutSessionId        String
-  workoutSession          WorkoutSession   @relation(fields: [workoutSessionId], references: [id], onDelete: Cascade)
+  id               String         @id @default(uuid())
+  workoutSessionId String
+  workoutSession   WorkoutSession @relation(fields: [workoutSessionId], references: [id], onDelete: Cascade)
 
   sourceWorkoutExerciseId String?
   sourceWorkoutExercise   WorkoutExercise? @relation(fields: [sourceWorkoutExerciseId], references: [id], onDelete: SetNull)
 
-  exerciseId              String?
-  exercise                Exercise?        @relation("SessionExerciseMain", fields: [exerciseId], references: [id], onDelete: SetNull)
+  exerciseId String?
+  exercise   Exercise? @relation("SessionExerciseMain", fields: [exerciseId], references: [id], onDelete: SetNull)
 
-  exerciseNameSnapshot    String
-  order                   Int
+  exerciseNameSnapshot String
+  order                Int
 
-  plannedExerciseId              String?
-  plannedExercise                Exercise?        @relation("SessionExercisePlanned", fields: [plannedExerciseId], references: [id], onDelete: SetNull)
-  plannedExerciseNameSnapshot    String?
+  plannedExerciseId           String?
+  plannedExercise             Exercise? @relation("SessionExercisePlanned", fields: [plannedExerciseId], references: [id], onDelete: SetNull)
+  plannedExerciseNameSnapshot String?
 
-  alternative1ExerciseId         String?
-  alternative1Exercise           Exercise?        @relation("SessionExerciseAlternative1", fields: [alternative1ExerciseId], references: [id], onDelete: SetNull)
+  alternative1ExerciseId           String?
+  alternative1Exercise             Exercise? @relation("SessionExerciseAlternative1", fields: [alternative1ExerciseId], references: [id], onDelete: SetNull)
   alternative1ExerciseNameSnapshot String?
 
-  alternative2ExerciseId         String?
-  alternative2Exercise           Exercise?        @relation("SessionExerciseAlternative2", fields: [alternative2ExerciseId], references: [id], onDelete: SetNull)
+  alternative2ExerciseId           String?
+  alternative2Exercise             Exercise? @relation("SessionExerciseAlternative2", fields: [alternative2ExerciseId], references: [id], onDelete: SetNull)
   alternative2ExerciseNameSnapshot String?
 
-  wasSubstituted                 Boolean          @default(false)
-  substitutedAt                  DateTime?        @db.Timestamptz()
+  wasSubstituted Boolean   @default(false)
+  substitutedAt  DateTime? @db.Timestamptz()
 
   plannedSets              Int?
   plannedWarmupSets        Int?
   plannedReps              Int?
   plannedRestTimeInSeconds Int?
 
-  notes                   String?
-  createdAt               DateTime         @default(now()) @db.Timestamptz()
-  updatedAt               DateTime         @updatedAt @db.Timestamptz()
+  notes     String?
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  updatedAt DateTime @updatedAt @db.Timestamptz()
 
-  revision                Int              @default(1)
-  proposals               WorkoutSetProposal[]
+  revision  Int                  @default(1)
+  proposals WorkoutSetProposal[]
 
-  sets                    WorkoutSet[]
+  sets WorkoutSet[]
 
   @@index([workoutSessionId, order])
   @@index([exerciseId])
@@ -347,30 +369,30 @@ model SessionExercise {
 }
 
 model WorkoutSet {
-  id                   String              @id @default(uuid())
-  sessionExerciseId    String
-  sessionExercise      SessionExercise     @relation(fields: [sessionExerciseId], references: [id], onDelete: Cascade)
+  id                String          @id @default(uuid())
+  sessionExerciseId String
+  sessionExercise   SessionExercise @relation(fields: [sessionExerciseId], references: [id], onDelete: Cascade)
 
   exerciseId           String?
-  exercise             Exercise?           @relation("WorkoutSetExercise", fields: [exerciseId], references: [id], onDelete: SetNull)
+  exercise             Exercise? @relation("WorkoutSetExercise", fields: [exerciseId], references: [id], onDelete: SetNull)
   exerciseNameSnapshot String?
 
-  proposalId           String?
-  proposal             WorkoutSetProposal? @relation(fields: [proposalId], references: [id], onDelete: SetNull)
+  proposalId String?
+  proposal   WorkoutSetProposal? @relation(fields: [proposalId], references: [id], onDelete: SetNull)
 
-  order                Int
-  type                 SetType             @default(WORKING)
+  order Int
+  type  SetType @default(WORKING)
 
-  weightInGrams        Int?
-  reps                 Int?
-  rir                  Int?
-  durationInSeconds    Int?
+  weightInGrams     Int?
+  reps              Int?
+  rir               Int?
+  durationInSeconds Int?
 
-  notes                String?
-  completedAt          DateTime?           @db.Timestamptz()
+  notes       String?
+  completedAt DateTime? @db.Timestamptz()
 
-  createdAt            DateTime            @default(now()) @db.Timestamptz()
-  updatedAt            DateTime            @updatedAt @db.Timestamptz()
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  updatedAt DateTime @updatedAt @db.Timestamptz()
 
   @@index([sessionExerciseId, order])
   @@index([sessionExerciseId, type, completedAt])
@@ -427,17 +449,18 @@ model Verification {
 }
 
 model AiConversation {
-  id        String      @id @default(uuid())
+  id        String   @id @default(uuid())
   userId    String
-  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   title     String
-  createdAt DateTime    @default(now()) @db.Timestamptz()
-  updatedAt DateTime    @updatedAt @db.Timestamptz()
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  updatedAt DateTime @updatedAt @db.Timestamptz()
 
   workoutSessionId String?
   workoutSession   WorkoutSession? @relation(fields: [workoutSessionId], references: [id], onDelete: Cascade)
 
-  messages  AiMessage[]
+  messages               AiMessage[]
+  forgottenWorkoutDrafts ForgottenWorkoutDraft[]
 
   @@index([userId, updatedAt(sort: Desc)])
   @@index([workoutSessionId])
@@ -511,76 +534,80 @@ enum EntitlementKey {
 }
 
 model Plan {
-  id                  String @id @default(uuid())
-  code                String @unique
+  id                  String            @id @default(uuid())
+  code                String            @unique
   name                String
   description         String?
   audience            PlanAudience
-  monthlyPriceInCents  Int
-  currency            String @default("BRL")
-  isPublic            Boolean @default(false)
-  isActive            Boolean @default(true)
-  sortOrder           Int @default(0)
-  createdAt           DateTime @default(now()) @db.Timestamptz()
-  updatedAt           DateTime @updatedAt @db.Timestamptz()
+  monthlyPriceInCents Int
+  currency            String            @default("BRL")
+  isPublic            Boolean           @default(false)
+  isActive            Boolean           @default(true)
+  sortOrder           Int               @default(0)
+  createdAt           DateTime          @default(now()) @db.Timestamptz()
+  updatedAt           DateTime          @updatedAt @db.Timestamptz()
   entitlements        PlanEntitlement[]
   subscriptions       Subscription[]
   signupIntents       SignupIntent[]
 }
 
 model PlanEntitlement {
-  id          String @id @default(uuid())
+  id          String         @id @default(uuid())
   planId      String
-  plan        Plan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  plan        Plan           @relation(fields: [planId], references: [id], onDelete: Cascade)
   entitlement EntitlementKey
   limitValue  Int?
-  createdAt   DateTime @default(now()) @db.Timestamptz()
+  createdAt   DateTime       @default(now()) @db.Timestamptz()
+
   @@unique([planId, entitlement])
 }
 
 model Subscription {
-  id                      String @id @default(uuid())
-  userId                  String @unique
-  user                    User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  planId                  String
-  plan                    Plan @relation(fields: [planId], references: [id], onDelete: Restrict)
-  status                  SubscriptionStatus
-  billingProvider         BillingProvider @default(NONE)
-  priceInCentsSnapshot     Int
-  currencySnapshot        String
-  externalSubscriptionId  String?
-  trialStartedAt          DateTime? @db.Timestamptz()
-  trialEndsAt             DateTime? @db.Timestamptz()
-  currentPeriodStart      DateTime? @db.Timestamptz()
-  currentPeriodEnd        DateTime? @db.Timestamptz()
-  canceledAt              DateTime? @db.Timestamptz()
-  createdAt               DateTime @default(now()) @db.Timestamptz()
-  updatedAt               DateTime @updatedAt @db.Timestamptz()
-  @@index([planId])
+  id                     String             @id @default(uuid())
+  userId                 String             @unique
+  user                   User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  planId                 String
+  plan                   Plan               @relation(fields: [planId], references: [id], onDelete: Restrict)
+  status                 SubscriptionStatus
+  billingProvider        BillingProvider    @default(NONE)
+  priceInCentsSnapshot   Int
+  currencySnapshot       String
+  externalSubscriptionId String?
+  trialStartedAt         DateTime?          @db.Timestamptz()
+  trialEndsAt            DateTime?          @db.Timestamptz()
+  currentPeriodStart     DateTime?          @db.Timestamptz()
+  currentPeriodEnd       DateTime?          @db.Timestamptz()
+  canceledAt             DateTime?          @db.Timestamptz()
+  createdAt              DateTime           @default(now()) @db.Timestamptz()
+  updatedAt              DateTime           @updatedAt @db.Timestamptz()
+
   @@unique([billingProvider, externalSubscriptionId])
+  @@index([planId])
 }
 
 model BillingCustomer {
-  id                  String @id @default(uuid())
-  userId              String
-  user                User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  provider            BillingProvider
-  externalCustomerId  String
-  createdAt           DateTime @default(now()) @db.Timestamptz()
-  updatedAt           DateTime @updatedAt @db.Timestamptz()
+  id                 String          @id @default(uuid())
+  userId             String
+  user               User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  provider           BillingProvider
+  externalCustomerId String
+  createdAt          DateTime        @default(now()) @db.Timestamptz()
+  updatedAt          DateTime        @updatedAt @db.Timestamptz()
+
   @@unique([userId, provider])
   @@unique([provider, externalCustomerId])
 }
 
 model SignupIntent {
-  id          String @id @default(uuid())
-  tokenHash   String @unique
+  id          String      @id @default(uuid())
+  tokenHash   String      @unique
   accountType AccountType
   planId      String
-  plan        Plan @relation(fields: [planId], references: [id], onDelete: Restrict)
-  expiresAt   DateTime @db.Timestamptz()
-  consumedAt  DateTime? @db.Timestamptz()
-  createdAt   DateTime @default(now()) @db.Timestamptz()
+  plan        Plan        @relation(fields: [planId], references: [id], onDelete: Restrict)
+  expiresAt   DateTime    @db.Timestamptz()
+  consumedAt  DateTime?   @db.Timestamptz()
+  createdAt   DateTime    @default(now()) @db.Timestamptz()
+
   @@index([expiresAt])
 }
 
@@ -595,18 +622,18 @@ enum AdminAuditAction {
 }
 
 model AdminAuditLog {
-  id           String @id @default(uuid())
+  id           String           @id @default(uuid())
   adminUserId  String
-  admin        User @relation("AuditActor", fields: [adminUserId], references: [id], onDelete: Restrict)
+  admin        User             @relation("AuditActor", fields: [adminUserId], references: [id], onDelete: Restrict)
   action       AdminAuditAction
   targetUserId String?
-  targetUser   User? @relation("AuditTarget", fields: [targetUserId], references: [id], onDelete: SetNull)
+  targetUser   User?            @relation("AuditTarget", fields: [targetUserId], references: [id], onDelete: SetNull)
   entityType   String
   entityId     String?
   before       Json?
   after        Json?
   metadata     Json?
-  createdAt    DateTime @default(now()) @db.Timestamptz()
+  createdAt    DateTime         @default(now()) @db.Timestamptz()
 
   @@index([adminUserId, createdAt])
   @@index([targetUserId, createdAt])
@@ -618,7 +645,7 @@ model AiUsageDaily {
   id        String   @id @default(uuid())
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  date      String   // "YYYY-MM-DD" em UTC
+  date      String // "YYYY-MM-DD" em UTC
   count     Int      @default(0)
   createdAt DateTime @default(now()) @db.Timestamptz()
   updatedAt DateTime @updatedAt @db.Timestamptz()
@@ -720,10 +747,10 @@ model CoachAthlete {
   revokedByUser   User?              @relation("RevokedLinks", fields: [revokedByUserId], references: [id], onDelete: SetNull)
 
   // Task 6.3: Consentimento explícito e escopo temporal para acompanhamento de evolução
-  evolutionShared         Boolean            @default(false)
-  includePreviousHistory  Boolean            @default(false)
-  evolutionSharedAt       DateTime?          @db.Timestamptz()
-  evolutionRevokedAt      DateTime?          @db.Timestamptz()
+  evolutionShared        Boolean   @default(false)
+  includePreviousHistory Boolean   @default(false)
+  evolutionSharedAt      DateTime? @db.Timestamptz()
+  evolutionRevokedAt     DateTime? @db.Timestamptz()
 
   @@index([coachId, status])
   @@index([athleteId, status])
@@ -770,38 +797,76 @@ enum WorkoutSetProposalStatus {
 }
 
 model WorkoutSetProposal {
-  id                            String                   @id @default(uuid())
-  userId                        String
-  user                          User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  workoutSessionId              String
-  workoutSession                WorkoutSession           @relation(fields: [workoutSessionId], references: [id], onDelete: Cascade)
-  sessionExerciseId             String
-  sessionExercise               SessionExercise          @relation(fields: [sessionExerciseId], references: [id], onDelete: Cascade)
+  id                String          @id @default(uuid())
+  userId            String
+  user              User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workoutSessionId  String
+  workoutSession    WorkoutSession  @relation(fields: [workoutSessionId], references: [id], onDelete: Cascade)
+  sessionExerciseId String
+  sessionExercise   SessionExercise @relation(fields: [sessionExerciseId], references: [id], onDelete: Cascade)
 
   targetExerciseId              String?
-  targetExercise                Exercise?                @relation(fields: [targetExerciseId], references: [id], onDelete: SetNull)
+  targetExercise                Exercise? @relation(fields: [targetExerciseId], references: [id], onDelete: SetNull)
   targetExerciseNameSnapshot    String
   targetSessionExerciseRevision Int
 
-  status                        WorkoutSetProposalStatus @default(PENDING)
-  invalidationReason            String?
+  status             WorkoutSetProposalStatus @default(PENDING)
+  invalidationReason String?
 
-  suggestedSets                 Json
-  confirmedSets                 Json?
+  suggestedSets Json
+  confirmedSets Json?
 
-  idempotencyKey                String?                  @unique
-  expiresAt                     DateTime                 @db.Timestamptz()
-  confirmedAt                   DateTime?                @db.Timestamptz()
-  discardedAt                   DateTime?                @db.Timestamptz()
+  idempotencyKey String?   @unique
+  expiresAt      DateTime  @db.Timestamptz()
+  confirmedAt    DateTime? @db.Timestamptz()
+  discardedAt    DateTime? @db.Timestamptz()
 
-  createdAt                     DateTime                 @default(now()) @db.Timestamptz()
-  updatedAt                     DateTime                 @updatedAt @db.Timestamptz()
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  updatedAt DateTime @updatedAt @db.Timestamptz()
 
-  workoutSets                   WorkoutSet[]
+  workoutSets WorkoutSet[]
 
   @@index([workoutSessionId, status])
   @@index([sessionExerciseId, status])
   @@index([userId, status])
 }
 
+model ForgottenWorkoutDraft {
+  id             String          @id @default(uuid())
+  userId         String
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  conversationId String?
+  conversation   AiConversation? @relation(fields: [conversationId], references: [id], onDelete: SetNull)
 
+  revision Int                         @default(1)
+  status   ForgottenWorkoutDraftStatus @default(DRAFT)
+
+  sessionDate   DateTime             @db.Date
+  timePrecision SessionTimePrecision @default(DATE_ONLY)
+  startedAt     DateTime?            @db.Timestamptz()
+  completedAt   DateTime?            @db.Timestamptz()
+  timezone      String
+
+  workoutPlanId String?
+  workoutPlan   WorkoutPlan? @relation(fields: [workoutPlanId], references: [id], onDelete: SetNull)
+  workoutDayId  String?
+  workoutDay    WorkoutDay?  @relation(fields: [workoutDayId], references: [id], onDelete: SetNull)
+
+  title  String
+  origin WorkoutSessionOrigin @default(FREE)
+
+  proposedExercises Json
+
+  confirmedSession WorkoutSession? @relation("SessionRecoveryDraft")
+
+  idempotencyKey String?   @unique
+  expiresAt      DateTime  @db.Timestamptz()
+  confirmedAt    DateTime? @db.Timestamptz()
+  discardedAt    DateTime? @db.Timestamptz()
+  createdAt      DateTime  @default(now()) @db.Timestamptz()
+  updatedAt      DateTime  @updatedAt @db.Timestamptz()
+
+  @@index([userId, status])
+  @@index([userId, sessionDate])
+  @@index([conversationId])
+}
