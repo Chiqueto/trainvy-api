@@ -7,6 +7,7 @@ import { auth } from "../lib/auth.js";
 import {
   CreateExerciseBodySchema,
   ErrorSchema,
+  ExerciseCatalogVersionResponseSchema,
   ExerciseMediaParamsSchema,
   ExerciseMediaResponseSchema,
   ExerciseResponseSchema,
@@ -15,22 +16,22 @@ import {
   UpdateExerciseMusclesParamsSchema,
 } from "../schemas/index.js";
 import { CreateExercise } from "../usecases/CreateExercise.js";
+import { GetExerciseCatalogVersion } from "../usecases/GetExerciseCatalogVersion.js";
 import { GetExerciseMedia } from "../usecases/GetExerciseMedia.js";
 import { ListExercises } from "../usecases/ListExercises.js";
 import { UpdateExerciseMuscles } from "../usecases/UpdateExerciseMuscles.js";
 
 export const exerciseRoutes: FastifyPluginAsyncZod = async (app) => {
-  // GET /exercises
+  // GET /exercises/version — Retorna versão leve do catálogo para validação de cache
   app.route({
     method: "GET",
-    url: "/",
+    url: "/version",
     schema: {
-      operationId: "listExercises",
+      operationId: "getExerciseCatalogVersion",
       tags: ["Exercise"],
-      summary: "List global exercises and user custom exercises with optional search query",
-      querystring: ListExercisesQuerySchema,
+      summary: "Get the current version and timestamp of the exercise catalog for caching",
       response: {
-        200: z.array(ExerciseResponseSchema),
+        200: ExerciseCatalogVersionResponseSchema,
         401: ErrorSchema,
         500: ErrorSchema,
       },
@@ -45,6 +46,65 @@ export const exerciseRoutes: FastifyPluginAsyncZod = async (app) => {
             error: "Unauthorized",
             code: "UNAUTHORIZED",
           });
+        }
+
+        const getVersion = new GetExerciseCatalogVersion();
+        const result = await getVersion.execute({ userId: session.user.id });
+        reply.header("ETag", `"${result.version}"`);
+        reply.header("Cache-Control", "private, no-cache");
+
+        return reply.status(200).send(result);
+      } catch (error) {
+        app.log.error(error);
+        return reply.status(500).send({
+          error: "Internal server error",
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }
+    },
+  });
+
+  // GET /exercises
+  app.route({
+    method: "GET",
+    url: "/",
+    schema: {
+      operationId: "listExercises",
+      tags: ["Exercise"],
+      summary: "List global exercises and user custom exercises with optional search query",
+      querystring: ListExercisesQuerySchema,
+      response: {
+        200: z.array(ExerciseResponseSchema),
+        304: z.null().describe("Not Modified"),
+        401: ErrorSchema,
+        500: ErrorSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      try {
+        const session = await auth.api.getSession({
+          headers: fromNodeHeaders(request.headers),
+        });
+        if (!session) {
+          return reply.status(401).send({
+            error: "Unauthorized",
+            code: "UNAUTHORIZED",
+          });
+        }
+
+        const getVersion = new GetExerciseCatalogVersion();
+        const versionResult = await getVersion.execute({ userId: session.user.id });
+        const etag = `"${versionResult.version}"`;
+        reply.header("ETag", etag);
+        reply.header("Cache-Control", "private, no-cache");
+
+        // Se o cliente já tem a versão mais recente em cache e não está filtrando por query
+        if (
+          !request.query.q &&
+          !request.query.onlyWithHistory &&
+          request.headers["if-none-match"] === etag
+        ) {
+          return reply.status(304).send();
         }
 
         const listExercises = new ListExercises();

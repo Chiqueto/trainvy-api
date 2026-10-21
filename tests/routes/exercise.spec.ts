@@ -110,4 +110,64 @@ describe("Exercise HTTP Routes", () => {
     });
     expect(dupRes.statusCode).toBe(409);
   });
+
+  it("GET /exercises/version — retorna versão e ETag para validação de cache", async () => {
+    mockAuthUser(userA);
+
+    const res = await app.inject({
+      method: "GET",
+      url: "/exercises/version",
+    });
+
+    expect(res.statusCode).toBe(200);
+    const body = res.json();
+    expect(typeof body.version).toBe("string");
+    expect(typeof body.count).toBe("number");
+    expect(res.headers["etag"]).toBe(`"${body.version}"`);
+  });
+
+  it("GET /exercises — responde 304 Not Modified quando If-None-Match coincide com a versão atual", async () => {
+    mockAuthUser(userA);
+
+    // Primeira requisição obtém a versão e os dados
+    const initialRes = await app.inject({
+      method: "GET",
+      url: "/exercises",
+    });
+
+    expect(initialRes.statusCode).toBe(200);
+    const etag = initialRes.headers["etag"];
+    expect(etag).toBeDefined();
+
+    // Segunda requisição enviando If-None-Match
+    const cachedRes = await app.inject({
+      method: "GET",
+      url: "/exercises",
+      headers: {
+        "if-none-match": etag as string,
+      },
+    });
+
+    expect(cachedRes.statusCode).toBe(304);
+
+    // Se o usuário cria um novo exercício, o ETag muda e 304 não é mais retornado
+    await app.inject({
+      method: "POST",
+      url: "/exercises",
+      payload: {
+        name: "Novo Exercicio Teste",
+      },
+    });
+
+    const updatedRes = await app.inject({
+      method: "GET",
+      url: "/exercises",
+      headers: {
+        "if-none-match": etag as string,
+      },
+    });
+
+    expect(updatedRes.statusCode).toBe(200);
+    expect(updatedRes.headers["etag"]).not.toBe(etag);
+  });
 });

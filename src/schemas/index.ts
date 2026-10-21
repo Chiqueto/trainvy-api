@@ -553,6 +553,12 @@ export const ExerciseResponseSchema = z.object({
   muscles: z.array(ExerciseMuscleResponseSchema).default([]),
 });
 
+export const ExerciseCatalogVersionResponseSchema = z.object({
+  version: z.string(),
+  count: z.number().int(),
+  lastUpdatedAt: z.string().nullable(),
+});
+
 export const ExerciseInstructionsSchema = z.object({
   description: z.string(),
   setup: z.string(),
