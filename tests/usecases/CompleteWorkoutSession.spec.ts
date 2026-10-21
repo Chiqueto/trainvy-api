@@ -196,6 +196,44 @@ describe("CompleteWorkoutSession Use Case", () => {
     expect(inDb?.completedAt).toBeNull();
   });
 
+  it("conclui sessão com séries pendentes quando forceComplete = true, marcando todas com completedAt", async () => {
+    const session = await createTestWorkoutSession(workoutDayA.id, {
+      athleteId: userA.id,
+      startedAt: new Date(),
+      completedAt: null,
+    });
+
+    const sessionExercise = await createTestSessionExercise(session.id, {
+      order: 1,
+      exerciseNameSnapshot: "Supino",
+    });
+
+    const pendingSet = await createTestWorkoutSet(sessionExercise.id, {
+      order: 1,
+      reps: 10,
+      completedAt: null,
+    });
+
+    const result = await completeWorkoutSession.execute({
+      userId: userA.id,
+      sessionId: session.id,
+      forceComplete: true,
+    });
+
+    expect(result.id).toBe(session.id);
+    expect(result.completedAt).toBeDefined();
+
+    const inDb = await prisma.workoutSession.findUnique({
+      where: { id: session.id },
+    });
+    expect(inDb?.completedAt).not.toBeNull();
+
+    const updatedSet = await prisma.workoutSet.findUnique({
+      where: { id: pendingSet.id },
+    });
+    expect(updatedSet?.completedAt).not.toBeNull();
+  });
+
   it("depois de concluir, usuário pode iniciar nova sessão e GET /workout-sessions/active deixa de retornar aquela sessão", async () => {
     const session = await createTestWorkoutSession(workoutDayA.id, {
       athleteId: userA.id,

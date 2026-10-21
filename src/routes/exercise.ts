@@ -98,6 +98,7 @@ export const exerciseRoutes: FastifyPluginAsyncZod = async (app) => {
         const result = await createExercise.execute({
           userId: session.user.id,
           name: request.body.name,
+          isUnilateral: request.body.isUnilateral,
           primaryMuscleGroups: request.body.primaryMuscleGroups,
           secondaryMuscleGroups: request.body.secondaryMuscleGroups,
         });

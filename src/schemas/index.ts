@@ -129,7 +129,7 @@ export const SessionExerciseResponseSchema = z.object({
   alternative1ExerciseNameSnapshot: z.string().nullable().optional(),
   alternative2ExerciseId: z.uuid().nullable().optional(),
   alternative2ExerciseNameSnapshot: z.string().nullable().optional(),
-  wasSubstituted: z.boolean().default(false),
+  wasSubstituted: z.boolean().default(false).optional(),
   substitutedAt: z.string().nullable().optional(),
   plannedSets: z.number().nullable(),
   plannedWarmupSets: z.number().nullable().optional(),
@@ -480,13 +480,14 @@ export const WorkoutSessionExerciseResponseSchema = z.object({
   alternative1ExerciseNameSnapshot: z.string().nullable().optional(),
   alternative2ExerciseId: z.uuid().nullable().optional(),
   alternative2ExerciseNameSnapshot: z.string().nullable().optional(),
-  wasSubstituted: z.boolean().default(false),
+  wasSubstituted: z.boolean().default(false).optional(),
   substitutedAt: z.string().nullable().optional(),
   plannedSets: z.number().int().nullable(),
   plannedWarmupSets: z.number().int().nullable().optional(),
   plannedReps: z.number().int().nullable(),
   plannedRestTimeInSeconds: z.number().int().nullable(),
   notes: z.string().nullable(),
+  isUnilateral: z.boolean().optional(),
   sets: z.array(WorkoutSessionSetResponseSchema),
 });
 
@@ -500,6 +501,10 @@ export const GetWorkoutSessionResponseSchema = z.object({
   startedAt: z.string(),
   completedAt: z.string().nullable(),
   sessionExercises: z.array(WorkoutSessionExerciseResponseSchema),
+});
+
+export const CompleteWorkoutSessionBodySchema = z.object({
+  forceComplete: z.boolean().optional(),
 });
 
 export const CompleteWorkoutSessionResponseSchema = z.object({
@@ -534,6 +539,7 @@ export const ExerciseResponseSchema = z.object({
   id: z.uuid(),
   name: z.string(),
   ownerUserId: z.string().nullable(),
+  isUnilateral: z.boolean().default(false).optional(),
   hasMedia: z.boolean().default(false),
   muscles: z.array(ExerciseMuscleResponseSchema).default([]),
 });
@@ -568,6 +574,7 @@ export const ListExercisesQuerySchema = z.object({
 
 export const CreateExerciseBodySchema = z.object({
   name: z.string().min(1),
+  isUnilateral: z.boolean().optional().default(false),
   primaryMuscleGroups: z.array(MuscleGroupSchema).optional(),
   secondaryMuscleGroups: z.array(MuscleGroupSchema).optional(),
 });
@@ -983,7 +990,7 @@ export const HistoryExerciseDetailSchema = z.object({
   alternative1ExerciseNameSnapshot: z.string().nullable().optional(),
   alternative2ExerciseId: z.uuid().nullable().optional(),
   alternative2ExerciseNameSnapshot: z.string().nullable().optional(),
-  wasSubstituted: z.boolean().default(false),
+  wasSubstituted: z.boolean().default(false).optional(),
   substitutedAt: z.string().nullable().optional(),
   planned: z.object({
     warmupSets: z.number().int().nullable(),

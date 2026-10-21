@@ -13,6 +13,7 @@ export interface ExerciseOutputDto {
   id: string;
   name: string;
   ownerUserId: string | null;
+  isUnilateral: boolean;
   hasMedia: boolean;
   muscles: Array<{
     id: string;
@@ -60,6 +61,7 @@ export class ListExercises {
         id: true,
         name: true,
         ownerUserId: true,
+        isUnilateral: true,
         media: {
           where: { isActive: true },
           select: { id: true },
@@ -147,6 +149,7 @@ export class ListExercises {
       id: ex.id,
       name: ex.name,
       ownerUserId: ex.ownerUserId,
+      isUnilateral: ex.isUnilateral,
       hasMedia: ex.media.length > 0,
       muscles: ex.muscles,
     }));

@@ -38,6 +38,7 @@ export interface SessionExerciseOutputDto {
   plannedReps: number | null;
   plannedRestTimeInSeconds: number | null;
   notes: string | null;
+  isUnilateral?: boolean;
   sets: WorkoutSetOutputDto[];
 }
 
@@ -65,6 +66,7 @@ export class GetWorkoutSession {
               select: {
                 id: true,
                 name: true,
+                isUnilateral: true,
                 media: {
                   where: { isActive: true },
                   select: { id: true },
@@ -118,6 +120,7 @@ export class GetWorkoutSession {
         plannedReps: exercise.plannedReps,
         plannedRestTimeInSeconds: exercise.plannedRestTimeInSeconds,
         notes: exercise.notes,
+        isUnilateral: Boolean(exercise.exercise?.isUnilateral),
         sets: exercise.sets.map((set) => ({
           id: set.id,
           order: set.order,

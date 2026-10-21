@@ -13,6 +13,7 @@ import {
   AddSessionExerciseBodySchema,
   AddSessionExerciseParamsSchema,
   CancelWorkoutSessionResponseSchema,
+  CompleteWorkoutSessionBodySchema,
   CompleteWorkoutSessionResponseSchema,
   CreateWorkoutSetBodySchema,
   CreateWorkoutSetParamsSchema,
@@ -154,6 +155,7 @@ export const workoutSessionRoutes: FastifyPluginAsyncZod = async (app) => {
       tags: ["Workout Session"],
       summary: "Complete an active workout session",
       params: GetWorkoutSessionParamsSchema,
+      body: CompleteWorkoutSessionBodySchema.nullish(),
       response: {
         200: CompleteWorkoutSessionResponseSchema,
         400: ErrorSchema,
@@ -178,6 +180,7 @@ export const workoutSessionRoutes: FastifyPluginAsyncZod = async (app) => {
         const result = await completeWorkoutSession.execute({
           userId: session.user.id,
           sessionId: request.params.sessionId,
+          forceComplete: request.body?.forceComplete,
         });
 
         return reply.status(200).send(result);

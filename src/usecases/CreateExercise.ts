@@ -6,6 +6,7 @@ import { prisma } from "../lib/db.js";
 interface InputDto {
   userId: string;
   name: string;
+  isUnilateral?: boolean;
   primaryMuscleGroups?: MuscleGroup[];
   secondaryMuscleGroups?: MuscleGroup[];
 }
@@ -14,6 +15,7 @@ interface OutputDto {
   id: string;
   name: string;
   ownerUserId: string;
+  isUnilateral: boolean;
   muscles: Array<{
     id: string;
     muscleGroup: MuscleGroup;
@@ -51,6 +53,7 @@ export class CreateExercise {
           id: crypto.randomUUID(),
           name: trimmedName,
           ownerUserId: dto.userId,
+          isUnilateral: dto.isUnilateral ?? false,
           muscles: {
             create: [
               ...primary.map((mg) => ({
@@ -82,6 +85,7 @@ export class CreateExercise {
         id: exercise.id,
         name: exercise.name,
         ownerUserId: dto.userId,
+        isUnilateral: exercise.isUnilateral,
         muscles: exercise.muscles,
       };
     } catch (error) {

@@ -7,6 +7,7 @@ import { prisma } from "../lib/db.js";
 interface InputDto {
   userId: string;
   sessionId: string;
+  forceComplete?: boolean;
 }
 
 interface OutputDto {
@@ -47,16 +48,24 @@ export class CompleteWorkoutSession {
         };
       }
 
-      // Verifica se existem séries pendentes criadas na sessão
-      const pendingSetsCount = session.sessionExercises.reduce(
-        (total, ex) => total + ex.sets.length,
-        0,
+      // Coleta IDs de séries pendentes
+      const pendingSetIds = session.sessionExercises.flatMap(
+        (ex) => ex.sets.map((s) => s.id),
       );
 
-      if (pendingSetsCount > 0) {
-        throw new PendingWorkoutSetsError(
-          `Existem ${pendingSetsCount} série(s) pendente(s) nesta sessão. Conclua ou remova todas as séries antes de finalizar o treino.`,
-        );
+      if (pendingSetIds.length > 0) {
+        if (dto.forceComplete) {
+          // Finaliza automaticamente todas as séries pendentes
+          const now = new Date();
+          await tx.workoutSet.updateMany({
+            where: { id: { in: pendingSetIds } },
+            data: { completedAt: now },
+          });
+        } else {
+          throw new PendingWorkoutSetsError(
+            `Existem ${pendingSetIds.length} série(s) pendente(s) nesta sessão. Conclua ou remova todas as séries antes de finalizar o treino.`,
+          );
+        }
       }
 
       // Servidor define completedAt (now)
