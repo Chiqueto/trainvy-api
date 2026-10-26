@@ -1,4 +1,4 @@
-import { syncCanonicalMedia } from "../domain/canonical-media-sync.js";
+import { syncCanonicalMedia, syncCustomExercisesMedia } from "../domain/canonical-media-sync.js";
 import { syncCanonicalGlobalCatalog } from "../domain/catalog-backfill.js";
 import { prisma } from "../lib/db.js";
 
@@ -25,6 +25,13 @@ async function main() {
       mediaResult.unmatchedExercises,
     );
   }
+
+  // 3. Propagar mídias para exercícios customizados/legados pré-existentes
+  console.log("[Seed Exercise Media] Sincronizando mídias para exercícios customizados...");
+  const customResult = await syncCustomExercisesMedia(prisma);
+  console.log(
+    `[Seed Exercise Media] Exercícios customizados: ${customResult.matched} vinculados com mídia de ${customResult.totalCandidates} candidatos (sem correspondência: ${customResult.unmatched}).`,
+  );
 
   console.log("[Seed Exercise Media] Concluído com sucesso!");
 }

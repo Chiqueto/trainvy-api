@@ -120,3 +120,84 @@ export async function syncCanonicalMedia(
     unmatchedExercises,
   };
 }
+
+export interface CustomMediaSyncReport {
+  totalCandidates: number;
+  matched: number;
+  unmatched: number;
+}
+
+/**
+ * Propaga mídias do catálogo canônico para exercícios customizados/legados pré-existentes
+ * que coincidem pelo nome (case-insensitive) e ainda não possuem mídia cadastrada.
+ */
+export async function syncCustomExercisesMedia(
+  client: Prisma.TransactionClient = prisma,
+): Promise<CustomMediaSyncReport> {
+  const customExercises = await client.exercise.findMany({
+    where: {
+      ownerUserId: { not: null },
+      media: { none: {} },
+    },
+    select: { id: true, name: true, ownerUserId: true },
+  });
+
+  if (customExercises.length === 0) {
+    return {
+      totalCandidates: 0,
+      matched: 0,
+      unmatched: 0,
+    };
+  }
+
+  const canonicalExercises = await client.exercise.findMany({
+    where: {
+      ownerUserId: null,
+      media: { some: { isActive: true } },
+    },
+    include: {
+      media: { where: { isActive: true }, take: 1 },
+    },
+  });
+
+  const canonicalByName = new Map<string, (typeof canonicalExercises)[0]>();
+  for (const c of canonicalExercises) {
+    canonicalByName.set(c.name.trim().toLowerCase(), c);
+  }
+
+  let matched = 0;
+  let unmatched = 0;
+
+  for (const custom of customExercises) {
+    const key = custom.name.trim().toLowerCase();
+    const canonical = canonicalByName.get(key);
+    if (canonical && canonical.media[0]) {
+      const srcMedia = canonical.media[0];
+      await client.exerciseMedia.create({
+        data: {
+          exerciseId: custom.id,
+          provider: srcMedia.provider,
+          providerExerciseId: srcMedia.providerExerciseId,
+          mediaType: srcMedia.mediaType,
+          startImagePath: srcMedia.startImagePath,
+          endImagePath: srcMedia.endImagePath,
+          motionPath: srcMedia.motionPath,
+          description: srcMedia.description,
+          instructions: srcMedia.instructions ?? undefined,
+          attributionName: srcMedia.attributionName,
+          attributionUrl: srcMedia.attributionUrl,
+          isActive: true,
+        },
+      });
+      matched++;
+    } else {
+      unmatched++;
+    }
+  }
+
+  return {
+    totalCandidates: customExercises.length,
+    matched,
+    unmatched,
+  };
+}
