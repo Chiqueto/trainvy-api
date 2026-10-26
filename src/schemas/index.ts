@@ -915,9 +915,14 @@ export const PlanningOverviewResponseSchema = z.object({
 export const AiConversationSummarySchema = z.object({
   id: z.uuid(),
   title: z.string(),
+  workoutSessionId: z.string().uuid().nullable().optional(),
   createdAt: z.string(),
   updatedAt: z.string(),
   messagesCount: z.number().int().min(0),
+});
+
+export const ListAiConversationsQuerySchema = z.object({
+  workoutSessionId: z.string().uuid().optional(),
 });
 
 export const ListAiConversationsResponseSchema = z.object({
@@ -927,6 +932,7 @@ export const ListAiConversationsResponseSchema = z.object({
 export const GetAiConversationResponseSchema = z.object({
   id: z.uuid(),
   title: z.string(),
+  workoutSessionId: z.string().uuid().nullable().optional(),
   createdAt: z.string(),
   updatedAt: z.string(),
   messages: z.array(z.unknown()),

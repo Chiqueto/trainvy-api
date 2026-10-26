@@ -28,7 +28,9 @@ import { WorkoutPlanRoutes } from "../routes/workout-plan.js";
 import { workoutSessionRoutes } from "../routes/workout-session.js";
 import { workoutSessionRecoveryRoutes } from "../routes/workout-session-recovery.js";
 
-const app = Fastify();
+const app = Fastify({
+  bodyLimit: 25 * 1024 * 1024,
+});
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
 

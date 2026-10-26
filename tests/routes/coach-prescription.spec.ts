@@ -619,4 +619,86 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
     });
     expect(finalPlan!.isActive).toBe(true);
   });
+
+  describe("Geração de Rascunho de Prescrição com Coach AI", () => {
+    it("POST /coach/prescriptions/ai-generate — 401 para usuário não autenticado", async () => {
+      vi.spyOn(auth.api, "getSession").mockResolvedValueOnce(null);
+
+      const res = await app.inject({
+        method: "POST",
+        url: "/coach/prescriptions/ai-generate",
+        payload: {
+          athleteId: athleteUser.id,
+          prompt: "Montar treino ABC",
+        },
+      });
+
+      expect(res.statusCode).toBe(401);
+    });
+
+    it("POST /coach/prescriptions/ai-generate — 404 para aluno não vinculado ao treinador", async () => {
+      const unlinkedAthlete = await prisma.user.create({
+        data: {
+          id: crypto.randomUUID(),
+          name: "Atleta Desconhecido",
+          email: `unknown-${Date.now()}@test.com`,
+          accountType: "ATHLETE",
+        },
+      });
+
+      vi.spyOn(auth.api, "getSession").mockResolvedValueOnce({
+        user: coachUser,
+        session: { id: "s-coach", userId: coachUser.id } as any,
+      } as any);
+
+      const res = await app.inject({
+        method: "POST",
+        url: "/coach/prescriptions/ai-generate",
+        payload: {
+          athleteId: unlinkedAthlete.id,
+          prompt: "Montar treino ABC",
+        },
+      });
+
+      expect(res.statusCode).toBe(404);
+      expect(res.json().code).toBe("ATHLETE_NOT_FOUND");
+    });
+
+    it("POST /coach/prescriptions/ai-generate — 200 com estrutura completa gerada para treinador autorizado", async () => {
+      vi.spyOn(auth.api, "getSession").mockResolvedValueOnce({
+        user: coachUser,
+        session: { id: "s-coach", userId: coachUser.id } as any,
+      } as any);
+
+      const res = await app.inject({
+        method: "POST",
+        url: "/coach/prescriptions/ai-generate",
+        payload: {
+          athleteId: athleteUser.id,
+          prompt: "Montar treino ABC para hipertrofia com foco em superiores",
+        },
+      });
+
+      expect(res.statusCode).toBe(200);
+      const body = res.json();
+      expect(typeof body.name).toBe("string");
+      expect(Array.isArray(body.workoutDays)).toBe(true);
+      expect(body.workoutDays.length).toBeGreaterThan(0);
+
+      const workoutDay = body.workoutDays[0];
+      expect(typeof workoutDay.name).toBe("string");
+      expect(typeof workoutDay.weekDay).toBe("string");
+      expect(typeof workoutDay.isRest).toBe("boolean");
+      expect(Array.isArray(workoutDay.exercises)).toBe(true);
+
+      if (workoutDay.exercises.length > 0) {
+        const ex = workoutDay.exercises[0];
+        expect(typeof ex.name).toBe("string");
+        expect(typeof ex.sets).toBe("number");
+        expect(typeof ex.reps).toBe("number");
+        expect(typeof ex.restTimeInSeconds).toBe("number");
+      }
+    });
+  });
 });
+

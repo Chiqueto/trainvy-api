@@ -52,6 +52,7 @@ const envToLogger = {
 
 const app = Fastify({
   logger: envToLogger[env.NODE_ENV],
+  bodyLimit: 25 * 1024 * 1024, // 25MB para permitir áudios e documentos multimodais
 });
 
 app.setValidatorCompiler(validatorCompiler);

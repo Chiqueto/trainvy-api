@@ -760,4 +760,77 @@ describe("Coach Athlete Progress & Training History (Task 6.3)", () => {
 
     expect(res.statusCode).toBe(404);
   });
+
+  describe("Diagnóstico e Insights de Evolução com IA (Coach AI Insights)", () => {
+    it("23. Retorna 403 SHARING_NOT_AUTHORIZED se o atleta não concedeu consentimento para insights", async () => {
+      const nonConsentingAthlete = await prisma.user.create({
+        data: {
+          id: crypto.randomUUID(),
+          name: "Atleta Sem Consentimento",
+          email: `no-consent-${Date.now()}@test.com`,
+          accountType: "ATHLETE",
+        },
+      });
+
+      await prisma.coachAthlete.create({
+        data: {
+          coachId: coachA.id,
+          athleteId: nonConsentingAthlete.id,
+          status: "ACTIVE",
+          evolutionShared: false,
+        },
+      });
+
+      setUser(coachA);
+      const res = await app.inject({
+        method: "GET",
+        url: `/coach/athletes/${nonConsentingAthlete.id}/progress/insights?tz=America/Sao_Paulo&weeksCount=4`,
+      });
+
+      expect(res.statusCode).toBe(403);
+      expect(res.json().code).toBe("SHARING_NOT_AUTHORIZED");
+    });
+
+    it("24. Retorna 404 para treinador não vinculado ao aluno (IDOR defense)", async () => {
+      setUser(coachB);
+      const res = await app.inject({
+        method: "GET",
+        url: `/coach/athletes/${athleteUser.id}/progress/insights?tz=America/Sao_Paulo&weeksCount=4`,
+      });
+
+      expect(res.statusCode).toBe(404);
+    });
+
+    it("25. Treinador autorizado obtém diagnóstico e insights estruturados com header no-store", async () => {
+      await prisma.coachAthlete.update({
+        where: { id: activeLinkA.id },
+        data: {
+          evolutionShared: true,
+          evolutionSharedAt: new Date(),
+        },
+      });
+
+      setUser(coachA);
+      const res = await app.inject({
+        method: "GET",
+        url: `/coach/athletes/${athleteUser.id}/progress/insights?tz=America/Sao_Paulo&weeksCount=4`,
+      });
+
+      expect(res.statusCode).toBe(200);
+      expect(res.headers["cache-control"]).toBe("no-store, private");
+
+      const body = res.json();
+      expect(body.athleteId).toBe(athleteUser.id);
+      expect(body.athleteName).toBe(athleteUser.name);
+      expect(body.periodWeeks).toBe(4);
+      expect(typeof body.summary).toBe("string");
+      expect(typeof body.consistencyAssessment).toBe("string");
+      expect(Array.isArray(body.highlights)).toBe(true);
+      expect(Array.isArray(body.warnings)).toBe(true);
+      expect(Array.isArray(body.recommendations)).toBe(true);
+      expect(typeof body.suggestedFocusForNextPrescription).toBe("string");
+      expect(typeof body.generatedAt).toBe("string");
+    });
+  });
 });
+

@@ -114,3 +114,33 @@ export const CoachAthleteProgressExerciseEvolutionQuerySchema = z.object({
 });
 
 export const CoachAthleteProgressExerciseEvolutionResponseSchema = GetExerciseEvolutionResponseSchema;
+
+// Coach: Progress AI Insights
+export const CoachAthleteProgressInsightsParamsSchema = z.object({
+  athleteId: z.string(),
+});
+
+export const CoachAthleteProgressInsightsQuerySchema = z.object({
+  tz: z.string().default("UTC"),
+  weeksCount: z.coerce.number().int().min(1).max(52).default(4).optional(),
+});
+
+export const CoachAthleteProgressInsightsResponseSchema = z.object({
+  athleteId: z.string(),
+  athleteName: z.string(),
+  periodWeeks: z.number(),
+  summary: z.string(),
+  consistencyAssessment: z.string(),
+  highlights: z.array(z.string()),
+  warnings: z.array(z.string()),
+  muscleBalanceInsights: z.array(
+    z.object({
+      muscleGroup: z.string(),
+      status: z.enum(["BALANCED", "OVERTRAINED", "UNDERTRAINED", "ATTENTION"]),
+      observation: z.string(),
+    })
+  ),
+  recommendations: z.array(z.string()),
+  suggestedFocusForNextPrescription: z.string(),
+  generatedAt: z.string(),
+});

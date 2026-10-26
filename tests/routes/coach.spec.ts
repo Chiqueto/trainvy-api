@@ -199,6 +199,12 @@ describe("Coach & Athlete HTTP Routes", () => {
     expect(body.activeCount).toBe(1);
     expect(body.athletes.length).toBe(1);
     expect(body.athletes[0].athleteId).toBe(athleteUser.id);
+    expect(body.athletes[0]).toHaveProperty("evolutionShared");
+    expect(body.athletes[0]).toHaveProperty("hasActiveWorkoutPlan");
+    expect(body.athletes[0]).toHaveProperty("workoutsThisWeekCount");
+    expect(body.athletes[0]).toHaveProperty("pendingPrescriptionsCount");
+    expect(body.summary).toBeDefined();
+    expect(body.summary.totalAthletes).toBe(1);
   });
 
   it("GET /coach/athletes/:athleteId — treinador consulta detalhes do aluno ativo", async () => {

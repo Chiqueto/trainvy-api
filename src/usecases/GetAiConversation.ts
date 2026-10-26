@@ -9,6 +9,7 @@ interface InputDto {
 export interface AiConversationDetailDto {
   id: string;
   title: string;
+  workoutSessionId?: string | null;
   createdAt: string;
   updatedAt: string;
   messages: unknown[];
@@ -37,6 +38,7 @@ export class GetAiConversation {
     return {
       id: conversation.id,
       title: conversation.title,
+      workoutSessionId: conversation.workoutSessionId,
       createdAt: conversation.createdAt.toISOString(),
       updatedAt: conversation.updatedAt.toISOString(),
       messages: conversation.messages.map((m) => m.payload),

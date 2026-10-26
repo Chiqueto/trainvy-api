@@ -43,6 +43,7 @@ export class ListAiConversations {
     return conversations.map((c) => ({
       id: c.id,
       title: c.title,
+      workoutSessionId: c.workoutSessionId,
       createdAt: c.createdAt.toISOString(),
       updatedAt: c.updatedAt.toISOString(),
       messagesCount: c._count.messages,

@@ -16,6 +16,7 @@ import {
   CreateAiConversationResponseSchema,
   ErrorSchema,
   GetAiConversationResponseSchema,
+  ListAiConversationsQuerySchema,
   ListAiConversationsResponseSchema,
   SuccessResponseSchema,
   UpdateUserAiConsentBodySchema,
@@ -30,18 +31,35 @@ import { ListAiConversations } from "../usecases/ListAiConversations.js";
 import { SaveAiMessages } from "../usecases/SaveAiMessages.js";
 import { UpdateUserAiConsent } from "../usecases/UpdateUserAiConsent.js";
 
-function getFirstUserMessageText(messages: UIMessage[]): string | null {
+function getFirstUserMessageSummary(messages: UIMessage[]): string | null {
   for (const msg of messages) {
-    if (msg.role === "user") {
-      if (Array.isArray(msg.parts)) {
-        for (const part of msg.parts) {
-          if (
-            part.type === "text" &&
-            typeof (part as { text?: string }).text === "string"
-          ) {
-            const text = (part as { text: string }).text.trim();
-            if (text) return text;
+    if (msg.role === "user" && Array.isArray(msg.parts)) {
+      for (const part of msg.parts) {
+        if (
+          part.type === "text" &&
+          typeof (part as { text?: string }).text === "string"
+        ) {
+          const text = (part as { text: string }).text.trim();
+          if (text) return text;
+        }
+      }
+      for (const part of msg.parts) {
+        if (part.type === "file") {
+          const filePart = part as { mediaType?: string; filename?: string };
+          if (filePart.mediaType?.startsWith("audio/")) {
+            return "Mensagem de voz";
           }
+          if (filePart.mediaType === "application/pdf") {
+            return filePart.filename
+              ? `Documento: ${filePart.filename}`
+              : "Ficha de treino em PDF";
+          }
+          if (filePart.mediaType?.startsWith("image/")) {
+            return filePart.filename
+              ? `Imagem: ${filePart.filename}`
+              : "Imagem de treino";
+          }
+          return filePart.filename || "Arquivo anexado";
         }
       }
     }
@@ -235,7 +253,7 @@ export const aiRoutes = async (app: FastifyInstance) => {
           if (existingSessionConv) {
             conversationId = existingSessionConv.id;
           } else {
-            const initialText = getFirstUserMessageText(messages);
+            const initialText = getFirstUserMessageSummary(messages);
             const createConversation = new CreateAiConversation();
             const created = await createConversation.execute({
               userId,
@@ -265,27 +283,29 @@ export const aiRoutes = async (app: FastifyInstance) => {
 
         systemPrompt = getInSessionSystemPrompt(userName);
       } else {
-        // Chat geral fora do treino
+        // Chat geral fora do treino - isolado de qualquer sessão de treino
         if (conversationId) {
           const existing = await prisma.aiConversation.findFirst({
             where: {
               id: conversationId,
               userId,
+              workoutSessionId: null,
             },
           });
 
           if (!existing) {
             return reply.status(404).send({
-              error: "Conversa não encontrada.",
+              error: "Conversa não encontrada no contexto geral.",
               code: "NOT_FOUND",
             });
           }
         } else {
-          const initialText = getFirstUserMessageText(messages);
+          const initialText = getFirstUserMessageSummary(messages);
           const createConversation = new CreateAiConversation();
           const created = await createConversation.execute({
             userId,
             initialMessageText: initialText,
+            workoutSessionId: null,
           });
           conversationId = created.id;
         }
@@ -343,9 +363,11 @@ export const aiRoutes = async (app: FastifyInstance) => {
     schema: {
       tags: ["AI"],
       summary: "List all AI conversations for current user",
+      querystring: ListAiConversationsQuerySchema,
       response: {
         200: ListAiConversationsResponseSchema,
         401: ErrorSchema,
+        404: ErrorSchema,
         500: ErrorSchema,
       },
     },
@@ -360,9 +382,29 @@ export const aiRoutes = async (app: FastifyInstance) => {
           .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
       }
 
+      const workoutSessionId = request.query.workoutSessionId;
+
+      if (workoutSessionId) {
+        const sessionRecord = await prisma.workoutSession.findFirst({
+          where: {
+            id: workoutSessionId,
+            athleteId: session.user.id,
+          },
+          select: { id: true },
+        });
+
+        if (!sessionRecord) {
+          return reply.status(404).send({
+            error: "Sessão de treino não encontrada.",
+            code: "NOT_FOUND",
+          });
+        }
+      }
+
       const listConversations = new ListAiConversations();
       const conversations = await listConversations.execute({
         userId: session.user.id,
+        workoutSessionId: workoutSessionId ?? null,
       });
 
       return reply.status(200).send({ conversations });

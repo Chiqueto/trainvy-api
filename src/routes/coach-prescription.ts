@@ -9,16 +9,19 @@ import {
   AcceptPrescriptionResponseSchema,
   CoachAthletePrescriptionsParamsSchema,
   CreatePrescriptionDraftBodySchema,
-  ErrorSchema,
+  GenerateCoachPrescriptionDraftBodySchema,
+  GenerateCoachPrescriptionDraftResponseSchema,
   ListPrescriptionsResponseSchema,
   PrescriptionIdParamsSchema,
   PrescriptionItemResponseSchema,
   UpdatePrescriptionDraftBodySchema,
-} from "../schemas/index.js";
+} from "../schemas/coach-prescription.js";
+import { ErrorSchema } from "../schemas/index.js";
 import { AcceptWorkoutPrescription } from "../usecases/AcceptWorkoutPrescription.js";
 import { CancelWorkoutPrescription } from "../usecases/CancelWorkoutPrescription.js";
 import { CreateWorkoutPrescriptionDraft } from "../usecases/CreateWorkoutPrescriptionDraft.js";
 import { DeclineWorkoutPrescription } from "../usecases/DeclineWorkoutPrescription.js";
+import { GenerateCoachPrescriptionDraftWithAi } from "../usecases/GenerateCoachPrescriptionDraftWithAi.js";
 import { GetWorkoutPrescriptionDetails } from "../usecases/GetWorkoutPrescriptionDetails.js";
 import { ListAthletePrescriptions } from "../usecases/ListAthletePrescriptions.js";
 import { ListCoachPrescriptions } from "../usecases/ListCoachPrescriptions.js";
@@ -464,4 +467,48 @@ export const coachPrescriptionRoutes: FastifyPluginAsyncZod = async (app) => {
       }
     },
   );
+
+  // 11. Gerar Rascunho de Prescrição com IA / Áudio / PDF (Coach)
+  app.post(
+    "/coach/prescriptions/ai-generate",
+    {
+      schema: {
+        operationId: "generateCoachPrescriptionDraftWithAi",
+        tags: ["Coach"],
+        summary: "Gerar rascunho de prescrição de treino com IA a partir de texto, voz ou documento",
+        body: GenerateCoachPrescriptionDraftBodySchema,
+        response: {
+          200: GenerateCoachPrescriptionDraftResponseSchema,
+          ...standardErrors,
+        },
+      },
+    },
+    async (request, reply) => {
+      try {
+        const session = await auth.api.getSession({
+          headers: fromNodeHeaders(request.headers),
+        });
+        if (!session?.user) {
+          return reply
+            .status(401)
+            .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+        }
+
+        const useCase = new GenerateCoachPrescriptionDraftWithAi();
+        const result = await useCase.execute({
+          coachId: session.user.id,
+          athleteId: request.body.athleteId,
+          prompt: request.body.prompt,
+          fileUrl: request.body.fileUrl,
+          mediaType: request.body.mediaType,
+          filename: request.body.filename,
+        });
+
+        return reply.status(200).send(result);
+      } catch (error) {
+        return fail(error, request, reply);
+      }
+    },
+  );
 };
+

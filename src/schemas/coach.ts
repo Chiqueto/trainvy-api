@@ -33,12 +33,36 @@ export const CoachAthleteItemSchema = z.object({
   email: z.string(),
   image: z.string().nullable(),
   acceptedAt: z.string(),
+  evolutionShared: z.boolean().default(false),
+  lastWorkoutSessionAt: z.string().nullable().optional(),
+  workoutsThisWeekCount: z.number().int().default(0),
+  hasActiveWorkoutPlan: z.boolean().default(false),
+  activeWorkoutPlanName: z.string().nullable().optional(),
+  pendingPrescriptionsCount: z.number().int().default(0),
+  activePrescription: z
+    .object({
+      id: z.string(),
+      status: z.enum(["DRAFT", "SENT", "ACCEPTED", "DECLINED", "CANCELLED"]),
+      name: z.string(),
+      updatedAt: z.string(),
+    })
+    .nullable()
+    .optional(),
+});
+
+export const CoachAthletesSummarySchema = z.object({
+  totalAthletes: z.number().int(),
+  activeThisWeekCount: z.number().int(),
+  atRiskCount: z.number().int(),
+  pendingPrescriptionsCount: z.number().int(),
+  withoutPlanCount: z.number().int(),
 });
 
 export const ListCoachAthletesResponseSchema = z.object({
   athletes: z.array(CoachAthleteItemSchema),
   activeCount: z.number().int(),
   limit: z.number().int().nullable(),
+  summary: CoachAthletesSummarySchema.optional(),
 });
 
 export const GetCoachAthleteParamsSchema = z.object({

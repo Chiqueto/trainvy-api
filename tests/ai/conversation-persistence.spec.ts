@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 import { clearToolCallsCache, getAiTools } from "../../src/ai/tools.js";
 import { NotFoundError } from "../../src/errors/index.js";
-import { WeekDay } from "../../src/generated/prisma/enums.js";
+import { WeekDay, WorkoutSessionOrigin } from "../../src/generated/prisma/enums.js";
 import { prisma } from "../../src/lib/db.js";
 import { CreateAiConversation, generateCleanTitle } from "../../src/usecases/CreateAiConversation.js";
 import { DeleteAiConversation } from "../../src/usecases/DeleteAiConversation.js";
@@ -358,6 +358,153 @@ describe("Coach AI - Chat Persistente e Confiabilidade (Task 2.8)", () => {
         },
       });
       expect(plansCount).toBe(1);
+    });
+  });
+
+  describe("Isolamento Estrito de Contexto (Sessão vs Chat Geral)", () => {
+    it("não vaza conversas de sessão no chat geral e permite filtrar por workoutSessionId", async () => {
+      const user = await createTestUser();
+      createdUserIds.push(user.id);
+
+      const createUsecase = new CreateAiConversation();
+      const listUsecase = new ListAiConversations();
+      const getUsecase = new GetAiConversation();
+
+      // Cria um plano e uma sessão de treino real para o atleta
+      const plan = await prisma.workoutPlan.create({
+        data: {
+          userId: user.id,
+          name: "Plano Isolamento",
+          isActive: true,
+        },
+      });
+
+      const session = await prisma.workoutSession.create({
+        data: {
+          athleteId: user.id,
+          workoutPlanId: plan.id,
+          startedAt: new Date(),
+          origin: WorkoutSessionOrigin.PLANNED,
+        },
+      });
+
+      // Conversa Geral
+      const generalConv = await createUsecase.execute({
+        userId: user.id,
+        title: "Conversa de Planejamento Geral",
+      });
+
+      // Conversa de Sessão de Treino
+      const sessionConv = await createUsecase.execute({
+        userId: user.id,
+        title: "Assistente de Treino na Sessão",
+        workoutSessionId: session.id,
+      });
+
+      // 1. Listagem padrão (chat geral): deve retornar APENAS generalConv
+      const generalList = await listUsecase.execute({ userId: user.id });
+      expect(generalList.length).toBe(1);
+      expect(generalList[0].id).toBe(generalConv.id);
+      expect(generalList[0].workoutSessionId).toBeNull();
+
+      // 2. Listagem filtrada pela sessão: deve retornar APENAS sessionConv
+      const sessionList = await listUsecase.execute({
+        userId: user.id,
+        workoutSessionId: session.id,
+      });
+      expect(sessionList.length).toBe(1);
+      expect(sessionList[0].id).toBe(sessionConv.id);
+      expect(sessionList[0].workoutSessionId).toBe(session.id);
+
+      // 3. GetAiConversation preserva workoutSessionId
+      const loadedGeneral = await getUsecase.execute({
+        userId: user.id,
+        conversationId: generalConv.id,
+      });
+      expect(loadedGeneral.workoutSessionId).toBeNull();
+
+      const loadedSession = await getUsecase.execute({
+        userId: user.id,
+        conversationId: sessionConv.id,
+      });
+      expect(loadedSession.workoutSessionId).toBe(session.id);
+    });
+  });
+
+  describe("Mensagens Multimodais (Áudios e Documentos PDF)", () => {
+    it("persiste e recupera mensagens com áudio gravado e documentos PDF", async () => {
+      const user = await createTestUser();
+      createdUserIds.push(user.id);
+
+      const createUsecase = new CreateAiConversation();
+      const saveMessages = new SaveAiMessages();
+      const getUsecase = new GetAiConversation();
+
+      const conv = await createUsecase.execute({
+        userId: user.id,
+        title: "Conversa Multimodal",
+      });
+
+      const multimodalMessages: UIMessage[] = [
+        {
+          id: "msg-audio-user",
+          role: "user",
+          parts: [
+            { type: "text", text: "Segue meu relato em áudio sobre o treino" },
+            {
+              type: "file" as any,
+              mediaType: "audio/webm",
+              filename: "audio-treino.webm",
+              url: "data:audio/webm;base64,GkXfo59ChoEBQveBAULygQ8=",
+            } as any,
+          ],
+        },
+        {
+          id: "msg-doc-user",
+          role: "user",
+          parts: [
+            { type: "text", text: "Analise esta ficha em PDF" },
+            {
+              type: "file" as any,
+              mediaType: "application/pdf",
+              filename: "ficha-personal.pdf",
+              url: "data:application/pdf;base64,JVBERi0xLjQKJeLjz9MKMSAwIG9iago=",
+            } as any,
+          ],
+        },
+        {
+          id: "msg-assistant-resp",
+          role: "assistant",
+          parts: [
+            {
+              type: "text",
+              text: "Ouvi seu áudio e analisei a ficha em PDF com sucesso!",
+            },
+          ],
+        },
+      ];
+
+      await saveMessages.execute({
+        userId: user.id,
+        conversationId: conv.id,
+        messages: multimodalMessages,
+      });
+
+      const loaded = await getUsecase.execute({
+        userId: user.id,
+        conversationId: conv.id,
+      });
+
+      expect(loaded.messages.length).toBe(3);
+      const audioMsg = loaded.messages[0] as any;
+      expect(audioMsg.parts[1].type).toBe("file");
+      expect(audioMsg.parts[1].mediaType).toBe("audio/webm");
+      expect(audioMsg.parts[1].filename).toBe("audio-treino.webm");
+
+      const docMsg = loaded.messages[1] as any;
+      expect(docMsg.parts[1].type).toBe("file");
+      expect(docMsg.parts[1].mediaType).toBe("application/pdf");
+      expect(docMsg.parts[1].filename).toBe("ficha-personal.pdf");
     });
   });
 });

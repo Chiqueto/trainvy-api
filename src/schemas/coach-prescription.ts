@@ -167,3 +167,44 @@ export const PrescriptionIdParamsSchema = z.object({
 export const CoachAthletePrescriptionsParamsSchema = z.object({
   athleteId: z.string(),
 });
+
+// Coach: AI Prescription Draft Generation
+export const GenerateCoachPrescriptionDraftBodySchema = z.object({
+  athleteId: z.string(),
+  prompt: z.string().trim().min(2, "Instrução de prescrição é obrigatória"),
+  fileUrl: z.string().optional(),
+  mediaType: z.string().optional(),
+  filename: z.string().optional(),
+});
+
+export const GenerateCoachPrescriptionDraftResponseSchema = z.object({
+  name: z.string(),
+  notes: z.string().nullable().optional(),
+  workoutDays: z.array(
+    z.object({
+      name: z.string(),
+      weekDay: z.enum([
+        "MONDAY",
+        "TUESDAY",
+        "WEDNESDAY",
+        "THURSDAY",
+        "FRIDAY",
+        "SATURDAY",
+        "SUNDAY",
+      ]),
+      isRest: z.boolean(),
+      estimatedDurationInMinutes: z.number(),
+      exercises: z.array(
+        z.object({
+          name: z.string(),
+          sets: z.number(),
+          warmupSets: z.number().default(0),
+          reps: z.number(),
+          restTimeInSeconds: z.number(),
+          alternative1Name: z.string().nullable().optional(),
+          alternative2Name: z.string().nullable().optional(),
+        })
+      ),
+    })
+  ),
+});

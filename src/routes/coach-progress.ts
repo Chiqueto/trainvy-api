@@ -17,6 +17,9 @@ import {
   CoachAthleteProgressExercisesParamsSchema,
   CoachAthleteProgressExercisesQuerySchema,
   CoachAthleteProgressExercisesResponseSchema,
+  CoachAthleteProgressInsightsParamsSchema,
+  CoachAthleteProgressInsightsQuerySchema,
+  CoachAthleteProgressInsightsResponseSchema,
   CoachAthleteProgressOverviewParamsSchema,
   CoachAthleteProgressOverviewQuerySchema,
   CoachAthleteProgressOverviewResponseSchema,
@@ -32,6 +35,7 @@ import { ErrorSchema } from "../schemas/index.js";
 import { GetAthleteCoachProgressSharing } from "../usecases/GetAthleteCoachProgressSharing.js";
 import { GetCoachAthleteProgressExerciseEvolution } from "../usecases/GetCoachAthleteProgressExerciseEvolution.js";
 import { GetCoachAthleteProgressExercises } from "../usecases/GetCoachAthleteProgressExercises.js";
+import { GetCoachAthleteProgressInsights } from "../usecases/GetCoachAthleteProgressInsights.js";
 import { GetCoachAthleteProgressOverview } from "../usecases/GetCoachAthleteProgressOverview.js";
 import { GetCoachAthleteProgressSessionDetail } from "../usecases/GetCoachAthleteProgressSessionDetail.js";
 import { GetCoachAthleteProgressSessions } from "../usecases/GetCoachAthleteProgressSessions.js";
@@ -355,4 +359,46 @@ export const coachProgressRoutes: FastifyPluginAsyncZod = async (app) => {
       }
     },
   );
+
+  // 8. Consultar Diagnóstico e Insights de Evolução com IA (Coach)
+  app.get(
+    "/coach/athletes/:athleteId/progress/insights",
+    {
+      schema: {
+        operationId: "getCoachAthleteProgressInsights",
+        tags: ["Coach"],
+        summary: "Consultar diagnóstico analítico e insights de evolução com IA para o aluno",
+        params: CoachAthleteProgressInsightsParamsSchema,
+        querystring: CoachAthleteProgressInsightsQuerySchema,
+        response: {
+          200: CoachAthleteProgressInsightsResponseSchema,
+          ...standardErrors,
+        },
+      },
+    },
+    async (request, reply) => {
+      try {
+        const session = await auth.api.getSession({
+          headers: fromNodeHeaders(request.headers),
+        });
+        if (!session?.user) {
+          return reply.status(401).send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+        }
+
+        const useCase = new GetCoachAthleteProgressInsights();
+        const result = await useCase.execute({
+          coachId: session.user.id,
+          athleteId: request.params.athleteId,
+          tz: request.query.tz,
+          weeksCount: request.query.weeksCount,
+        });
+
+        reply.header("Cache-Control", "no-store, private");
+        return reply.status(200).send(result);
+      } catch (error) {
+        return fail(error, request, reply);
+      }
+    },
+  );
 };
+
