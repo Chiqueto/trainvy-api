@@ -18,6 +18,12 @@ function runCommand(command: string) {
 }
 
 function main() {
+  // CRÍTICO: prisma generate PRECISA rodar antes de qualquer script TypeScript (seeds)
+  // pois scripts como commercial-bootstrap e seed-exercise-media importam ../lib/db.js
+  // que por sua vez importa ../generated/prisma/client.js gerado por este comando.
+  console.log("[vercel:build] Gerando cliente Prisma (prisma generate)...");
+  runCommand("npx prisma generate");
+
   const isProduction = process.env.VERCEL_ENV === "production";
 
   if (isProduction) {
@@ -36,8 +42,7 @@ function main() {
     );
   }
 
-  console.log("[vercel:build] Gerando cliente Prisma e compilando TypeScript...");
-  runCommand("npx prisma generate");
+  console.log("[vercel:build] Compilando TypeScript...");
   runCommand("npx tsc");
 
   console.log("[vercel:build] Build finalizado com sucesso!");

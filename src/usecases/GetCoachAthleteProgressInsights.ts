@@ -104,8 +104,8 @@ export class GetCoachAthleteProgressInsights {
 
     const weeklyTrendText = (overview.weekly?.weeks || [])
       .map(
-        (w) =>
-          `Semana ${w.weekNumber} (${w.startDate} a ${w.endDate}): ${w.workoutsCompleted} treinos, ${w.workingSets} séries válidas, ${w.loadVolumeKg} kg de volume de carga.`
+        (w, idx) =>
+          `Semana ${idx + 1} (${w.weekStartDate} a ${w.weekEndDate}): ${w.workoutsCompleted} treinos, ${w.workingSets} séries válidas, ${w.loadVolumeKg} kg de volume de carga.`
       )
       .join("\n");
 

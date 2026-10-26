@@ -144,7 +144,7 @@ Regras Inegociáveis de Prescrição:
       // Monta mensagens multimodais caso haja anexo (áudio ou PDF)
       const userContent: Array<
         | { type: "text"; text: string }
-        | { type: "file"; data: string; mimeType: string }
+        | { type: "file"; data: string; mediaType: string }
       > = [
         {
           type: "text",
@@ -156,7 +156,7 @@ Regras Inegociáveis de Prescrição:
         userContent.push({
           type: "file",
           data: input.fileUrl,
-          mimeType: input.mediaType,
+          mediaType: input.mediaType,
         });
       }
 
