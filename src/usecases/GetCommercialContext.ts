@@ -3,6 +3,7 @@ import {
   subscriptionGrantsAccess,
 } from "../domain/commercial.js";
 import { Prisma } from "../generated/prisma/client.js";
+import { isConfiguredAdminEmail } from "../lib/admin-config.js";
 import { prisma } from "../lib/db.js";
 
 export class GetCommercialContext {
@@ -24,6 +25,15 @@ export class GetCommercialContext {
       },
     });
     if (!user) throw new CommercialError("USER_NOT_FOUND", 404);
+
+    if (user.systemRole !== "ADMIN" && isConfiguredAdminEmail(user.email)) {
+      user.systemRole = "ADMIN";
+      await client.user.update({
+        where: { id: user.id },
+        data: { systemRole: "ADMIN" },
+      });
+    }
+
     const subscription = user.subscription;
     const plan = subscription?.plan;
     const granted =

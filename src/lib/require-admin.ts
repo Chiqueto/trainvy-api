@@ -2,6 +2,7 @@ import { fromNodeHeaders } from "better-auth/node";
 import type { FastifyRequest } from "fastify";
 
 import type { Prisma } from "../generated/prisma/client.js";
+import { isConfiguredAdminEmail } from "./admin-config.js";
 import { auth } from "./auth.js";
 import { prisma } from "./db.js";
 
@@ -10,8 +11,15 @@ export class AdminError extends Error {
 }
 
 export async function assertAdminUser(db: Pick<Prisma.TransactionClient, "user">, adminUserId: string) {
-  const user = await db.user.findUnique({ where: { id: adminUserId }, select: { systemRole: true } });
-  if (user?.systemRole !== "ADMIN") throw new AdminError("ADMIN_REQUIRED", 403);
+  const user = await db.user.findUnique({ where: { id: adminUserId }, select: { email: true, systemRole: true } });
+  if (!user) throw new AdminError("USER_NOT_FOUND", 404);
+
+  if (user.systemRole !== "ADMIN" && isConfiguredAdminEmail(user.email)) {
+    await db.user.update({ where: { id: adminUserId }, data: { systemRole: "ADMIN" } });
+    return;
+  }
+
+  if (user.systemRole !== "ADMIN") throw new AdminError("ADMIN_REQUIRED", 403);
 }
 
 export async function requireAdmin(request: FastifyRequest) {

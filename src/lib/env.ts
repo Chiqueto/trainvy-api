@@ -41,6 +41,7 @@ const envSchema = z.object({
     emptyToUndefined,
     z.string().optional()
   ),
+  ADMIN_EMAILS: z.preprocess(emptyToUndefined, z.string().optional()),
 });
 
 const envResult = envSchema.safeParse(process.env);
