@@ -29,7 +29,9 @@ describe("WorkoutSession Integration Tests", () => {
     const user = await createTestUser({ name: "Usuário Recorrente" });
     createdUserIds.push(user.id);
 
-    const plan = await createTestWorkoutPlan(user.id, { name: "Plano Recorrente" });
+    const plan = await createTestWorkoutPlan(user.id, {
+      name: "Plano Recorrente",
+    });
     const day = await createTestWorkoutDay(plan.id, { name: "Treino A" });
 
     // 1. Inicia sessão S1
@@ -59,8 +61,12 @@ describe("WorkoutSession Integration Tests", () => {
     // Validar
     expect(s1Id).not.toBe(s2Id);
 
-    const session1 = await prisma.workoutSession.findUnique({ where: { id: s1Id } });
-    const session2 = await prisma.workoutSession.findUnique({ where: { id: s2Id } });
+    const session1 = await prisma.workoutSession.findUnique({
+      where: { id: s1Id },
+    });
+    const session2 = await prisma.workoutSession.findUnique({
+      where: { id: s2Id },
+    });
 
     expect(session1?.completedAt).not.toBeNull();
     expect(session2?.completedAt).toBeNull();
@@ -72,10 +78,14 @@ describe("WorkoutSession Integration Tests", () => {
   });
 
   it("Cenário 2 — Sessão aberta bloqueia o mesmo treino: tentativa de iniciar o mesmo WorkoutDay sem concluir lança ConflictError", async () => {
-    const user = await createTestUser({ name: "Usuário Conflito Mesmo Treino" });
+    const user = await createTestUser({
+      name: "Usuário Conflito Mesmo Treino",
+    });
     createdUserIds.push(user.id);
 
-    const plan = await createTestWorkoutPlan(user.id, { name: "Plano Conflito" });
+    const plan = await createTestWorkoutPlan(user.id, {
+      name: "Plano Conflito",
+    });
     const day = await createTestWorkoutDay(plan.id, { name: "Treino A" });
 
     // Inicia sessão S1
@@ -96,12 +106,22 @@ describe("WorkoutSession Integration Tests", () => {
   });
 
   it("Cenário 3 — Sessão aberta bloqueia outro WorkoutDay: regra de apenas uma sessão aberta por usuário", async () => {
-    const user = await createTestUser({ name: "Usuário Conflito Outro Treino" });
+    const user = await createTestUser({
+      name: "Usuário Conflito Outro Treino",
+    });
     createdUserIds.push(user.id);
 
-    const plan = await createTestWorkoutPlan(user.id, { name: "Plano Dividido" });
-    const dayA = await createTestWorkoutDay(plan.id, { name: "Superior A", weekDay: WeekDay.MONDAY });
-    const dayB = await createTestWorkoutDay(plan.id, { name: "Inferior A", weekDay: WeekDay.TUESDAY });
+    const plan = await createTestWorkoutPlan(user.id, {
+      name: "Plano Dividido",
+    });
+    const dayA = await createTestWorkoutDay(plan.id, {
+      name: "Superior A",
+      weekDay: WeekDay.MONDAY,
+    });
+    const dayB = await createTestWorkoutDay(plan.id, {
+      name: "Inferior A",
+      weekDay: WeekDay.TUESDAY,
+    });
 
     // Inicia Day A
     await startWorkoutSession.execute({
@@ -195,7 +215,9 @@ describe("WorkoutSession Integration Tests", () => {
     ).rejects.toThrowError(NotFoundError);
 
     // Sessão de A deve continuar aberta
-    const sessionA = await prisma.workoutSession.findUnique({ where: { id: sAId } });
+    const sessionA = await prisma.workoutSession.findUnique({
+      where: { id: sAId },
+    });
     expect(sessionA?.completedAt).toBeNull();
   });
 
@@ -203,16 +225,25 @@ describe("WorkoutSession Integration Tests", () => {
     const user = await createTestUser({ name: "Usuário Sequencial" });
     createdUserIds.push(user.id);
 
-    const plan = await createTestWorkoutPlan(user.id, { name: "Plano Sequencial" });
-    const dayA = await createTestWorkoutDay(plan.id, { name: "Treino A", weekDay: WeekDay.MONDAY });
-    const dayB = await createTestWorkoutDay(plan.id, { name: "Treino B", weekDay: WeekDay.WEDNESDAY });
+    const plan = await createTestWorkoutPlan(user.id, {
+      name: "Plano Sequencial",
+    });
+    const dayA = await createTestWorkoutDay(plan.id, {
+      name: "Treino A",
+      weekDay: WeekDay.MONDAY,
+    });
+    const dayB = await createTestWorkoutDay(plan.id, {
+      name: "Treino B",
+      weekDay: WeekDay.WEDNESDAY,
+    });
 
     // 1. Inicia Day A
-    const { userWorkoutSessionId: sessionAId } = await startWorkoutSession.execute({
-      userId: user.id,
-      workoutPlanId: plan.id,
-      workoutDayId: dayA.id,
-    });
+    const { userWorkoutSessionId: sessionAId } =
+      await startWorkoutSession.execute({
+        userId: user.id,
+        workoutPlanId: plan.id,
+        workoutDayId: dayA.id,
+      });
 
     // 2. Day B está bloqueado enquanto Day A está aberto
     await expect(
@@ -233,15 +264,18 @@ describe("WorkoutSession Integration Tests", () => {
     });
 
     // 4. Inicia Day B -> Agora deve iniciar com sucesso
-    const { userWorkoutSessionId: sessionBId } = await startWorkoutSession.execute({
-      userId: user.id,
-      workoutPlanId: plan.id,
-      workoutDayId: dayB.id,
-    });
+    const { userWorkoutSessionId: sessionBId } =
+      await startWorkoutSession.execute({
+        userId: user.id,
+        workoutPlanId: plan.id,
+        workoutDayId: dayB.id,
+      });
 
     expect(sessionBId).toBeDefined();
 
-    const sessionB = await prisma.workoutSession.findUnique({ where: { id: sessionBId } });
+    const sessionB = await prisma.workoutSession.findUnique({
+      where: { id: sessionBId },
+    });
     expect(sessionB?.completedAt).toBeNull();
   });
 
@@ -249,12 +283,32 @@ describe("WorkoutSession Integration Tests", () => {
     const user = await createTestUser({ name: "Usuário Snapshot Básico" });
     createdUserIds.push(user.id);
 
-    const plan = await createTestWorkoutPlan(user.id, { name: "Plano Snapshot" });
+    const plan = await createTestWorkoutPlan(user.id, {
+      name: "Plano Snapshot",
+    });
     const day = await createTestWorkoutDay(plan.id, { name: "Treino Peito" });
 
-    await createTestWorkoutExercise(day.id, { name: "Supino Reto", order: 0, sets: 4, reps: 8, restTimeInSeconds: 90 });
-    await createTestWorkoutExercise(day.id, { name: "Crucifixo", order: 1, sets: 3, reps: 12, restTimeInSeconds: 60 });
-    await createTestWorkoutExercise(day.id, { name: "Tríceps Corda", order: 2, sets: 3, reps: 15, restTimeInSeconds: 60 });
+    await createTestWorkoutExercise(day.id, {
+      name: "Supino Reto",
+      order: 0,
+      sets: 4,
+      reps: 8,
+      restTimeInSeconds: 90,
+    });
+    await createTestWorkoutExercise(day.id, {
+      name: "Crucifixo",
+      order: 1,
+      sets: 3,
+      reps: 12,
+      restTimeInSeconds: 60,
+    });
+    await createTestWorkoutExercise(day.id, {
+      name: "Tríceps Corda",
+      order: 2,
+      sets: 3,
+      reps: 15,
+      restTimeInSeconds: 60,
+    });
 
     const result = await startWorkoutSession.execute({
       userId: user.id,
@@ -280,9 +334,14 @@ describe("WorkoutSession Integration Tests", () => {
     const user = await createTestUser({ name: "Usuário Conteúdo Snapshot" });
     createdUserIds.push(user.id);
 
-    const exercise = await createTestExercise({ name: "Desenvolvimento Militar", ownerUserId: user.id });
+    const exercise = await createTestExercise({
+      name: "Desenvolvimento Militar",
+      ownerUserId: user.id,
+    });
 
-    const plan = await createTestWorkoutPlan(user.id, { name: "Plano Militar" });
+    const plan = await createTestWorkoutPlan(user.id, {
+      name: "Plano Militar",
+    });
     const day = await createTestWorkoutDay(plan.id, { name: "Treino Ombros" });
 
     const we = await createTestWorkoutExercise(day.id, {
@@ -310,7 +369,9 @@ describe("WorkoutSession Integration Tests", () => {
     expect(snapshot.plannedReps).toBe(6);
     expect(snapshot.plannedRestTimeInSeconds).toBe(120);
 
-    const inDb = await prisma.sessionExercise.findUnique({ where: { id: snapshot.id } });
+    const inDb = await prisma.sessionExercise.findUnique({
+      where: { id: snapshot.id },
+    });
     expect(inDb?.workoutSessionId).toBe(result.userWorkoutSessionId);
     expect(inDb?.plannedSets).toBe(4);
   });
@@ -319,7 +380,9 @@ describe("WorkoutSession Integration Tests", () => {
     const user = await createTestUser({ name: "Usuário Imutabilidade" });
     createdUserIds.push(user.id);
 
-    const plan = await createTestWorkoutPlan(user.id, { name: "Plano Original" });
+    const plan = await createTestWorkoutPlan(user.id, {
+      name: "Plano Original",
+    });
     const day = await createTestWorkoutDay(plan.id, { name: "Treino Pernas" });
 
     const we = await createTestWorkoutExercise(day.id, {
@@ -331,11 +394,12 @@ describe("WorkoutSession Integration Tests", () => {
     });
 
     // 1. Inicia sessão S1 com os valores originais
-    const { userWorkoutSessionId: s1Id, exercises } = await startWorkoutSession.execute({
-      userId: user.id,
-      workoutPlanId: plan.id,
-      workoutDayId: day.id,
-    });
+    const { userWorkoutSessionId: s1Id, exercises } =
+      await startWorkoutSession.execute({
+        userId: user.id,
+        workoutPlanId: plan.id,
+        workoutDayId: day.id,
+      });
 
     expect(exercises[0].exerciseNameSnapshot).toBe("Agachamento Livre");
     expect(exercises[0].plannedSets).toBe(3);
@@ -366,17 +430,25 @@ describe("WorkoutSession Integration Tests", () => {
     const user = await createTestUser({ name: "Usuário Reexecução Snapshots" });
     createdUserIds.push(user.id);
 
-    const plan = await createTestWorkoutPlan(user.id, { name: "Plano Recorrência" });
+    const plan = await createTestWorkoutPlan(user.id, {
+      name: "Plano Recorrência",
+    });
     const day = await createTestWorkoutDay(plan.id, { name: "Treino Costas" });
 
-    await createTestWorkoutExercise(day.id, { name: "Barra Fixa", order: 0, sets: 3, reps: 8 });
+    await createTestWorkoutExercise(day.id, {
+      name: "Barra Fixa",
+      order: 0,
+      sets: 3,
+      reps: 8,
+    });
 
     // 1. Inicia sessão A
-    const { userWorkoutSessionId: sessionAId, exercises: exercisesA } = await startWorkoutSession.execute({
-      userId: user.id,
-      workoutPlanId: plan.id,
-      workoutDayId: day.id,
-    });
+    const { userWorkoutSessionId: sessionAId, exercises: exercisesA } =
+      await startWorkoutSession.execute({
+        userId: user.id,
+        workoutPlanId: plan.id,
+        workoutDayId: day.id,
+      });
 
     // 2. Conclui sessão A
     await updateWorkoutSession.execute({
@@ -388,17 +460,22 @@ describe("WorkoutSession Integration Tests", () => {
     });
 
     // 3. Inicia sessão B no mesmo dia
-    const { userWorkoutSessionId: sessionBId, exercises: exercisesB } = await startWorkoutSession.execute({
-      userId: user.id,
-      workoutPlanId: plan.id,
-      workoutDayId: day.id,
-    });
+    const { userWorkoutSessionId: sessionBId, exercises: exercisesB } =
+      await startWorkoutSession.execute({
+        userId: user.id,
+        workoutPlanId: plan.id,
+        workoutDayId: day.id,
+      });
 
     expect(sessionAId).not.toBe(sessionBId);
     expect(exercisesA[0].id).not.toBe(exercisesB[0].id);
 
-    const countA = await prisma.sessionExercise.count({ where: { workoutSessionId: sessionAId } });
-    const countB = await prisma.sessionExercise.count({ where: { workoutSessionId: sessionBId } });
+    const countA = await prisma.sessionExercise.count({
+      where: { workoutSessionId: sessionAId },
+    });
+    const countB = await prisma.sessionExercise.count({
+      where: { workoutSessionId: sessionBId },
+    });
 
     expect(countA).toBe(1);
     expect(countB).toBe(1);
@@ -408,7 +485,9 @@ describe("WorkoutSession Integration Tests", () => {
     const user = await createTestUser({ name: "Usuário Descanso" });
     createdUserIds.push(user.id);
 
-    const plan = await createTestWorkoutPlan(user.id, { name: "Plano com Descanso" });
+    const plan = await createTestWorkoutPlan(user.id, {
+      name: "Plano com Descanso",
+    });
     const restDay = await createTestWorkoutDay(plan.id, {
       name: "Dia de Descanso",
       isRest: true,
@@ -436,29 +515,44 @@ describe("WorkoutSession Integration Tests", () => {
     createdUserIds.push(user.id);
 
     const plan = await createTestWorkoutPlan(user.id, { name: "Plano Falha" });
-    const day = await createTestWorkoutDay(plan.id, { name: "Treino com Falha" });
+    const day = await createTestWorkoutDay(plan.id, {
+      name: "Treino com Falha",
+    });
 
-    await createTestWorkoutExercise(day.id, { name: "Exercício Válido", order: 0 });
+    await createTestWorkoutExercise(day.id, {
+      name: "Exercício Válido",
+      order: 0,
+    });
 
     let intercepted = false;
     const errorThrowingStart = new StartWorkoutSession();
     const originalTransaction = prisma.$transaction.bind(prisma);
-    const spy = vi.spyOn(prisma, "$transaction").mockImplementation(async (callback) => {
-      return originalTransaction(async tx => (callback as any)(new Proxy(tx, {
-        get(target, key) {
-          if (key === "sessionExercise") return new Proxy(target.sessionExercise, {
-            get(delegate, method) {
-              if (method === "create") return async () => {
-                intercepted = true;
-                throw new Error("Simulação de falha catastrófica ao criar snapshot");
-              };
-              return Reflect.get(delegate, method);
-            },
-          });
-          return Reflect.get(target, key);
-        },
-      })));
-    });
+    const spy = vi
+      .spyOn(prisma, "$transaction")
+      .mockImplementation(async (callback) => {
+        return originalTransaction(async (tx) =>
+          (callback as any)(
+            new Proxy(tx, {
+              get(target, key) {
+                if (key === "sessionExercise")
+                  return new Proxy(target.sessionExercise, {
+                    get(delegate, method) {
+                      if (method === "create")
+                        return async () => {
+                          intercepted = true;
+                          throw new Error(
+                            "Simulação de falha catastrófica ao criar snapshot",
+                          );
+                        };
+                      return Reflect.get(delegate, method);
+                    },
+                  });
+                return Reflect.get(target, key);
+              },
+            }),
+          ),
+        );
+      });
 
     await expect(
       errorThrowingStart.execute({
@@ -470,7 +564,9 @@ describe("WorkoutSession Integration Tests", () => {
 
     expect(intercepted).toBe(true);
     spy.mockRestore();
-    expect(await prisma.workoutSession.count({ where: { athleteId: user.id } })).toBe(0);
+    expect(
+      await prisma.workoutSession.count({ where: { athleteId: user.id } }),
+    ).toBe(0);
 
     // Validar que se uma falha real ocorre, a transação garante que nenhuma sessão é persistida
   });
@@ -480,7 +576,9 @@ describe("WorkoutSession Integration Tests", () => {
     createdUserIds.push(user.id);
 
     const plan = await createTestWorkoutPlan(user.id, { name: "Plano P2002" });
-    const day = await createTestWorkoutDay(plan.id, { name: "Treino Concorrência" });
+    const day = await createTestWorkoutDay(plan.id, {
+      name: "Treino Concorrência",
+    });
 
     // Inicia sessão 1
     await startWorkoutSession.execute({

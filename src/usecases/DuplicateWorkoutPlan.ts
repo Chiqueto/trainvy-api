@@ -1,3 +1,4 @@
+import { advancedPrescription } from "../schemas/advanced-prescription.js";
 import { NotFoundError } from "../errors/index.js";
 import { WeekDay } from "../generated/prisma/enums.js";
 import { prisma } from "../lib/db.js";
@@ -26,6 +27,11 @@ interface OutputDto {
       sets: number;
       warmupSets: number;
       reps: number;
+      repsMin?: number | null;
+      repsMax?: number | null;
+      targetRir?: number | null;
+      targetLoadInGrams?: number | null;
+      tempo?: string | null;
       restTimeInSeconds: number;
       exerciseId: string | null;
       alternative1ExerciseId?: string | null;
@@ -51,7 +57,11 @@ export class DuplicateWorkoutPlan {
         },
       });
 
-      if (!original || original.userId !== dto.userId || original.deletedAt !== null) {
+      if (
+        !original ||
+        original.userId !== dto.userId ||
+        original.deletedAt !== null
+      ) {
         throw new NotFoundError("Workout plan not found");
       }
 
@@ -81,6 +91,7 @@ export class DuplicateWorkoutPlan {
                   sets: ex.sets,
                   warmupSets: ex.warmupSets,
                   reps: ex.reps,
+                  ...advancedPrescription(ex),
                   restTimeInSeconds: ex.restTimeInSeconds,
                   exerciseId: ex.exerciseId, // Preserva vínculo canônico sem duplicar Exercise
                   alternative1ExerciseId: ex.alternative1ExerciseId,
@@ -121,6 +132,7 @@ export class DuplicateWorkoutPlan {
             sets: ex.sets,
             warmupSets: ex.warmupSets,
             reps: ex.reps,
+            ...advancedPrescription(ex),
             restTimeInSeconds: ex.restTimeInSeconds,
             exerciseId: ex.exerciseId,
             alternative1ExerciseId: ex.alternative1ExerciseId,

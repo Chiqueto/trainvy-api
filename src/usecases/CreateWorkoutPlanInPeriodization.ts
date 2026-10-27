@@ -1,3 +1,4 @@
+import { advancedPrescription } from "../schemas/advanced-prescription.js";
 import { resolveCanonicalExerciseMap } from "../domain/canonical-exercise.js";
 import { normalizeAndValidateAlternatives } from "../domain/exercise-alternatives.js";
 import {
@@ -25,6 +26,11 @@ interface InputDto {
       warmupSets?: number;
       sets: number;
       reps: number;
+      repsMin?: number | null;
+      repsMax?: number | null;
+      targetRir?: number | null;
+      targetLoadInGrams?: number | null;
+      tempo?: string | null;
       restTimeInSeconds: number;
       exerciseId?: string | null;
       alternative1ExerciseId?: string | null;
@@ -66,6 +72,11 @@ interface OutputDto {
         warmupSets: number;
         sets: number;
         reps: number;
+        repsMin?: number | null;
+        repsMax?: number | null;
+        targetRir?: number | null;
+        targetLoadInGrams?: number | null;
+        tempo?: string | null;
         restTimeInSeconds: number;
         exerciseId?: string | null;
         alternative1ExerciseId?: string | null;
@@ -163,16 +174,20 @@ export class CreateWorkoutPlanInPeriodization {
                   const resolvedAlt1Id =
                     exercise.alternative1ExerciseId ??
                     (exercise.alternative1Name
-                      ? canonicalExerciseMap.get(exercise.alternative1Name.trim()) ??
-                        canonicalExerciseMap.get(exercise.alternative1Name)
+                      ? (canonicalExerciseMap.get(
+                          exercise.alternative1Name.trim(),
+                        ) ??
+                        canonicalExerciseMap.get(exercise.alternative1Name))
                       : null) ??
                     null;
 
                   const resolvedAlt2Id =
                     exercise.alternative2ExerciseId ??
                     (exercise.alternative2Name
-                      ? canonicalExerciseMap.get(exercise.alternative2Name.trim()) ??
-                        canonicalExerciseMap.get(exercise.alternative2Name)
+                      ? (canonicalExerciseMap.get(
+                          exercise.alternative2Name.trim(),
+                        ) ??
+                        canonicalExerciseMap.get(exercise.alternative2Name))
                       : null) ??
                     null;
 
@@ -190,6 +205,7 @@ export class CreateWorkoutPlanInPeriodization {
                     warmupSets: exercise.warmupSets ?? 0,
                     sets: exercise.sets,
                     reps: exercise.reps,
+                    ...advancedPrescription(exercise),
                     restTimeInSeconds: exercise.restTimeInSeconds,
                     exerciseId: resolvedMainId,
                     alternative1ExerciseId,
@@ -265,6 +281,7 @@ export class CreateWorkoutPlanInPeriodization {
               warmupSets: exercise.warmupSets,
               sets: exercise.sets,
               reps: exercise.reps,
+              ...advancedPrescription(exercise),
               restTimeInSeconds: exercise.restTimeInSeconds,
               exerciseId: exercise.exerciseId,
               alternative1ExerciseId: exercise.alternative1ExerciseId,

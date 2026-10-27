@@ -1,3 +1,4 @@
+import { advancedPrescription } from "../schemas/advanced-prescription.js";
 import {
   assertCoachCanPrescribe,
   CoachPrescriptionError,
@@ -163,9 +164,16 @@ export class CreateWorkoutPlanTemplateFromPlan {
           let alt2Name = ex.alternative2Exercise?.name || null;
           const exName = ex.name.trim();
 
-          if (alt1Name && alt1Name.toLowerCase() === exName.toLowerCase()) alt1Name = null;
-          if (alt2Name && alt2Name.toLowerCase() === exName.toLowerCase()) alt2Name = null;
-          if (alt1Name && alt2Name && alt1Name.toLowerCase() === alt2Name.toLowerCase()) alt2Name = null;
+          if (alt1Name && alt1Name.toLowerCase() === exName.toLowerCase())
+            alt1Name = null;
+          if (alt2Name && alt2Name.toLowerCase() === exName.toLowerCase())
+            alt2Name = null;
+          if (
+            alt1Name &&
+            alt2Name &&
+            alt1Name.toLowerCase() === alt2Name.toLowerCase()
+          )
+            alt2Name = null;
           if (!alt1Name && alt2Name) {
             alt1Name = alt2Name;
             alt2Name = null;
@@ -182,6 +190,7 @@ export class CreateWorkoutPlanTemplateFromPlan {
             sets: ex.sets,
             warmupSets: ex.warmupSets ?? 0,
             reps: ex.reps,
+            ...advancedPrescription(ex),
             restTimeInSeconds: ex.restTimeInSeconds,
           };
         }),

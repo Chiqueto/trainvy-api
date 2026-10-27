@@ -1,4 +1,9 @@
 import z from "zod";
+import {
+  advancedPrescriptionShape,
+  plannedAdvancedPrescriptionShape,
+  validateRepetitionRange,
+} from "./advanced-prescription.js";
 
 import {
   ExerciseMediaType,
@@ -14,7 +19,9 @@ import {
 
 export const WorkoutSessionOriginSchema = z.enum(WorkoutSessionOrigin);
 export const SessionTimePrecisionSchema = z.enum(SessionTimePrecision);
-export const ForgottenWorkoutDraftStatusSchema = z.enum(ForgottenWorkoutDraftStatus);
+export const ForgottenWorkoutDraftStatusSchema = z.enum(
+  ForgottenWorkoutDraftStatus,
+);
 export const ExerciseMediaTypeSchema = z.enum(ExerciseMediaType);
 export const WorkoutSetProposalStatusSchema = z.enum(WorkoutSetProposalStatus);
 
@@ -29,25 +36,27 @@ export const GamificationTheme = {
 export type GamificationTheme =
   (typeof GamificationTheme)[keyof typeof GamificationTheme];
 
-
 export const ErrorSchema = z.object({
   error: z.string(),
   code: z.string(),
 });
 
-export const WorkoutExerciseSchema = z.object({
-  order: z.number().min(0),
-  name: z.string().trim().min(1),
-  exerciseId: z.string().uuid().nullable().optional(),
-  alternative1ExerciseId: z.string().uuid().nullable().optional(),
-  alternative1Name: z.string().trim().min(1).nullable().optional(),
-  alternative2ExerciseId: z.string().uuid().nullable().optional(),
-  alternative2Name: z.string().trim().min(1).nullable().optional(),
-  sets: z.number().min(1),
-  warmupSets: z.number().int().min(0).default(0),
-  reps: z.number().min(1),
-  restTimeInSeconds: z.number().min(1),
-});
+export const WorkoutExerciseSchema = z
+  .object({
+    ...advancedPrescriptionShape,
+    order: z.number().min(0),
+    name: z.string().trim().min(1),
+    exerciseId: z.string().uuid().nullable().optional(),
+    alternative1ExerciseId: z.string().uuid().nullable().optional(),
+    alternative1Name: z.string().trim().min(1).nullable().optional(),
+    alternative2ExerciseId: z.string().uuid().nullable().optional(),
+    alternative2Name: z.string().trim().min(1).nullable().optional(),
+    sets: z.number().min(1),
+    warmupSets: z.number().int().min(0).default(0),
+    reps: z.number().min(1),
+    restTimeInSeconds: z.number().min(1),
+  })
+  .superRefine(validateRepetitionRange);
 
 export const WorkoutDaySchema = z
   .object({
@@ -124,6 +133,7 @@ export const StartWorkoutSessionParamsSchema = z.object({
 });
 
 export const SessionExerciseResponseSchema = z.object({
+  ...plannedAdvancedPrescriptionShape,
   id: z.uuid(),
   sourceWorkoutExerciseId: z.uuid().nullable(),
   exerciseId: z.uuid().nullable(),
@@ -226,6 +236,7 @@ export const GetWorkoutDayResponseSchema = z.object({
       sets: z.number(),
       warmupSets: z.number().default(0),
       reps: z.number(),
+      ...advancedPrescriptionShape,
       restTimeInSeconds: z.number(),
     }),
   ),
@@ -315,6 +326,7 @@ export const ListWorkoutPlansResponseSchema = z.object({
               warmupSets: z.number().default(0),
               sets: z.number(),
               reps: z.number(),
+              ...advancedPrescriptionShape,
               restTimeInSeconds: z.number(),
             }),
           ),
@@ -345,7 +357,6 @@ export const StatsResponseSchema = z.object({
 });
 
 export const UpdateGamificationThemeBodySchema = z.object({
-
   theme: z.enum(GamificationTheme),
 });
 
@@ -358,7 +369,7 @@ export const UserTrainDataBodySchema = z.object({
   weightInGrams: z.number().min(1),
   heightInCentimeters: z.number().min(1),
   age: z.number().min(1),
-  bodyFatPercentage: z.number().min(0).max(100),
+  bodyFatPercentage: z.number().int().min(0).max(100).nullable().optional(),
   gamificationTheme: z.enum(GamificationTheme).optional(),
 });
 
@@ -367,7 +378,7 @@ export const UserTrainDataResponseSchema = z.object({
   weightInGrams: z.number(),
   heightInCentimeters: z.number(),
   age: z.number(),
-  bodyFatPercentage: z.number(),
+  bodyFatPercentage: z.number().nullable(),
   gamificationTheme: z.enum(GamificationTheme),
 });
 
@@ -378,7 +389,7 @@ export const GetUserTrainDataResponseSchema = z
     weightInGrams: z.number(),
     heightInCentimeters: z.number(),
     age: z.number(),
-    bodyFatPercentage: z.number(),
+    bodyFatPercentage: z.number().nullable(),
     gamificationTheme: z.enum(GamificationTheme),
     previousWeightInGrams: z.number().nullable().optional(),
     previousBodyFatPercentage: z.number().nullable().optional(),
@@ -401,8 +412,6 @@ export const MetricLogItemSchema = z.object({
 });
 
 export const GetUserMetricsHistoryResponseSchema = z.array(MetricLogItemSchema);
-
-
 
 export const CreateWorkoutSetParamsSchema = z.object({
   sessionExerciseId: z.uuid(),
@@ -481,6 +490,7 @@ export const WorkoutSessionSetResponseSchema = z.object({
 });
 
 export const WorkoutSessionExerciseResponseSchema = z.object({
+  ...plannedAdvancedPrescriptionShape,
   id: z.uuid(),
   exerciseId: z.uuid().nullable().optional(),
   hasMedia: z.boolean().optional(),
@@ -1040,6 +1050,7 @@ export const HistoryExerciseDetailSchema = z.object({
   wasSubstituted: z.boolean().default(false).optional(),
   substitutedAt: z.string().nullable().optional(),
   planned: z.object({
+    ...advancedPrescriptionShape,
     warmupSets: z.number().int().nullable(),
     workingSets: z.number().int().nullable(),
     reps: z.number().int().nullable(),
@@ -1213,14 +1224,23 @@ export const MuscleAnalyticsQuerySchema = z.object({
 export const GetMuscleAnalyticsQuerySchema = MuscleAnalyticsQuerySchema;
 
 export type WeeklyAnalyticsItem = z.infer<typeof WeeklyAnalyticsItemSchema>;
-export type WeeklyAnalyticsResponse = z.infer<typeof WeeklyAnalyticsResponseSchema>;
+export type WeeklyAnalyticsResponse = z.infer<
+  typeof WeeklyAnalyticsResponseSchema
+>;
 export type WeeklyAnalyticsQuery = z.infer<typeof WeeklyAnalyticsQuerySchema>;
 
 export type MuscleAnalyticsItem = z.infer<typeof MuscleAnalyticsItemSchema>;
-export type MuscleAnalyticsResponse = z.infer<typeof MuscleAnalyticsResponseSchema>;
+export type MuscleAnalyticsResponse = z.infer<
+  typeof MuscleAnalyticsResponseSchema
+>;
 export type MuscleAnalyticsQuery = z.infer<typeof MuscleAnalyticsQuerySchema>;
 
-export const FeedbackCategorySchema = z.enum(["BUG", "SUGGESTION", "QUESTION", "OTHER"]);
+export const FeedbackCategorySchema = z.enum([
+  "BUG",
+  "SUGGESTION",
+  "QUESTION",
+  "OTHER",
+]);
 
 export const CreateFeedbackBodySchema = z.object({
   category: FeedbackCategorySchema.default("SUGGESTION"),
@@ -1288,7 +1308,9 @@ export const ConfirmWorkoutSetProposalParamsSchema = z.object({
 
 export const ConfirmWorkoutSetProposalBodySchema = z.object({
   idempotencyKey: z.string().max(100).optional(),
-  sets: z.array(ProposedSetInputSchema).min(1, "A proposta deve conter ao menos uma série"),
+  sets: z
+    .array(ProposedSetInputSchema)
+    .min(1, "A proposta deve conter ao menos uma série"),
 });
 
 export const ConfirmWorkoutSetProposalResponseSchema = z.object({
@@ -1337,17 +1359,25 @@ export const ForgottenWorkoutExerciseInputSchema = z.object({
   order: z.number().int().min(1).optional(),
   exerciseId: z.string().uuid(),
   exerciseNameSnapshot: z.string().min(1).optional(),
-  sets: z.array(ForgottenWorkoutSetSchema).min(1, "Cada exercício deve conter ao menos uma série"),
+  sets: z
+    .array(ForgottenWorkoutSetSchema)
+    .min(1, "Cada exercício deve conter ao menos uma série"),
 });
-export type ForgottenWorkoutExerciseInput = z.infer<typeof ForgottenWorkoutExerciseInputSchema>;
+export type ForgottenWorkoutExerciseInput = z.infer<
+  typeof ForgottenWorkoutExerciseInputSchema
+>;
 
 export const ForgottenWorkoutExerciseSchema = z.object({
   order: z.number().int().min(1),
   exerciseId: z.string().uuid(),
   exerciseNameSnapshot: z.string().min(1),
-  sets: z.array(ForgottenWorkoutSetSchema).min(1, "Cada exercício deve conter ao menos uma série"),
+  sets: z
+    .array(ForgottenWorkoutSetSchema)
+    .min(1, "Cada exercício deve conter ao menos uma série"),
 });
-export type ForgottenWorkoutExercise = z.infer<typeof ForgottenWorkoutExerciseSchema>;
+export type ForgottenWorkoutExercise = z.infer<
+  typeof ForgottenWorkoutExerciseSchema
+>;
 
 export const ForgottenWorkoutDraftSchema = z.object({
   id: z.string().uuid(),
@@ -1373,7 +1403,9 @@ export const ForgottenWorkoutDraftSchema = z.object({
   createdAt: z.string(),
   updatedAt: z.string(),
 });
-export type ForgottenWorkoutDraftDto = z.infer<typeof ForgottenWorkoutDraftSchema>;
+export type ForgottenWorkoutDraftDto = z.infer<
+  typeof ForgottenWorkoutDraftSchema
+>;
 
 export const WorkoutRecoveryConflictSessionSchema = z.object({
   id: z.string().uuid(),
@@ -1392,10 +1424,14 @@ export const WorkoutRecoveryConflictDetailsSchema = z.object({
   reason: z.string().nullable().optional(),
   conflictingSessions: z.array(WorkoutRecoveryConflictSessionSchema),
 });
-export type WorkoutRecoveryConflictDetails = z.infer<typeof WorkoutRecoveryConflictDetailsSchema>;
+export type WorkoutRecoveryConflictDetails = z.infer<
+  typeof WorkoutRecoveryConflictDetailsSchema
+>;
 
 export const CreateForgottenWorkoutDraftBodySchema = z.object({
-  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Data deve estar no formato YYYY-MM-DD"),
+  date: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Data deve estar no formato YYYY-MM-DD"),
   timezone: z.string().min(1, "Timezone IANA é obrigatório"),
   title: z.string().min(1, "Título é obrigatório").max(100),
   conversationId: z.string().uuid().optional(),
@@ -1403,10 +1439,14 @@ export const CreateForgottenWorkoutDraftBodySchema = z.object({
   workoutDayId: z.string().uuid().optional(),
   startedAt: z.string().datetime({ offset: true }).optional(),
   completedAt: z.string().datetime({ offset: true }).optional(),
-  exercises: z.array(ForgottenWorkoutExerciseInputSchema).min(1, "Rascunho deve conter ao menos um exercício"),
+  exercises: z
+    .array(ForgottenWorkoutExerciseInputSchema)
+    .min(1, "Rascunho deve conter ao menos um exercício"),
   idempotencyKey: z.string().max(100).optional(),
 });
-export type CreateForgottenWorkoutDraftBody = z.infer<typeof CreateForgottenWorkoutDraftBodySchema>;
+export type CreateForgottenWorkoutDraftBody = z.infer<
+  typeof CreateForgottenWorkoutDraftBodySchema
+>;
 
 export const UpdateForgottenWorkoutDraftParamsSchema = z.object({
   draftId: z.string().uuid(),
@@ -1414,7 +1454,10 @@ export const UpdateForgottenWorkoutDraftParamsSchema = z.object({
 
 export const UpdateForgottenWorkoutDraftBodySchema = z.object({
   clientRevision: z.number().int().min(1),
-  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Data deve estar no formato YYYY-MM-DD").optional(),
+  date: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Data deve estar no formato YYYY-MM-DD")
+    .optional(),
   timezone: z.string().min(1).optional(),
   title: z.string().min(1).max(100).optional(),
   workoutPlanId: z.string().uuid().nullable().optional(),
@@ -1423,7 +1466,9 @@ export const UpdateForgottenWorkoutDraftBodySchema = z.object({
   completedAt: z.string().datetime({ offset: true }).nullable().optional(),
   exercises: z.array(ForgottenWorkoutExerciseInputSchema).min(1).optional(),
 });
-export type UpdateForgottenWorkoutDraftBody = z.infer<typeof UpdateForgottenWorkoutDraftBodySchema>;
+export type UpdateForgottenWorkoutDraftBody = z.infer<
+  typeof UpdateForgottenWorkoutDraftBodySchema
+>;
 
 export const GetForgottenWorkoutDraftParamsSchema = z.object({
   draftId: z.string().uuid(),
@@ -1433,7 +1478,9 @@ export const GetForgottenWorkoutDraftResponseSchema = z.object({
   draft: ForgottenWorkoutDraftSchema,
   conflicts: WorkoutRecoveryConflictDetailsSchema,
 });
-export type GetForgottenWorkoutDraftResponse = z.infer<typeof GetForgottenWorkoutDraftResponseSchema>;
+export type GetForgottenWorkoutDraftResponse = z.infer<
+  typeof GetForgottenWorkoutDraftResponseSchema
+>;
 
 export const ConfirmForgottenWorkoutRecoveryParamsSchema = z.object({
   draftId: z.string().uuid(),
@@ -1444,7 +1491,9 @@ export const ConfirmForgottenWorkoutRecoveryBodySchema = z.object({
   idempotencyKey: z.string().max(100).optional(),
   confirmConflict: z.boolean().optional().default(false),
 });
-export type ConfirmForgottenWorkoutRecoveryBody = z.infer<typeof ConfirmForgottenWorkoutRecoveryBodySchema>;
+export type ConfirmForgottenWorkoutRecoveryBody = z.infer<
+  typeof ConfirmForgottenWorkoutRecoveryBodySchema
+>;
 
 export const ConfirmForgottenWorkoutRecoveryResponseSchema = z.object({
   success: z.boolean(),
@@ -1472,9 +1521,3 @@ export const ListActiveForgottenWorkoutDraftsQuerySchema = z.object({
 export const ListActiveForgottenWorkoutDraftsResponseSchema = z.object({
   drafts: z.array(ForgottenWorkoutDraftSchema),
 });
-
-
-
-
-
-

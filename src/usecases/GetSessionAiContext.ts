@@ -1,5 +1,7 @@
+import { plannedAdvancedPrescription } from "../schemas/advanced-prescription.js";
 import { NotFoundError } from "../errors/index.js";
 import { prisma } from "../lib/db.js";
+import { SportsProfileResponse } from "../schemas/sports-profile.js";
 
 interface InputDto {
   userId: string;
@@ -8,6 +10,12 @@ interface InputDto {
 }
 
 export interface SessionAiContextOutput {
+  sportsProfile?: {
+    trainingGoals: string | null;
+    experienceLevel: "BEGINNER" | "INTERMEDIATE" | "ADVANCED" | null;
+    availableEquipment: string[];
+    trainingRestrictions: string | null;
+  };
   sessionId: string;
   sessionName: string;
   origin: string;
@@ -28,6 +36,11 @@ export interface SessionAiContextOutput {
       plannedWarmupSets: number | null;
       plannedWorkingSets: number | null;
       plannedReps: number | null;
+      plannedRepsMin?: number | null;
+      plannedRepsMax?: number | null;
+      plannedTargetRir?: number | null;
+      plannedTargetLoadInGrams?: number | null;
+      plannedTempo?: string | null;
       plannedRestTimeInSeconds: number | null;
     };
     loggedSets: Array<{
@@ -58,7 +71,14 @@ export class GetSessionAiContext {
   async execute(dto: InputDto): Promise<SessionAiContextOutput> {
     const user = await prisma.user.findUnique({
       where: { id: dto.userId },
-      select: { id: true, aiTrainingHistoryAccess: true },
+      select: {
+        id: true,
+        aiTrainingHistoryAccess: true,
+        trainingGoals: true,
+        experienceLevel: true,
+        availableEquipment: true,
+        trainingRestrictions: true,
+      },
     });
 
     if (!user) {
@@ -90,7 +110,8 @@ export class GetSessionAiContext {
 
     const exercises = await Promise.all(
       session.sessionExercises.map(async (ex) => {
-        let recentHistory: SessionAiContextOutput["exercises"][0]["recentHistory"] = null;
+        let recentHistory: SessionAiContextOutput["exercises"][0]["recentHistory"] =
+          null;
 
         if (hasHistoryConsent && ex.exerciseId) {
           // Busca minimizada: no máximo a última sessão concluída onde este exercício foi realizado
@@ -119,7 +140,11 @@ export class GetSessionAiContext {
 
           if (previousSets.length > 0) {
             let maxWeightGrams = -1;
-            let bestSet: { weightKg: number | null; reps: number | null; rir: number | null } | null = null;
+            let bestSet: {
+              weightKg: number | null;
+              reps: number | null;
+              rir: number | null;
+            } | null = null;
 
             for (const s of previousSets) {
               const w = s.weightInGrams ?? 0;
@@ -134,7 +159,8 @@ export class GetSessionAiContext {
             }
 
             recentHistory = {
-              sessionDate: previousSets[0].completedAt?.toISOString().split("T")[0] ?? "",
+              sessionDate:
+                previousSets[0].completedAt?.toISOString().split("T")[0] ?? "",
               bestSet,
               workingSetsCount: previousSets.length,
             };
@@ -148,7 +174,9 @@ export class GetSessionAiContext {
           isUnilateral: Boolean(ex.exercise?.isUnilateral),
           order: ex.order,
           wasSubstituted: ex.wasSubstituted,
-          substitutedAt: ex.substitutedAt ? ex.substitutedAt.toISOString() : null,
+          substitutedAt: ex.substitutedAt
+            ? ex.substitutedAt.toISOString()
+            : null,
           plannedExerciseName: ex.plannedExerciseNameSnapshot ?? null,
           alternative1Name: ex.alternative1ExerciseNameSnapshot ?? null,
           alternative2Name: ex.alternative2ExerciseNameSnapshot ?? null,
@@ -156,6 +184,7 @@ export class GetSessionAiContext {
             plannedWarmupSets: ex.plannedWarmupSets,
             plannedWorkingSets: ex.plannedSets,
             plannedReps: ex.plannedReps,
+            ...plannedAdvancedPrescription(ex),
             plannedRestTimeInSeconds: ex.plannedRestTimeInSeconds,
           },
           loggedSets: ex.sets.map((s) => ({
@@ -181,10 +210,13 @@ export class GetSessionAiContext {
       sessionName,
       origin: session.origin,
       startedAt: session.startedAt.toISOString(),
-      completedAt: session.completedAt ? session.completedAt.toISOString() : null,
+      completedAt: session.completedAt
+        ? session.completedAt.toISOString()
+        : null,
       exercises,
       selectedExerciseId: dto.sessionExerciseId ?? null,
       previousHistoryAllowed: hasHistoryConsent,
+      sportsProfile: SportsProfileResponse.parse(user),
       consentNotice: hasHistoryConsent
         ? null
         : "Consentimento de acesso ao histórico de treinos desativado pelo atleta (LGPD). A IA só tem visibilidade da sessão atual.",

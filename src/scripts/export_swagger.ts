@@ -30,6 +30,7 @@ import { workoutSessionRoutes } from "../routes/workout-session.js";
 import { workoutSessionRecoveryRoutes } from "../routes/workout-session-recovery.js";
 import { workoutEditRoutes } from "../routes/workout-edit.js";
 import { sessionFeedbackRoutes } from "../routes/session-feedback.js";
+import { sportsProfileRoutes } from "../routes/sports-profile.js";
 
 const app = Fastify({
   bodyLimit: 25 * 1024 * 1024,
@@ -72,6 +73,7 @@ await app.register(workoutSessionRoutes);
 await app.register(workoutSessionRecoveryRoutes);
 await app.register(workoutEditRoutes);
 await app.register(sessionFeedbackRoutes);
+await app.register(sportsProfileRoutes);
 await app.register(feedbackRoutes, { prefix: "/feedback" });
 await app.register(historyRoutes, { prefix: "/history" });
 

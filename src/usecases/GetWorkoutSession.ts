@@ -1,3 +1,4 @@
+import { plannedAdvancedPrescription } from "../schemas/advanced-prescription.js";
 import { NotFoundError } from "../errors/index.js";
 import { SetType, WorkoutSessionOrigin } from "../generated/prisma/enums.js";
 import { prisma } from "../lib/db.js";
@@ -40,6 +41,11 @@ export interface SessionExerciseOutputDto {
   plannedWarmupSets?: number | null;
   plannedSets: number | null;
   plannedReps: number | null;
+  plannedRepsMin?: number | null;
+  plannedRepsMax?: number | null;
+  plannedTargetRir?: number | null;
+  plannedTargetLoadInGrams?: number | null;
+  plannedTempo?: string | null;
   plannedRestTimeInSeconds: number | null;
   notes: string | null;
   isUnilateral?: boolean;
@@ -98,7 +104,9 @@ export class GetWorkoutSession {
       workoutPlanNameSnapshot: session.workoutPlanNameSnapshot,
       workoutDayNameSnapshot: session.workoutDayNameSnapshot,
       startedAt: session.startedAt.toISOString(),
-      completedAt: session.completedAt ? session.completedAt.toISOString() : null,
+      completedAt: session.completedAt
+        ? session.completedAt.toISOString()
+        : null,
       sessionExercises: session.sessionExercises.map((exercise) => ({
         id: exercise.id,
         exerciseId: exercise.exerciseId ?? null,
@@ -109,7 +117,8 @@ export class GetWorkoutSession {
         order: exercise.order,
         revision: exercise.revision,
         plannedExerciseId: exercise.plannedExerciseId ?? null,
-        plannedExerciseNameSnapshot: exercise.plannedExerciseNameSnapshot ?? null,
+        plannedExerciseNameSnapshot:
+          exercise.plannedExerciseNameSnapshot ?? null,
         alternative1ExerciseId: exercise.alternative1ExerciseId ?? null,
         alternative1ExerciseNameSnapshot:
           exercise.alternative1ExerciseNameSnapshot ?? null,
@@ -123,6 +132,7 @@ export class GetWorkoutSession {
         plannedWarmupSets: exercise.plannedWarmupSets,
         plannedSets: exercise.plannedSets,
         plannedReps: exercise.plannedReps,
+        ...plannedAdvancedPrescription(exercise),
         plannedRestTimeInSeconds: exercise.plannedRestTimeInSeconds,
         notes: exercise.notes,
         isUnilateral: Boolean(exercise.exercise?.isUnilateral),

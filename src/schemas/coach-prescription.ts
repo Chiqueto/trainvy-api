@@ -1,18 +1,25 @@
 import z from "zod";
+import {
+  advancedPrescriptionShape,
+  validateRepetitionRange,
+} from "./advanced-prescription.js";
 
-export const WorkoutExerciseDraftSchema = z.object({
-  name: z.string().trim().min(1, "Nome do exercício é obrigatório"),
-  order: z.number().int().min(0),
-  exerciseId: z.string().uuid().nullable().optional(),
-  alternative1ExerciseId: z.string().uuid().nullable().optional(),
-  alternative1ExerciseName: z.string().nullable().optional(),
-  alternative2ExerciseId: z.string().uuid().nullable().optional(),
-  alternative2ExerciseName: z.string().nullable().optional(),
-  sets: z.number().int().min(1, "Mínimo de 1 série"),
-  warmupSets: z.number().int().min(0).default(0),
-  reps: z.number().int().min(1, "Mínimo de 1 repetição"),
-  restTimeInSeconds: z.number().int().min(1, "Mínimo de 1 segundo"),
-});
+export const WorkoutExerciseDraftSchema = z
+  .object({
+    ...advancedPrescriptionShape,
+    name: z.string().trim().min(1, "Nome do exercício é obrigatório"),
+    order: z.number().int().min(0),
+    exerciseId: z.string().uuid().nullable().optional(),
+    alternative1ExerciseId: z.string().uuid().nullable().optional(),
+    alternative1ExerciseName: z.string().nullable().optional(),
+    alternative2ExerciseId: z.string().uuid().nullable().optional(),
+    alternative2ExerciseName: z.string().nullable().optional(),
+    sets: z.number().int().min(1, "Mínimo de 1 série"),
+    warmupSets: z.number().int().min(0).default(0),
+    reps: z.number().int().min(1, "Mínimo de 1 repetição"),
+    restTimeInSeconds: z.number().int().min(1, "Mínimo de 1 segundo"),
+  })
+  .superRefine(validateRepetitionRange);
 
 export const WorkoutDayDraftSchema = z
   .object({
@@ -89,6 +96,7 @@ export const UpdatePrescriptionDraftBodySchema = z.object({
 });
 
 export const PrescriptionExerciseItemSchema = z.object({
+  ...advancedPrescriptionShape,
   name: z.string(),
   order: z.number(),
   exerciseId: z.string().nullable().optional(),
@@ -200,11 +208,12 @@ export const GenerateCoachPrescriptionDraftResponseSchema = z.object({
           sets: z.number(),
           warmupSets: z.number().default(0),
           reps: z.number(),
+          ...advancedPrescriptionShape,
           restTimeInSeconds: z.number(),
           alternative1Name: z.string().nullable().optional(),
           alternative2Name: z.string().nullable().optional(),
-        })
+        }),
       ),
-    })
+    }),
   ),
 });

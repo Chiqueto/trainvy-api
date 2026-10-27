@@ -96,6 +96,10 @@ model User {
   heightInCentimeters     Int?
   age                     Int?
   bodyFatPercentage       Int? // 100 representa 100%
+  trainingGoals           String?
+  experienceLevel         String?
+  availableEquipment      String[]          @default([])
+  trainingRestrictions    String?
   gamificationTheme       String            @default("ALL")
   createdExercises        Exercise[]
 
@@ -270,6 +274,11 @@ model WorkoutExercise {
   sets              Int
   warmupSets        Int        @default(0)
   reps              Int
+  repsMin           Int?
+  repsMax           Int?
+  targetRir         Int?
+  targetLoadInGrams Int?
+  tempo             String?
   restTimeInSeconds Int
   createdAt         DateTime   @default(now()) @db.Timestamptz()
   updatedAt         DateTime   @updatedAt @db.Timestamptz()
@@ -352,6 +361,11 @@ model SessionExercise {
   plannedSets              Int?
   plannedWarmupSets        Int?
   plannedReps              Int?
+  plannedRepsMin           Int?
+  plannedRepsMax           Int?
+  plannedTargetRir         Int?
+  plannedTargetLoadInGrams Int?
+  plannedTempo             String?
   plannedRestTimeInSeconds Int?
 
   notes     String?
@@ -615,6 +629,7 @@ model SignupIntent {
 }
 
 enum AdminAuditAction {
+  PLAN_CREATED
   PLAN_UPDATED
   PLAN_ENTITLEMENTS_UPDATED
   SUBSCRIPTION_TRIAL_GRANTED

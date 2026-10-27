@@ -4,6 +4,8 @@
 
 ## Prioridade atual — 27/10/2026
 
+Extensão: [perfil esportivo, prescrição avançada e planos administrativos](16-SPORTS-PRESCRIPTION-AND-ADMIN-PLANS.md). Mudança de preço com aviso e antecedência em cobranças é especificação futura; não é executada nesta etapa.
+
 Edição de planos, persistência de feedback pós-treino e consumo/custo estimado de IA no admin. RAG e cobrança automática fora desta etapa; catálogo é um trabalho separado. Ver [implementação atual](15-PLAN-EDITING-FEEDBACK-AI-USAGE.md).
 
 ## Fase 0 — Correções estruturais [CONCLUÍDA]

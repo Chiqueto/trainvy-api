@@ -1,5 +1,7 @@
+import { advancedPrescriptionShape } from '../schemas/advanced-prescription.js';
 import { tool } from "ai";
 import z from "zod";
+import { GetSportsProfile } from "../usecases/SportsProfile.js";
 
 import { validateIanaTimezone } from "../domain/analytics-dates.js";
 import { Prisma } from "../generated/prisma/client.js";
@@ -29,6 +31,7 @@ import { CreateForgottenWorkoutDraft } from "../usecases/CreateForgottenWorkoutD
 
 
 export const aiExerciseSchema = z.object({
+  ...advancedPrescriptionShape,
   order: z
     .number()
     .int()
@@ -314,12 +317,18 @@ export function getAiTools(userId: string, context: AiToolsContext = {}) {
           weightInGrams: params.weightInGrams,
           heightInCentimeters: params.heightInCentimeters,
           age: params.age,
-          bodyFatPercentage: params.bodyFatPercentage ?? 0,
+          bodyFatPercentage: params.bodyFatPercentage,
           gamificationTheme: params.gamificationTheme,
         });
       },
     }),
 
+
+    getSportsProfile: tool({
+      description: "Consulta objetivos, experiência, equipamentos disponíveis e restrições declaradas pelo próprio atleta. Use antes de sugerir ou adaptar treinos; campos vazios significam informação não fornecida, não ausência de restrições.",
+      inputSchema: z.object({}),
+      execute: async () => new GetSportsProfile().execute(userId),
+    }),
 
     getRecentTrainingFeedback: tool({
       description: "Consulta as últimas 10 avaliações pós-treino do próprio atleta (sensação, dor, fadiga, sono e notas). Requer consentimento de histórico. Use antes de comentar recuperação; são relatos subjetivos, não diagnóstico. Não recebe IDs de outros usuários.",

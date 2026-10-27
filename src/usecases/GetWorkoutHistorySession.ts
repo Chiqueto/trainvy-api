@@ -1,3 +1,4 @@
+import { advancedPrescription } from "../schemas/advanced-prescription.js";
 import {
   computeExercisePerformedMetrics,
   computeSessionDurationInSeconds,
@@ -93,11 +94,7 @@ export class GetWorkoutHistorySession {
           include: {
             sets: {
               where: { completedAt: { not: null } },
-              orderBy: [
-                { order: "asc" },
-                { createdAt: "asc" },
-                { id: "asc" },
-              ],
+              orderBy: [{ order: "asc" }, { createdAt: "asc" }, { id: "asc" }],
             },
           },
         },
@@ -111,62 +108,75 @@ export class GetWorkoutHistorySession {
     const durationInSeconds =
       session.timePrecision === "DATE_ONLY"
         ? null
-        : computeSessionDurationInSeconds(session.startedAt, session.completedAt);
+        : computeSessionDurationInSeconds(
+            session.startedAt,
+            session.completedAt,
+          );
 
     let totalWorkingSets = 0;
     let totalWarmupSets = 0;
     let totalLoadVolumeGrams = 0;
 
-    const exercises: HistoryExerciseDetailDto[] = session.sessionExercises.map((exercise) => {
-      const performed = computeExercisePerformedMetrics(exercise.sets);
+    const exercises: HistoryExerciseDetailDto[] = session.sessionExercises.map(
+      (exercise) => {
+        const performed = computeExercisePerformedMetrics(exercise.sets);
 
-      totalWorkingSets += performed.workingSetsCount;
-      totalWarmupSets += performed.warmupSetsCount;
-      totalLoadVolumeGrams += performed.loadVolumeGrams;
+        totalWorkingSets += performed.workingSetsCount;
+        totalWarmupSets += performed.warmupSetsCount;
+        totalLoadVolumeGrams += performed.loadVolumeGrams;
 
-      const sets: HistorySetDetailDto[] = exercise.sets.map((set) => ({
-        id: set.id,
-        order: set.order,
-        type: set.type as "WARMUP" | "WORKING",
-        weightInGrams: set.weightInGrams,
-        reps: set.reps,
-        rir: set.rir,
-        durationInSeconds: set.durationInSeconds,
-        notes: set.notes,
-        completedAt: set.completedAt!.toISOString(),
-        exerciseId: set.exerciseId,
-        exerciseNameSnapshot: set.exerciseNameSnapshot,
-        proposalId: set.proposalId,
-      }));
+        const sets: HistorySetDetailDto[] = exercise.sets.map((set) => ({
+          id: set.id,
+          order: set.order,
+          type: set.type as "WARMUP" | "WORKING",
+          weightInGrams: set.weightInGrams,
+          reps: set.reps,
+          rir: set.rir,
+          durationInSeconds: set.durationInSeconds,
+          notes: set.notes,
+          completedAt: set.completedAt!.toISOString(),
+          exerciseId: set.exerciseId,
+          exerciseNameSnapshot: set.exerciseNameSnapshot,
+          proposalId: set.proposalId,
+        }));
 
-      return {
-        id: exercise.id,
-        exerciseId: exercise.exerciseId ?? null,
-        exerciseNameSnapshot: exercise.exerciseNameSnapshot,
-        order: exercise.order,
-        notes: exercise.notes ?? null,
-        plannedExerciseId: exercise.plannedExerciseId ?? null,
-        plannedExerciseNameSnapshot: exercise.plannedExerciseNameSnapshot ?? null,
-        alternative1ExerciseId: exercise.alternative1ExerciseId ?? null,
-        alternative1ExerciseNameSnapshot:
-          exercise.alternative1ExerciseNameSnapshot ?? null,
-        alternative2ExerciseId: exercise.alternative2ExerciseId ?? null,
-        alternative2ExerciseNameSnapshot:
-          exercise.alternative2ExerciseNameSnapshot ?? null,
-        wasSubstituted: exercise.wasSubstituted,
-        substitutedAt: exercise.substitutedAt
-          ? exercise.substitutedAt.toISOString()
-          : null,
-        planned: {
-          warmupSets: exercise.plannedWarmupSets ?? null,
-          workingSets: exercise.plannedSets ?? null,
-          reps: exercise.plannedReps ?? null,
-          restTimeInSeconds: exercise.plannedRestTimeInSeconds ?? null,
-        },
-        performed,
-        sets,
-      };
-    });
+        return {
+          id: exercise.id,
+          exerciseId: exercise.exerciseId ?? null,
+          exerciseNameSnapshot: exercise.exerciseNameSnapshot,
+          order: exercise.order,
+          notes: exercise.notes ?? null,
+          plannedExerciseId: exercise.plannedExerciseId ?? null,
+          plannedExerciseNameSnapshot:
+            exercise.plannedExerciseNameSnapshot ?? null,
+          alternative1ExerciseId: exercise.alternative1ExerciseId ?? null,
+          alternative1ExerciseNameSnapshot:
+            exercise.alternative1ExerciseNameSnapshot ?? null,
+          alternative2ExerciseId: exercise.alternative2ExerciseId ?? null,
+          alternative2ExerciseNameSnapshot:
+            exercise.alternative2ExerciseNameSnapshot ?? null,
+          wasSubstituted: exercise.wasSubstituted,
+          substitutedAt: exercise.substitutedAt
+            ? exercise.substitutedAt.toISOString()
+            : null,
+          planned: {
+            warmupSets: exercise.plannedWarmupSets ?? null,
+            workingSets: exercise.plannedSets ?? null,
+            reps: exercise.plannedReps ?? null,
+            ...advancedPrescription({
+              repsMin: exercise.plannedRepsMin,
+              repsMax: exercise.plannedRepsMax,
+              targetRir: exercise.plannedTargetRir,
+              targetLoadInGrams: exercise.plannedTargetLoadInGrams,
+              tempo: exercise.plannedTempo,
+            }),
+            restTimeInSeconds: exercise.plannedRestTimeInSeconds ?? null,
+          },
+          performed,
+          sets,
+        };
+      },
+    );
 
     return {
       id: session.id,

@@ -23,6 +23,11 @@ export interface PrescriptionExercisePayload {
   sets: number;
   warmupSets: number;
   reps: number;
+  repsMin?: number | null;
+  repsMax?: number | null;
+  targetRir?: number | null;
+  targetLoadInGrams?: number | null;
+  tempo?: string | null;
   restTimeInSeconds: number;
   exerciseId?: string | null;
   alternative1ExerciseId?: string | null;

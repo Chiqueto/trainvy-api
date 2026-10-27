@@ -1,3 +1,4 @@
+import { advancedPrescription } from "../schemas/advanced-prescription.js";
 import { WeekDay } from "../generated/prisma/enums.js";
 import { prisma } from "../lib/db.js";
 
@@ -26,6 +27,11 @@ interface OutputDto {
         warmupSets: number;
         sets: number;
         reps: number;
+        repsMin?: number | null;
+        repsMax?: number | null;
+        targetRir?: number | null;
+        targetLoadInGrams?: number | null;
+        tempo?: string | null;
         restTimeInSeconds: number;
       }>;
     }>;
@@ -72,6 +78,7 @@ export class ListWorkoutPlans {
             warmupSets: exercise.warmupSets,
             sets: exercise.sets,
             reps: exercise.reps,
+            ...advancedPrescription(exercise),
             restTimeInSeconds: exercise.restTimeInSeconds,
           })),
         })),

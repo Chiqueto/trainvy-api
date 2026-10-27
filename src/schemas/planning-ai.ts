@@ -1,7 +1,11 @@
+import { advancedPrescriptionShape } from "../schemas/advanced-prescription.js";
 import z from "zod";
 
 export const GenerateWorkoutPlanDraftWithAiBodySchema = z.object({
-  prompt: z.string().trim().min(2, "Instrução ou descrição do treino é obrigatória"),
+  prompt: z
+    .string()
+    .trim()
+    .min(2, "Instrução ou descrição do treino é obrigatória"),
   fileUrl: z.string().optional(),
   mediaType: z.string().optional(),
   filename: z.string().optional(),
@@ -30,11 +34,12 @@ export const GenerateWorkoutPlanDraftWithAiResponseSchema = z.object({
           sets: z.number(),
           warmupSets: z.number().default(0),
           reps: z.number(),
+          ...advancedPrescriptionShape,
           restTimeInSeconds: z.number(),
           alternative1Name: z.string().nullable().optional(),
           alternative2Name: z.string().nullable().optional(),
-        })
+        }),
       ),
-    })
+    }),
   ),
 });

@@ -1,3 +1,4 @@
+import { advancedPrescription } from "../schemas/advanced-prescription.js";
 import { resolveCanonicalExerciseMap } from "../domain/canonical-exercise.js";
 import {
   CoachPrescriptionError,
@@ -39,7 +40,10 @@ export class AcceptWorkoutPrescription {
         }
 
         // 2. Idempotência perfeita para aceite já concluído
-        if (prescription.status === "ACCEPTED" && prescription.acceptedWorkoutPlanId) {
+        if (
+          prescription.status === "ACCEPTED" &&
+          prescription.acceptedWorkoutPlanId
+        ) {
           const existingPlan = await tx.workoutPlan.findUnique({
             where: { id: prescription.acceptedWorkoutPlanId },
           });
@@ -117,9 +121,11 @@ export class AcceptWorkoutPrescription {
         // 5. Resolução canônica de exercícios (isolamento por usuário)
         const allExerciseNames = workoutDays.flatMap((day) =>
           day.exercises.flatMap((e) =>
-            [e.name, e.alternative1ExerciseName, e.alternative2ExerciseName].filter(
-              (n): n is string => !!n && n.trim().length > 0,
-            ),
+            [
+              e.name,
+              e.alternative1ExerciseName,
+              e.alternative2ExerciseName,
+            ].filter((n): n is string => !!n && n.trim().length > 0),
           ),
         );
         const canonicalExerciseMap = await resolveCanonicalExerciseMap({
@@ -155,14 +161,18 @@ export class AcceptWorkoutPrescription {
                     const resolvedAlt1Id =
                       exercise.alternative1ExerciseId ??
                       (exercise.alternative1ExerciseName
-                        ? canonicalExerciseMap.get(exercise.alternative1ExerciseName)
+                        ? canonicalExerciseMap.get(
+                            exercise.alternative1ExerciseName,
+                          )
                         : null) ??
                       null;
 
                     const resolvedAlt2Id =
                       exercise.alternative2ExerciseId ??
                       (exercise.alternative2ExerciseName
-                        ? canonicalExerciseMap.get(exercise.alternative2ExerciseName)
+                        ? canonicalExerciseMap.get(
+                            exercise.alternative2ExerciseName,
+                          )
                         : null) ??
                       null;
 
@@ -180,6 +190,7 @@ export class AcceptWorkoutPrescription {
                       sets: exercise.sets,
                       warmupSets: exercise.warmupSets ?? 0,
                       reps: exercise.reps,
+                      ...advancedPrescription(exercise),
                       restTimeInSeconds: exercise.restTimeInSeconds,
                       exerciseId: resolvedMainId,
                       alternative1ExerciseId,
@@ -223,7 +234,8 @@ export class AcceptWorkoutPrescription {
             createdAt: finalPrescription.createdAt.toISOString(),
             updatedAt: finalPrescription.updatedAt.toISOString(),
             coach: finalPrescription.coach,
-            payload: finalPrescription.payload as unknown as PrescriptionPayload,
+            payload:
+              finalPrescription.payload as unknown as PrescriptionPayload,
           },
           workoutPlanId: newPlan.id,
           workoutPlanName: newPlan.name,

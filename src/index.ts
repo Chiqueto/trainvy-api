@@ -34,6 +34,7 @@ import { workoutSessionRoutes } from "./routes/workout-session.js";
 import { workoutSessionRecoveryRoutes } from "./routes/workout-session-recovery.js";
 import { workoutEditRoutes } from "./routes/workout-edit.js";
 import { sessionFeedbackRoutes } from "./routes/session-feedback.js";
+import { sportsProfileRoutes } from "./routes/sports-profile.js";
 
 const isVercel = Boolean(process.env.VERCEL);
 
@@ -118,6 +119,7 @@ await app.register(workoutSessionRoutes);
 await app.register(workoutSessionRecoveryRoutes);
 await app.register(workoutEditRoutes);
 await app.register(sessionFeedbackRoutes);
+await app.register(sportsProfileRoutes);
 await app.register(commercialRoutes);
 await app.register(coachRoutes);
 await app.register(coachPrescriptionRoutes);

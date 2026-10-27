@@ -1,4 +1,8 @@
 import {
+  plannedAdvancedPrescription,
+  snapshotAdvancedPrescription,
+} from "../schemas/advanced-prescription.js";
+import {
   ConflictError,
   NotFoundError,
   WorkoutPlanNotActiveError,
@@ -36,6 +40,11 @@ interface OutputDto {
     plannedWarmupSets?: number | null;
     plannedSets: number | null;
     plannedReps: number | null;
+    plannedRepsMin?: number | null;
+    plannedRepsMax?: number | null;
+    plannedTargetRir?: number | null;
+    plannedTargetLoadInGrams?: number | null;
+    plannedTempo?: string | null;
     plannedRestTimeInSeconds: number | null;
   }>;
 }
@@ -90,7 +99,9 @@ export class StartWorkoutSession {
         });
 
         if (activeSession) {
-          throw new ConflictError("There is already a workout session in progress");
+          throw new ConflictError(
+            "There is already a workout session in progress",
+          );
         }
 
         const session = await tx.workoutSession.create({
@@ -130,6 +141,7 @@ export class StartWorkoutSession {
               plannedWarmupSets: exercise.warmupSets,
               plannedSets: exercise.sets,
               plannedReps: exercise.reps,
+              ...snapshotAdvancedPrescription(exercise),
               plannedRestTimeInSeconds: exercise.restTimeInSeconds,
             },
           });
@@ -156,7 +168,7 @@ export class StartWorkoutSession {
               sessionExerciseId: created.id,
               order: setOrder++,
               type: SetType.WORKING,
-              reps: exercise.reps ?? null,
+              reps: exercise.repsMin ?? exercise.reps ?? null,
               weightInGrams: null,
             });
           }
@@ -188,6 +200,7 @@ export class StartWorkoutSession {
             plannedWarmupSets: created.plannedWarmupSets,
             plannedSets: created.plannedSets,
             plannedReps: created.plannedReps,
+            ...plannedAdvancedPrescription(created),
             plannedRestTimeInSeconds: created.plannedRestTimeInSeconds,
           });
         }
@@ -210,11 +223,12 @@ export class StartWorkoutSession {
           "code" in error &&
           (error as { code: string }).code === "P2002")
       ) {
-        throw new ConflictError("There is already a workout session in progress");
+        throw new ConflictError(
+          "There is already a workout session in progress",
+        );
       }
 
       throw error;
     }
   }
 }
-

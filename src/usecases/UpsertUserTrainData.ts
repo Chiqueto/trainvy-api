@@ -6,7 +6,7 @@ interface InputDto {
   weightInGrams: number;
   heightInCentimeters: number;
   age: number;
-  bodyFatPercentage: number;
+  bodyFatPercentage?: number | null;
   gamificationTheme?: GamificationTheme;
 }
 
@@ -15,41 +15,47 @@ interface OutputDto {
   weightInGrams: number;
   heightInCentimeters: number;
   age: number;
-  bodyFatPercentage: number;
+  bodyFatPercentage: number | null;
   gamificationTheme: GamificationTheme;
 }
 
 export class UpsertUserTrainData {
   async execute(dto: InputDto): Promise<OutputDto> {
-    const [user] = await prisma.$transaction([
-      prisma.user.update({
+    const user = await prisma.$transaction(async (tx) => {
+      const updated = await tx.user.update({
         where: { id: dto.userId },
         data: {
           weightInGrams: dto.weightInGrams,
           heightInCentimeters: dto.heightInCentimeters,
           age: dto.age,
-          bodyFatPercentage: dto.bodyFatPercentage,
-          ...(dto.gamificationTheme ? { gamificationTheme: dto.gamificationTheme } : {}),
+          ...(dto.bodyFatPercentage !== undefined
+            ? { bodyFatPercentage: dto.bodyFatPercentage }
+            : {}),
+          ...(dto.gamificationTheme
+            ? { gamificationTheme: dto.gamificationTheme }
+            : {}),
         },
-      }),
-      prisma.userMetricLog.create({
+      });
+      await tx.userMetricLog.create({
         data: {
           userId: dto.userId,
           weightInGrams: dto.weightInGrams,
           heightInCentimeters: dto.heightInCentimeters,
           age: dto.age,
-          bodyFatPercentage: dto.bodyFatPercentage,
+          bodyFatPercentage: updated.bodyFatPercentage,
         },
-      }),
-    ]);
+      });
+      return updated;
+    });
 
     return {
       userId: user.id,
       weightInGrams: user.weightInGrams!,
       heightInCentimeters: user.heightInCentimeters!,
       age: user.age!,
-      bodyFatPercentage: user.bodyFatPercentage!,
-      gamificationTheme: (user.gamificationTheme as GamificationTheme) || GamificationTheme.ALL,
+      bodyFatPercentage: user.bodyFatPercentage,
+      gamificationTheme:
+        (user.gamificationTheme as GamificationTheme) || GamificationTheme.ALL,
     };
   }
 }

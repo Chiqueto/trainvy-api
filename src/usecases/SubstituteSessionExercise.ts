@@ -1,11 +1,10 @@
+import { plannedAdvancedPrescription } from "../schemas/advanced-prescription.js";
 import {
   NotFoundError,
   WorkoutSessionAlreadyCompletedError,
 } from "../errors/index.js";
 import { prisma } from "../lib/db.js";
-import {
-  SessionExerciseOutputDto,
-} from "./GetWorkoutSession.js";
+import { SessionExerciseOutputDto } from "./GetWorkoutSession.js";
 
 interface InputDto {
   userId: string;
@@ -18,7 +17,9 @@ export class SubstituteSessionExercise {
   async execute(dto: InputDto): Promise<SessionExerciseOutputDto> {
     return await prisma.$transaction(async (tx) => {
       // 1. Lock Sessão
-      const lockedSessions = await tx.$queryRaw<Array<{ id: string; athleteId: string; completedAt: Date | null }>>`
+      const lockedSessions = await tx.$queryRaw<
+        Array<{ id: string; athleteId: string; completedAt: Date | null }>
+      >`
         SELECT id, "athleteId", "completedAt"
         FROM "WorkoutSession"
         WHERE id = ${dto.sessionId}
@@ -37,14 +38,16 @@ export class SubstituteSessionExercise {
       }
 
       // 2. Lock SessionExercise
-      const lockedExercises = await tx.$queryRaw<Array<{
-        id: string;
-        exerciseId: string | null;
-        exerciseNameSnapshot: string;
-        plannedExerciseId: string | null;
-        plannedExerciseNameSnapshot: string | null;
-        revision: number;
-      }>>`
+      const lockedExercises = await tx.$queryRaw<
+        Array<{
+          id: string;
+          exerciseId: string | null;
+          exerciseNameSnapshot: string;
+          plannedExerciseId: string | null;
+          plannedExerciseNameSnapshot: string | null;
+          revision: number;
+        }>
+      >`
         SELECT id, "exerciseId", "exerciseNameSnapshot", "plannedExerciseId", "plannedExerciseNameSnapshot", revision
         FROM "SessionExercise"
         WHERE id = ${dto.sessionExerciseId} AND "workoutSessionId" = ${session.id}
@@ -141,14 +144,19 @@ export class SubstituteSessionExercise {
         plannedExerciseId: updated.plannedExerciseId,
         plannedExerciseNameSnapshot: updated.plannedExerciseNameSnapshot,
         alternative1ExerciseId: updated.alternative1ExerciseId,
-        alternative1ExerciseNameSnapshot: updated.alternative1ExerciseNameSnapshot,
+        alternative1ExerciseNameSnapshot:
+          updated.alternative1ExerciseNameSnapshot,
         alternative2ExerciseId: updated.alternative2ExerciseId,
-        alternative2ExerciseNameSnapshot: updated.alternative2ExerciseNameSnapshot,
+        alternative2ExerciseNameSnapshot:
+          updated.alternative2ExerciseNameSnapshot,
         wasSubstituted: updated.wasSubstituted,
-        substitutedAt: updated.substitutedAt ? updated.substitutedAt.toISOString() : null,
+        substitutedAt: updated.substitutedAt
+          ? updated.substitutedAt.toISOString()
+          : null,
         plannedWarmupSets: updated.plannedWarmupSets,
         plannedSets: updated.plannedSets,
         plannedReps: updated.plannedReps,
+        ...plannedAdvancedPrescription(updated),
         plannedRestTimeInSeconds: updated.plannedRestTimeInSeconds,
         notes: updated.notes,
         sets: updated.sets.map((set) => ({

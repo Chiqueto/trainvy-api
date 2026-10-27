@@ -12,7 +12,7 @@ interface OutputDto {
   weightInGrams: number;
   heightInCentimeters: number;
   age: number;
-  bodyFatPercentage: number;
+  bodyFatPercentage: number | null;
   gamificationTheme: GamificationTheme;
   previousWeightInGrams?: number | null;
   previousBodyFatPercentage?: number | null;
@@ -39,8 +39,7 @@ export class GetUserTrainData {
     if (
       user.weightInGrams === null ||
       user.heightInCentimeters === null ||
-      user.age === null ||
-      user.bodyFatPercentage === null
+      user.age === null
     ) {
       return null;
     }
@@ -55,7 +54,11 @@ export class GetUserTrainData {
       previousWeightInGrams = prev.weightInGrams;
       previousBodyFatPercentage = prev.bodyFatPercentage ?? null;
       weightDiffInGrams = user.weightInGrams - prev.weightInGrams;
-      if (user.bodyFatPercentage !== null && prev.bodyFatPercentage !== null && prev.bodyFatPercentage !== undefined) {
+      if (
+        user.bodyFatPercentage !== null &&
+        prev.bodyFatPercentage !== null &&
+        prev.bodyFatPercentage !== undefined
+      ) {
         bodyFatDiff = user.bodyFatPercentage - prev.bodyFatPercentage;
       }
     }
@@ -67,7 +70,8 @@ export class GetUserTrainData {
       heightInCentimeters: user.heightInCentimeters,
       age: user.age,
       bodyFatPercentage: user.bodyFatPercentage,
-      gamificationTheme: (user.gamificationTheme as GamificationTheme) || GamificationTheme.ALL,
+      gamificationTheme:
+        (user.gamificationTheme as GamificationTheme) || GamificationTheme.ALL,
       previousWeightInGrams,
       previousBodyFatPercentage,
       weightDiffInGrams,

@@ -1,3 +1,4 @@
+import { advancedPrescription } from "../schemas/advanced-prescription.js";
 import {
   assertCoachCanPrescribe,
   CoachPrescriptionError,
@@ -33,6 +34,11 @@ export interface CreateWorkoutPrescriptionDraftInput {
       sets: number;
       warmupSets?: number;
       reps: number;
+      repsMin?: number | null;
+      repsMax?: number | null;
+      targetRir?: number | null;
+      targetLoadInGrams?: number | null;
+      tempo?: string | null;
       restTimeInSeconds: number;
     }>;
   }>;
@@ -138,7 +144,8 @@ export class CreateWorkoutPrescriptionDraft {
 
           if (alt1 && alt1.toLowerCase() === name.toLowerCase()) alt1 = null;
           if (alt2 && alt2.toLowerCase() === name.toLowerCase()) alt2 = null;
-          if (alt1 && alt2 && alt1.toLowerCase() === alt2.toLowerCase()) alt2 = null;
+          if (alt1 && alt2 && alt1.toLowerCase() === alt2.toLowerCase())
+            alt2 = null;
           if (!alt1 && alt2) {
             alt1 = alt2;
             alt2 = null;
@@ -152,6 +159,7 @@ export class CreateWorkoutPrescriptionDraft {
             sets: ex.sets,
             warmupSets: ex.warmupSets ?? 0,
             reps: ex.reps,
+            ...advancedPrescription(ex),
             restTimeInSeconds: ex.restTimeInSeconds,
           };
         }),

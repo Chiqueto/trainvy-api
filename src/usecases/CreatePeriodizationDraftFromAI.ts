@@ -1,3 +1,4 @@
+import { advancedPrescription } from "../schemas/advanced-prescription.js";
 import { resolveCanonicalExerciseMap } from "../domain/canonical-exercise.js";
 import { sanitizeAndNormalizeAlternatives } from "../domain/exercise-alternatives.js";
 import { ValidationError } from "../errors/index.js";
@@ -24,6 +25,11 @@ export interface CreatePeriodizationDraftFromAIInput {
           warmupSets?: number;
           sets: number;
           reps: number;
+          repsMin?: number | null;
+          repsMax?: number | null;
+          targetRir?: number | null;
+          targetLoadInGrams?: number | null;
+          tempo?: string | null;
           restTimeInSeconds: number;
           exerciseId?: string | null;
           alternative1ExerciseId?: string | null;
@@ -176,156 +182,162 @@ export class CreatePeriodizationDraftFromAI {
       }
     }
 
-    return await prisma.$transaction(async (tx) => {
-      const periodization = await tx.periodization.create({
-        data: {
-          id: crypto.randomUUID(),
-          userId: dto.userId,
-          name: trimmedName,
-          goal: dto.goal?.trim() || null,
-          notes: dto.notes?.trim() || null,
-          isActive: false,
-          startedAt: null,
-          completedAt: null,
-        },
-      });
-
-      const allExerciseNames = dto.blocks.flatMap((b) =>
-        b.plan.workoutDays.flatMap((wd) =>
-          wd.exercises.flatMap((e) =>
-            [e.name, e.alternative1Name, e.alternative2Name].filter(
-              (n): n is string => !!n && n.trim().length > 0,
-            ),
-          ),
-        ),
-      );
-      const canonicalExerciseMap = await resolveCanonicalExerciseMap({
-        userId: dto.userId,
-        names: allExerciseNames,
-        tx,
-      });
-
-      const createdBlocks = [];
-
-      for (let i = 0; i < dto.blocks.length; i++) {
-        const block = dto.blocks[i];
-        const order = i + 1;
-
-        const workoutPlan = await tx.workoutPlan.create({
+    return await prisma.$transaction(
+      async (tx) => {
+        const periodization = await tx.periodization.create({
           data: {
             id: crypto.randomUUID(),
             userId: dto.userId,
-            name: block.plan.name.trim(),
+            name: trimmedName,
+            goal: dto.goal?.trim() || null,
+            notes: dto.notes?.trim() || null,
             isActive: false,
-            workoutDays: {
-              create: block.plan.workoutDays.map((wd) => ({
-                id: crypto.randomUUID(),
-                name: wd.name.trim(),
-                weekDay: wd.weekDay,
-                isRest: wd.isRest,
-                estimatedDurationInSeconds: wd.estimatedDurationInSeconds,
-                coverImageUrl: wd.coverImageUrl || null,
-                exercises: {
-                  create: wd.exercises.map((ex) => {
-                    const resolvedMainId =
-                      ex.exerciseId ??
-                      canonicalExerciseMap.get(ex.name.trim()) ??
-                      canonicalExerciseMap.get(ex.name) ??
-                      null;
-
-                    const resolvedAlt1Id =
-                      ex.alternative1ExerciseId ??
-                      (ex.alternative1Name
-                        ? canonicalExerciseMap.get(ex.alternative1Name.trim()) ??
-                          canonicalExerciseMap.get(ex.alternative1Name)
-                        : null) ??
-                      null;
-
-                    const resolvedAlt2Id =
-                      ex.alternative2ExerciseId ??
-                      (ex.alternative2Name
-                        ? canonicalExerciseMap.get(ex.alternative2Name.trim()) ??
-                          canonicalExerciseMap.get(ex.alternative2Name)
-                        : null) ??
-                      null;
-
-                    const { alternative1ExerciseId, alternative2ExerciseId } =
-                      sanitizeAndNormalizeAlternatives({
-                        mainExerciseId: resolvedMainId,
-                        mainExerciseName: ex.name,
-                        alternative1ExerciseId: resolvedAlt1Id,
-                        alternative2ExerciseId: resolvedAlt2Id,
-                      });
-
-                    return {
-                      id: crypto.randomUUID(),
-                      name: ex.name.trim(),
-                      order: ex.order,
-                      warmupSets: ex.warmupSets ?? 0,
-                      sets: ex.sets,
-                      reps: ex.reps,
-                      restTimeInSeconds: ex.restTimeInSeconds,
-                      exerciseId: resolvedMainId,
-                      alternative1ExerciseId,
-                      alternative2ExerciseId,
-                    };
-                  }),
-                },
-              })),
-            },
-          },
-        });
-
-        const periodizationPlan = await tx.periodizationPlan.create({
-          data: {
-            id: crypto.randomUUID(),
-            periodizationId: periodization.id,
-            workoutPlanId: workoutPlan.id,
-            order,
-            plannedStartDate: block.plannedStartDate
-              ? new Date(block.plannedStartDate)
-              : null,
-            plannedEndDate: block.plannedEndDate
-              ? new Date(block.plannedEndDate)
-              : null,
-            notes: block.notes?.trim() || null,
-            activatedAt: null,
+            startedAt: null,
             completedAt: null,
           },
         });
 
-        createdBlocks.push({
-          id: periodizationPlan.id,
-          order,
-          workoutPlanId: workoutPlan.id,
-          workoutPlanName: workoutPlan.name,
-          plannedStartDate: block.plannedStartDate
-            ? block.plannedStartDate.split("T")[0]
-            : null,
-          plannedEndDate: block.plannedEndDate
-            ? block.plannedEndDate.split("T")[0]
-            : null,
-          notes: periodizationPlan.notes,
-          activatedAt: null,
-          completedAt: null,
+        const allExerciseNames = dto.blocks.flatMap((b) =>
+          b.plan.workoutDays.flatMap((wd) =>
+            wd.exercises.flatMap((e) =>
+              [e.name, e.alternative1Name, e.alternative2Name].filter(
+                (n): n is string => !!n && n.trim().length > 0,
+              ),
+            ),
+          ),
+        );
+        const canonicalExerciseMap = await resolveCanonicalExerciseMap({
+          userId: dto.userId,
+          names: allExerciseNames,
+          tx,
         });
-      }
 
-      return {
-        id: periodization.id,
-        name: periodization.name,
-        goal: periodization.goal,
-        notes: periodization.notes,
-        isActive: false,
-        startedAt: null,
-        completedAt: null,
-        createdAt: periodization.createdAt.toISOString(),
-        status: "DRAFT" as const,
-        blocks: createdBlocks,
-      };
-    }, {
-      maxWait: 5000,
-      timeout: 15000,
-    });
+        const createdBlocks = [];
+
+        for (let i = 0; i < dto.blocks.length; i++) {
+          const block = dto.blocks[i];
+          const order = i + 1;
+
+          const workoutPlan = await tx.workoutPlan.create({
+            data: {
+              id: crypto.randomUUID(),
+              userId: dto.userId,
+              name: block.plan.name.trim(),
+              isActive: false,
+              workoutDays: {
+                create: block.plan.workoutDays.map((wd) => ({
+                  id: crypto.randomUUID(),
+                  name: wd.name.trim(),
+                  weekDay: wd.weekDay,
+                  isRest: wd.isRest,
+                  estimatedDurationInSeconds: wd.estimatedDurationInSeconds,
+                  coverImageUrl: wd.coverImageUrl || null,
+                  exercises: {
+                    create: wd.exercises.map((ex) => {
+                      const resolvedMainId =
+                        ex.exerciseId ??
+                        canonicalExerciseMap.get(ex.name.trim()) ??
+                        canonicalExerciseMap.get(ex.name) ??
+                        null;
+
+                      const resolvedAlt1Id =
+                        ex.alternative1ExerciseId ??
+                        (ex.alternative1Name
+                          ? (canonicalExerciseMap.get(
+                              ex.alternative1Name.trim(),
+                            ) ?? canonicalExerciseMap.get(ex.alternative1Name))
+                          : null) ??
+                        null;
+
+                      const resolvedAlt2Id =
+                        ex.alternative2ExerciseId ??
+                        (ex.alternative2Name
+                          ? (canonicalExerciseMap.get(
+                              ex.alternative2Name.trim(),
+                            ) ?? canonicalExerciseMap.get(ex.alternative2Name))
+                          : null) ??
+                        null;
+
+                      const { alternative1ExerciseId, alternative2ExerciseId } =
+                        sanitizeAndNormalizeAlternatives({
+                          mainExerciseId: resolvedMainId,
+                          mainExerciseName: ex.name,
+                          alternative1ExerciseId: resolvedAlt1Id,
+                          alternative2ExerciseId: resolvedAlt2Id,
+                        });
+
+                      return {
+                        id: crypto.randomUUID(),
+                        name: ex.name.trim(),
+                        order: ex.order,
+                        warmupSets: ex.warmupSets ?? 0,
+                        sets: ex.sets,
+                        reps: ex.reps,
+                        ...advancedPrescription(ex),
+                        restTimeInSeconds: ex.restTimeInSeconds,
+                        exerciseId: resolvedMainId,
+                        alternative1ExerciseId,
+                        alternative2ExerciseId,
+                      };
+                    }),
+                  },
+                })),
+              },
+            },
+          });
+
+          const periodizationPlan = await tx.periodizationPlan.create({
+            data: {
+              id: crypto.randomUUID(),
+              periodizationId: periodization.id,
+              workoutPlanId: workoutPlan.id,
+              order,
+              plannedStartDate: block.plannedStartDate
+                ? new Date(block.plannedStartDate)
+                : null,
+              plannedEndDate: block.plannedEndDate
+                ? new Date(block.plannedEndDate)
+                : null,
+              notes: block.notes?.trim() || null,
+              activatedAt: null,
+              completedAt: null,
+            },
+          });
+
+          createdBlocks.push({
+            id: periodizationPlan.id,
+            order,
+            workoutPlanId: workoutPlan.id,
+            workoutPlanName: workoutPlan.name,
+            plannedStartDate: block.plannedStartDate
+              ? block.plannedStartDate.split("T")[0]
+              : null,
+            plannedEndDate: block.plannedEndDate
+              ? block.plannedEndDate.split("T")[0]
+              : null,
+            notes: periodizationPlan.notes,
+            activatedAt: null,
+            completedAt: null,
+          });
+        }
+
+        return {
+          id: periodization.id,
+          name: periodization.name,
+          goal: periodization.goal,
+          notes: periodization.notes,
+          isActive: false,
+          startedAt: null,
+          completedAt: null,
+          createdAt: periodization.createdAt.toISOString(),
+          status: "DRAFT" as const,
+          blocks: createdBlocks,
+        };
+      },
+      {
+        maxWait: 5000,
+        timeout: 15000,
+      },
+    );
   }
 }

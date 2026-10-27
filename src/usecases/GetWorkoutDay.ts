@@ -1,3 +1,4 @@
+import { advancedPrescription } from "../schemas/advanced-prescription.js";
 import dayjs from "dayjs";
 
 import { NotFoundError } from "../errors/index.js";
@@ -31,6 +32,11 @@ interface OutputDto {
     warmupSets: number;
     sets: number;
     reps: number;
+    repsMin?: number | null;
+    repsMax?: number | null;
+    targetRir?: number | null;
+    targetLoadInGrams?: number | null;
+    tempo?: string | null;
     restTimeInSeconds: number;
   }>;
   sessions: Array<{
@@ -111,6 +117,7 @@ export class GetWorkoutDay {
         warmupSets: exercise.warmupSets,
         sets: exercise.sets,
         reps: exercise.reps,
+        ...advancedPrescription(exercise),
         restTimeInSeconds: exercise.restTimeInSeconds,
       })),
       sessions: workoutDay.sessions.map((session) => ({
