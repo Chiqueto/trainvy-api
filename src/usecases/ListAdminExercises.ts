@@ -1,8 +1,10 @@
+import priorityPlan from "../domain/exercise-3d-priority.json" with { type: "json" };
 import expansion from "../domain/exercise-catalog-expansion.json" with { type: "json" };
 import { prisma } from "../lib/db.js";
 import { assertAdminUser } from "../lib/require-admin.js";
 
 const families = new Map(expansion.map(e => [e.id, e.family]));
+const priorities = new Map(priorityPlan.map(e => [e.exerciseId, e]));
 
 export class ListAdminExercises {
   async execute(adminUserId: string) {
@@ -14,6 +16,7 @@ export class ListAdminExercises {
     return exercises.map(e => ({
       id: e.id, name: e.name, isUnilateral: e.isUnilateral,
       family: families.get(e.id) ?? null, updatedAt: e.updatedAt.toISOString(),
+      priority3d: priorities.get(e.id) ?? null,
       muscles: e.muscles.map(m => ({muscleGroup: m.muscleGroup, role: m.role})),
       media: e.media.map(m => ({mediaType: m.mediaType,
         hasImages: Boolean(m.startImagePath || m.endImagePath),
