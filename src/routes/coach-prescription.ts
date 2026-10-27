@@ -1,6 +1,9 @@
 import { fromNodeHeaders } from "better-auth/node";
 import type { FastifyReply, FastifyRequest } from "fastify";
-import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
+import {
+  type FastifyPluginAsyncZod,
+  hasZodFastifySchemaValidationErrors,
+} from "fastify-type-provider-zod";
 
 import { CoachAthleteError } from "../domain/coach-athlete.js";
 import { CoachPrescriptionError } from "../domain/coach-prescription.js";
@@ -72,6 +75,28 @@ const standardErrors = {
 };
 
 export const coachPrescriptionRoutes: FastifyPluginAsyncZod = async (app) => {
+  app.setErrorHandler((error, request, reply) => {
+    if (hasZodFastifySchemaValidationErrors(error)) {
+      const issue = error.validation[0];
+      return reply.status(400).send({
+        error: `Revise ${issue?.instancePath || "a prescrição"}: ${issue?.message ?? "valor inválido"}.`,
+        code: "INVALID_PRESCRIPTION_PAYLOAD",
+      });
+    }
+    if (
+      error instanceof Error &&
+      "statusCode" in error &&
+      error.statusCode === 400
+    ) {
+      return reply.status(400).send({
+        error:
+          "Não foi possível ler a prescrição. Revise os dados e tente novamente.",
+        code: "INVALID_REQUEST",
+      });
+    }
+    return fail(error, request, reply);
+  });
+
   // 1. Criar Rascunho de Prescrição (Coach)
   app.post(
     "/coach/prescriptions",
@@ -282,7 +307,8 @@ export const coachPrescriptionRoutes: FastifyPluginAsyncZod = async (app) => {
       schema: {
         operationId: "getCoachPrescriptionDetails",
         tags: ["Coach"],
-        summary: "Consultar detalhes completos de uma prescrição criada pelo treinador",
+        summary:
+          "Consultar detalhes completos de uma prescrição criada pelo treinador",
         params: PrescriptionIdParamsSchema,
         response: {
           200: PrescriptionItemResponseSchema,
@@ -397,7 +423,8 @@ export const coachPrescriptionRoutes: FastifyPluginAsyncZod = async (app) => {
       schema: {
         operationId: "acceptWorkoutPrescription",
         tags: ["Me"],
-        summary: "Aceitar prescrição de treino e gerar planejamento próprio inativo",
+        summary:
+          "Aceitar prescrição de treino e gerar planejamento próprio inativo",
         params: PrescriptionIdParamsSchema,
         response: {
           200: AcceptPrescriptionResponseSchema,
@@ -475,7 +502,8 @@ export const coachPrescriptionRoutes: FastifyPluginAsyncZod = async (app) => {
       schema: {
         operationId: "generateCoachPrescriptionDraftWithAi",
         tags: ["Coach"],
-        summary: "Gerar rascunho de prescrição de treino com IA a partir de texto, voz ou documento",
+        summary:
+          "Gerar rascunho de prescrição de treino com IA a partir de texto, voz ou documento",
         body: GenerateCoachPrescriptionDraftBodySchema,
         response: {
           200: GenerateCoachPrescriptionDraftResponseSchema,
@@ -511,4 +539,3 @@ export const coachPrescriptionRoutes: FastifyPluginAsyncZod = async (app) => {
     },
   );
 };
-

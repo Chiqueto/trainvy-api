@@ -15,13 +15,22 @@ export interface UpdateWorkoutPrescriptionDraftInput {
   workoutDays: Array<{
     name: string;
     order?: number;
-    weekDay?: "MONDAY" | "TUESDAY" | "WEDNESDAY" | "THURSDAY" | "FRIDAY" | "SATURDAY" | "SUNDAY";
+    weekDay?:
+      | "MONDAY"
+      | "TUESDAY"
+      | "WEDNESDAY"
+      | "THURSDAY"
+      | "FRIDAY"
+      | "SATURDAY"
+      | "SUNDAY";
     isRest: boolean;
     estimatedDurationInSeconds: number;
     coverImageUrl?: string | null;
     exercises: Array<{
       order: number;
       name: string;
+      alternative1ExerciseName?: string | null;
+      alternative2ExerciseName?: string | null;
       sets: number;
       warmupSets?: number;
       reps: number;
@@ -94,6 +103,8 @@ export class UpdateWorkoutPrescriptionDraft {
         exercises: day.exercises.map((ex, exIndex) => ({
           order: ex.order ?? exIndex,
           name: ex.name.trim(),
+          alternative1ExerciseName: ex.alternative1ExerciseName?.trim() || null,
+          alternative2ExerciseName: ex.alternative2ExerciseName?.trim() || null,
           sets: ex.sets,
           warmupSets: ex.warmupSets ?? 0,
           reps: ex.reps,
