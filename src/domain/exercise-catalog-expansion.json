@@ -1,0 +1,1280 @@
+[
+  {
+    "id": "eb910207-283c-414d-8d37-7c6b6d7de0d8",
+    "name": "Supino Declinado com Barra",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito"
+  },
+  {
+    "id": "d8e07a71-16ec-4ed8-8236-861a26c869e8",
+    "name": "Supino Declinado com Halteres",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito"
+  },
+  {
+    "id": "6ef90b25-cd99-4860-8933-ae29e4d1f3d8",
+    "name": "Supino Reto com Halteres",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito"
+  },
+  {
+    "id": "f5a99b5a-74d1-4622-880e-bcf24758dc31",
+    "name": "Supino Reto no Smith",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito"
+  },
+  {
+    "id": "cf30614a-819d-42ee-8dfd-5564f9ea9da2",
+    "name": "Supino Inclinado no Smith",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito"
+  },
+  {
+    "id": "d0a2d0cf-c6b3-4bfb-889e-82ccd3701ede",
+    "name": "Supino Declinado no Smith",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito"
+  },
+  {
+    "id": "f3e5e1cf-d232-4a80-87b3-9f35650a1b5e",
+    "name": "Supino Reto na Máquina",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito"
+  },
+  {
+    "id": "acfb67be-5a99-4243-8e26-2a489031d177",
+    "name": "Supino Inclinado na Máquina",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito"
+  },
+  {
+    "id": "d555deb1-6eef-436d-8377-9427ac267697",
+    "name": "Crucifixo Reto com Halteres",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito"
+  },
+  {
+    "id": "b9859cd9-6ed6-4e63-8fd0-500e8cf8d553",
+    "name": "Crucifixo na Máquina — aliases: peck deck, pec deck, voador",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito"
+  },
+  {
+    "id": "46e31e5f-585b-4a3b-8b06-f6bed13440b5",
+    "name": "Crucifixo no Cabo na Altura do Peito",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito"
+  },
+  {
+    "id": "daf02b04-9308-4b8f-8047-d4a5bb86d079",
+    "name": "Crossover no Cabo Alto",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito"
+  },
+  {
+    "id": "dd8854e2-5652-4ffb-86bc-dbf61b42bd04",
+    "name": "Crucifixo no Cabo Baixo",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito"
+  },
+  {
+    "id": "38c1d513-124b-4952-8187-003f50f8c7c1",
+    "name": "Flexão de Braços",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito"
+  },
+  {
+    "id": "9a83be35-3b36-4f1a-8bd3-cfc7cb78f772",
+    "name": "Flexão de Braços com Joelhos Apoiados",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito"
+  },
+  {
+    "id": "64c13c24-240c-44d8-88db-d52af9063792",
+    "name": "Flexão de Braços com Mãos Elevadas",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito"
+  },
+  {
+    "id": "f4b8fc60-0e9a-4fb6-8e1b-f40d56f442c0",
+    "name": "Flexão de Braços com Pés Elevados",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito"
+  },
+  {
+    "id": "36ed79fa-48ce-40f9-8f78-7e84aa9db1e7",
+    "name": "Pullover com Halter",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito"
+  },
+  {
+    "id": "120f29ac-733c-478b-8aa9-a3f4c22f5e70",
+    "name": "Remada Baixa no Cabo com Triângulo",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas"
+  },
+  {
+    "id": "98a489f1-67d6-4c87-8189-d83515ccf603",
+    "name": "Remada Baixa no Cabo com Barra Aberta",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas"
+  },
+  {
+    "id": "43025392-0466-46e7-82ab-27888d53f929",
+    "name": "Remada Sentada na Máquina",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas"
+  },
+  {
+    "id": "617b5657-d614-4b67-8e2d-6a21f36bd87a",
+    "name": "Remada com Halteres e Peito Apoiado",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas"
+  },
+  {
+    "id": "98109c9e-b7c6-44f3-8f36-7ffade02de5d",
+    "name": "Remada Unilateral na Máquina",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — costas"
+  },
+  {
+    "id": "21ed0c47-601a-408b-882f-8428fb62a1a2",
+    "name": "Puxada Frontal com Pegada Neutra",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas"
+  },
+  {
+    "id": "d8ce4a79-d54b-40bc-878c-85f013b32d14",
+    "name": "Puxada Frontal com Pegada Supinada",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas"
+  },
+  {
+    "id": "4825e2e4-b78b-4454-804a-1aab1e660040",
+    "name": "Puxada Unilateral no Cabo",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — costas"
+  },
+  {
+    "id": "3a5808f6-f68c-4484-8531-27875ae9ad1a",
+    "name": "Pulldown com Braços Estendidos no Cabo",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas"
+  },
+  {
+    "id": "d2786802-f941-4c55-8ee2-9a0135943722",
+    "name": "Barra Fixa com Pegada Supinada — alias: chin-up",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas"
+  },
+  {
+    "id": "30f83a25-de8c-45a5-859a-52f44e803cd3",
+    "name": "Barra Fixa com Pegada Neutra",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas"
+  },
+  {
+    "id": "4424e219-f3ac-4da1-86d4-20da69609ce4",
+    "name": "Barra Fixa Assistida na Máquina",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas"
+  },
+  {
+    "id": "8453d0f7-44fd-4468-8c87-6015fce80862",
+    "name": "Remada Invertida na Barra",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas"
+  },
+  {
+    "id": "1eef7876-e093-42af-8374-00d3b105c47a",
+    "name": "Remada Pendlay",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas"
+  },
+  {
+    "id": "d3b3f492-65fa-4038-851f-6f46b69e9fb4",
+    "name": "Agachamento no Smith",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "7bd5b49f-252c-43a2-83a8-816d6401f6cb",
+    "name": "Agachamento Hack na Máquina",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "9e9f7973-098d-432d-8745-ee8c126fe576",
+    "name": "Agachamento Goblet",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "67ed4623-adca-4008-8ecb-ccf19808a5f4",
+    "name": "Agachamento Sumô com Halter",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "2209d4ec-7807-4bd1-8e37-d622b4a5c15c",
+    "name": "Agachamento com Peso Corporal — alias: air squat",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "3c7f1815-4037-4186-8781-24c5762bcc6f",
+    "name": "Agachamento no Banco — alias: box squat",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "44bb63b7-0071-4a2f-8db8-a8dfa60ff41d",
+    "name": "Agachamento Zercher",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "17e716eb-2e73-478a-8322-d255b6b4430e",
+    "name": "Agachamento no Belt Squat",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "641ee20a-34bc-4a42-8b68-6fe359486362",
+    "name": "Agachamento no Pêndulo",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "440bc1d0-d61c-40e8-875f-7c394b2c5709",
+    "name": "Afundo Estático com Halteres",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "dbeed6b0-ebce-4e76-81e5-c037bda6d3ce",
+    "name": "Afundo Reverso com Halteres",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "31804968-a951-475a-8aa1-83570459c21b",
+    "name": "Afundo Lateral com Halter",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "a32fd931-69aa-4dbb-8d3d-d39cdc500b64",
+    "name": "Step-up com Halteres",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "0d8f6761-8c33-4f1e-8431-cce66916b538",
+    "name": "Levantamento Terra com Trap Bar",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "42f92003-f632-49aa-8835-19cc8bfac9f5",
+    "name": "Levantamento Terra Romeno com Barra",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "cd5fd328-8e17-47d9-86de-b758e45093cc",
+    "name": "Levantamento Terra Romeno Unilateral com Halter",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "c16917f8-68a4-40c1-82c7-e2d759e91d32",
+    "name": "Good Morning com Barra",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "3ba6f7c5-b215-4a21-88e8-02720b9d037f",
+    "name": "Flexão de Joelhos em Pé na Máquina",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "c2d006d8-760c-41a0-841d-e7a5cc1662c4",
+    "name": "Flexão de Joelhos Unilateral na Máquina",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "05bf3c93-d537-4db2-8fc1-055532d7cee8",
+    "name": "Flexão Nórdica de Posteriores — alias: Nordic curl",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "dbe65f9f-d436-4213-87b5-dc9a6b11bc18",
+    "name": "Flexão de Joelhos com Bola Suíça",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "bc663624-eab4-43ab-80eb-7c530a941263",
+    "name": "Ponte de Glúteos no Solo",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "5822bf41-eb84-4302-8060-55a5795976de",
+    "name": "Elevação Pélvica Unilateral",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "7ed07fa5-1795-4f7a-82d0-c9a6527664c7",
+    "name": "Extensão de Quadril no Cabo",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "4df4c443-be27-4ea3-8eee-37c5f8cd0f2f",
+    "name": "Abdução de Quadril no Cabo",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "95f4fdc6-a175-4cc3-87af-30bf83da5b4e",
+    "name": "Adução de Quadril no Cabo",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "6804cb1a-45c0-4c06-8f30-bbd80035f358",
+    "name": "Caminhada Lateral com Miniband",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "bd5ec77b-1186-4044-8cfe-26b8d1fe22fa",
+    "name": "Panturrilha no Leg Press",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "b7340583-e68f-4bdd-82cf-9230e6e9c50e",
+    "name": "Panturrilha Unilateral em Pé",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "397bacc0-d167-4382-883b-71fe6a9b5c56",
+    "name": "Elevação de Tibial Anterior",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril"
+  },
+  {
+    "id": "41023d42-af49-48cf-878e-d08d0d3b771c",
+    "name": "Desenvolvimento de Ombros na Máquina",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços"
+  },
+  {
+    "id": "675d2496-c092-4329-8340-29d95f83219f",
+    "name": "Desenvolvimento de Ombros no Smith",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços"
+  },
+  {
+    "id": "3882a123-5b3b-42e4-8ea5-3aff3f92b04a",
+    "name": "Elevação Frontal com Halteres",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços"
+  },
+  {
+    "id": "4e2154e2-910d-41ba-8038-b383bf329bc1",
+    "name": "Elevação Lateral na Máquina",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços"
+  },
+  {
+    "id": "a76c891b-132d-4cf5-8a58-9da775363a78",
+    "name": "Crucifixo Inverso com Halteres",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços"
+  },
+  {
+    "id": "daa5b03b-a7dc-4842-8747-534265fce3f2",
+    "name": "Crucifixo Inverso no Cabo",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços"
+  },
+  {
+    "id": "cd312278-5101-4faa-8c74-99f2209ebdca",
+    "name": "Encolhimento com Barra",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços"
+  },
+  {
+    "id": "e3cfb752-222b-4b62-8062-003e7083abf2",
+    "name": "Rosca Alternada com Halteres",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — ombros, braços e antebraços"
+  },
+  {
+    "id": "8124966b-3c55-4b28-8388-06e0bbaeb282",
+    "name": "Rosca Inclinada com Halteres",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços"
+  },
+  {
+    "id": "77e16d7c-c515-4066-88f0-93db502b89f2",
+    "name": "Rosca Direta no Cabo",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços"
+  },
+  {
+    "id": "16d9c6f7-ebb7-41d1-8743-ff22fdd72748",
+    "name": "Rosca Scott na Máquina",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços"
+  },
+  {
+    "id": "c82dab5c-092b-4b44-8cca-6c680ef85f92",
+    "name": "Rosca Inversa com Barra",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços"
+  },
+  {
+    "id": "9576aba7-3aff-4186-81e0-162e76d4be50",
+    "name": "Rosca de Punho com Barra",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços"
+  },
+  {
+    "id": "1ce3e560-1665-4bd5-8998-aa8f4f50011c",
+    "name": "Extensão de Punho com Barra",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços"
+  },
+  {
+    "id": "044421ae-d368-47a5-83e0-2af37dc61131",
+    "name": "Tríceps no Cabo com Barra Reta",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços"
+  },
+  {
+    "id": "89f594ac-082e-4ff9-8d6b-c1cb58c9717e",
+    "name": "Tríceps Unilateral no Cabo",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — ombros, braços e antebraços"
+  },
+  {
+    "id": "19f34820-3730-4fde-8c3e-07b2545995cf",
+    "name": "Tríceps Acima da Cabeça no Cabo",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços"
+  },
+  {
+    "id": "6426af45-7406-4592-86c5-4ac86b2a29aa",
+    "name": "Tríceps Coice com Halter",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços"
+  },
+  {
+    "id": "c24102f2-9302-4083-851f-bf5c69c4dff8",
+    "name": "Supino com Pegada Fechada",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços"
+  },
+  {
+    "id": "17fc44bd-4fbf-4655-82ad-07edff42c306",
+    "name": "Paralelas Assistidas na Máquina",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços"
+  },
+  {
+    "id": "4f96bada-30e1-4260-8512-5b6de0e44704",
+    "name": "Prancha Ventral",
+    "isUnilateral": false,
+    "family": "Core e estabilidade"
+  },
+  {
+    "id": "f8d7befb-6c87-4b40-8acb-c5801f3bad63",
+    "name": "Prancha Lateral",
+    "isUnilateral": true,
+    "family": "Core e estabilidade"
+  },
+  {
+    "id": "8dcbf19a-e30c-4f40-8c2a-7b7d7cbb73dd",
+    "name": "Dead Bug",
+    "isUnilateral": true,
+    "family": "Core e estabilidade"
+  },
+  {
+    "id": "7617482f-8291-4235-86bf-3aef1ef1f49a",
+    "name": "Bird Dog",
+    "isUnilateral": true,
+    "family": "Core e estabilidade"
+  },
+  {
+    "id": "d1bdfecd-0952-479c-87d5-9e50b8399d0f",
+    "name": "Abdominal Crunch no Solo",
+    "isUnilateral": false,
+    "family": "Core e estabilidade"
+  },
+  {
+    "id": "35b154dd-b2de-4c9f-8994-f1177b052a40",
+    "name": "Abdominal na Máquina",
+    "isUnilateral": false,
+    "family": "Core e estabilidade"
+  },
+  {
+    "id": "c7a96602-149a-47de-843c-a0fe26c3583e",
+    "name": "Abdominal com AbMat",
+    "isUnilateral": false,
+    "family": "Core e estabilidade"
+  },
+  {
+    "id": "b42bbf72-2c53-418f-8541-3e278cf25146",
+    "name": "Abdominal Reverso",
+    "isUnilateral": false,
+    "family": "Core e estabilidade"
+  },
+  {
+    "id": "ec214a71-5095-4781-8cc9-77313dfee7a5",
+    "name": "Roda Abdominal — alias: ab wheel rollout",
+    "isUnilateral": false,
+    "family": "Core e estabilidade"
+  },
+  {
+    "id": "4483cd2d-568f-4587-81b9-56ab954e8905",
+    "name": "Pallof Press no Cabo",
+    "isUnilateral": true,
+    "family": "Core e estabilidade"
+  },
+  {
+    "id": "d78e99b1-81df-4d20-8812-b7e15ebb199f",
+    "name": "Woodchop no Cabo Alto",
+    "isUnilateral": true,
+    "family": "Core e estabilidade"
+  },
+  {
+    "id": "62c994f3-0f6c-4d72-8dde-8c0ad09da90c",
+    "name": "Elevação de Joelhos Suspenso",
+    "isUnilateral": false,
+    "family": "Core e estabilidade"
+  },
+  {
+    "id": "c96a2d1f-20c0-4beb-8e24-089758f2c9bf",
+    "name": "Hollow Hold",
+    "isUnilateral": false,
+    "family": "Core e estabilidade"
+  },
+  {
+    "id": "7e47d431-f834-461d-85f7-bbae415c34f9",
+    "name": "Arch Hold — alias: Superman hold",
+    "isUnilateral": false,
+    "family": "Core e estabilidade"
+  },
+  {
+    "id": "c9bbf500-c289-441e-8162-afef74d25237",
+    "name": "Desenvolvimento Unilateral no Landmine — alias: single-arm landmine press",
+    "isUnilateral": true,
+    "family": "Landmine"
+  },
+  {
+    "id": "ef1e3395-5f08-4c95-82ac-1a2bc5e099d1",
+    "name": "Desenvolvimento Bilateral no Landmine",
+    "isUnilateral": false,
+    "family": "Landmine"
+  },
+  {
+    "id": "26e45901-2ccc-46df-8188-cd3503830860",
+    "name": "Desenvolvimento Unilateral Meio-Ajoelhado no Landmine",
+    "isUnilateral": true,
+    "family": "Landmine"
+  },
+  {
+    "id": "8bdde5b9-d201-40ab-8198-3ac1fe77d63c",
+    "name": "Push Press Unilateral no Landmine",
+    "isUnilateral": true,
+    "family": "Landmine"
+  },
+  {
+    "id": "37d17ee5-4fcd-45a0-8bd9-037a2c5f97bd",
+    "name": "Press Rotacional Unilateral no Landmine",
+    "isUnilateral": true,
+    "family": "Landmine"
+  },
+  {
+    "id": "566f3759-b346-4a4e-80b2-29618cda6dd1",
+    "name": "Agachamento no Landmine",
+    "isUnilateral": false,
+    "family": "Landmine"
+  },
+  {
+    "id": "45f82445-d2c4-4a74-858e-1b00f0fa178f",
+    "name": "Agachamento com Press no Landmine",
+    "isUnilateral": false,
+    "family": "Landmine"
+  },
+  {
+    "id": "eef396ad-8271-463d-844a-a7023f64bd8e",
+    "name": "Afundo Reverso com Press Unilateral no Landmine",
+    "isUnilateral": true,
+    "family": "Landmine"
+  },
+  {
+    "id": "3e962d98-1b67-4280-899f-d965e3c1e257",
+    "name": "Remada Unilateral no Landmine",
+    "isUnilateral": true,
+    "family": "Landmine"
+  },
+  {
+    "id": "6f49e547-9500-4888-8b46-09736d07a169",
+    "name": "Remada Meadows",
+    "isUnilateral": true,
+    "family": "Landmine"
+  },
+  {
+    "id": "efa5ed74-0b27-4f99-89db-0546048b6b62",
+    "name": "Levantamento Terra no Landmine",
+    "isUnilateral": false,
+    "family": "Landmine"
+  },
+  {
+    "id": "52b75b53-d5d9-4c4c-8929-aa6dece24b0d",
+    "name": "Anti-Rotação no Landmine",
+    "isUnilateral": false,
+    "family": "Landmine"
+  },
+  {
+    "id": "b79bd93b-72a4-443f-8c56-ebeee69d9d04",
+    "name": "Arremesso de Peito com Medicine Ball na Parede",
+    "isUnilateral": false,
+    "family": "Medicine ball e slam ball"
+  },
+  {
+    "id": "2d1fa957-9027-436f-8910-3c6f947a4fc1",
+    "name": "Arremesso de Peito Sentado com Medicine Ball",
+    "isUnilateral": false,
+    "family": "Medicine ball e slam ball"
+  },
+  {
+    "id": "da6137b3-c773-43f7-8b7c-fb0fbf2609b3",
+    "name": "Arremesso Rotacional de Medicine Ball na Parede",
+    "isUnilateral": true,
+    "family": "Medicine ball e slam ball"
+  },
+  {
+    "id": "bda3b4e0-4244-4010-83e6-ac5841b228d2",
+    "name": "Arremesso de Medicine Ball Acima da Cabeça para Frente",
+    "isUnilateral": false,
+    "family": "Medicine ball e slam ball"
+  },
+  {
+    "id": "1b833278-06be-4ad0-831a-e87c85564521",
+    "name": "Arremesso de Medicine Ball para Trás Acima da Cabeça",
+    "isUnilateral": false,
+    "family": "Medicine ball e slam ball"
+  },
+  {
+    "id": "5b198859-1552-48f7-81d5-ad176ffbb367",
+    "name": "Slam Ball no Solo",
+    "isUnilateral": false,
+    "family": "Medicine ball e slam ball"
+  },
+  {
+    "id": "0d3c8197-f719-4a93-8545-f00c52cec1a6",
+    "name": "Slam Ball Rotacional",
+    "isUnilateral": true,
+    "family": "Medicine ball e slam ball"
+  },
+  {
+    "id": "cabc544c-fd0e-41f2-83b0-168605cd36b8",
+    "name": "Wall Ball — agachamento com lançamento da bola ao alvo",
+    "isUnilateral": false,
+    "family": "Medicine ball e slam ball"
+  },
+  {
+    "id": "1d432b5a-29b4-4d71-847a-2608f6650fda",
+    "name": "Clean com Medicine Ball",
+    "isUnilateral": false,
+    "family": "Medicine ball e slam ball"
+  },
+  {
+    "id": "2c1657df-13fa-4644-82e3-11a17bc6cb9d",
+    "name": "Pogo Jump Bilateral",
+    "isUnilateral": false,
+    "family": "Saltos e pliometria"
+  },
+  {
+    "id": "fc13b372-4454-459c-8cef-8e2242a23ebd",
+    "name": "Pogo Jump Unilateral",
+    "isUnilateral": true,
+    "family": "Saltos e pliometria"
+  },
+  {
+    "id": "5ec972bc-f8a0-47fd-8789-b9363ea28b84",
+    "name": "Salto Vertical com Contramovimento",
+    "isUnilateral": false,
+    "family": "Saltos e pliometria"
+  },
+  {
+    "id": "28893c38-900f-4518-844f-93471a3e0f0c",
+    "name": "Salto Vertical Partindo de Agachamento — alias: squat jump",
+    "isUnilateral": false,
+    "family": "Saltos e pliometria"
+  },
+  {
+    "id": "9d2667b4-14cc-4e63-8d4f-5a4757aaad74",
+    "name": "Salto Horizontal Parado — alias: standing broad jump",
+    "isUnilateral": false,
+    "family": "Saltos e pliometria"
+  },
+  {
+    "id": "90c19acb-1cfd-4da3-8a68-ac452ba58e5a",
+    "name": "Saltos Horizontais Consecutivos",
+    "isUnilateral": false,
+    "family": "Saltos e pliometria"
+  },
+  {
+    "id": "87ef0649-841a-42c5-88c5-ae9447173c43",
+    "name": "Salto na Caixa — alias: box jump",
+    "isUnilateral": false,
+    "family": "Saltos e pliometria"
+  },
+  {
+    "id": "97da65a9-0008-45a9-8779-865ae03c2a33",
+    "name": "Salto por Cima da Caixa — alias: box jump-over",
+    "isUnilateral": false,
+    "family": "Saltos e pliometria"
+  },
+  {
+    "id": "f2d4ada3-9397-4a5e-8939-9573a52e2961",
+    "name": "Salto Lateral sobre Obstáculo",
+    "isUnilateral": false,
+    "family": "Saltos e pliometria"
+  },
+  {
+    "id": "a4cefb4f-37cf-4489-8343-c56af23bbfa8",
+    "name": "Saltos sobre Barreiras",
+    "isUnilateral": false,
+    "family": "Saltos e pliometria"
+  },
+  {
+    "id": "78501398-5301-4325-8b2a-085c035b870e",
+    "name": "Salto Lateral Alternado — alias: skater jump",
+    "isUnilateral": true,
+    "family": "Saltos e pliometria"
+  },
+  {
+    "id": "1aad0068-09c5-4f78-8e4d-38343326fa91",
+    "name": "Saltos Alternados em Afundo — alias: split squat jump",
+    "isUnilateral": true,
+    "family": "Saltos e pliometria"
+  },
+  {
+    "id": "67b27d44-92d8-4c58-8533-98967f89c92b",
+    "name": "Salto Unilateral para Frente",
+    "isUnilateral": true,
+    "family": "Saltos e pliometria"
+  },
+  {
+    "id": "c4ad50ca-6df3-4b61-83f0-02538c1507df",
+    "name": "Drop Landing — queda da caixa com estabilização",
+    "isUnilateral": false,
+    "family": "Saltos e pliometria"
+  },
+  {
+    "id": "a1df9269-072d-411b-81b8-4197aa4a84c8",
+    "name": "Depth Jump — queda da caixa seguida de salto",
+    "isUnilateral": false,
+    "family": "Saltos e pliometria"
+  },
+  {
+    "id": "5e4d8fc5-7566-41da-8589-7c4d90076292",
+    "name": "Flexão Pliométrica",
+    "isUnilateral": false,
+    "family": "Saltos e pliometria"
+  },
+  {
+    "id": "828d2135-37b8-4e03-8936-1554e4b3e99f",
+    "name": "Power Clean",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "ee45732c-628c-4cb9-8386-b0a58b682fb1",
+    "name": "Clean — aliases: squat clean, full clean",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "1b7764ca-1826-488e-8734-fc88117ed9dd",
+    "name": "Hang Power Clean",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "c7b1bd07-08d9-4794-8588-0534a607ae50",
+    "name": "Hang Clean",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "625a2d84-4a60-4342-848a-bb176c4370df",
+    "name": "Clean a Partir de Blocos",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "f3f156f0-523e-45d9-83e8-026e8299292e",
+    "name": "Muscle Clean",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "214278a7-0fb9-4657-8774-73203eb7a0ab",
+    "name": "Tall Clean",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "4fb4e4e6-e685-4a72-8da4-9af02ce80afd",
+    "name": "Clean Pull",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "e94df5cc-688c-4894-8651-26bd0b7cd729",
+    "name": "Clean High Pull",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "8b10ad1c-4bb1-44ed-8d89-b916185451a3",
+    "name": "Clean Deadlift",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "4b5a6860-b5e5-4a5f-81db-ed2ffa42b8d0",
+    "name": "Power Snatch",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "1c9d749e-bcdc-46ef-8c61-8f6c62495ad3",
+    "name": "Snatch — aliases: squat snatch, full snatch",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "839f3abf-c126-4b5d-82f2-bcd3f5eea73c",
+    "name": "Hang Power Snatch",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "d8ccf56a-3e42-4deb-8744-61a7bdba6a7a",
+    "name": "Hang Snatch",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "e0f5d67f-493e-4352-834a-456560ecca2b",
+    "name": "Snatch a Partir de Blocos",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "67697db2-773d-4120-8305-ffc5c2179f31",
+    "name": "Muscle Snatch",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "88bd42c5-11d8-41cd-87e3-409c005751e4",
+    "name": "Tall Snatch",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "0dd16782-2671-4d6e-8cc8-7fa516b7a4c8",
+    "name": "Snatch Pull",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "30dc93d6-27a3-4a69-81e4-c936412ce6a0",
+    "name": "Snatch High Pull",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "c5443faf-a2b5-4ec7-8879-c6b1d38136e5",
+    "name": "Snatch Deadlift",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "708862bf-1e56-437b-8ef8-fff5c581fdde",
+    "name": "Snatch Balance",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "8a0fa5b8-e102-4a6c-85c5-7a666d027296",
+    "name": "Overhead Squat",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "3f008308-7990-4c42-8008-56916d3be09e",
+    "name": "Push Press com Barra",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "e5c85899-146d-49f8-8673-5c1c4e04eace",
+    "name": "Push Jerk",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "a1a03a80-fdfe-4d0d-87ca-7b7a3d1b0a60",
+    "name": "Split Jerk",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "82e5d50e-7651-4f1c-88a4-424ad0354896",
+    "name": "Squat Jerk",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "ac8f7416-2631-427d-8368-d974889c1d14",
+    "name": "Jerk Dip",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "1ad5f03c-0d81-4d28-8d0c-060726c06fb6",
+    "name": "Jerk Drive",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "8b4a7da1-fc99-46b6-82ce-22b7f575d709",
+    "name": "Clean and Jerk",
+    "isUnilateral": false,
+    "family": "LPO — clean, snatch, jerk e derivados"
+  },
+  {
+    "id": "4a26d043-9e3e-4e16-891f-3e291bfed19e",
+    "name": "Kettlebell Swing até a Altura dos Ombros — alias: Russian swing",
+    "isUnilateral": false,
+    "family": "Kettlebell e halteres — movimentos dinâmicos"
+  },
+  {
+    "id": "1fd318ce-de48-455a-8e0a-e2ab9c45681e",
+    "name": "Kettlebell Swing Acima da Cabeça — alias: American swing",
+    "isUnilateral": false,
+    "family": "Kettlebell e halteres — movimentos dinâmicos"
+  },
+  {
+    "id": "4cca654e-e0cd-4d90-84be-053cab9e661b",
+    "name": "Kettlebell Swing Unilateral",
+    "isUnilateral": true,
+    "family": "Kettlebell e halteres — movimentos dinâmicos"
+  },
+  {
+    "id": "7a2d55db-be0a-4318-8978-92d32d01c1e7",
+    "name": "Kettlebell Clean Unilateral",
+    "isUnilateral": true,
+    "family": "Kettlebell e halteres — movimentos dinâmicos"
+  },
+  {
+    "id": "319d60a2-9774-4b56-85e7-4649cf2d23d7",
+    "name": "Kettlebell Snatch Unilateral",
+    "isUnilateral": true,
+    "family": "Kettlebell e halteres — movimentos dinâmicos"
+  },
+  {
+    "id": "83b94d1b-77c7-4b0c-8881-7dc9974770b2",
+    "name": "Kettlebell Push Press Unilateral",
+    "isUnilateral": true,
+    "family": "Kettlebell e halteres — movimentos dinâmicos"
+  },
+  {
+    "id": "2451bd48-05fb-473e-80cb-b0479bee48f5",
+    "name": "Kettlebell Jerk Unilateral",
+    "isUnilateral": true,
+    "family": "Kettlebell e halteres — movimentos dinâmicos"
+  },
+  {
+    "id": "defa9909-90f4-4278-8351-8bdab5f6b7d4",
+    "name": "Turkish Get-up",
+    "isUnilateral": true,
+    "family": "Kettlebell e halteres — movimentos dinâmicos"
+  },
+  {
+    "id": "e70bbf0e-80d4-40ea-888c-8e0358c927ef",
+    "name": "Power Clean com Halteres",
+    "isUnilateral": false,
+    "family": "Kettlebell e halteres — movimentos dinâmicos"
+  },
+  {
+    "id": "1c57981e-05f6-498b-8975-2679a3c85d35",
+    "name": "Hang Power Clean com Halteres",
+    "isUnilateral": false,
+    "family": "Kettlebell e halteres — movimentos dinâmicos"
+  },
+  {
+    "id": "4291abd4-8b68-4b19-8223-27b5e9f2b4e8",
+    "name": "Snatch Unilateral com Halter",
+    "isUnilateral": true,
+    "family": "Kettlebell e halteres — movimentos dinâmicos"
+  },
+  {
+    "id": "726bc1a0-a83d-4262-8898-791709f8c01f",
+    "name": "Push Press com Halteres",
+    "isUnilateral": false,
+    "family": "Kettlebell e halteres — movimentos dinâmicos"
+  },
+  {
+    "id": "5d74502e-8955-44ec-8e58-455dc39c8b1b",
+    "name": "Thruster com Barra",
+    "isUnilateral": false,
+    "family": "Kettlebell e halteres — movimentos dinâmicos"
+  },
+  {
+    "id": "f88b41e8-2d6e-4042-895a-e57c803401d2",
+    "name": "Thruster com Halteres",
+    "isUnilateral": false,
+    "family": "Kettlebell e halteres — movimentos dinâmicos"
+  },
+  {
+    "id": "f0eeccc0-954b-454d-8aaa-c272830213e8",
+    "name": "Devil Press com Halteres",
+    "isUnilateral": false,
+    "family": "Kettlebell e halteres — movimentos dinâmicos"
+  },
+  {
+    "id": "42e439e0-6eca-416c-8d33-4bfa8d48ac36",
+    "name": "Remada Renegade com Halteres",
+    "isUnilateral": true,
+    "family": "Kettlebell e halteres — movimentos dinâmicos"
+  },
+  {
+    "id": "59be040d-c5ed-45bb-82c0-b8369829e019",
+    "name": "Burpee",
+    "isUnilateral": false,
+    "family": "Ginástica e movimentos comuns em treinos funcionais/CrossFit"
+  },
+  {
+    "id": "cfd75a15-4513-4f01-89a6-5fbd8ecd1574",
+    "name": "Burpee sobre a Barra",
+    "isUnilateral": false,
+    "family": "Ginástica e movimentos comuns em treinos funcionais/CrossFit"
+  },
+  {
+    "id": "84d0c069-21f2-4660-8ba1-b47bb09b3e81",
+    "name": "Burpee com Salto por Cima da Caixa",
+    "isUnilateral": false,
+    "family": "Ginástica e movimentos comuns em treinos funcionais/CrossFit"
+  },
+  {
+    "id": "5c64df12-58dd-4840-8494-54b6fe10b54b",
+    "name": "Kipping Pull-up",
+    "isUnilateral": false,
+    "family": "Ginástica e movimentos comuns em treinos funcionais/CrossFit"
+  },
+  {
+    "id": "2ec2e5b6-c015-4d08-8d4d-9577c410f143",
+    "name": "Butterfly Pull-up",
+    "isUnilateral": false,
+    "family": "Ginástica e movimentos comuns em treinos funcionais/CrossFit"
+  },
+  {
+    "id": "3f882b66-3ba6-430c-8996-32179546dacd",
+    "name": "Chest-to-Bar Pull-up",
+    "isUnilateral": false,
+    "family": "Ginástica e movimentos comuns em treinos funcionais/CrossFit"
+  },
+  {
+    "id": "a9c79cda-74c6-4fff-8b2a-01f3a0e4c91c",
+    "name": "Toes-to-Bar",
+    "isUnilateral": false,
+    "family": "Ginástica e movimentos comuns em treinos funcionais/CrossFit"
+  },
+  {
+    "id": "eee0b56d-e70a-4c5f-8e33-32032f8b6c2f",
+    "name": "Knees-to-Elbows",
+    "isUnilateral": false,
+    "family": "Ginástica e movimentos comuns em treinos funcionais/CrossFit"
+  },
+  {
+    "id": "b034a035-e699-4b70-858f-9f131820545e",
+    "name": "Muscle-up na Barra",
+    "isUnilateral": false,
+    "family": "Ginástica e movimentos comuns em treinos funcionais/CrossFit"
+  },
+  {
+    "id": "66f7980f-4e11-4bd7-8a38-c45d5fe23e29",
+    "name": "Muscle-up nas Argolas",
+    "isUnilateral": false,
+    "family": "Ginástica e movimentos comuns em treinos funcionais/CrossFit"
+  },
+  {
+    "id": "e63a558c-89d0-44ba-80ab-fdd2f3459092",
+    "name": "Remada nas Argolas",
+    "isUnilateral": false,
+    "family": "Ginástica e movimentos comuns em treinos funcionais/CrossFit"
+  },
+  {
+    "id": "9800a359-b8c3-4b4a-86d2-2e62a20b1d50",
+    "name": "Paralelas nas Argolas",
+    "isUnilateral": false,
+    "family": "Ginástica e movimentos comuns em treinos funcionais/CrossFit"
+  },
+  {
+    "id": "270f8e74-11d1-4cfd-8219-98dbd47ff372",
+    "name": "Flexão de Braços nas Argolas",
+    "isUnilateral": false,
+    "family": "Ginástica e movimentos comuns em treinos funcionais/CrossFit"
+  },
+  {
+    "id": "067c23df-07bc-4110-8022-e026d6697199",
+    "name": "Handstand Push-up Estrito",
+    "isUnilateral": false,
+    "family": "Ginástica e movimentos comuns em treinos funcionais/CrossFit"
+  },
+  {
+    "id": "87bb8075-09af-43d8-813d-19b257bb67eb",
+    "name": "Kipping Handstand Push-up",
+    "isUnilateral": false,
+    "family": "Ginástica e movimentos comuns em treinos funcionais/CrossFit"
+  },
+  {
+    "id": "df51e789-ae36-4ffc-8636-72e0d458ca4d",
+    "name": "Wall Walk",
+    "isUnilateral": false,
+    "family": "Ginástica e movimentos comuns em treinos funcionais/CrossFit"
+  },
+  {
+    "id": "c9e30495-151c-4a1f-8e64-b5ea8ce767bb",
+    "name": "Handstand Walk",
+    "isUnilateral": false,
+    "family": "Ginástica e movimentos comuns em treinos funcionais/CrossFit"
+  },
+  {
+    "id": "eab742e2-9380-4dfa-86fc-459d84157b6c",
+    "name": "Subida na Corda",
+    "isUnilateral": false,
+    "family": "Ginástica e movimentos comuns em treinos funcionais/CrossFit"
+  },
+  {
+    "id": "8d74b7a0-243a-42fd-8755-e984a7c62b22",
+    "name": "Pistol Squat",
+    "isUnilateral": true,
+    "family": "Ginástica e movimentos comuns em treinos funcionais/CrossFit"
+  },
+  {
+    "id": "216cde22-ddf3-4f36-88ae-6ee918e2d221",
+    "name": "L-Sit nas Paralelas",
+    "isUnilateral": false,
+    "family": "Ginástica e movimentos comuns em treinos funcionais/CrossFit"
+  },
+  {
+    "id": "d5231b45-3579-4418-85dd-dc44d8b9d2a9",
+    "name": "Pular Corda com Giro Simples — alias: single-under",
+    "isUnilateral": false,
+    "family": "Condicionamento e transportes"
+  },
+  {
+    "id": "3d8e35e1-3414-49c4-8100-923294135403",
+    "name": "Pular Corda com Giro Duplo — alias: double-under",
+    "isUnilateral": false,
+    "family": "Condicionamento e transportes"
+  },
+  {
+    "id": "22de6ad2-4b31-4de1-8bc1-e3591b4af04c",
+    "name": "Remo no Ergômetro",
+    "isUnilateral": false,
+    "family": "Condicionamento e transportes"
+  },
+  {
+    "id": "5a6c9f8a-7c11-40cf-80de-c6cd688bce32",
+    "name": "Bicicleta de Ar — alias: air bike",
+    "isUnilateral": false,
+    "family": "Condicionamento e transportes"
+  },
+  {
+    "id": "ad10fe8f-b3c9-4b0a-83e5-d8aa6d82073f",
+    "name": "SkiErg",
+    "isUnilateral": false,
+    "family": "Condicionamento e transportes"
+  },
+  {
+    "id": "86df7d73-c743-476e-8d46-719b916e17a9",
+    "name": "Corrida",
+    "isUnilateral": false,
+    "family": "Condicionamento e transportes"
+  },
+  {
+    "id": "347a52f4-0233-4073-8d79-d01cfd6616d0",
+    "name": "Sprint",
+    "isUnilateral": false,
+    "family": "Condicionamento e transportes"
+  },
+  {
+    "id": "ea1f87ba-f5c3-4c14-8ca3-670d4fb32c9b",
+    "name": "Corrida de Ida e Volta — alias: shuttle run",
+    "isUnilateral": false,
+    "family": "Condicionamento e transportes"
+  },
+  {
+    "id": "cbc95d73-bdd6-4573-8d90-65c9dd256f62",
+    "name": "Empurrar Trenó",
+    "isUnilateral": false,
+    "family": "Condicionamento e transportes"
+  },
+  {
+    "id": "28086afd-b431-453b-80f3-cca10db500a9",
+    "name": "Puxar Trenó Caminhando para Trás",
+    "isUnilateral": false,
+    "family": "Condicionamento e transportes"
+  },
+  {
+    "id": "e3f4caca-9f77-4e1b-8388-a84e51e96474",
+    "name": "Farmer Carry com Halteres",
+    "isUnilateral": false,
+    "family": "Condicionamento e transportes"
+  },
+  {
+    "id": "85c4058a-918d-4934-8c31-5383ac68b765",
+    "name": "Suitcase Carry com Halter",
+    "isUnilateral": true,
+    "family": "Condicionamento e transportes"
+  },
+  {
+    "id": "b36d7169-2020-46fb-8394-b1b8db2a5b86",
+    "name": "Front Rack Carry com Kettlebells",
+    "isUnilateral": false,
+    "family": "Condicionamento e transportes"
+  },
+  {
+    "id": "fe2d1f67-ec85-46bc-8d0b-0c3611adefca",
+    "name": "Overhead Carry Unilateral",
+    "isUnilateral": true,
+    "family": "Condicionamento e transportes"
+  },
+  {
+    "id": "d8d95580-5871-4fa7-83b2-f85d353e1f4c",
+    "name": "Battle Rope com Ondas Alternadas",
+    "isUnilateral": true,
+    "family": "Condicionamento e transportes"
+  }
+]
