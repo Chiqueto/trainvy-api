@@ -69,3 +69,42 @@ export function normalizeAndValidateAlternatives(
     alternative2ExerciseId: alt2,
   };
 }
+
+/**
+ * Sanitiza e normaliza alternativas de exercício de forma resiliente,
+ * removendo duplicidades e conflitos com o exercício principal sem lançar erro.
+ * Indicado para importações, prescrições de treinador, saídas de IA e aceites.
+ */
+export function sanitizeAndNormalizeAlternatives(
+  input: AlternativesInput,
+): NormalizedAlternatives {
+  let alt1 = input.alternative1ExerciseId?.trim() || null;
+  let alt2 = input.alternative2ExerciseId?.trim() || null;
+  const mainId = input.mainExerciseId?.trim() || null;
+
+  // 1. Remover alternativas idênticas ao exercício principal
+  if (mainId) {
+    if (alt1 && alt1 === mainId) {
+      alt1 = null;
+    }
+    if (alt2 && alt2 === mainId) {
+      alt2 = null;
+    }
+  }
+
+  // 2. Remover alternativa 2 se for idêntica à alternativa 1
+  if (alt1 && alt2 && alt1 === alt2) {
+    alt2 = null;
+  }
+
+  // 3. Slot shifting: se slot 1 vazio e slot 2 preenchido, move para slot 1
+  if (!alt1 && alt2) {
+    alt1 = alt2;
+    alt2 = null;
+  }
+
+  return {
+    alternative1ExerciseId: alt1,
+    alternative2ExerciseId: alt2,
+  };
+}

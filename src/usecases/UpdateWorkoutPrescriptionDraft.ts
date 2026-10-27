@@ -100,16 +100,30 @@ export class UpdateWorkoutPrescriptionDraft {
         isRest: day.isRest,
         estimatedDurationInSeconds: day.estimatedDurationInSeconds,
         coverImageUrl: day.coverImageUrl ?? null,
-        exercises: day.exercises.map((ex, exIndex) => ({
-          order: ex.order ?? exIndex,
-          name: ex.name.trim(),
-          alternative1ExerciseName: ex.alternative1ExerciseName?.trim() || null,
-          alternative2ExerciseName: ex.alternative2ExerciseName?.trim() || null,
-          sets: ex.sets,
-          warmupSets: ex.warmupSets ?? 0,
-          reps: ex.reps,
-          restTimeInSeconds: ex.restTimeInSeconds,
-        })),
+        exercises: day.exercises.map((ex, exIndex) => {
+          const name = ex.name.trim();
+          let alt1 = ex.alternative1ExerciseName?.trim() || null;
+          let alt2 = ex.alternative2ExerciseName?.trim() || null;
+
+          if (alt1 && alt1.toLowerCase() === name.toLowerCase()) alt1 = null;
+          if (alt2 && alt2.toLowerCase() === name.toLowerCase()) alt2 = null;
+          if (alt1 && alt2 && alt1.toLowerCase() === alt2.toLowerCase()) alt2 = null;
+          if (!alt1 && alt2) {
+            alt1 = alt2;
+            alt2 = null;
+          }
+
+          return {
+            order: ex.order ?? exIndex,
+            name,
+            alternative1ExerciseName: alt1,
+            alternative2ExerciseName: alt2,
+            sets: ex.sets,
+            warmupSets: ex.warmupSets ?? 0,
+            reps: ex.reps,
+            restTimeInSeconds: ex.restTimeInSeconds,
+          };
+        }),
       })),
     };
 

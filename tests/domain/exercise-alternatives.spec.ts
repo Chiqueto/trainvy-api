@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 
-import { normalizeAndValidateAlternatives } from "../../src/domain/exercise-alternatives.js";
+import {
+  normalizeAndValidateAlternatives,
+  sanitizeAndNormalizeAlternatives,
+} from "../../src/domain/exercise-alternatives.js";
 import { ValidationError } from "../../src/errors/index.js";
 
 describe("normalizeAndValidateAlternatives", () => {
@@ -71,5 +74,59 @@ describe("normalizeAndValidateAlternatives", () => {
         alternative2ExerciseId: "ex-alt-1",
       }),
     ).toThrow(ValidationError);
+  });
+});
+
+describe("sanitizeAndNormalizeAlternatives", () => {
+  it("drops alternative1 when it equals main exercise and shifts slot 2", () => {
+    const result = sanitizeAndNormalizeAlternatives({
+      mainExerciseId: "ex-main",
+      alternative1ExerciseId: "ex-main",
+      alternative2ExerciseId: "ex-alt-2",
+    });
+
+    expect(result).toEqual({
+      alternative1ExerciseId: "ex-alt-2",
+      alternative2ExerciseId: null,
+    });
+  });
+
+  it("drops alternative2 when it equals main exercise", () => {
+    const result = sanitizeAndNormalizeAlternatives({
+      mainExerciseId: "ex-main",
+      alternative1ExerciseId: "ex-alt-1",
+      alternative2ExerciseId: "ex-main",
+    });
+
+    expect(result).toEqual({
+      alternative1ExerciseId: "ex-alt-1",
+      alternative2ExerciseId: null,
+    });
+  });
+
+  it("drops alternative2 when it equals alternative1", () => {
+    const result = sanitizeAndNormalizeAlternatives({
+      mainExerciseId: "ex-main",
+      alternative1ExerciseId: "ex-alt-1",
+      alternative2ExerciseId: "ex-alt-1",
+    });
+
+    expect(result).toEqual({
+      alternative1ExerciseId: "ex-alt-1",
+      alternative2ExerciseId: null,
+    });
+  });
+
+  it("shifts alternative 2 to slot 1 if slot 1 is empty", () => {
+    const result = sanitizeAndNormalizeAlternatives({
+      mainExerciseId: "ex-main",
+      alternative1ExerciseId: null,
+      alternative2ExerciseId: "ex-alt-2",
+    });
+
+    expect(result).toEqual({
+      alternative1ExerciseId: "ex-alt-2",
+      alternative2ExerciseId: null,
+    });
   });
 });

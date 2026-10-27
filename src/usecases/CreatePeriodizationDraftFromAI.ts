@@ -1,5 +1,5 @@
 import { resolveCanonicalExerciseMap } from "../domain/canonical-exercise.js";
-import { normalizeAndValidateAlternatives } from "../domain/exercise-alternatives.js";
+import { sanitizeAndNormalizeAlternatives } from "../domain/exercise-alternatives.js";
 import { ValidationError } from "../errors/index.js";
 import { WeekDay } from "../generated/prisma/enums.js";
 import { prisma } from "../lib/db.js";
@@ -250,7 +250,7 @@ export class CreatePeriodizationDraftFromAI {
                       null;
 
                     const { alternative1ExerciseId, alternative2ExerciseId } =
-                      normalizeAndValidateAlternatives({
+                      sanitizeAndNormalizeAlternatives({
                         mainExerciseId: resolvedMainId,
                         mainExerciseName: ex.name,
                         alternative1ExerciseId: resolvedAlt1Id,

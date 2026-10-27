@@ -620,6 +620,71 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
     expect(finalPlan!.isActive).toBe(true);
   });
 
+  it("POST /me/prescriptions/:id/accept — aceita com sucesso prescrição com alternativas duplicadas (resiliência)", async () => {
+    const daysWithDuplicateAlternatives = [
+      {
+        name: "Treino Abdômen & Pernas",
+        order: 0,
+        weekDay: "MONDAY" as const,
+        isRest: false,
+        estimatedDurationInSeconds: 3600,
+        exercises: [
+          {
+            order: 0,
+            name: "Abdominal no Cabo",
+            sets: 3,
+            warmupSets: 0,
+            reps: 15,
+            restTimeInSeconds: 60,
+            alternative1ExerciseName: "Elevação de Pernas Suspenso",
+            alternative2ExerciseName: "Abdominal no Cabo", // Duplicata proposital igual ao principal
+          },
+        ],
+      },
+    ];
+
+    const sent = await prisma.workoutPrescription.create({
+      data: {
+        coachId: coachUser.id,
+        athleteId: athleteUser.id,
+        name: "Prescrição com Alternativas Duplicadas",
+        status: "SENT",
+        sentAt: new Date(),
+        payload: { workoutDays: daysWithDuplicateAlternatives },
+      },
+    });
+
+    vi.spyOn(auth.api, "getSession").mockResolvedValueOnce({
+      user: athleteUser,
+      session: { id: "s-ath", userId: athleteUser.id } as any,
+    } as any);
+
+    const res = await app.inject({
+      method: "POST",
+      url: `/me/prescriptions/${sent.id}/accept`,
+    });
+
+    expect(res.statusCode).toBe(200);
+    const body = res.json();
+    expect(body.success).toBe(true);
+    expect(body.workoutPlanId).toBeDefined();
+
+    const plan = await prisma.workoutPlan.findUnique({
+      where: { id: body.workoutPlanId },
+      include: {
+        workoutDays: {
+          include: { exercises: true },
+        },
+      },
+    });
+
+    expect(plan).not.toBeNull();
+    const createdEx = plan!.workoutDays[0].exercises[0];
+    // A alternativa 2 igual ao principal foi removida com segurança
+    expect(createdEx.alternative2ExerciseId).toBeNull();
+    expect(createdEx.alternative1ExerciseId).not.toBeNull();
+  });
+
   describe("Geração de Rascunho de Prescrição com Coach AI", () => {
     it("POST /coach/prescriptions/ai-generate — 401 para usuário não autenticado", async () => {
       vi.spyOn(auth.api, "getSession").mockResolvedValueOnce(null);

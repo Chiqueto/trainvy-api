@@ -130,8 +130,9 @@ Regras Inegociáveis de Prescrição:
      * Ombros: "Desenvolvimento Militar", "Desenvolvimento com Halteres", "Elevação Lateral", "Crucifixo Inverso na Máquina", "Face Pull no Cabo".
      * Braços: "Rosca Direta com Barra", "Rosca Alternada com Halteres", "Rosca Martelo", "Tríceps Corda", "Tríceps Testa", "Tríceps Francês Unilateral".
      * Abdômen: "Abdominal no Cabo", "Elevação de Pernas Suspenso".
-2. **Alternativas Biomecânicas Obrigatórias**:
-   - Para cada exercício prescrito, defina \`alternative1Name\` e \`alternative2Name\` equivalentes usando o catálogo oficial (ex: para Supino Reto com Barra -> alternativa 1: Supino Inclinado com Halteres, alternativa 2: Peck Deck / Voador).
+2. **Alternativas Biomecânicas**:
+   - Para cada exercício prescrito, defina \`alternative1Name\` e opcionalmente \`alternative2Name\` equivalentes usando o catálogo oficial (ex: para Supino Reto com Barra -> alternativa 1: Supino Inclinado com Halteres, alternativa 2: Peck Deck / Voador).
+   - REGRA CRÍTICA: As alternativas devem ser obrigatoriamente DIFERENTES do exercício prescrito e DIFERENTES entre si. Se não houver uma segunda alternativa distinta no catálogo (ex: Abdômen, onde existem apenas 2 exercícios ao todo), deixe \`alternative2Name\` como null.
 3. **Aquecimento vs Séries Válidas**:
    - Primeiro exercício multiarticular principal de cada dia: \`warmupSets: 1..2\`.
    - Exercícios isoladores e acessórios subsequentes: \`warmupSets: 0\`.
@@ -182,15 +183,29 @@ Regras Inegociáveis de Prescrição:
           estimatedDurationInMinutes: d.isRest ? 0 : d.estimatedDurationInMinutes || 60,
           exercises: d.isRest
             ? []
-            : d.exercises.map((e) => ({
-                name: e.name,
-                sets: e.sets || 3,
-                warmupSets: e.warmupSets ?? 0,
-                reps: e.reps || 10,
-                restTimeInSeconds: e.restTimeInSeconds || 90,
-                alternative1Name: e.alternative1Name || null,
-                alternative2Name: e.alternative2Name || null,
-              })),
+            : d.exercises.map((e) => {
+                const name = e.name.trim();
+                let alt1 = e.alternative1Name?.trim() || null;
+                let alt2 = e.alternative2Name?.trim() || null;
+
+                if (alt1 && alt1.toLowerCase() === name.toLowerCase()) alt1 = null;
+                if (alt2 && alt2.toLowerCase() === name.toLowerCase()) alt2 = null;
+                if (alt1 && alt2 && alt1.toLowerCase() === alt2.toLowerCase()) alt2 = null;
+                if (!alt1 && alt2) {
+                  alt1 = alt2;
+                  alt2 = null;
+                }
+
+                return {
+                  name,
+                  sets: e.sets || 3,
+                  warmupSets: e.warmupSets ?? 0,
+                  reps: e.reps || 10,
+                  restTimeInSeconds: e.restTimeInSeconds || 90,
+                  alternative1Name: alt1,
+                  alternative2Name: alt2,
+                };
+              }),
         })),
       };
     } catch {

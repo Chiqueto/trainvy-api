@@ -7,6 +7,7 @@ import {
 
 import { CoachAthleteError } from "../domain/coach-athlete.js";
 import { CoachPrescriptionError } from "../domain/coach-prescription.js";
+import { ValidationError } from "../errors/index.js";
 import { auth } from "../lib/auth.js";
 import {
   AcceptPrescriptionResponseSchema,
@@ -39,6 +40,13 @@ function fail(error: unknown, request: FastifyRequest, reply: FastifyReply) {
     return reply.status(error.status).send({
       error: error.message,
       code: error.code,
+    });
+  }
+
+  if (error instanceof ValidationError) {
+    return reply.status(400).send({
+      error: error.message,
+      code: "VALIDATION_ERROR",
     });
   }
 

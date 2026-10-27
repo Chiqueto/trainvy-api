@@ -4,7 +4,7 @@ import {
   PrescriptionDayPayload,
   PrescriptionPayload,
 } from "../domain/coach-prescription.js";
-import { normalizeAndValidateAlternatives } from "../domain/exercise-alternatives.js";
+import { sanitizeAndNormalizeAlternatives } from "../domain/exercise-alternatives.js";
 import { WeekDay } from "../generated/prisma/enums.js";
 import { prisma } from "../lib/db.js";
 
@@ -167,7 +167,7 @@ export class AcceptWorkoutPrescription {
                       null;
 
                     const { alternative1ExerciseId, alternative2ExerciseId } =
-                      normalizeAndValidateAlternatives({
+                      sanitizeAndNormalizeAlternatives({
                         mainExerciseId: resolvedMainId,
                         mainExerciseName: exercise.name,
                         alternative1ExerciseId: resolvedAlt1Id,
