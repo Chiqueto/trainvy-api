@@ -589,6 +589,7 @@ export const ExerciseMediaResponseSchema = z.object({
 export const ListExercisesQuerySchema = z.object({
   q: z.string().optional(),
   onlyWithHistory: z.string().optional(),
+  onlyCustom: z.string().optional(),
 });
 
 export const CreateExerciseBodySchema = z.object({
@@ -596,6 +597,21 @@ export const CreateExerciseBodySchema = z.object({
   isUnilateral: z.boolean().optional().default(false),
   primaryMuscleGroups: z.array(MuscleGroupSchema).optional(),
   secondaryMuscleGroups: z.array(MuscleGroupSchema).optional(),
+});
+
+export const UpdateExerciseParamsSchema = z.object({
+  id: z.uuid(),
+});
+
+export const UpdateExerciseBodySchema = z.object({
+  name: z.string().trim().min(1).optional(),
+  isUnilateral: z.boolean().optional(),
+  primaryMuscleGroups: z.array(MuscleGroupSchema).optional(),
+  secondaryMuscleGroups: z.array(MuscleGroupSchema).optional(),
+});
+
+export const DeleteExerciseParamsSchema = z.object({
+  id: z.uuid(),
 });
 
 export const UpdateExerciseMusclesParamsSchema = z.object({

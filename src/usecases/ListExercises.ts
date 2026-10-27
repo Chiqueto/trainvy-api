@@ -6,6 +6,7 @@ interface InputDto {
   query?: string;
   limit?: number;
   onlyWithHistory?: boolean;
+  onlyCustom?: boolean;
   minCompletedAt?: Date;
 }
 
@@ -46,9 +47,11 @@ export class ListExercises {
     );
 
     // 2. Busca exercícios globais e customizados do usuário
-    const where: Prisma.ExerciseWhereInput = {
-      OR: [{ ownerUserId: null }, { ownerUserId: dto.userId }],
-    };
+    const where: Prisma.ExerciseWhereInput = dto.onlyCustom
+      ? { ownerUserId: dto.userId }
+      : {
+          OR: [{ ownerUserId: null }, { ownerUserId: dto.userId }],
+        };
 
     if (dto.onlyWithHistory) {
       where.id = { in: Array.from(exercisedIds) };

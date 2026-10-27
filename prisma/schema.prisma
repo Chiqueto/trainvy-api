@@ -114,6 +114,7 @@ model User {
   acceptedInvitations        CoachInvitation[]       @relation("AthleteAcceptedInvitations")
   coachPrescriptions         WorkoutPrescription[]   @relation("CoachPrescriptions")
   athletePrescriptions       WorkoutPrescription[]   @relation("AthletePrescriptions")
+  coachWorkoutPlanTemplates  WorkoutPlanTemplate[]   @relation("CoachWorkoutPlanTemplates")
   aiTrainingHistoryAccess    Boolean                 @default(false)
   aiTrainingHistoryConsentAt DateTime?               @db.Timestamptz()
   workoutSetProposals        WorkoutSetProposal[]
@@ -786,6 +787,19 @@ model WorkoutPrescription {
   @@index([coachId, status])
   @@index([athleteId, status])
   @@index([createdAt])
+}
+
+model WorkoutPlanTemplate {
+  id          String   @id @default(uuid())
+  coachId     String
+  coach       User     @relation("CoachWorkoutPlanTemplates", fields: [coachId], references: [id], onDelete: Cascade)
+  name        String
+  description String?
+  payload     Json
+  createdAt   DateTime @default(now()) @db.Timestamptz()
+  updatedAt   DateTime @updatedAt @db.Timestamptz()
+
+  @@index([coachId, createdAt])
 }
 
 enum WorkoutSetProposalStatus {

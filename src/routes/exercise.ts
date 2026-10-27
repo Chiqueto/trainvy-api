@@ -6,19 +6,26 @@ import { ConflictError, NotFoundError, ValidationError } from "../errors/index.j
 import { auth } from "../lib/auth.js";
 import {
   CreateExerciseBodySchema,
+  DeleteExerciseParamsSchema,
   ErrorSchema,
   ExerciseCatalogVersionResponseSchema,
   ExerciseMediaParamsSchema,
   ExerciseMediaResponseSchema,
   ExerciseResponseSchema,
   ListExercisesQuerySchema,
+  UpdateExerciseBodySchema,
   UpdateExerciseMusclesBodySchema,
   UpdateExerciseMusclesParamsSchema,
+  UpdateExerciseParamsSchema,
 } from "../schemas/index.js";
 import { CreateExercise } from "../usecases/CreateExercise.js";
 import { GetExerciseCatalogVersion } from "../usecases/GetExerciseCatalogVersion.js";
 import { GetExerciseMedia } from "../usecases/GetExerciseMedia.js";
 import { ListExercises } from "../usecases/ListExercises.js";
+import {
+  DeleteCustomExercise,
+  UpdateCustomExercise,
+} from "../usecases/ManageCustomExercise.js";
 import { UpdateExerciseMuscles } from "../usecases/UpdateExerciseMuscles.js";
 
 export const exerciseRoutes: FastifyPluginAsyncZod = async (app) => {
@@ -102,6 +109,7 @@ export const exerciseRoutes: FastifyPluginAsyncZod = async (app) => {
         if (
           !request.query.q &&
           !request.query.onlyWithHistory &&
+          !request.query.onlyCustom &&
           request.headers["if-none-match"] === etag
         ) {
           return reply.status(304).send(undefined as any);
@@ -112,6 +120,7 @@ export const exerciseRoutes: FastifyPluginAsyncZod = async (app) => {
           userId: session.user.id,
           query: request.query.q,
           onlyWithHistory: request.query.onlyWithHistory === "true",
+          onlyCustom: request.query.onlyCustom === "true",
         });
 
         return reply.status(200).send(result);
@@ -294,6 +303,127 @@ export const exerciseRoutes: FastifyPluginAsyncZod = async (app) => {
           });
         }
 
+        app.log.error(error);
+        return reply.status(500).send({
+          error: "Internal server error",
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }
+    },
+  });
+
+  // PATCH /exercises/:id — Atualizar exercício personalizado
+  app.route({
+    method: "PATCH",
+    url: "/:id",
+    schema: {
+      operationId: "updateCustomExercise",
+      tags: ["Exercise"],
+      summary: "Update custom exercise name, unilateral status, and muscles",
+      params: UpdateExerciseParamsSchema,
+      body: UpdateExerciseBodySchema,
+      response: {
+        200: ExerciseResponseSchema,
+        400: ErrorSchema,
+        401: ErrorSchema,
+        404: ErrorSchema,
+        409: ErrorSchema,
+        500: ErrorSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      try {
+        const session = await auth.api.getSession({
+          headers: fromNodeHeaders(request.headers),
+        });
+        if (!session) {
+          return reply.status(401).send({
+            error: "Unauthorized",
+            code: "UNAUTHORIZED",
+          });
+        }
+
+        const updateCustomExercise = new UpdateCustomExercise();
+        const result = await updateCustomExercise.execute({
+          userId: session.user.id,
+          exerciseId: request.params.id,
+          name: request.body.name,
+          isUnilateral: request.body.isUnilateral,
+          primaryMuscleGroups: request.body.primaryMuscleGroups,
+          secondaryMuscleGroups: request.body.secondaryMuscleGroups,
+        });
+
+        return reply.status(200).send(result);
+      } catch (error) {
+        if (error instanceof ValidationError) {
+          return reply.status(400).send({
+            error: error.message,
+            code: "VALIDATION_ERROR",
+          });
+        }
+        if (error instanceof NotFoundError) {
+          return reply.status(404).send({
+            error: error.message,
+            code: "NOT_FOUND",
+          });
+        }
+        if (error instanceof ConflictError) {
+          return reply.status(409).send({
+            error: error.message,
+            code: "CONFLICT",
+          });
+        }
+        app.log.error(error);
+        return reply.status(500).send({
+          error: "Internal server error",
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }
+    },
+  });
+
+  // DELETE /exercises/:id — Excluir exercício personalizado
+  app.route({
+    method: "DELETE",
+    url: "/:id",
+    schema: {
+      operationId: "deleteCustomExercise",
+      tags: ["Exercise"],
+      summary: "Delete a custom exercise belonging to the authenticated user",
+      params: DeleteExerciseParamsSchema,
+      response: {
+        200: z.object({ success: z.boolean() }),
+        401: ErrorSchema,
+        404: ErrorSchema,
+        500: ErrorSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      try {
+        const session = await auth.api.getSession({
+          headers: fromNodeHeaders(request.headers),
+        });
+        if (!session) {
+          return reply.status(401).send({
+            error: "Unauthorized",
+            code: "UNAUTHORIZED",
+          });
+        }
+
+        const deleteCustomExercise = new DeleteCustomExercise();
+        const result = await deleteCustomExercise.execute({
+          userId: session.user.id,
+          exerciseId: request.params.id,
+        });
+
+        return reply.status(200).send(result);
+      } catch (error) {
+        if (error instanceof NotFoundError) {
+          return reply.status(404).send({
+            error: error.message,
+            code: "NOT_FOUND",
+          });
+        }
         app.log.error(error);
         return reply.status(500).send({
           error: "Internal server error",
