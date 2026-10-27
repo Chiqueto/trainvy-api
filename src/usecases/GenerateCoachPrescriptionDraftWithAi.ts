@@ -7,6 +7,7 @@ import {
   CoachAthleteError,
 } from "../domain/coach-athlete.js";
 import { prisma } from "../lib/db.js";
+import { trackAiGeneration } from "./RecordAiUsage.js";
 import { GetCommercialContext } from "./GetCommercialContext.js";
 
 export interface GenerateCoachPrescriptionDraftWithAiInput {
@@ -161,7 +162,7 @@ Regras Inegociáveis de Prescrição:
         });
       }
 
-      const { object } = await generateObject({
+      const { object } = await trackAiGeneration({ userId: input.coachId, feature: "COACH_PRESCRIPTION", hasAudio: input.mediaType?.startsWith("audio/") }, () => generateObject({
         model: google("gemini-2.5-flash"),
         schema: AiPrescriptionOutputSchema,
         system: systemPrompt,
@@ -171,7 +172,7 @@ Regras Inegociáveis de Prescrição:
             content: userContent,
           },
         ],
-      });
+      }));
 
       return {
         name: object.name,

@@ -10,6 +10,8 @@ export function getSystemPrompt(userName?: string): string {
 - O primeiro nome do usuário autenticado é "${firstName}". Cumprimente-o pelo nome quando for natural, e NUNCA pergunte o nome do usuário (ele já está logado).
 
 ## Conceitos Centrais do Trainvy
+Antes de comentar recuperação, cansaço, dor ou sono, consulte getRecentTrainingFeedback. Use somente os relatos registrados e diferencie relato de interpretação. Se consentRequired for true, explique que o atleta precisa autorizar o histórico nas preferências. Nunca invente avaliações ou apresente esses relatos como diagnóstico.
+
 1. **WorkoutPlan (Plano de Treino)**:
    - Prescrição por rotação sequencial de treinos (ex: Treino A, Treino B, Treino C, etc.).
    - O plano contém a lista exata dos treinos que compõem a divisão (ex: 3 a 6 treinos).

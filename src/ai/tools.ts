@@ -15,6 +15,7 @@ import { GetPlanningOverview } from "../usecases/GetPlanningOverview.js";
 import { GetUserTrainData } from "../usecases/GetUserTrainData.js";
 import { GetWeeklyTrainingAnalytics } from "../usecases/GetWeeklyTrainingAnalytics.js";
 import { GetWorkoutHistorySession } from "../usecases/GetWorkoutHistorySession.js";
+import { GetRecentTrainingFeedback } from "../usecases/SessionFeedback.js";
 import { GetWorkoutPlan } from "../usecases/GetWorkoutPlan.js";
 import { ListExercises } from "../usecases/ListExercises.js";
 import { ListWorkoutHistory } from "../usecases/ListWorkoutHistory.js";
@@ -319,6 +320,12 @@ export function getAiTools(userId: string, context: AiToolsContext = {}) {
       },
     }),
 
+
+    getRecentTrainingFeedback: tool({
+      description: "Consulta as últimas 10 avaliações pós-treino do próprio atleta (sensação, dor, fadiga, sono e notas). Requer consentimento de histórico. Use antes de comentar recuperação; são relatos subjetivos, não diagnóstico. Não recebe IDs de outros usuários.",
+      inputSchema: z.object({}),
+      execute: async () => new GetRecentTrainingFeedback().execute(userId),
+    }),
 
     getRecentTrainingHistory: tool({
       description:

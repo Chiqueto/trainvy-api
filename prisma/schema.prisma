@@ -105,6 +105,7 @@ model User {
   aiToolExecutions           AiToolExecution[]
   aiUsageDaily               AiUsageDaily[]
   aiRequestLogs              AiRequestLog[]
+  aiUsageEvents              AiUsageEvent[]
   feedbacks                  Feedback[]
   metricLogs                 UserMetricLog[]
   coachAthletesAsCoach       CoachAthlete[]          @relation("CoachLinks")
@@ -311,6 +312,7 @@ model WorkoutSession {
   sessionExercises SessionExercise[]
   proposals        WorkoutSetProposal[]
   aiConversations  AiConversation[]
+  feedback         WorkoutSessionFeedback?
 
   @@index([athleteId, startedAt])
   @@index([athleteId, completedAt])
@@ -663,6 +665,42 @@ model AiRequestLog {
 
   @@index([userId, createdAt])
   @@index([createdAt])
+}
+
+model AiUsageEvent {
+  id               String   @id @default(uuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  feature          String
+  model            String
+  status           String
+  inputTokens      Int?
+  outputTokens     Int?
+  reasoningTokens  Int?
+  cachedInputTokens Int?
+  estimatedCostUsd Decimal? @db.Decimal(18, 9)
+  inputRate        Decimal  @db.Decimal(12, 6)
+  outputRate       Decimal  @db.Decimal(12, 6)
+  cachedInputRate  Decimal  @db.Decimal(12, 6)
+  pricingVersion   String
+  createdAt        DateTime @default(now()) @db.Timestamptz()
+
+  @@index([createdAt])
+  @@index([userId, createdAt])
+  @@index([feature, createdAt])
+}
+
+model WorkoutSessionFeedback {
+  id               String         @id @default(uuid())
+  workoutSessionId String         @unique
+  workoutSession   WorkoutSession @relation(fields: [workoutSessionId], references: [id], onDelete: Cascade)
+  feeling          String
+  pain             Int?
+  fatigue          Int?
+  sleepQuality     Int?
+  notes            String?
+  createdAt        DateTime       @default(now()) @db.Timestamptz()
+  updatedAt        DateTime       @updatedAt @db.Timestamptz()
 }
 
 enum FeedbackCategory {

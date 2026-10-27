@@ -23,6 +23,7 @@ import {
   UserAiConsentResponseSchema,
 } from "../schemas/index.js";
 import { CheckAndConsumeAiQuota } from "../usecases/CheckAndConsumeAiQuota.js";
+import { recordAiUsage } from "../usecases/RecordAiUsage.js";
 import { CreateAiConversation } from "../usecases/CreateAiConversation.js";
 import { DeleteAiConversation } from "../usecases/DeleteAiConversation.js";
 import { GetAiConversation } from "../usecases/GetAiConversation.js";
@@ -67,18 +68,24 @@ function getFirstUserMessageSummary(messages: UIMessage[]): string | null {
   return null;
 }
 
-function sanitizeMessagesForRevokedHistory(messages: UIMessage[]): UIMessage[] {
+export function sanitizeMessagesForRevokedHistory(messages: UIMessage[]): UIMessage[] {
   const historyToolNames = new Set([
     "getWeeklyTrainingAnalytics",
     "getMuscleTrainingAnalytics",
     "getExerciseEvolution",
     "getWorkoutHistorySession",
     "listWorkoutHistory",
+    "getRecentTrainingHistory",
+    "getRecentTrainingFeedback",
   ]);
 
   return messages.map((msg) => {
     if (!Array.isArray(msg.parts)) return msg;
     const sanitizedParts = msg.parts.map((part: any) => {
+      const name = part.type === "dynamic-tool" ? part.toolName : part.type?.replace(/^tool-/, "");
+      if (historyToolNames.has(name) && "output" in part) {
+        return { ...part, output: { notice: "O acesso ao histórico foi revogado pelo atleta." } };
+      }
       if (
         part.type === "tool-invocation" &&
         part.toolInvocation &&
@@ -331,6 +338,13 @@ export const aiRoutes = async (app: FastifyInstance) => {
         messages: await convertToModelMessages(messages),
         stopWhen: stepCountIs(10),
         tools,
+        onStepFinish: async ({ usage }) => {
+          await recordAiUsage({ userId, feature: workoutSessionId ? "SESSION_CHAT" : "CHAT",
+            hasAudio: messages.some(m => m.parts?.some(p => p.type === "file" && p.mediaType?.startsWith("audio/"))) }, usage);
+        },
+        onError: async () => {
+          await recordAiUsage({ userId, feature: workoutSessionId ? "SESSION_CHAT" : "CHAT" }, undefined, "ERROR");
+        },
       });
 
       const response = result.toUIMessageStreamResponse({

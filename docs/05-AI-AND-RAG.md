@@ -1,5 +1,7 @@
 # 05 — IA e RAG
 
+> Decisão em 27/10/2026: RAG/biblioteca ficam fora do escopo atual. A IA usa dados estruturados do atleta. Medição de tokens/custo é operacional e exclusiva do admin, sem cobrança. As seções de RAG abaixo são referências futuras. Ver [implementação atual](15-PLAN-EDITING-FEEDBACK-AI-USAGE.md).
+
 ## Objetivo
 
 ```text

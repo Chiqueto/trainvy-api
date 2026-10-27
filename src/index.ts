@@ -32,6 +32,8 @@ import { statsRoutes } from "./routes/stats.js";
 import { WorkoutPlanRoutes } from "./routes/workout-plan.js";
 import { workoutSessionRoutes } from "./routes/workout-session.js";
 import { workoutSessionRecoveryRoutes } from "./routes/workout-session-recovery.js";
+import { workoutEditRoutes } from "./routes/workout-edit.js";
+import { sessionFeedbackRoutes } from "./routes/session-feedback.js";
 
 const isVercel = Boolean(process.env.VERCEL);
 
@@ -114,6 +116,8 @@ await app.register(exerciseRoutes, { prefix: "/exercises" });
 await app.register(historyRoutes, { prefix: "/history" });
 await app.register(workoutSessionRoutes);
 await app.register(workoutSessionRecoveryRoutes);
+await app.register(workoutEditRoutes);
+await app.register(sessionFeedbackRoutes);
 await app.register(commercialRoutes);
 await app.register(coachRoutes);
 await app.register(coachPrescriptionRoutes);

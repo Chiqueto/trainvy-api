@@ -44,6 +44,7 @@ export class StartWorkoutSession {
   async execute(dto: InputDto): Promise<OutputDto> {
     try {
       return await prisma.$transaction(async (tx) => {
+        await tx.$queryRaw`SELECT id FROM "WorkoutPlan" WHERE id = ${dto.workoutPlanId} AND "userId" = ${dto.userId} FOR UPDATE`;
         const workoutPlan = await tx.workoutPlan.findUnique({
           where: { id: dto.workoutPlanId },
         });

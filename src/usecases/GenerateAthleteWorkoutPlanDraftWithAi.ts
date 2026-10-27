@@ -3,6 +3,7 @@ import { generateObject } from "ai";
 import z from "zod";
 
 import { prisma } from "../lib/db.js";
+import { trackAiGeneration } from "./RecordAiUsage.js";
 
 export interface GenerateAthleteWorkoutPlanDraftWithAiInput {
   userId: string;
@@ -127,7 +128,7 @@ Regras Obrigatórias de Prescrição:
         });
       }
 
-      const { object } = await generateObject({
+      const { object } = await trackAiGeneration({ userId: input.userId, feature: "ATHLETE_PLAN", hasAudio: input.mediaType?.startsWith("audio/") }, () => generateObject({
         model: google("gemini-2.5-flash"),
         schema: AiPlanOutputSchema,
         system: systemPrompt,
@@ -137,7 +138,7 @@ Regras Obrigatórias de Prescrição:
             content: userContent,
           },
         ],
-      });
+      }));
 
       return {
         name: object.name,

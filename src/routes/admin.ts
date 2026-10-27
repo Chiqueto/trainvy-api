@@ -8,6 +8,8 @@ import { AdminExerciseCatalog } from "../schemas/admin-exercises.js";
 import { ErrorSchema } from "../schemas/index.js";
 import { AdminQueries } from "../usecases/AdminQueries.js";
 import { ListAdminExercises } from "../usecases/ListAdminExercises.js";
+import { GetAdminAiUsage } from "../usecases/GetAdminAiUsage.js";
+import { AdminAiUsageQuery, AdminAiUsageResponse } from "../schemas/admin-ai-usage.js";
 import { ManageAdminPlan } from "../usecases/ManageAdminPlan.js";
 import { ActivateManualSubscription, CancelManualSubscription, ChangeManualSubscriptionPlan, ExtendManualTrial, GrantManualTrial } from "../usecases/ManualSubscriptions.js";
 
@@ -27,6 +29,8 @@ export const adminRoutes: FastifyPluginAsyncZod = async app => {
     return reply.status(500).send({ error: "Internal server error", code: "INTERNAL_SERVER_ERROR" });
   });
   const queries = new AdminQueries();
+  app.get("/ai-usage", { schema: { operationId: "getAdminAiUsage", tags: ["Admin"], summary: "Estimated AI token usage and provider costs", querystring: AdminAiUsageQuery, response: response(AdminAiUsageResponse) } },
+    request => new GetAdminAiUsage().execute(actor(request), request.query));
   app.get("/exercises", { schema: { operationId: "listAdminExercises", tags: ["Admin"], summary: "List global exercise catalog and content coverage", response: response(AdminExerciseCatalog) } },
     request => new ListAdminExercises().execute(actor(request)));
   app.get("/overview", { schema: { operationId: "getAdminOverview", tags: ["Admin"], response: response(s.AdminOverview) } },

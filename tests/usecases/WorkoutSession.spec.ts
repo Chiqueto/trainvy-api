@@ -20,6 +20,7 @@ describe("WorkoutSession Integration Tests", () => {
   const updateWorkoutSession = new UpdateWorkoutSession();
 
   afterEach(async () => {
+    vi.restoreAllMocks();
     await cleanupTestUsers(createdUserIds);
     createdUserIds.length = 0;
   });
@@ -441,23 +442,22 @@ describe("WorkoutSession Integration Tests", () => {
 
     let intercepted = false;
     const errorThrowingStart = new StartWorkoutSession();
+    const originalTransaction = prisma.$transaction.bind(prisma);
     const spy = vi.spyOn(prisma, "$transaction").mockImplementation(async (callback) => {
-      return (callback as any)({
-        workoutPlan: prisma.workoutPlan,
-        workoutDay: prisma.workoutDay,
-        workoutSession: {
-          findFirst: prisma.workoutSession.findFirst.bind(prisma.workoutSession),
-          create: async (args: any) => {
-            return prisma.workoutSession.create(args);
-          },
+      return originalTransaction(async tx => (callback as any)(new Proxy(tx, {
+        get(target, key) {
+          if (key === "sessionExercise") return new Proxy(target.sessionExercise, {
+            get(delegate, method) {
+              if (method === "create") return async () => {
+                intercepted = true;
+                throw new Error("Simulação de falha catastrófica ao criar snapshot");
+              };
+              return Reflect.get(delegate, method);
+            },
+          });
+          return Reflect.get(target, key);
         },
-        sessionExercise: {
-          create: async () => {
-            intercepted = true;
-            throw new Error("Simulação de falha catastrófica ao criar snapshot");
-          },
-        },
-      });
+      })));
     });
 
     await expect(
@@ -470,6 +470,7 @@ describe("WorkoutSession Integration Tests", () => {
 
     expect(intercepted).toBe(true);
     spy.mockRestore();
+    expect(await prisma.workoutSession.count({ where: { athleteId: user.id } })).toBe(0);
 
     // Validar que se uma falha real ocorre, a transação garante que nenhuma sessão é persistida
   });

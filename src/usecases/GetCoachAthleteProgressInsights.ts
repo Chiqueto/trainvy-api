@@ -1,6 +1,7 @@
 import { google } from "@ai-sdk/google";
 import { generateObject } from "ai";
 import z from "zod";
+import { trackAiGeneration } from "./RecordAiUsage.js";
 
 import { AuthorizeCoachAthleteProgressAccess } from "./AuthorizeCoachAthleteProgressAccess.js";
 import { GetCoachAthleteProgressOverview } from "./GetCoachAthleteProgressOverview.js";
@@ -127,7 +128,7 @@ ${muscleDistributionText}
 `;
 
     try {
-      const { object } = await generateObject({
+      const { object } = await trackAiGeneration({ userId: input.coachId, feature: "COACH_INSIGHTS" }, () => generateObject({
         model: google("gemini-2.5-flash"),
         schema: AiInsightsObjectSchema,
         system: `Você é um consultor sênior de inteligência artificial em fisiologia do exercício, biomecânica e periodização de musculação do Trainvy.
@@ -140,7 +141,7 @@ Diretrizes obrigatórias:
 4. Forneça recomendações práticas e acionáveis que o Personal Trainer possa aplicar diretamente na próxima prescrição de treino.
 5. Seja direto, conciso e evite clichês vazios.`,
         prompt: `Analise as métricas reais do aluno abaixo e gere o diagnóstico completo de evolução para o treinador:\n${promptContext}`,
-      });
+      }));
 
       return {
         athleteId: input.athleteId,
