@@ -61,6 +61,8 @@ enum MuscleGroup {
   CALVES
 
   CORE
+  HIP_FLEXORS
+  TIBIALIS_ANTERIOR
 }
 
 enum MuscleRole {
@@ -629,6 +631,7 @@ model SignupIntent {
 }
 
 enum AdminAuditAction {
+  EXERCISE_MUSCLES_UPDATED
   PLAN_CREATED
   PLAN_UPDATED
   PLAN_ENTITLEMENTS_UPDATED

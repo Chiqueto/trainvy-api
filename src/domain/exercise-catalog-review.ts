@@ -1,0 +1,176 @@
+import { createHash } from "node:crypto";
+
+import z from "zod";
+
+import { MuscleGroup } from "../generated/prisma/enums.js";
+import definitions from "./exercise-catalog-review.json" with { type: "json" };
+
+export const ExerciseTrainingGroup = z.enum([
+  "RESISTANCE",
+  "POWER",
+  "PLYOMETRICS",
+  "WEIGHTLIFTING",
+  "CALISTHENICS",
+  "CONDITIONING",
+  "CORE_STABILITY",
+  "CARRIES",
+]);
+
+export const CATALOG_REVIEW_VERSION = "2026-10-28.1";
+export const CATALOG_REVIEW_SOURCES: Record<
+  string,
+  { title: string; url: string }
+> = {
+  press: {
+    title: "Bench press and dumbbell flyes — comparative study (2020)",
+    url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC7675616/",
+  },
+  legs: {
+    title: "Leg press and variants — systematic review (2020)",
+    url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC7369968/",
+  },
+  glutes: {
+    title: "Gluteus maximus in strength exercises — systematic review (2020)",
+    url: "https://pubmed.ncbi.nlm.nih.gov/32132843/",
+  },
+  deadlift: {
+    title: "Deadlift and variants — systematic review (2020)",
+    url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC7046193/",
+  },
+  "hip-flexors": {
+    title: "Hip flexor activation — systematic review (2024)",
+    url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC11546833/",
+  },
+  tibial: {
+    title: "Anatomy: tibialis anterior — NCBI Bookshelf",
+    url: "https://www.ncbi.nlm.nih.gov/books/NBK513304/",
+  },
+  "face-pull": {
+    title: "Posterior deltoid exercises — biomechanical modeling (2026)",
+    url: "https://pubmed.ncbi.nlm.nih.gov/41964926/",
+  },
+  kettlebell: {
+    title: "Kettlebell swing, snatch and clean — comparative EMG (2017)",
+    url: "https://pubmed.ncbi.nlm.nih.gov/28394829/",
+  },
+  ace: {
+    title: "ACE exercise library: movement references",
+    url: "https://www.acefitness.org/resources/everyone/exercise-library/",
+  },
+  "upper-anatomy": {
+    title: "Chest exercises: shoulder/elbow/wrist biomechanics (2022)",
+    url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC8877248/",
+  },
+  catalyst: {
+    title: "Catalyst Athletics: Olympic weightlifting movement library",
+    url: "https://www.catalystathletics.com/exercises/",
+  },
+  crossfit: {
+    title: "CrossFit: official movement library",
+    url: "https://www.crossfit.com/crossfit-movements",
+  },
+  landmine: {
+    title: "Catalyst Athletics: landmine anti-rotation",
+    url: "https://www.catalystathletics.com/exercise/504/Anti-Rotation-Landmine/",
+  },
+  throws: {
+    title: "NSCA: tests of core muscle power",
+    url: "https://dxpprod.nsca.com/education/articles/kinetic-select/tests-of-core-muscle-power/",
+  },
+  jumps: {
+    title: "HSS: introduction to plyometrics",
+    url: "https://www.hss.edu/health-library/move-better/plyometrics-workouts-for-beginner",
+  },
+  locomotion: {
+    title: "CrossFit: monostructural movements and carries",
+    url: "https://www.crossfit.com/crossfit-movements",
+  },
+};
+
+export const CatalogReviewEntry = z
+  .object({
+    id: z.uuid(),
+    name: z.string().min(1),
+    family: z.string().min(1),
+    groups: z.array(ExerciseTrainingGroup).min(1),
+    primary: z.array(z.enum(MuscleGroup)).min(1),
+    secondary: z.array(z.enum(MuscleGroup)),
+    sourceIds: z
+      .array(z.string().refine((id) => !!CATALOG_REVIEW_SOURCES[id]))
+      .min(1),
+    notes: z.string().optional(),
+  })
+  .strict()
+  .superRefine((entry, ctx) => {
+    for (const key of ["primary", "secondary", "groups"] as const) {
+      if (new Set(entry[key]).size !== entry[key].length)
+        ctx.addIssue({
+          code: "custom",
+          path: [key],
+          message: "Duplicate classification",
+        });
+    }
+    if (entry.primary.some((m) => entry.secondary.includes(m)))
+      ctx.addIssue({
+        code: "custom",
+        path: ["secondary"],
+        message: "Primary/secondary overlap",
+      });
+  });
+export type ReviewedExercise = z.infer<typeof CatalogReviewEntry>;
+export const REVIEWED_EXERCISES = z
+  .array(CatalogReviewEntry)
+  .parse(definitions);
+if (
+  new Set(REVIEWED_EXERCISES.map((e) => e.id)).size !==
+  REVIEWED_EXERCISES.length
+)
+  throw new Error("Duplicate reviewed exercise IDs");
+export const REVIEWED_EXERCISES_BY_ID = new Map(
+  REVIEWED_EXERCISES.map((e) => [e.id, e]),
+);
+
+export type CatalogSnapshot = {
+  id: string;
+  name: string;
+  updatedAt: Date;
+  muscles: { muscleGroup: string; role: string }[];
+}[];
+export function catalogFingerprint(rows: CatalogSnapshot) {
+  return createHash("sha256")
+    .update(
+      JSON.stringify(
+        [...rows]
+          .sort((a, b) => a.id.localeCompare(b.id))
+          .map((e) => ({
+            id: e.id,
+            name: e.name,
+            updatedAt: e.updatedAt.toISOString(),
+            muscles: e.muscles.map((m) => `${m.role}:${m.muscleGroup}`).sort(),
+          })),
+      ),
+    )
+    .digest("hex");
+}
+export function muscleSignature(
+  muscles: { muscleGroup: string; role: string }[],
+) {
+  return muscles
+    .map((m) => `${m.role}:${m.muscleGroup}`)
+    .sort()
+    .join("|");
+}
+export function reviewedMuscles(
+  e: Pick<ReviewedExercise, "primary" | "secondary">,
+) {
+  return [
+    ...e.primary.map((muscleGroup) => ({
+      muscleGroup,
+      role: "PRIMARY" as const,
+    })),
+    ...e.secondary.map((muscleGroup) => ({
+      muscleGroup,
+      role: "SECONDARY" as const,
+    })),
+  ];
+}

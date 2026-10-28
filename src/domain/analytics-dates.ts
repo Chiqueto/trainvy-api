@@ -2,7 +2,7 @@ import { InvalidDateRangeError, InvalidTimezoneError } from "../errors/index.js"
 import { MuscleGroup } from "../generated/prisma/client.js";
 
 /**
- * Ordem canônica estável dos 13 grupos musculares para respostas analíticas.
+ * Ordem estável dos grupos musculares para respostas analíticas.
  */
 export const CANONICAL_MUSCLE_ORDER: MuscleGroup[] = [
   MuscleGroup.CHEST,
@@ -18,6 +18,8 @@ export const CANONICAL_MUSCLE_ORDER: MuscleGroup[] = [
   MuscleGroup.HIP_ABDUCTORS,
   MuscleGroup.CALVES,
   MuscleGroup.CORE,
+  MuscleGroup.HIP_FLEXORS,
+  MuscleGroup.TIBIALIS_ANTERIOR,
 ];
 
 /**

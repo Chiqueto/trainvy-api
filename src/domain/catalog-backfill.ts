@@ -82,6 +82,9 @@ export async function syncCanonicalGlobalCatalog(
       existing++;
     }
 
+    // Preserve explicit admin reviews. Bootstrap only fills empty classifications.
+    if (await client.exerciseMuscle.count({ where: { exerciseId } })) continue;
+
     // Criar ExerciseMuscle (PRIMARY e SECONDARY) de forma idempotente
     const musclesToSync = [
       ...def.primary.map((mg) => ({ muscleGroup: mg, role: MuscleRole.PRIMARY })),

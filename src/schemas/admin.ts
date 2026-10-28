@@ -41,7 +41,7 @@ export const AdminAuditQuery = z.strictObject({
   action: z.enum(AdminAuditAction).optional(),
   adminUserId: id.optional(),
   targetUserId: id.optional(),
-  entityType: z.enum(["PLAN", "SUBSCRIPTION"]).optional(),
+    entityType: z.enum(["PLAN", "SUBSCRIPTION", "EXERCISE"]).optional(),
 });
 export const AdminEntitlement = z.strictObject({
   entitlement: z.enum(EntitlementKey),

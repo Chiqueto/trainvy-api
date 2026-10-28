@@ -4,7 +4,8 @@ import z from "zod";
 
 import { AdminError, requireAdmin } from "../lib/require-admin.js";
 import * as s from "../schemas/admin.js";
-import { AdminExerciseCatalog } from "../schemas/admin-exercises.js";
+import { AdminExerciseCatalog, AdminExerciseMusclesBody, AdminExerciseMusclesResult } from "../schemas/admin-exercises.js";
+import { UpdateAdminExerciseMuscles } from "../usecases/UpdateAdminExerciseMuscles.js";
 import { ErrorSchema } from "../schemas/index.js";
 import { AdminQueries } from "../usecases/AdminQueries.js";
 import { ListAdminExercises } from "../usecases/ListAdminExercises.js";
@@ -59,6 +60,13 @@ export const adminRoutes: FastifyPluginAsyncZod = async (app) => {
       .send({ error: "Internal server error", code: "INTERNAL_SERVER_ERROR" });
   });
   const queries = new AdminQueries();
+  app.put("/exercises/:exerciseId/muscles", {
+    schema: { operationId: "updateAdminExerciseMuscles", tags: ["Admin"],
+      summary: "Update global exercise muscles with audit and conflict protection",
+      params: z.object({ exerciseId: z.uuid() }), body: AdminExerciseMusclesBody,
+      response: response(AdminExerciseMusclesResult),
+    },
+  }, request => new UpdateAdminExerciseMuscles().execute(actor(request), request.params.exerciseId, request.body));
   app.post(
     "/plans",
     {

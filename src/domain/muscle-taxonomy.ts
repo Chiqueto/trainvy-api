@@ -2,6 +2,7 @@ import { ValidationError } from "../errors/index.js";
 import { Prisma } from "../generated/prisma/client.js";
 import { MuscleGroup, MuscleRole } from "../generated/prisma/enums.js";
 import { prisma } from "../lib/db.js";
+import { REVIEWED_EXERCISES } from "./exercise-catalog-review.js";
 
 export { MuscleGroup, MuscleRole };
 
@@ -15,149 +16,15 @@ export interface MuscleClassification {
  * Usado exclusivamente para catalogar exercícios globais (ownerUserId = null).
  * Exercícios personalizados dos usuários NUNCA são modificados por este catálogo.
  */
-export const GLOBAL_EXERCISE_MUSCLE_MAPPING: Record<string, MuscleClassification> = {
-  // Peito & Empurrar
-  "supino reto com barra": {
-    primary: [MuscleGroup.CHEST],
-    secondary: [MuscleGroup.TRICEPS, MuscleGroup.SHOULDERS],
-  },
-  "supino reto": {
-    primary: [MuscleGroup.CHEST],
-    secondary: [MuscleGroup.TRICEPS, MuscleGroup.SHOULDERS],
-  },
-  "supino inclinado com halteres": {
-    primary: [MuscleGroup.CHEST],
-    secondary: [MuscleGroup.TRICEPS, MuscleGroup.SHOULDERS],
-  },
-  "supino inclinado": {
-    primary: [MuscleGroup.CHEST],
-    secondary: [MuscleGroup.TRICEPS, MuscleGroup.SHOULDERS],
-  },
-
-  // Pernas / Membros Inferiores
-  "agachamento livre": {
-    primary: [MuscleGroup.QUADRICEPS, MuscleGroup.GLUTES],
-    secondary: [MuscleGroup.HAMSTRINGS],
-  },
-  "agachamento": {
-    primary: [MuscleGroup.QUADRICEPS, MuscleGroup.GLUTES],
-    secondary: [MuscleGroup.HAMSTRINGS],
-  },
-  "agachamento búlgaro": {
-    primary: [MuscleGroup.QUADRICEPS, MuscleGroup.GLUTES],
-    secondary: [MuscleGroup.HAMSTRINGS],
-  },
-  "leg press 45": {
-    primary: [MuscleGroup.QUADRICEPS, MuscleGroup.GLUTES],
-    secondary: [MuscleGroup.HAMSTRINGS, MuscleGroup.CALVES],
-  },
-  "leg press horizontal": {
-    primary: [MuscleGroup.QUADRICEPS, MuscleGroup.GLUTES],
-    secondary: [MuscleGroup.HAMSTRINGS, MuscleGroup.CALVES],
-  },
-  "cadeira extensora": {
-    primary: [MuscleGroup.QUADRICEPS],
-    secondary: [],
-  },
-  "cadeira flexora": {
-    primary: [MuscleGroup.HAMSTRINGS],
-    secondary: [],
-  },
-  "mesa flexora": {
-    primary: [MuscleGroup.HAMSTRINGS],
-    secondary: [],
-  },
-  "stiff": {
-    primary: [MuscleGroup.HAMSTRINGS, MuscleGroup.GLUTES],
-    secondary: [MuscleGroup.BACK, MuscleGroup.CORE],
-  },
-  "elevação pélvica": {
-    primary: [MuscleGroup.GLUTES],
-    secondary: [MuscleGroup.HAMSTRINGS],
-  },
-  "cadeira abdutora": {
-    primary: [MuscleGroup.HIP_ABDUCTORS, MuscleGroup.GLUTES],
-    secondary: [],
-  },
-  "cadeira adutora": {
-    primary: [MuscleGroup.ADDUCTORS],
-    secondary: [],
-  },
-  "panturrilha em pé": {
-    primary: [MuscleGroup.CALVES],
-    secondary: [],
-  },
-  "panturrilha sentado": {
-    primary: [MuscleGroup.CALVES],
-    secondary: [],
-  },
-
-  // Costas / Puxadas / Remadas
-  "puxada frontal na máquina": {
-    primary: [MuscleGroup.BACK],
-    secondary: [MuscleGroup.BICEPS],
-  },
-  "puxada frontal": {
-    primary: [MuscleGroup.BACK],
-    secondary: [MuscleGroup.BICEPS],
-  },
-  "remada curvada com barra": {
-    primary: [MuscleGroup.BACK],
-    secondary: [MuscleGroup.BICEPS, MuscleGroup.CORE],
-  },
-  "remada curvada": {
-    primary: [MuscleGroup.BACK],
-    secondary: [MuscleGroup.BICEPS, MuscleGroup.CORE],
-  },
-
-  // Ombros
-  "desenvolvimento militar": {
-    primary: [MuscleGroup.SHOULDERS],
-    secondary: [MuscleGroup.TRICEPS, MuscleGroup.CORE],
-  },
-  "desenvolvimento com halteres": {
-    primary: [MuscleGroup.SHOULDERS],
-    secondary: [MuscleGroup.TRICEPS],
-  },
-  "elevação lateral": {
-    primary: [MuscleGroup.SHOULDERS],
-    secondary: [],
-  },
-  "crucifixo inverso na máquina": {
-    primary: [MuscleGroup.SHOULDERS, MuscleGroup.BACK],
-    secondary: [],
-  },
-
-  // Braços (Bíceps, Tríceps, Antebraço)
-  "rosca direta com barra": {
-    primary: [MuscleGroup.BICEPS],
-    secondary: [MuscleGroup.FOREARMS],
-  },
-  "rosca direta": {
-    primary: [MuscleGroup.BICEPS],
-    secondary: [MuscleGroup.FOREARMS],
-  },
-  "rosca martelo": {
-    primary: [MuscleGroup.BICEPS, MuscleGroup.FOREARMS],
-    secondary: [],
-  },
-  "rosca scott": {
-    primary: [MuscleGroup.BICEPS],
-    secondary: [],
-  },
-  "tríceps corda": {
-    primary: [MuscleGroup.TRICEPS],
-    secondary: [],
-  },
-  "tríceps testa": {
-    primary: [MuscleGroup.TRICEPS],
-    secondary: [],
-  },
-  "tríceps francês unilateral": {
-    primary: [MuscleGroup.TRICEPS],
-    secondary: [],
-  },
-};
+export const GLOBAL_EXERCISE_MUSCLE_MAPPING: Record<
+  string,
+  MuscleClassification
+> = Object.fromEntries(
+  REVIEWED_EXERCISES.map((e) => [
+    e.name.trim().toLowerCase(),
+    { primary: e.primary, secondary: e.secondary },
+  ]),
+);
 
 /**
  * Valida a integridade da classificação muscular:

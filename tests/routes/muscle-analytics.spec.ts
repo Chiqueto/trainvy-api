@@ -500,7 +500,7 @@ describe("Muscle Training Analytics API — GET /history/analytics/muscles (Task
     expect(response.statusCode).toBe(200);
     const body = response.json();
 
-    expect(body.muscles).toHaveLength(13);
+    expect(body.muscles).toHaveLength(15);
     expect(body.muscles).toHaveLength(CANONICAL_MUSCLE_ORDER.length);
 
     // Verifica que a ordem de retorno bate exatamente com a ordem canônica
