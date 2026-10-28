@@ -23,6 +23,19 @@ const muscles = review.participants.map((p) => ({
 }));
 const targetId = "b9859cd9-6ed6-4e63-8fd0-500e8cf8d553";
 
+const machineCanonical = JSON.parse(
+  readFileSync(
+    new URL("../../src/domain/machine-chest-press-anatomy.json", import.meta.url),
+    "utf8",
+  ),
+);
+const machineReview = ExerciseAnatomySchema.parse(machineCanonical);
+const machineMuscles = machineReview.participants.map((p) => ({
+  muscleGroup: p.muscleGroup,
+  role: p.role,
+}));
+const machineTargetId = "f3e5e1cf-d232-4a80-87b3-9f35650a1b5e";
+
 describe("detailed exercise anatomy", () => {
   it("validates the single-exercise review and rejects dangling sources, regions and changed classifications", () => {
     expect(getExerciseAnatomy(review, muscles)).toEqual(review);
@@ -37,6 +50,51 @@ describe("detailed exercise anatomy", () => {
       getExerciseAnatomy(review, [{ muscleGroup: "BACK", role: "PRIMARY" }]),
     ).toBeNull();
     expect(getExerciseAnatomy(null, muscles)).toBeNull();
+  });
+
+  it("applies the machine chest press migration to its UUID only and validates review", async () => {
+    expect(getExerciseAnatomy(machineReview, machineMuscles)).toEqual(machineReview);
+    const client = new Client({ connectionString: getDatabaseUrl() });
+    await client.connect();
+    try {
+      await client.query("BEGIN");
+      const name = "Supino Reto na Máquina";
+      await client.query(
+        'INSERT INTO "Exercise" (id,name,"isUnilateral","createdAt","updatedAt") VALUES ($1,$2,false,NOW(),NOW()) ON CONFLICT (id) DO NOTHING',
+        [machineTargetId, name],
+      );
+      const before = await client.query(
+        'SELECT id,name,"ownerUserId","createdAt" FROM "Exercise" WHERE id=$1',
+        [machineTargetId],
+      );
+      await client.query(
+        'UPDATE "Exercise" SET "anatomyReview"=NULL WHERE id=$1',
+        [machineTargetId],
+      );
+      const sql = readFileSync(
+        new URL(
+          "../../prisma/migrations/20261028150000_machine_chest_press_anatomy/migration.sql",
+          import.meta.url,
+        ),
+        "utf8",
+      )
+        .replace(/^BEGIN;\s*$/m, "")
+        .replace(/^COMMIT;\s*$/m, "");
+      await client.query(sql);
+      const row = (
+        await client.query('SELECT * FROM "Exercise" WHERE id=$1', [machineTargetId])
+      ).rows[0];
+      expect(row.anatomyReview).toEqual(machineReview);
+      expect(row).toMatchObject(before.rows[0]);
+      await client.query(sql);
+      const second = (
+        await client.query('SELECT * FROM "Exercise" WHERE id=$1', [machineTargetId])
+      ).rows[0];
+      expect(second).toEqual(row);
+    } finally {
+      await client.query("ROLLBACK");
+      await client.end();
+    }
   });
 
   it("applies the migration to its UUID only, is idempotent, and preserves the original row and muscles", async () => {
