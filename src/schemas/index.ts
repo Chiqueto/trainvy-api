@@ -1,11 +1,7 @@
 import z from "zod";
-import { ExerciseAnatomySchema } from "../domain/exercise-anatomy.js";
-import {
-  advancedPrescriptionShape,
-  plannedAdvancedPrescriptionShape,
-  validateRepetitionRange,
-} from "./advanced-prescription.js";
 
+import { BirthDateSchema } from "../domain/birth-date.js";
+import { ExerciseAnatomySchema } from "../domain/exercise-anatomy.js";
 import {
   ExerciseMediaType,
   ForgottenWorkoutDraftStatus,
@@ -17,6 +13,11 @@ import {
   WorkoutSessionOrigin,
   WorkoutSetProposalStatus,
 } from "../generated/prisma/enums.js";
+import {
+  advancedPrescriptionShape,
+  plannedAdvancedPrescriptionShape,
+  validateRepetitionRange,
+} from "./advanced-prescription.js";
 
 export const WorkoutSessionOriginSchema = z.enum(WorkoutSessionOrigin);
 export const SessionTimePrecisionSchema = z.enum(SessionTimePrecision);
@@ -369,9 +370,13 @@ export const UpdateGamificationThemeResponseSchema = z.object({
 export const UserTrainDataBodySchema = z.object({
   weightInGrams: z.number().min(1),
   heightInCentimeters: z.number().min(1),
-  age: z.number().min(1),
+  age: z.number().int().min(1).optional(),
+  birthDate: BirthDateSchema.optional(),
+  trainingGoals: z.string().trim().min(1).max(1000).optional(),
   bodyFatPercentage: z.number().int().min(0).max(100).nullable().optional(),
   gamificationTheme: z.enum(GamificationTheme).optional(),
+}).refine((value) => value.age !== undefined || value.birthDate !== undefined, {
+  message: "Informe a data de nascimento ou a idade legada.", path: ["birthDate"],
 });
 
 export const UserTrainDataResponseSchema = z.object({
@@ -379,6 +384,7 @@ export const UserTrainDataResponseSchema = z.object({
   weightInGrams: z.number(),
   heightInCentimeters: z.number(),
   age: z.number(),
+  birthDate: z.iso.date().nullable().optional(),
   bodyFatPercentage: z.number().nullable(),
   gamificationTheme: z.enum(GamificationTheme),
 });
@@ -390,6 +396,7 @@ export const GetUserTrainDataResponseSchema = z
     weightInGrams: z.number(),
     heightInCentimeters: z.number(),
     age: z.number(),
+    birthDate: z.iso.date().nullable().optional(),
     bodyFatPercentage: z.number().nullable(),
     gamificationTheme: z.enum(GamificationTheme),
     previousWeightInGrams: z.number().nullable().optional(),

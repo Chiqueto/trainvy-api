@@ -1,3 +1,4 @@
+import { ageFromBirthDate, birthDateString } from "../domain/birth-date.js";
 import { NotFoundError } from "../errors/index.js";
 import { prisma } from "../lib/db.js";
 import { GamificationTheme } from "../schemas/index.js";
@@ -12,6 +13,7 @@ interface OutputDto {
   weightInGrams: number;
   heightInCentimeters: number;
   age: number;
+  birthDate: string | null;
   bodyFatPercentage: number | null;
   gamificationTheme: GamificationTheme;
   previousWeightInGrams?: number | null;
@@ -39,7 +41,7 @@ export class GetUserTrainData {
     if (
       user.weightInGrams === null ||
       user.heightInCentimeters === null ||
-      user.age === null
+      (user.age === null && user.birthDate === null)
     ) {
       return null;
     }
@@ -68,7 +70,10 @@ export class GetUserTrainData {
       userName: user.name,
       weightInGrams: user.weightInGrams,
       heightInCentimeters: user.heightInCentimeters,
-      age: user.age,
+      age: user.birthDate
+        ? ageFromBirthDate(birthDateString(user.birthDate)!)
+        : user.age!,
+      birthDate: birthDateString(user.birthDate),
       bodyFatPercentage: user.bodyFatPercentage,
       gamificationTheme:
         (user.gamificationTheme as GamificationTheme) || GamificationTheme.ALL,

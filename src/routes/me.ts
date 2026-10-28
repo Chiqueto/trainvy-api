@@ -100,6 +100,8 @@ export const meRoutes = async (app: FastifyInstance) => {
           weightInGrams: request.body.weightInGrams,
           heightInCentimeters: request.body.heightInCentimeters,
           age: request.body.age,
+          birthDate: request.body.birthDate,
+          trainingGoals: request.body.trainingGoals,
           bodyFatPercentage: request.body.bodyFatPercentage,
           gamificationTheme: request.body.gamificationTheme,
         });

@@ -12,30 +12,33 @@ import {
   it,
   vi,
 } from "vitest";
+
+import { ageFromBirthDate } from "../../src/domain/birth-date.js";
 import { auth } from "../../src/lib/auth.js";
 import { prisma } from "../../src/lib/db.js";
+import { adminRoutes } from "../../src/routes/admin.js";
 import { meRoutes } from "../../src/routes/me.js";
 import { sportsProfileRoutes } from "../../src/routes/sports-profile.js";
 import { WorkoutPlanRoutes } from "../../src/routes/workout-plan.js";
-import { adminRoutes } from "../../src/routes/admin.js";
+import { AcceptWorkoutPrescription } from "../../src/usecases/AcceptWorkoutPrescription.js";
+import { AllocateWorkoutPlanTemplate } from "../../src/usecases/AllocateWorkoutPlanTemplate.js";
 import { CreateWorkoutPlan } from "../../src/usecases/CreateWorkoutPlan.js";
 import { CreateWorkoutPlanInPeriodization } from "../../src/usecases/CreateWorkoutPlanInPeriodization.js";
 import { CreateWorkoutPlanTemplate } from "../../src/usecases/CreateWorkoutPlanTemplate.js";
-import { AllocateWorkoutPlanTemplate } from "../../src/usecases/AllocateWorkoutPlanTemplate.js";
-import { AcceptWorkoutPrescription } from "../../src/usecases/AcceptWorkoutPrescription.js";
 import { DuplicateWorkoutPlan } from "../../src/usecases/DuplicateWorkoutPlan.js";
 import { EditWorkoutPlan } from "../../src/usecases/EditWorkoutPlan.js";
-import { GetWorkoutDay } from "../../src/usecases/GetWorkoutDay.js";
-import { GetWorkoutSession } from "../../src/usecases/GetWorkoutSession.js";
-import { GetWorkoutHistorySession } from "../../src/usecases/GetWorkoutHistorySession.js";
-import { StartWorkoutSession } from "../../src/usecases/StartWorkoutSession.js";
 import { GetCommercialContext } from "../../src/usecases/GetCommercialContext.js";
 import { GetUserTrainData } from "../../src/usecases/GetUserTrainData.js";
+import { GetWorkoutDay } from "../../src/usecases/GetWorkoutDay.js";
+import { GetWorkoutHistorySession } from "../../src/usecases/GetWorkoutHistorySession.js";
+import { GetWorkoutSession } from "../../src/usecases/GetWorkoutSession.js";
 import { GetSportsProfile } from "../../src/usecases/SportsProfile.js";
+import { StartWorkoutSession } from "../../src/usecases/StartWorkoutSession.js";
+import { UpsertUserTrainData } from "../../src/usecases/UpsertUserTrainData.js";
 import {
-  createTestUser,
   cleanupTestUsers,
   createTestPeriodization,
+  createTestUser,
 } from "../helpers/test-db.js";
 
 const users: string[] = [],
@@ -107,6 +110,54 @@ afterEach(async () => {
 afterAll(() => app.close());
 
 describe("Optional sports profile and body fat", () => {
+  it("saves birth date and goals atomically with the initial metrics, deriving age on the server", async () => {
+    const owner = await user();
+    login(owner);
+    const response = await app.inject({ method: "PUT", url: "/me", payload: {
+      weightInGrams: 75500, heightInCentimeters: 175,
+      birthDate: "1998-05-20", trainingGoals: "  Ganhar força  ",
+    } });
+    expect(response.statusCode).toBe(200);
+    expect(response.json()).toMatchObject({ birthDate: "1998-05-20", age: ageFromBirthDate("1998-05-20") });
+    const stored = await prisma.user.findUniqueOrThrow({ where: { id: owner.id } });
+    expect(stored.birthDate?.toISOString()).toBe("1998-05-20T00:00:00.000Z");
+    expect(stored.trainingGoals).toBe("Ganhar força");
+    const logs = await prisma.userMetricLog.findMany({ where: { userId: owner.id } });
+    expect(logs).toHaveLength(1);
+    expect(logs[0].age).toBe(ageFromBirthDate("1998-05-20"));
+  });
+  it("keeps legacy accounts accessible and completes missing profile fields without rewriting metric history", async () => {
+    const owner = await user(), other = await user();
+    login(owner);
+    const metrics = { weightInGrams: 80000, heightInCentimeters: 180, age: 25 };
+    await new UpsertUserTrainData().execute({ userId: owner.id, ...metrics });
+    expect(await new GetUserTrainData().execute({ userId: owner.id })).toMatchObject({ age: 25, birthDate: null });
+    expect(await new GetSportsProfile().execute(owner.id)).toMatchObject({ birthDate: null, trainingGoals: null });
+    const response = await app.inject({ method: "PATCH", url: "/me/sports-profile", payload: { birthDate: "1990-11-01", trainingGoals: "Condicionamento" } });
+    expect(response.statusCode).toBe(200);
+    expect(response.json()).toMatchObject({ birthDate: "1990-11-01", trainingGoals: "Condicionamento" });
+    expect(await new GetUserTrainData().execute({ userId: owner.id })).toMatchObject({ age: ageFromBirthDate("1990-11-01") });
+    expect(await prisma.userMetricLog.findMany({ where: { userId: owner.id }, select: { age: true } })).toEqual([{ age: 25 }]);
+    expect(await new GetSportsProfile().execute(other.id)).toMatchObject({ birthDate: null, trainingGoals: null });
+    // A legacy caller's age cannot replace age calculated from a known birth date.
+    await new UpsertUserTrainData().execute({ userId: owner.id, ...metrics, age: 99 });
+    expect(await new GetUserTrainData().execute({ userId: owner.id })).toMatchObject({ age: ageFromBirthDate("1990-11-01"), birthDate: "1990-11-01" });
+  });
+  it("rejects invalid birth dates and blank onboarding goals before any write", async () => {
+    const owner = await user();
+    login(owner);
+    for (const payload of [
+      { birthDate: "2000-02-30", trainingGoals: "Força" },
+      { birthDate: "9999-01-01", trainingGoals: "Força" },
+      { birthDate: "2025-01-01", trainingGoals: "Força" },
+      { birthDate: "1998-05-20", trainingGoals: "   " },
+    ]) {
+      const response = await app.inject({ method: "PUT", url: "/me", payload: { ...payload, weightInGrams: 70000, heightInCentimeters: 170 } });
+      expect(response.statusCode).toBe(400);
+    }
+    expect(await prisma.userMetricLog.count({ where: { userId: owner.id } })).toBe(0);
+    expect((await prisma.user.findUniqueOrThrow({ where: { id: owner.id } })).birthDate).toBeNull();
+  });
   it("persists optional sports data without generating biometric logs or changing another user", async () => {
     const owner = await user(),
       other = await user();

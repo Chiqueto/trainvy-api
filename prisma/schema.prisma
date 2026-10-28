@@ -97,6 +97,7 @@ model User {
   weightInGrams           Int?
   heightInCentimeters     Int?
   age                     Int?
+  birthDate               DateTime?         @db.Date
   bodyFatPercentage       Int? // 100 representa 100%
   trainingGoals           String?
   experienceLevel         String?
