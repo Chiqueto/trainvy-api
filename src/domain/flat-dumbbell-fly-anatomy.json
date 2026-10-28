@@ -1,6 +1,6 @@
 {
-  "version": "2026-10-28.1",
-  "reviewedAt": "2026-10-28T00:00:00.000Z",
+  "version": "2026-10-28.2",
+  "reviewedAt": "2026-10-28T17:30:00.000Z",
   "variant": "Crucifixo bilateral com halteres em banco horizontal, cotovelos levemente flexionados e adução horizontal dos ombros.",
   "aliases": [
     "crucifixo reto com halteres"
@@ -82,13 +82,19 @@
       "title": "Welsch et al. — electromyographic activity during three upper-body lifts (2005)",
       "url": "https://pubmed.ncbi.nlm.nih.gov/15903389/",
       "limitation": "Doze participantes, EMG apenas do peitoral maior e deltoide anterior; não estabelece ênfase regional."
+    },
+    {
+      "id": "ACE_CHEST_FLY",
+      "title": "ACE — Lying Chest Fly",
+      "url": "https://www.acefitness.org/resources/everyone/exercise-library/21/lying-chest-fly/",
+      "limitation": "Referência técnica de pegada neutra e punhos alinhados; não é ensaio de EMG nem demonstra superioridade de uma pegada."
     }
   ],
   "notes": "Peitoral maior como alvo; deltoide anterior e bíceps braquial como participantes secundários. A participação como estabilizador do cotovelo é inferência anatômica. Sem ênfase regional estabelecida. A lista e a amplitude são ilustrativas, não medidas de EMG nem prescrição individual.",
   "instructions": {
     "description": "Adução horizontal dos braços com halteres, com foco no peitoral maior.",
-    "setup": "Deite no banco reto com pés apoiados e segure os halteres acima do peito.",
-    "execution": "Abra os braços em arco, mantendo os cotovelos levemente flexionados; retorne suavemente pelo mesmo caminho.",
+    "setup": "Deite no banco reto com pés apoiados e halteres acima do peito, palmas voltadas uma para a outra.",
+    "execution": "Abra os braços em arco com cotovelos levemente flexionados, acompanhando o arco com as palmas voltadas para cima na abertura. Retorne com as palmas uma para a outra acima do peito, sem dobrar os punhos.",
     "tips": "Mantenha o tronco apoiado e use uma amplitude confortável. A pose é ilustrativa."
   }
 }

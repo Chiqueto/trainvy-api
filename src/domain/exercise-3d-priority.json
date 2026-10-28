@@ -8,26 +8,10 @@
     "reason": "Manter a anima??o existente; validar as variantes e os m?sculos sem criar outra anima??o equivalente."
   },
   {
-    "exerciseId": "00000000-0000-4000-8000-000000000102",
-    "exerciseName": "Supino Reto",
-    "tier": 1,
-    "order": 2,
-    "batch": "Base j? dispon?vel",
-    "reason": "Manter a anima??o existente; validar as variantes e os m?sculos sem criar outra anima??o equivalente."
-  },
-  {
     "exerciseId": "00000000-0000-4000-8000-000000000105",
     "exerciseName": "Agachamento Livre",
     "tier": 1,
-    "order": 3,
-    "batch": "Base j? dispon?vel",
-    "reason": "Manter a anima??o existente; validar as variantes e os m?sculos sem criar outra anima??o equivalente."
-  },
-  {
-    "exerciseId": "00000000-0000-4000-8000-000000000106",
-    "exerciseName": "Agachamento",
-    "tier": 1,
-    "order": 4,
+    "order": 2,
     "batch": "Base j? dispon?vel",
     "reason": "Manter a anima??o existente; validar as variantes e os m?sculos sem criar outra anima??o equivalente."
   },
@@ -35,7 +19,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000103",
     "exerciseName": "Supino Inclinado com Halteres",
     "tier": 1,
-    "order": 5,
+    "order": 3,
     "batch": "Supinos e crucifixos essenciais",
     "reason": "Completar os b?sicos de peito aproveitando banco, barra e pose do supino; revisar trajet?ria, pegada e equipamento por variante."
   },
@@ -43,7 +27,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000104",
     "exerciseName": "Supino Inclinado",
     "tier": 1,
-    "order": 6,
+    "order": 4,
     "batch": "Supinos e crucifixos essenciais",
     "reason": "Completar os b?sicos de peito aproveitando banco, barra e pose do supino; revisar trajet?ria, pegada e equipamento por variante."
   },
@@ -51,7 +35,7 @@
     "exerciseId": "eb910207-283c-414d-8d37-7c6b6d7de0d8",
     "exerciseName": "Supino Declinado com Barra",
     "tier": 1,
-    "order": 7,
+    "order": 5,
     "batch": "Supinos e crucifixos essenciais",
     "reason": "Completar os b?sicos de peito aproveitando banco, barra e pose do supino; revisar trajet?ria, pegada e equipamento por variante."
   },
@@ -59,15 +43,23 @@
     "exerciseId": "6ef90b25-cd99-4860-8933-ae29e4d1f3d8",
     "exerciseName": "Supino Reto com Halteres",
     "tier": 1,
-    "order": 8,
+    "order": 6,
     "batch": "Supinos e crucifixos essenciais",
     "reason": "Completar os b?sicos de peito aproveitando banco, barra e pose do supino; revisar trajet?ria, pegada e equipamento por variante."
   },
   {
     "exerciseId": "b9859cd9-6ed6-4e63-8fd0-500e8cf8d553",
-    "exerciseName": "Crucifixo na Máquina — aliases: peck deck, pec deck, voador",
+    "exerciseName": "Peck Deck",
     "tier": 1,
-    "order": 9,
+    "order": 7,
+    "batch": "Supinos e crucifixos essenciais",
+    "reason": "Completar os b?sicos de peito aproveitando banco, barra e pose do supino; revisar trajet?ria, pegada e equipamento por variante."
+  },
+  {
+    "exerciseId": "6ca42bbc-3724-45ec-98ed-36fb53af260a",
+    "exerciseName": "Crucifixo na Máquina",
+    "tier": 1,
+    "order": 8,
     "batch": "Supinos e crucifixos essenciais",
     "reason": "Completar os b?sicos de peito aproveitando banco, barra e pose do supino; revisar trajet?ria, pegada e equipamento por variante."
   },
@@ -75,7 +67,7 @@
     "exerciseId": "d555deb1-6eef-436d-8377-9427ac267697",
     "exerciseName": "Crucifixo Reto com Halteres",
     "tier": 1,
-    "order": 10,
+    "order": 9,
     "batch": "Supinos e crucifixos essenciais",
     "reason": "Completar os b?sicos de peito aproveitando banco, barra e pose do supino; revisar trajet?ria, pegada e equipamento por variante."
   },
@@ -83,7 +75,7 @@
     "exerciseId": "f3e5e1cf-d232-4a80-87b3-9f35650a1b5e",
     "exerciseName": "Supino Reto na Máquina",
     "tier": 1,
-    "order": 11,
+    "order": 10,
     "batch": "Supinos e crucifixos essenciais",
     "reason": "Completar os b?sicos de peito aproveitando banco, barra e pose do supino; revisar trajet?ria, pegada e equipamento por variante."
   },
@@ -91,7 +83,7 @@
     "exerciseId": "f5a99b5a-74d1-4622-880e-bcf24758dc31",
     "exerciseName": "Supino Reto no Smith",
     "tier": 1,
-    "order": 12,
+    "order": 11,
     "batch": "Supinos e crucifixos essenciais",
     "reason": "Completar os b?sicos de peito aproveitando banco, barra e pose do supino; revisar trajet?ria, pegada e equipamento por variante."
   },
@@ -99,7 +91,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000110",
     "exerciseName": "Cadeira Extensora",
     "tier": 1,
-    "order": 13,
+    "order": 12,
     "batch": "Pernas essenciais",
     "reason": "Cobrir os equipamentos e padr?es b?sicos de pernas; criar apoios e trajet?rias pr?prios antes das varia??es."
   },
@@ -107,7 +99,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000111",
     "exerciseName": "Cadeira Flexora",
     "tier": 1,
-    "order": 14,
+    "order": 13,
     "batch": "Pernas essenciais",
     "reason": "Cobrir os equipamentos e padr?es b?sicos de pernas; criar apoios e trajet?rias pr?prios antes das varia??es."
   },
@@ -115,7 +107,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000112",
     "exerciseName": "Mesa Flexora",
     "tier": 1,
-    "order": 15,
+    "order": 14,
     "batch": "Pernas essenciais",
     "reason": "Cobrir os equipamentos e padr?es b?sicos de pernas; criar apoios e trajet?rias pr?prios antes das varia??es."
   },
@@ -123,7 +115,7 @@
     "exerciseId": "d3b3f492-65fa-4038-851f-6f46b69e9fb4",
     "exerciseName": "Agachamento no Smith",
     "tier": 1,
-    "order": 16,
+    "order": 15,
     "batch": "Pernas essenciais",
     "reason": "Cobrir os equipamentos e padr?es b?sicos de pernas; criar apoios e trajet?rias pr?prios antes das varia??es."
   },
@@ -131,7 +123,7 @@
     "exerciseId": "7bd5b49f-252c-43a2-83a8-816d6401f6cb",
     "exerciseName": "Agachamento Hack na Máquina",
     "tier": 1,
-    "order": 17,
+    "order": 16,
     "batch": "Pernas essenciais",
     "reason": "Cobrir os equipamentos e padr?es b?sicos de pernas; criar apoios e trajet?rias pr?prios antes das varia??es."
   },
@@ -139,7 +131,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000108",
     "exerciseName": "Leg Press 45",
     "tier": 1,
-    "order": 18,
+    "order": 17,
     "batch": "Pernas essenciais",
     "reason": "Cobrir os equipamentos e padr?es b?sicos de pernas; criar apoios e trajet?rias pr?prios antes das varia??es."
   },
@@ -147,7 +139,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000109",
     "exerciseName": "Leg Press Horizontal",
     "tier": 1,
-    "order": 19,
+    "order": 18,
     "batch": "Pernas essenciais",
     "reason": "Cobrir os equipamentos e padr?es b?sicos de pernas; criar apoios e trajet?rias pr?prios antes das varia??es."
   },
@@ -155,7 +147,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000113",
     "exerciseName": "Stiff",
     "tier": 1,
-    "order": 20,
+    "order": 19,
     "batch": "Pernas essenciais",
     "reason": "Cobrir os equipamentos e padr?es b?sicos de pernas; criar apoios e trajet?rias pr?prios antes das varia??es."
   },
@@ -163,7 +155,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000114",
     "exerciseName": "Elevação Pélvica",
     "tier": 1,
-    "order": 21,
+    "order": 20,
     "batch": "Pernas essenciais",
     "reason": "Cobrir os equipamentos e padr?es b?sicos de pernas; criar apoios e trajet?rias pr?prios antes das varia??es."
   },
@@ -171,7 +163,7 @@
     "exerciseId": "9e9f7973-098d-432d-8745-ee8c126fe576",
     "exerciseName": "Agachamento Goblet",
     "tier": 1,
-    "order": 22,
+    "order": 21,
     "batch": "Pernas essenciais",
     "reason": "Cobrir os equipamentos e padr?es b?sicos de pernas; criar apoios e trajet?rias pr?prios antes das varia??es."
   },
@@ -179,7 +171,7 @@
     "exerciseId": "67ed4623-adca-4008-8ecb-ccf19808a5f4",
     "exerciseName": "Agachamento Sumô com Halter",
     "tier": 1,
-    "order": 23,
+    "order": 22,
     "batch": "Pernas essenciais",
     "reason": "Cobrir os equipamentos e padr?es b?sicos de pernas; criar apoios e trajet?rias pr?prios antes das varia??es."
   },
@@ -187,7 +179,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000140",
     "exerciseName": "Levantamento Terra",
     "tier": 1,
-    "order": 24,
+    "order": 23,
     "batch": "Pernas essenciais",
     "reason": "Cobrir os equipamentos e padr?es b?sicos de pernas; criar apoios e trajet?rias pr?prios antes das varia??es."
   },
@@ -195,7 +187,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000141",
     "exerciseName": "Levantamento Terra Sumô",
     "tier": 1,
-    "order": 25,
+    "order": 24,
     "batch": "Pernas essenciais",
     "reason": "Cobrir os equipamentos e padr?es b?sicos de pernas; criar apoios e trajet?rias pr?prios antes das varia??es."
   },
@@ -203,7 +195,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000117",
     "exerciseName": "Panturrilha em Pé",
     "tier": 1,
-    "order": 26,
+    "order": 25,
     "batch": "Pernas essenciais",
     "reason": "Cobrir os equipamentos e padr?es b?sicos de pernas; criar apoios e trajet?rias pr?prios antes das varia??es."
   },
@@ -211,7 +203,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000118",
     "exerciseName": "Panturrilha Sentado",
     "tier": 1,
-    "order": 27,
+    "order": 26,
     "batch": "Pernas essenciais",
     "reason": "Cobrir os equipamentos e padr?es b?sicos de pernas; criar apoios e trajet?rias pr?prios antes das varia??es."
   },
@@ -219,7 +211,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000119",
     "exerciseName": "Puxada Frontal na Máquina",
     "tier": 1,
-    "order": 28,
+    "order": 27,
     "batch": "Puxar e empurrar essenciais",
     "reason": "Criar bases de puxada, remada e desenvolvimento com apoios est?veis e m?os alinhadas ao implemento."
   },
@@ -227,7 +219,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000120",
     "exerciseName": "Puxada Frontal",
     "tier": 1,
-    "order": 29,
+    "order": 28,
     "batch": "Puxar e empurrar essenciais",
     "reason": "Criar bases de puxada, remada e desenvolvimento com apoios est?veis e m?os alinhadas ao implemento."
   },
@@ -235,7 +227,7 @@
     "exerciseId": "120f29ac-733c-478b-8aa9-a3f4c22f5e70",
     "exerciseName": "Remada Baixa no Cabo com Triângulo",
     "tier": 1,
-    "order": 30,
+    "order": 29,
     "batch": "Puxar e empurrar essenciais",
     "reason": "Criar bases de puxada, remada e desenvolvimento com apoios est?veis e m?os alinhadas ao implemento."
   },
@@ -243,7 +235,7 @@
     "exerciseId": "43025392-0466-46e7-82ab-27888d53f929",
     "exerciseName": "Remada Sentada na Máquina",
     "tier": 1,
-    "order": 31,
+    "order": 30,
     "batch": "Puxar e empurrar essenciais",
     "reason": "Criar bases de puxada, remada e desenvolvimento com apoios est?veis e m?os alinhadas ao implemento."
   },
@@ -251,7 +243,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000121",
     "exerciseName": "Remada Curvada com Barra",
     "tier": 1,
-    "order": 32,
+    "order": 31,
     "batch": "Puxar e empurrar essenciais",
     "reason": "Criar bases de puxada, remada e desenvolvimento com apoios est?veis e m?os alinhadas ao implemento."
   },
@@ -259,7 +251,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000122",
     "exerciseName": "Remada Curvada",
     "tier": 1,
-    "order": 33,
+    "order": 32,
     "batch": "Puxar e empurrar essenciais",
     "reason": "Criar bases de puxada, remada e desenvolvimento com apoios est?veis e m?os alinhadas ao implemento."
   },
@@ -267,7 +259,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000138",
     "exerciseName": "Remada Unilateral com Halteres",
     "tier": 1,
-    "order": 34,
+    "order": 33,
     "batch": "Puxar e empurrar essenciais",
     "reason": "Criar bases de puxada, remada e desenvolvimento com apoios est?veis e m?os alinhadas ao implemento."
   },
@@ -275,7 +267,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000123",
     "exerciseName": "Desenvolvimento Militar",
     "tier": 1,
-    "order": 35,
+    "order": 34,
     "batch": "Puxar e empurrar essenciais",
     "reason": "Criar bases de puxada, remada e desenvolvimento com apoios est?veis e m?os alinhadas ao implemento."
   },
@@ -283,7 +275,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000124",
     "exerciseName": "Desenvolvimento com Halteres",
     "tier": 1,
-    "order": 36,
+    "order": 35,
     "batch": "Puxar e empurrar essenciais",
     "reason": "Criar bases de puxada, remada e desenvolvimento com apoios est?veis e m?os alinhadas ao implemento."
   },
@@ -291,7 +283,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000125",
     "exerciseName": "Elevação Lateral",
     "tier": 1,
-    "order": 37,
+    "order": 36,
     "batch": "Puxar e empurrar essenciais",
     "reason": "Criar bases de puxada, remada e desenvolvimento com apoios est?veis e m?os alinhadas ao implemento."
   },
@@ -299,7 +291,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000127",
     "exerciseName": "Rosca Direta com Barra",
     "tier": 1,
-    "order": 38,
+    "order": 37,
     "batch": "Bra?os essenciais",
     "reason": "Ampliar a cobertura b?sica com trajet?rias simples de cotovelo; evitar tor??o do antebra?o e do punho."
   },
@@ -307,7 +299,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000128",
     "exerciseName": "Rosca Direta",
     "tier": 1,
-    "order": 39,
+    "order": 38,
     "batch": "Bra?os essenciais",
     "reason": "Ampliar a cobertura b?sica com trajet?rias simples de cotovelo; evitar tor??o do antebra?o e do punho."
   },
@@ -315,7 +307,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000129",
     "exerciseName": "Rosca Martelo",
     "tier": 1,
-    "order": 40,
+    "order": 39,
     "batch": "Bra?os essenciais",
     "reason": "Ampliar a cobertura b?sica com trajet?rias simples de cotovelo; evitar tor??o do antebra?o e do punho."
   },
@@ -323,7 +315,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000130",
     "exerciseName": "Rosca Scott",
     "tier": 1,
-    "order": 41,
+    "order": 40,
     "batch": "Bra?os essenciais",
     "reason": "Ampliar a cobertura b?sica com trajet?rias simples de cotovelo; evitar tor??o do antebra?o e do punho."
   },
@@ -331,7 +323,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000131",
     "exerciseName": "Tríceps Corda",
     "tier": 1,
-    "order": 42,
+    "order": 41,
     "batch": "Bra?os essenciais",
     "reason": "Ampliar a cobertura b?sica com trajet?rias simples de cotovelo; evitar tor??o do antebra?o e do punho."
   },
@@ -339,7 +331,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000132",
     "exerciseName": "Tríceps Testa",
     "tier": 1,
-    "order": 43,
+    "order": 42,
     "batch": "Bra?os essenciais",
     "reason": "Ampliar a cobertura b?sica com trajet?rias simples de cotovelo; evitar tor??o do antebra?o e do punho."
   },
@@ -347,7 +339,7 @@
     "exerciseId": "044421ae-d368-47a5-83e0-2af37dc61131",
     "exerciseName": "Tríceps no Cabo com Barra Reta",
     "tier": 1,
-    "order": 44,
+    "order": 43,
     "batch": "Bra?os essenciais",
     "reason": "Ampliar a cobertura b?sica com trajet?rias simples de cotovelo; evitar tor??o do antebra?o e do punho."
   },
@@ -355,7 +347,7 @@
     "exerciseId": "d8e07a71-16ec-4ed8-8236-861a26c869e8",
     "exerciseName": "Supino Declinado com Halteres",
     "tier": 2,
-    "order": 45,
+    "order": 44,
     "batch": "Varia??es de supino e peito",
     "reason": "Derivar das bases de peito ap?s aprova??o, com ajuste de banco, polia, amplitude e pegada por exerc?cio."
   },
@@ -363,7 +355,7 @@
     "exerciseId": "cf30614a-819d-42ee-8dfd-5564f9ea9da2",
     "exerciseName": "Supino Inclinado no Smith",
     "tier": 2,
-    "order": 46,
+    "order": 45,
     "batch": "Varia??es de supino e peito",
     "reason": "Derivar das bases de peito ap?s aprova??o, com ajuste de banco, polia, amplitude e pegada por exerc?cio."
   },
@@ -371,7 +363,7 @@
     "exerciseId": "d0a2d0cf-c6b3-4bfb-889e-82ccd3701ede",
     "exerciseName": "Supino Declinado no Smith",
     "tier": 2,
-    "order": 47,
+    "order": 46,
     "batch": "Varia??es de supino e peito",
     "reason": "Derivar das bases de peito ap?s aprova??o, com ajuste de banco, polia, amplitude e pegada por exerc?cio."
   },
@@ -379,31 +371,31 @@
     "exerciseId": "acfb67be-5a99-4243-8e26-2a489031d177",
     "exerciseName": "Supino Inclinado na Máquina",
     "tier": 2,
-    "order": 48,
+    "order": 47,
     "batch": "Varia??es de supino e peito",
     "reason": "Derivar das bases de peito ap?s aprova??o, com ajuste de banco, polia, amplitude e pegada por exerc?cio."
   },
   {
     "exerciseId": "46e31e5f-585b-4a3b-8b06-f6bed13440b5",
-    "exerciseName": "Crucifixo no Cabo na Altura do Peito",
+    "exerciseName": "Crossover na Polia Média",
+    "tier": 2,
+    "order": 48,
+    "batch": "Varia??es de supino e peito",
+    "reason": "Derivar das bases de peito ap?s aprova??o, com ajuste de banco, polia, amplitude e pegada por exerc?cio."
+  },
+  {
+    "exerciseId": "daf02b04-9308-4b8f-8047-d4a5bb86d079",
+    "exerciseName": "Crossover na Polia Alta",
     "tier": 2,
     "order": 49,
     "batch": "Varia??es de supino e peito",
     "reason": "Derivar das bases de peito ap?s aprova??o, com ajuste de banco, polia, amplitude e pegada por exerc?cio."
   },
   {
-    "exerciseId": "daf02b04-9308-4b8f-8047-d4a5bb86d079",
-    "exerciseName": "Crossover no Cabo Alto",
+    "exerciseId": "dd8854e2-5652-4ffb-86bc-dbf61b42bd04",
+    "exerciseName": "Crossover na Polia Baixa",
     "tier": 2,
     "order": 50,
-    "batch": "Varia??es de supino e peito",
-    "reason": "Derivar das bases de peito ap?s aprova??o, com ajuste de banco, polia, amplitude e pegada por exerc?cio."
-  },
-  {
-    "exerciseId": "dd8854e2-5652-4ffb-86bc-dbf61b42bd04",
-    "exerciseName": "Crucifixo no Cabo Baixo",
-    "tier": 2,
-    "order": 51,
     "batch": "Varia??es de supino e peito",
     "reason": "Derivar das bases de peito ap?s aprova??o, com ajuste de banco, polia, amplitude e pegada por exerc?cio."
   },
@@ -411,7 +403,7 @@
     "exerciseId": "38c1d513-124b-4952-8187-003f50f8c7c1",
     "exerciseName": "Flexão de Braços",
     "tier": 2,
-    "order": 52,
+    "order": 51,
     "batch": "Varia??es de supino e peito",
     "reason": "Derivar das bases de peito ap?s aprova??o, com ajuste de banco, polia, amplitude e pegada por exerc?cio."
   },
@@ -419,7 +411,7 @@
     "exerciseId": "9a83be35-3b36-4f1a-8bd3-cfc7cb78f772",
     "exerciseName": "Flexão de Braços com Joelhos Apoiados",
     "tier": 2,
-    "order": 53,
+    "order": 52,
     "batch": "Varia??es de supino e peito",
     "reason": "Derivar das bases de peito ap?s aprova??o, com ajuste de banco, polia, amplitude e pegada por exerc?cio."
   },
@@ -427,7 +419,7 @@
     "exerciseId": "64c13c24-240c-44d8-88db-d52af9063792",
     "exerciseName": "Flexão de Braços com Mãos Elevadas",
     "tier": 2,
-    "order": 54,
+    "order": 53,
     "batch": "Varia??es de supino e peito",
     "reason": "Derivar das bases de peito ap?s aprova??o, com ajuste de banco, polia, amplitude e pegada por exerc?cio."
   },
@@ -435,7 +427,7 @@
     "exerciseId": "f4b8fc60-0e9a-4fb6-8e1b-f40d56f442c0",
     "exerciseName": "Flexão de Braços com Pés Elevados",
     "tier": 2,
-    "order": 55,
+    "order": 54,
     "batch": "Varia??es de supino e peito",
     "reason": "Derivar das bases de peito ap?s aprova??o, com ajuste de banco, polia, amplitude e pegada por exerc?cio."
   },
@@ -443,7 +435,7 @@
     "exerciseId": "36ed79fa-48ce-40f9-8f78-7e84aa9db1e7",
     "exerciseName": "Pullover com Halter",
     "tier": 2,
-    "order": 56,
+    "order": 55,
     "batch": "Varia??es de supino e peito",
     "reason": "Derivar das bases de peito ap?s aprova??o, com ajuste de banco, polia, amplitude e pegada por exerc?cio."
   },
@@ -451,7 +443,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000136",
     "exerciseName": "Barra Fixa",
     "tier": 2,
-    "order": 57,
+    "order": 56,
     "batch": "Varia??es de remada e puxada",
     "reason": "Reaproveitar os padr?es de puxar ap?s aprova??o, preservando apoio do tronco e diferen?as de pegada."
   },
@@ -459,7 +451,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000137",
     "exerciseName": "Remada Cavalinho",
     "tier": 2,
-    "order": 58,
+    "order": 57,
     "batch": "Varia??es de remada e puxada",
     "reason": "Reaproveitar os padr?es de puxar ap?s aprova??o, preservando apoio do tronco e diferen?as de pegada."
   },
@@ -467,7 +459,7 @@
     "exerciseId": "98a489f1-67d6-4c87-8189-d83515ccf603",
     "exerciseName": "Remada Baixa no Cabo com Barra Aberta",
     "tier": 2,
-    "order": 59,
+    "order": 58,
     "batch": "Varia??es de remada e puxada",
     "reason": "Reaproveitar os padr?es de puxar ap?s aprova??o, preservando apoio do tronco e diferen?as de pegada."
   },
@@ -475,7 +467,7 @@
     "exerciseId": "617b5657-d614-4b67-8e2d-6a21f36bd87a",
     "exerciseName": "Remada com Halteres e Peito Apoiado",
     "tier": 2,
-    "order": 60,
+    "order": 59,
     "batch": "Varia??es de remada e puxada",
     "reason": "Reaproveitar os padr?es de puxar ap?s aprova??o, preservando apoio do tronco e diferen?as de pegada."
   },
@@ -483,7 +475,7 @@
     "exerciseId": "98109c9e-b7c6-44f3-8f36-7ffade02de5d",
     "exerciseName": "Remada Unilateral na Máquina",
     "tier": 2,
-    "order": 61,
+    "order": 60,
     "batch": "Varia??es de remada e puxada",
     "reason": "Reaproveitar os padr?es de puxar ap?s aprova??o, preservando apoio do tronco e diferen?as de pegada."
   },
@@ -491,7 +483,7 @@
     "exerciseId": "21ed0c47-601a-408b-882f-8428fb62a1a2",
     "exerciseName": "Puxada Frontal com Pegada Neutra",
     "tier": 2,
-    "order": 62,
+    "order": 61,
     "batch": "Varia??es de remada e puxada",
     "reason": "Reaproveitar os padr?es de puxar ap?s aprova??o, preservando apoio do tronco e diferen?as de pegada."
   },
@@ -499,7 +491,7 @@
     "exerciseId": "d8ce4a79-d54b-40bc-878c-85f013b32d14",
     "exerciseName": "Puxada Frontal com Pegada Supinada",
     "tier": 2,
-    "order": 63,
+    "order": 62,
     "batch": "Varia??es de remada e puxada",
     "reason": "Reaproveitar os padr?es de puxar ap?s aprova??o, preservando apoio do tronco e diferen?as de pegada."
   },
@@ -507,7 +499,7 @@
     "exerciseId": "4825e2e4-b78b-4454-804a-1aab1e660040",
     "exerciseName": "Puxada Unilateral no Cabo",
     "tier": 2,
-    "order": 64,
+    "order": 63,
     "batch": "Varia??es de remada e puxada",
     "reason": "Reaproveitar os padr?es de puxar ap?s aprova??o, preservando apoio do tronco e diferen?as de pegada."
   },
@@ -515,7 +507,7 @@
     "exerciseId": "3a5808f6-f68c-4484-8531-27875ae9ad1a",
     "exerciseName": "Pulldown com Braços Estendidos no Cabo",
     "tier": 2,
-    "order": 65,
+    "order": 64,
     "batch": "Varia??es de remada e puxada",
     "reason": "Reaproveitar os padr?es de puxar ap?s aprova??o, preservando apoio do tronco e diferen?as de pegada."
   },
@@ -523,7 +515,7 @@
     "exerciseId": "d2786802-f941-4c55-8ee2-9a0135943722",
     "exerciseName": "Barra Fixa com Pegada Supinada — alias: chin-up",
     "tier": 2,
-    "order": 66,
+    "order": 65,
     "batch": "Varia??es de remada e puxada",
     "reason": "Reaproveitar os padr?es de puxar ap?s aprova??o, preservando apoio do tronco e diferen?as de pegada."
   },
@@ -531,7 +523,7 @@
     "exerciseId": "30f83a25-de8c-45a5-859a-52f44e803cd3",
     "exerciseName": "Barra Fixa com Pegada Neutra",
     "tier": 2,
-    "order": 67,
+    "order": 66,
     "batch": "Varia??es de remada e puxada",
     "reason": "Reaproveitar os padr?es de puxar ap?s aprova??o, preservando apoio do tronco e diferen?as de pegada."
   },
@@ -539,7 +531,7 @@
     "exerciseId": "4424e219-f3ac-4da1-86d4-20da69609ce4",
     "exerciseName": "Barra Fixa Assistida na Máquina",
     "tier": 2,
-    "order": 68,
+    "order": 67,
     "batch": "Varia??es de remada e puxada",
     "reason": "Reaproveitar os padr?es de puxar ap?s aprova??o, preservando apoio do tronco e diferen?as de pegada."
   },
@@ -547,7 +539,7 @@
     "exerciseId": "8453d0f7-44fd-4468-8c87-6015fce80862",
     "exerciseName": "Remada Invertida na Barra",
     "tier": 2,
-    "order": 69,
+    "order": 68,
     "batch": "Varia??es de remada e puxada",
     "reason": "Reaproveitar os padr?es de puxar ap?s aprova??o, preservando apoio do tronco e diferen?as de pegada."
   },
@@ -555,7 +547,7 @@
     "exerciseId": "1eef7876-e093-42af-8374-00d3b105c47a",
     "exerciseName": "Remada Pendlay",
     "tier": 2,
-    "order": 70,
+    "order": 69,
     "batch": "Varia??es de remada e puxada",
     "reason": "Reaproveitar os padr?es de puxar ap?s aprova??o, preservando apoio do tronco e diferen?as de pegada."
   },
@@ -563,7 +555,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000107",
     "exerciseName": "Agachamento Búlgaro",
     "tier": 2,
-    "order": 71,
+    "order": 70,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -571,7 +563,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000115",
     "exerciseName": "Cadeira Abdutora",
     "tier": 2,
-    "order": 72,
+    "order": 71,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -579,7 +571,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000116",
     "exerciseName": "Cadeira Adutora",
     "tier": 2,
-    "order": 73,
+    "order": 72,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -587,7 +579,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000142",
     "exerciseName": "Agachamento Frontal",
     "tier": 2,
-    "order": 74,
+    "order": 73,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -595,7 +587,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000145",
     "exerciseName": "Leg Press Unilateral",
     "tier": 2,
-    "order": 75,
+    "order": 74,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -603,7 +595,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000152",
     "exerciseName": "Avanço com Halteres",
     "tier": 2,
-    "order": 76,
+    "order": 75,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -611,7 +603,7 @@
     "exerciseId": "2209d4ec-7807-4bd1-8e37-d622b4a5c15c",
     "exerciseName": "Agachamento com Peso Corporal — alias: air squat",
     "tier": 2,
-    "order": 77,
+    "order": 76,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -619,7 +611,7 @@
     "exerciseId": "3c7f1815-4037-4186-8781-24c5762bcc6f",
     "exerciseName": "Agachamento no Banco — alias: box squat",
     "tier": 2,
-    "order": 78,
+    "order": 77,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -627,7 +619,7 @@
     "exerciseId": "44bb63b7-0071-4a2f-8db8-a8dfa60ff41d",
     "exerciseName": "Agachamento Zercher",
     "tier": 2,
-    "order": 79,
+    "order": 78,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -635,7 +627,7 @@
     "exerciseId": "17e716eb-2e73-478a-8322-d255b6b4430e",
     "exerciseName": "Agachamento no Belt Squat",
     "tier": 2,
-    "order": 80,
+    "order": 79,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -643,7 +635,7 @@
     "exerciseId": "641ee20a-34bc-4a42-8b68-6fe359486362",
     "exerciseName": "Agachamento no Pêndulo",
     "tier": 2,
-    "order": 81,
+    "order": 80,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -651,7 +643,7 @@
     "exerciseId": "440bc1d0-d61c-40e8-875f-7c394b2c5709",
     "exerciseName": "Afundo Estático com Halteres",
     "tier": 2,
-    "order": 82,
+    "order": 81,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -659,7 +651,7 @@
     "exerciseId": "dbeed6b0-ebce-4e76-81e5-c037bda6d3ce",
     "exerciseName": "Afundo Reverso com Halteres",
     "tier": 2,
-    "order": 83,
+    "order": 82,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -667,7 +659,7 @@
     "exerciseId": "31804968-a951-475a-8aa1-83570459c21b",
     "exerciseName": "Afundo Lateral com Halter",
     "tier": 2,
-    "order": 84,
+    "order": 83,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -675,7 +667,7 @@
     "exerciseId": "a32fd931-69aa-4dbb-8d3d-d39cdc500b64",
     "exerciseName": "Step-up com Halteres",
     "tier": 2,
-    "order": 85,
+    "order": 84,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -683,7 +675,7 @@
     "exerciseId": "0d8f6761-8c33-4f1e-8431-cce66916b538",
     "exerciseName": "Levantamento Terra com Trap Bar",
     "tier": 2,
-    "order": 86,
+    "order": 85,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -691,7 +683,7 @@
     "exerciseId": "42f92003-f632-49aa-8835-19cc8bfac9f5",
     "exerciseName": "Levantamento Terra Romeno com Barra",
     "tier": 2,
-    "order": 87,
+    "order": 86,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -699,7 +691,7 @@
     "exerciseId": "cd5fd328-8e17-47d9-86de-b758e45093cc",
     "exerciseName": "Levantamento Terra Romeno Unilateral com Halter",
     "tier": 2,
-    "order": 88,
+    "order": 87,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -707,7 +699,7 @@
     "exerciseId": "c16917f8-68a4-40c1-82c7-e2d759e91d32",
     "exerciseName": "Good Morning com Barra",
     "tier": 2,
-    "order": 89,
+    "order": 88,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -715,7 +707,7 @@
     "exerciseId": "3ba6f7c5-b215-4a21-88e8-02720b9d037f",
     "exerciseName": "Flexão de Joelhos em Pé na Máquina",
     "tier": 2,
-    "order": 90,
+    "order": 89,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -723,7 +715,7 @@
     "exerciseId": "c2d006d8-760c-41a0-841d-e7a5cc1662c4",
     "exerciseName": "Flexão de Joelhos Unilateral na Máquina",
     "tier": 2,
-    "order": 91,
+    "order": 90,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -731,7 +723,7 @@
     "exerciseId": "05bf3c93-d537-4db2-8fc1-055532d7cee8",
     "exerciseName": "Flexão Nórdica de Posteriores — alias: Nordic curl",
     "tier": 2,
-    "order": 92,
+    "order": 91,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -739,7 +731,7 @@
     "exerciseId": "dbe65f9f-d436-4213-87b5-dc9a6b11bc18",
     "exerciseName": "Flexão de Joelhos com Bola Suíça",
     "tier": 2,
-    "order": 93,
+    "order": 92,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -747,7 +739,7 @@
     "exerciseId": "bc663624-eab4-43ab-80eb-7c530a941263",
     "exerciseName": "Ponte de Glúteos no Solo",
     "tier": 2,
-    "order": 94,
+    "order": 93,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -755,7 +747,7 @@
     "exerciseId": "5822bf41-eb84-4302-8060-55a5795976de",
     "exerciseName": "Elevação Pélvica Unilateral",
     "tier": 2,
-    "order": 95,
+    "order": 94,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -763,7 +755,7 @@
     "exerciseId": "7ed07fa5-1795-4f7a-82d0-c9a6527664c7",
     "exerciseName": "Extensão de Quadril no Cabo",
     "tier": 2,
-    "order": 96,
+    "order": 95,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -771,7 +763,7 @@
     "exerciseId": "4df4c443-be27-4ea3-8eee-37c5f8cd0f2f",
     "exerciseName": "Abdução de Quadril no Cabo",
     "tier": 2,
-    "order": 97,
+    "order": 96,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -779,7 +771,7 @@
     "exerciseId": "95f4fdc6-a175-4cc3-87af-30bf83da5b4e",
     "exerciseName": "Adução de Quadril no Cabo",
     "tier": 2,
-    "order": 98,
+    "order": 97,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -787,7 +779,7 @@
     "exerciseId": "6804cb1a-45c0-4c06-8f30-bbd80035f358",
     "exerciseName": "Caminhada Lateral com Miniband",
     "tier": 2,
-    "order": 99,
+    "order": 98,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -795,7 +787,7 @@
     "exerciseId": "bd5ec77b-1186-4044-8cfe-26b8d1fe22fa",
     "exerciseName": "Panturrilha no Leg Press",
     "tier": 2,
-    "order": 100,
+    "order": 99,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -803,7 +795,7 @@
     "exerciseId": "b7340583-e68f-4bdd-82cf-9230e6e9c50e",
     "exerciseName": "Panturrilha Unilateral em Pé",
     "tier": 2,
-    "order": 101,
+    "order": 100,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -811,7 +803,7 @@
     "exerciseId": "397bacc0-d167-4382-883b-71fe6a9b5c56",
     "exerciseName": "Elevação de Tibial Anterior",
     "tier": 2,
-    "order": 102,
+    "order": 101,
     "batch": "Unilaterais e acess?rios de pernas",
     "reason": "Expandir as bases de pernas com deslocamento, equil?brio unilateral e equipamentos espec?ficos."
   },
@@ -819,7 +811,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000126",
     "exerciseName": "Crucifixo Inverso na Máquina",
     "tier": 2,
-    "order": 103,
+    "order": 102,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -827,7 +819,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000133",
     "exerciseName": "Tríceps Francês Unilateral",
     "tier": 2,
-    "order": 104,
+    "order": 103,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -835,7 +827,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000134",
     "exerciseName": "Paralelas",
     "tier": 2,
-    "order": 105,
+    "order": 104,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -843,7 +835,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000135",
     "exerciseName": "Crucifixo Inclinado",
     "tier": 2,
-    "order": 106,
+    "order": 105,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -851,7 +843,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000139",
     "exerciseName": "Rosca Concentrada",
     "tier": 2,
-    "order": 107,
+    "order": 106,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -859,7 +851,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000143",
     "exerciseName": "Remada Alta com Barra",
     "tier": 2,
-    "order": 108,
+    "order": 107,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -867,7 +859,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000146",
     "exerciseName": "Desenvolvimento Arnold",
     "tier": 2,
-    "order": 109,
+    "order": 108,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -875,7 +867,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000147",
     "exerciseName": "Face Pull no Cabo",
     "tier": 2,
-    "order": 110,
+    "order": 109,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -883,7 +875,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000148",
     "exerciseName": "Elevação Lateral no Cabo",
     "tier": 2,
-    "order": 111,
+    "order": 110,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -891,7 +883,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000149",
     "exerciseName": "Encolhimento com Halteres",
     "tier": 2,
-    "order": 112,
+    "order": 111,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -899,7 +891,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000153",
     "exerciseName": "Rosca Spider",
     "tier": 2,
-    "order": 113,
+    "order": 112,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -907,7 +899,7 @@
     "exerciseId": "41023d42-af49-48cf-878e-d08d0d3b771c",
     "exerciseName": "Desenvolvimento de Ombros na Máquina",
     "tier": 2,
-    "order": 114,
+    "order": 113,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -915,7 +907,7 @@
     "exerciseId": "675d2496-c092-4329-8340-29d95f83219f",
     "exerciseName": "Desenvolvimento de Ombros no Smith",
     "tier": 2,
-    "order": 115,
+    "order": 114,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -923,7 +915,7 @@
     "exerciseId": "3882a123-5b3b-42e4-8ea5-3aff3f92b04a",
     "exerciseName": "Elevação Frontal com Halteres",
     "tier": 2,
-    "order": 116,
+    "order": 115,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -931,7 +923,7 @@
     "exerciseId": "4e2154e2-910d-41ba-8038-b383bf329bc1",
     "exerciseName": "Elevação Lateral na Máquina",
     "tier": 2,
-    "order": 117,
+    "order": 116,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -939,7 +931,7 @@
     "exerciseId": "a76c891b-132d-4cf5-8a58-9da775363a78",
     "exerciseName": "Crucifixo Inverso com Halteres",
     "tier": 2,
-    "order": 118,
+    "order": 117,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -947,7 +939,7 @@
     "exerciseId": "daa5b03b-a7dc-4842-8747-534265fce3f2",
     "exerciseName": "Crucifixo Inverso no Cabo",
     "tier": 2,
-    "order": 119,
+    "order": 118,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -955,7 +947,7 @@
     "exerciseId": "cd312278-5101-4faa-8c74-99f2209ebdca",
     "exerciseName": "Encolhimento com Barra",
     "tier": 2,
-    "order": 120,
+    "order": 119,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -963,7 +955,7 @@
     "exerciseId": "e3cfb752-222b-4b62-8062-003e7083abf2",
     "exerciseName": "Rosca Alternada com Halteres",
     "tier": 2,
-    "order": 121,
+    "order": 120,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -971,7 +963,7 @@
     "exerciseId": "8124966b-3c55-4b28-8388-06e0bbaeb282",
     "exerciseName": "Rosca Inclinada com Halteres",
     "tier": 2,
-    "order": 122,
+    "order": 121,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -979,7 +971,7 @@
     "exerciseId": "77e16d7c-c515-4066-88f0-93db502b89f2",
     "exerciseName": "Rosca Direta no Cabo",
     "tier": 2,
-    "order": 123,
+    "order": 122,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -987,7 +979,7 @@
     "exerciseId": "16d9c6f7-ebb7-41d1-8743-ff22fdd72748",
     "exerciseName": "Rosca Scott na Máquina",
     "tier": 2,
-    "order": 124,
+    "order": 123,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -995,7 +987,7 @@
     "exerciseId": "c82dab5c-092b-4b44-8cca-6c680ef85f92",
     "exerciseName": "Rosca Inversa com Barra",
     "tier": 2,
-    "order": 125,
+    "order": 124,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -1003,7 +995,7 @@
     "exerciseId": "9576aba7-3aff-4186-81e0-162e76d4be50",
     "exerciseName": "Rosca de Punho com Barra",
     "tier": 2,
-    "order": 126,
+    "order": 125,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -1011,7 +1003,7 @@
     "exerciseId": "1ce3e560-1665-4bd5-8998-aa8f4f50011c",
     "exerciseName": "Extensão de Punho com Barra",
     "tier": 2,
-    "order": 127,
+    "order": 126,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -1019,7 +1011,7 @@
     "exerciseId": "89f594ac-082e-4ff9-8d6b-c1cb58c9717e",
     "exerciseName": "Tríceps Unilateral no Cabo",
     "tier": 2,
-    "order": 128,
+    "order": 127,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -1027,7 +1019,7 @@
     "exerciseId": "19f34820-3730-4fde-8c3e-07b2545995cf",
     "exerciseName": "Tríceps Acima da Cabeça no Cabo",
     "tier": 2,
-    "order": 129,
+    "order": 128,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -1035,7 +1027,7 @@
     "exerciseId": "6426af45-7406-4592-86c5-4ac86b2a29aa",
     "exerciseName": "Tríceps Coice com Halter",
     "tier": 2,
-    "order": 130,
+    "order": 129,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -1043,7 +1035,7 @@
     "exerciseId": "c24102f2-9302-4083-851f-bf5c69c4dff8",
     "exerciseName": "Supino com Pegada Fechada",
     "tier": 2,
-    "order": 131,
+    "order": 130,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -1051,7 +1043,7 @@
     "exerciseId": "17fc44bd-4fbf-4655-82ad-07edff42c306",
     "exerciseName": "Paralelas Assistidas na Máquina",
     "tier": 2,
-    "order": 132,
+    "order": 131,
     "batch": "Ombros e bra?os complementares",
     "reason": "Completar a muscula??o tradicional com ajustes espec?ficos de polia, banco e alinhamento articular."
   },
@@ -1059,7 +1051,7 @@
     "exerciseId": "4f96bada-30e1-4260-8512-5b6de0e44704",
     "exerciseName": "Prancha Ventral",
     "tier": 2,
-    "order": 133,
+    "order": 132,
     "batch": "Core e estabilidade",
     "reason": "Criar posi??es no solo e padr?es de estabilidade antes de movimentos suspensos ou din?micos complexos."
   },
@@ -1067,7 +1059,7 @@
     "exerciseId": "f8d7befb-6c87-4b40-8acb-c5801f3bad63",
     "exerciseName": "Prancha Lateral",
     "tier": 2,
-    "order": 134,
+    "order": 133,
     "batch": "Core e estabilidade",
     "reason": "Criar posi??es no solo e padr?es de estabilidade antes de movimentos suspensos ou din?micos complexos."
   },
@@ -1075,7 +1067,7 @@
     "exerciseId": "8dcbf19a-e30c-4f40-8c2a-7b7d7cbb73dd",
     "exerciseName": "Dead Bug",
     "tier": 2,
-    "order": 135,
+    "order": 134,
     "batch": "Core e estabilidade",
     "reason": "Criar posi??es no solo e padr?es de estabilidade antes de movimentos suspensos ou din?micos complexos."
   },
@@ -1083,7 +1075,7 @@
     "exerciseId": "7617482f-8291-4235-86bf-3aef1ef1f49a",
     "exerciseName": "Bird Dog",
     "tier": 2,
-    "order": 136,
+    "order": 135,
     "batch": "Core e estabilidade",
     "reason": "Criar posi??es no solo e padr?es de estabilidade antes de movimentos suspensos ou din?micos complexos."
   },
@@ -1091,7 +1083,7 @@
     "exerciseId": "d1bdfecd-0952-479c-87d5-9e50b8399d0f",
     "exerciseName": "Abdominal Crunch no Solo",
     "tier": 2,
-    "order": 137,
+    "order": 136,
     "batch": "Core e estabilidade",
     "reason": "Criar posi??es no solo e padr?es de estabilidade antes de movimentos suspensos ou din?micos complexos."
   },
@@ -1099,7 +1091,7 @@
     "exerciseId": "35b154dd-b2de-4c9f-8994-f1177b052a40",
     "exerciseName": "Abdominal na Máquina",
     "tier": 2,
-    "order": 138,
+    "order": 137,
     "batch": "Core e estabilidade",
     "reason": "Criar posi??es no solo e padr?es de estabilidade antes de movimentos suspensos ou din?micos complexos."
   },
@@ -1107,7 +1099,7 @@
     "exerciseId": "c7a96602-149a-47de-843c-a0fe26c3583e",
     "exerciseName": "Abdominal com AbMat",
     "tier": 2,
-    "order": 139,
+    "order": 138,
     "batch": "Core e estabilidade",
     "reason": "Criar posi??es no solo e padr?es de estabilidade antes de movimentos suspensos ou din?micos complexos."
   },
@@ -1115,7 +1107,7 @@
     "exerciseId": "b42bbf72-2c53-418f-8541-3e278cf25146",
     "exerciseName": "Abdominal Reverso",
     "tier": 2,
-    "order": 140,
+    "order": 139,
     "batch": "Core e estabilidade",
     "reason": "Criar posi??es no solo e padr?es de estabilidade antes de movimentos suspensos ou din?micos complexos."
   },
@@ -1123,7 +1115,7 @@
     "exerciseId": "4483cd2d-568f-4587-81b9-56ab954e8905",
     "exerciseName": "Pallof Press no Cabo",
     "tier": 2,
-    "order": 141,
+    "order": 140,
     "batch": "Core e estabilidade",
     "reason": "Criar posi??es no solo e padr?es de estabilidade antes de movimentos suspensos ou din?micos complexos."
   },
@@ -1131,7 +1123,7 @@
     "exerciseId": "d78e99b1-81df-4d20-8812-b7e15ebb199f",
     "exerciseName": "Woodchop no Cabo Alto",
     "tier": 2,
-    "order": 142,
+    "order": 141,
     "batch": "Core e estabilidade",
     "reason": "Criar posi??es no solo e padr?es de estabilidade antes de movimentos suspensos ou din?micos complexos."
   },
@@ -1139,7 +1131,7 @@
     "exerciseId": "c96a2d1f-20c0-4beb-8e24-089758f2c9bf",
     "exerciseName": "Hollow Hold",
     "tier": 2,
-    "order": 143,
+    "order": 142,
     "batch": "Core e estabilidade",
     "reason": "Criar posi??es no solo e padr?es de estabilidade antes de movimentos suspensos ou din?micos complexos."
   },
@@ -1147,7 +1139,7 @@
     "exerciseId": "7e47d431-f834-461d-85f7-bbae415c34f9",
     "exerciseName": "Arch Hold — alias: Superman hold",
     "tier": 2,
-    "order": 144,
+    "order": 143,
     "batch": "Core e estabilidade",
     "reason": "Criar posi??es no solo e padr?es de estabilidade antes de movimentos suspensos ou din?micos complexos."
   },
@@ -1155,7 +1147,7 @@
     "exerciseId": "ec214a71-5095-4781-8cc9-77313dfee7a5",
     "exerciseName": "Roda Abdominal — alias: ab wheel rollout",
     "tier": 2,
-    "order": 145,
+    "order": 144,
     "batch": "Core e estabilidade",
     "reason": "Criar posi??es no solo e padr?es de estabilidade antes de movimentos suspensos ou din?micos complexos."
   },
@@ -1163,7 +1155,7 @@
     "exerciseId": "62c994f3-0f6c-4d72-8dde-8c0ad09da90c",
     "exerciseName": "Elevação de Joelhos Suspenso",
     "tier": 2,
-    "order": 146,
+    "order": 145,
     "batch": "Core e estabilidade",
     "reason": "Criar posi??es no solo e padr?es de estabilidade antes de movimentos suspensos ou din?micos complexos."
   },
@@ -1171,7 +1163,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000144",
     "exerciseName": "Hiperextensão Lombar",
     "tier": 2,
-    "order": 147,
+    "order": 146,
     "batch": "Core e estabilidade",
     "reason": "Criar posi??es no solo e padr?es de estabilidade antes de movimentos suspensos ou din?micos complexos."
   },
@@ -1179,7 +1171,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000150",
     "exerciseName": "Abdominal no Cabo",
     "tier": 2,
-    "order": 148,
+    "order": 147,
     "batch": "Core e estabilidade",
     "reason": "Criar posi??es no solo e padr?es de estabilidade antes de movimentos suspensos ou din?micos complexos."
   },
@@ -1187,7 +1179,7 @@
     "exerciseId": "00000000-0000-4000-8000-000000000151",
     "exerciseName": "Elevação de Pernas Suspenso",
     "tier": 2,
-    "order": 149,
+    "order": 148,
     "batch": "Core e estabilidade",
     "reason": "Criar posi??es no solo e padr?es de estabilidade antes de movimentos suspensos ou din?micos complexos."
   },
@@ -1195,7 +1187,7 @@
     "exerciseId": "c9bbf500-c289-441e-8162-afef74d25237",
     "exerciseName": "Desenvolvimento Unilateral no Landmine — alias: single-arm landmine press",
     "tier": 3,
-    "order": 150,
+    "order": 149,
     "batch": "Landmine: fundamentos",
     "reason": "Introduzir piv? da barra e trajet?rias do landmine antes de rota??es explosivas e movimentos combinados."
   },
@@ -1203,7 +1195,7 @@
     "exerciseId": "ef1e3395-5f08-4c95-82ac-1a2bc5e099d1",
     "exerciseName": "Desenvolvimento Bilateral no Landmine",
     "tier": 3,
-    "order": 151,
+    "order": 150,
     "batch": "Landmine: fundamentos",
     "reason": "Introduzir piv? da barra e trajet?rias do landmine antes de rota??es explosivas e movimentos combinados."
   },
@@ -1211,7 +1203,7 @@
     "exerciseId": "26e45901-2ccc-46df-8188-cd3503830860",
     "exerciseName": "Desenvolvimento Unilateral Meio-Ajoelhado no Landmine",
     "tier": 3,
-    "order": 152,
+    "order": 151,
     "batch": "Landmine: fundamentos",
     "reason": "Introduzir piv? da barra e trajet?rias do landmine antes de rota??es explosivas e movimentos combinados."
   },
@@ -1219,7 +1211,7 @@
     "exerciseId": "566f3759-b346-4a4e-80b2-29618cda6dd1",
     "exerciseName": "Agachamento no Landmine",
     "tier": 3,
-    "order": 153,
+    "order": 152,
     "batch": "Landmine: fundamentos",
     "reason": "Introduzir piv? da barra e trajet?rias do landmine antes de rota??es explosivas e movimentos combinados."
   },
@@ -1227,7 +1219,7 @@
     "exerciseId": "3e962d98-1b67-4280-899f-d965e3c1e257",
     "exerciseName": "Remada Unilateral no Landmine",
     "tier": 3,
-    "order": 154,
+    "order": 153,
     "batch": "Landmine: fundamentos",
     "reason": "Introduzir piv? da barra e trajet?rias do landmine antes de rota??es explosivas e movimentos combinados."
   },
@@ -1235,7 +1227,7 @@
     "exerciseId": "6f49e547-9500-4888-8b46-09736d07a169",
     "exerciseName": "Remada Meadows",
     "tier": 3,
-    "order": 155,
+    "order": 154,
     "batch": "Landmine: fundamentos",
     "reason": "Introduzir piv? da barra e trajet?rias do landmine antes de rota??es explosivas e movimentos combinados."
   },
@@ -1243,7 +1235,7 @@
     "exerciseId": "efa5ed74-0b27-4f99-89db-0546048b6b62",
     "exerciseName": "Levantamento Terra no Landmine",
     "tier": 3,
-    "order": 156,
+    "order": 155,
     "batch": "Landmine: fundamentos",
     "reason": "Introduzir piv? da barra e trajet?rias do landmine antes de rota??es explosivas e movimentos combinados."
   },
@@ -1251,7 +1243,7 @@
     "exerciseId": "52b75b53-d5d9-4c4c-8929-aa6dece24b0d",
     "exerciseName": "Anti-Rotação no Landmine",
     "tier": 3,
-    "order": 157,
+    "order": 156,
     "batch": "Landmine: fundamentos",
     "reason": "Introduzir piv? da barra e trajet?rias do landmine antes de rota??es explosivas e movimentos combinados."
   },
@@ -1259,7 +1251,7 @@
     "exerciseId": "e3f4caca-9f77-4e1b-8388-a84e51e96474",
     "exerciseName": "Farmer Carry com Halteres",
     "tier": 3,
-    "order": 158,
+    "order": 157,
     "batch": "Transportes e condicionamento",
     "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
   },
@@ -1267,7 +1259,7 @@
     "exerciseId": "85c4058a-918d-4934-8c31-5383ac68b765",
     "exerciseName": "Suitcase Carry com Halter",
     "tier": 3,
-    "order": 159,
+    "order": 158,
     "batch": "Transportes e condicionamento",
     "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
   },
@@ -1275,7 +1267,7 @@
     "exerciseId": "b36d7169-2020-46fb-8394-b1b8db2a5b86",
     "exerciseName": "Front Rack Carry com Kettlebells",
     "tier": 3,
-    "order": 160,
+    "order": 159,
     "batch": "Transportes e condicionamento",
     "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
   },
@@ -1283,7 +1275,7 @@
     "exerciseId": "fe2d1f67-ec85-46bc-8d0b-0c3611adefca",
     "exerciseName": "Overhead Carry Unilateral",
     "tier": 3,
-    "order": 161,
+    "order": 160,
     "batch": "Transportes e condicionamento",
     "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
   },
@@ -1291,7 +1283,7 @@
     "exerciseId": "cbc95d73-bdd6-4573-8d90-65c9dd256f62",
     "exerciseName": "Empurrar Trenó",
     "tier": 3,
-    "order": 162,
+    "order": 161,
     "batch": "Transportes e condicionamento",
     "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
   },
@@ -1299,7 +1291,7 @@
     "exerciseId": "28086afd-b431-453b-80f3-cca10db500a9",
     "exerciseName": "Puxar Trenó Caminhando para Trás",
     "tier": 3,
-    "order": 163,
+    "order": 162,
     "batch": "Transportes e condicionamento",
     "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
   },
@@ -1307,7 +1299,7 @@
     "exerciseId": "22de6ad2-4b31-4de1-8bc1-e3591b4af04c",
     "exerciseName": "Remo no Ergômetro",
     "tier": 3,
-    "order": 164,
+    "order": 163,
     "batch": "Transportes e condicionamento",
     "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
   },
@@ -1315,7 +1307,7 @@
     "exerciseId": "5a6c9f8a-7c11-40cf-80de-c6cd688bce32",
     "exerciseName": "Bicicleta de Ar — alias: air bike",
     "tier": 3,
-    "order": 165,
+    "order": 164,
     "batch": "Transportes e condicionamento",
     "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
   },
@@ -1323,7 +1315,7 @@
     "exerciseId": "ad10fe8f-b3c9-4b0a-83e5-d8aa6d82073f",
     "exerciseName": "SkiErg",
     "tier": 3,
-    "order": 166,
+    "order": 165,
     "batch": "Transportes e condicionamento",
     "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
   },
@@ -1331,7 +1323,7 @@
     "exerciseId": "86df7d73-c743-476e-8d46-719b916e17a9",
     "exerciseName": "Corrida",
     "tier": 3,
-    "order": 167,
+    "order": 166,
     "batch": "Transportes e condicionamento",
     "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
   },
@@ -1339,7 +1331,7 @@
     "exerciseId": "347a52f4-0233-4073-8d79-d01cfd6616d0",
     "exerciseName": "Sprint",
     "tier": 3,
-    "order": 168,
+    "order": 167,
     "batch": "Transportes e condicionamento",
     "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
   },
@@ -1347,7 +1339,7 @@
     "exerciseId": "ea1f87ba-f5c3-4c14-8ca3-670d4fb32c9b",
     "exerciseName": "Corrida de Ida e Volta — alias: shuttle run",
     "tier": 3,
-    "order": 169,
+    "order": 168,
     "batch": "Transportes e condicionamento",
     "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
   },
@@ -1355,7 +1347,7 @@
     "exerciseId": "d5231b45-3579-4418-85dd-dc44d8b9d2a9",
     "exerciseName": "Pular Corda com Giro Simples — alias: single-under",
     "tier": 3,
-    "order": 170,
+    "order": 169,
     "batch": "Transportes e condicionamento",
     "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
   },
@@ -1363,7 +1355,7 @@
     "exerciseId": "d8d95580-5871-4fa7-83b2-f85d353e1f4c",
     "exerciseName": "Battle Rope com Ondas Alternadas",
     "tier": 3,
-    "order": 171,
+    "order": 170,
     "batch": "Transportes e condicionamento",
     "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
   },
@@ -1371,7 +1363,7 @@
     "exerciseId": "4a26d043-9e3e-4e16-891f-3e291bfed19e",
     "exerciseName": "Kettlebell Swing até a Altura dos Ombros — alias: Russian swing",
     "tier": 3,
-    "order": 172,
+    "order": 171,
     "batch": "Kettlebell e halteres: bases",
     "reason": "Criar balan?o, transfer?ncia de carga e movimentos din?micos b?sicos antes de snatches e transi??es complexas."
   },
@@ -1379,7 +1371,7 @@
     "exerciseId": "4cca654e-e0cd-4d90-84be-053cab9e661b",
     "exerciseName": "Kettlebell Swing Unilateral",
     "tier": 3,
-    "order": 173,
+    "order": 172,
     "batch": "Kettlebell e halteres: bases",
     "reason": "Criar balan?o, transfer?ncia de carga e movimentos din?micos b?sicos antes de snatches e transi??es complexas."
   },
@@ -1387,7 +1379,7 @@
     "exerciseId": "83b94d1b-77c7-4b0c-8881-7dc9974770b2",
     "exerciseName": "Kettlebell Push Press Unilateral",
     "tier": 3,
-    "order": 174,
+    "order": 173,
     "batch": "Kettlebell e halteres: bases",
     "reason": "Criar balan?o, transfer?ncia de carga e movimentos din?micos b?sicos antes de snatches e transi??es complexas."
   },
@@ -1395,7 +1387,7 @@
     "exerciseId": "726bc1a0-a83d-4262-8898-791709f8c01f",
     "exerciseName": "Push Press com Halteres",
     "tier": 3,
-    "order": 175,
+    "order": 174,
     "batch": "Kettlebell e halteres: bases",
     "reason": "Criar balan?o, transfer?ncia de carga e movimentos din?micos b?sicos antes de snatches e transi??es complexas."
   },
@@ -1403,7 +1395,7 @@
     "exerciseId": "5d74502e-8955-44ec-8e58-455dc39c8b1b",
     "exerciseName": "Thruster com Barra",
     "tier": 3,
-    "order": 176,
+    "order": 175,
     "batch": "Kettlebell e halteres: bases",
     "reason": "Criar balan?o, transfer?ncia de carga e movimentos din?micos b?sicos antes de snatches e transi??es complexas."
   },
@@ -1411,7 +1403,7 @@
     "exerciseId": "f88b41e8-2d6e-4042-895a-e57c803401d2",
     "exerciseName": "Thruster com Halteres",
     "tier": 3,
-    "order": 177,
+    "order": 176,
     "batch": "Kettlebell e halteres: bases",
     "reason": "Criar balan?o, transfer?ncia de carga e movimentos din?micos b?sicos antes de snatches e transi??es complexas."
   },
@@ -1419,7 +1411,7 @@
     "exerciseId": "42e439e0-6eca-416c-8d33-4bfa8d48ac36",
     "exerciseName": "Remada Renegade com Halteres",
     "tier": 3,
-    "order": 178,
+    "order": 177,
     "batch": "Kettlebell e halteres: bases",
     "reason": "Criar balan?o, transfer?ncia de carga e movimentos din?micos b?sicos antes de snatches e transi??es complexas."
   },
@@ -1427,7 +1419,7 @@
     "exerciseId": "2c1657df-13fa-4644-82e3-11a17bc6cb9d",
     "exerciseName": "Pogo Jump Bilateral",
     "tier": 4,
-    "order": 179,
+    "order": 178,
     "batch": "Saltos: apoios e aterrissagem",
     "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
   },
@@ -1435,7 +1427,7 @@
     "exerciseId": "5ec972bc-f8a0-47fd-8789-b9363ea28b84",
     "exerciseName": "Salto Vertical com Contramovimento",
     "tier": 4,
-    "order": 180,
+    "order": 179,
     "batch": "Saltos: apoios e aterrissagem",
     "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
   },
@@ -1443,7 +1435,7 @@
     "exerciseId": "28893c38-900f-4518-844f-93471a3e0f0c",
     "exerciseName": "Salto Vertical Partindo de Agachamento — alias: squat jump",
     "tier": 4,
-    "order": 181,
+    "order": 180,
     "batch": "Saltos: apoios e aterrissagem",
     "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
   },
@@ -1451,7 +1443,7 @@
     "exerciseId": "9d2667b4-14cc-4e63-8d4f-5a4757aaad74",
     "exerciseName": "Salto Horizontal Parado — alias: standing broad jump",
     "tier": 4,
-    "order": 182,
+    "order": 181,
     "batch": "Saltos: apoios e aterrissagem",
     "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
   },
@@ -1459,7 +1451,7 @@
     "exerciseId": "c4ad50ca-6df3-4b61-83f0-02538c1507df",
     "exerciseName": "Drop Landing — queda da caixa com estabilização",
     "tier": 4,
-    "order": 183,
+    "order": 182,
     "batch": "Saltos: apoios e aterrissagem",
     "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
   },
@@ -1467,7 +1459,7 @@
     "exerciseId": "87ef0649-841a-42c5-88c5-ae9447173c43",
     "exerciseName": "Salto na Caixa — alias: box jump",
     "tier": 4,
-    "order": 184,
+    "order": 183,
     "batch": "Saltos: apoios e aterrissagem",
     "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
   },
@@ -1475,7 +1467,7 @@
     "exerciseId": "fc13b372-4454-459c-8cef-8e2242a23ebd",
     "exerciseName": "Pogo Jump Unilateral",
     "tier": 4,
-    "order": 185,
+    "order": 184,
     "batch": "Saltos: apoios e aterrissagem",
     "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
   },
@@ -1483,7 +1475,7 @@
     "exerciseId": "78501398-5301-4325-8b2a-085c035b870e",
     "exerciseName": "Salto Lateral Alternado — alias: skater jump",
     "tier": 4,
-    "order": 186,
+    "order": 185,
     "batch": "Saltos: apoios e aterrissagem",
     "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
   },
@@ -1491,7 +1483,7 @@
     "exerciseId": "67b27d44-92d8-4c58-8533-98967f89c92b",
     "exerciseName": "Salto Unilateral para Frente",
     "tier": 4,
-    "order": 187,
+    "order": 186,
     "batch": "Saltos: apoios e aterrissagem",
     "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
   },
@@ -1499,7 +1491,7 @@
     "exerciseId": "1aad0068-09c5-4f78-8e4d-38343326fa91",
     "exerciseName": "Saltos Alternados em Afundo — alias: split squat jump",
     "tier": 4,
-    "order": 188,
+    "order": 187,
     "batch": "Saltos: apoios e aterrissagem",
     "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
   },
@@ -1507,7 +1499,7 @@
     "exerciseId": "b79bd93b-72a4-443f-8c56-ebeee69d9d04",
     "exerciseName": "Arremesso de Peito com Medicine Ball na Parede",
     "tier": 4,
-    "order": 189,
+    "order": 188,
     "batch": "Bolas e pot?ncia",
     "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
   },
@@ -1515,7 +1507,7 @@
     "exerciseId": "2d1fa957-9027-436f-8910-3c6f947a4fc1",
     "exerciseName": "Arremesso de Peito Sentado com Medicine Ball",
     "tier": 4,
-    "order": 190,
+    "order": 189,
     "batch": "Bolas e pot?ncia",
     "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
   },
@@ -1523,7 +1515,7 @@
     "exerciseId": "5b198859-1552-48f7-81d5-ad176ffbb367",
     "exerciseName": "Slam Ball no Solo",
     "tier": 4,
-    "order": 191,
+    "order": 190,
     "batch": "Bolas e pot?ncia",
     "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
   },
@@ -1531,7 +1523,7 @@
     "exerciseId": "cabc544c-fd0e-41f2-83b0-168605cd36b8",
     "exerciseName": "Wall Ball — agachamento com lançamento da bola ao alvo",
     "tier": 4,
-    "order": 192,
+    "order": 191,
     "batch": "Bolas e pot?ncia",
     "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
   },
@@ -1539,7 +1531,7 @@
     "exerciseId": "1d432b5a-29b4-4d71-847a-2608f6650fda",
     "exerciseName": "Clean com Medicine Ball",
     "tier": 4,
-    "order": 193,
+    "order": 192,
     "batch": "Bolas e pot?ncia",
     "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
   },
@@ -1547,7 +1539,7 @@
     "exerciseId": "da6137b3-c773-43f7-8b7c-fb0fbf2609b3",
     "exerciseName": "Arremesso Rotacional de Medicine Ball na Parede",
     "tier": 4,
-    "order": 194,
+    "order": 193,
     "batch": "Bolas e pot?ncia",
     "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
   },
@@ -1555,7 +1547,7 @@
     "exerciseId": "bda3b4e0-4244-4010-83e6-ac5841b228d2",
     "exerciseName": "Arremesso de Medicine Ball Acima da Cabeça para Frente",
     "tier": 4,
-    "order": 195,
+    "order": 194,
     "batch": "Bolas e pot?ncia",
     "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
   },
@@ -1563,7 +1555,7 @@
     "exerciseId": "1b833278-06be-4ad0-831a-e87c85564521",
     "exerciseName": "Arremesso de Medicine Ball para Trás Acima da Cabeça",
     "tier": 4,
-    "order": 196,
+    "order": 195,
     "batch": "Bolas e pot?ncia",
     "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
   },
@@ -1571,7 +1563,7 @@
     "exerciseId": "0d3c8197-f719-4a93-8545-f00c52cec1a6",
     "exerciseName": "Slam Ball Rotacional",
     "tier": 4,
-    "order": 197,
+    "order": 196,
     "batch": "Bolas e pot?ncia",
     "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
   },
@@ -1579,7 +1571,7 @@
     "exerciseId": "8bdde5b9-d201-40ab-8198-3ac1fe77d63c",
     "exerciseName": "Push Press Unilateral no Landmine",
     "tier": 4,
-    "order": 198,
+    "order": 197,
     "batch": "Landmine: movimentos combinados",
     "reason": "Combinar as bases aprovadas de landmine com impulso, rota??o e afundo sem reutilizar poses incompat?veis."
   },
@@ -1587,7 +1579,7 @@
     "exerciseId": "37d17ee5-4fcd-45a0-8bd9-037a2c5f97bd",
     "exerciseName": "Press Rotacional Unilateral no Landmine",
     "tier": 4,
-    "order": 199,
+    "order": 198,
     "batch": "Landmine: movimentos combinados",
     "reason": "Combinar as bases aprovadas de landmine com impulso, rota??o e afundo sem reutilizar poses incompat?veis."
   },
@@ -1595,7 +1587,7 @@
     "exerciseId": "45f82445-d2c4-4a74-858e-1b00f0fa178f",
     "exerciseName": "Agachamento com Press no Landmine",
     "tier": 4,
-    "order": 200,
+    "order": 199,
     "batch": "Landmine: movimentos combinados",
     "reason": "Combinar as bases aprovadas de landmine com impulso, rota??o e afundo sem reutilizar poses incompat?veis."
   },
@@ -1603,7 +1595,7 @@
     "exerciseId": "eef396ad-8271-463d-844a-a7023f64bd8e",
     "exerciseName": "Afundo Reverso com Press Unilateral no Landmine",
     "tier": 4,
-    "order": 201,
+    "order": 200,
     "batch": "Landmine: movimentos combinados",
     "reason": "Combinar as bases aprovadas de landmine com impulso, rota??o e afundo sem reutilizar poses incompat?veis."
   },
@@ -1611,7 +1603,7 @@
     "exerciseId": "8a0fa5b8-e102-4a6c-85c5-7a666d027296",
     "exerciseName": "Overhead Squat",
     "tier": 4,
-    "order": 202,
+    "order": 201,
     "batch": "LPO: prepara??o e movimentos principais",
     "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
   },
@@ -1619,7 +1611,7 @@
     "exerciseId": "8b10ad1c-4bb1-44ed-8d89-b916185451a3",
     "exerciseName": "Clean Deadlift",
     "tier": 4,
-    "order": 203,
+    "order": 202,
     "batch": "LPO: prepara??o e movimentos principais",
     "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
   },
@@ -1627,7 +1619,7 @@
     "exerciseId": "4fb4e4e6-e685-4a72-8da4-9af02ce80afd",
     "exerciseName": "Clean Pull",
     "tier": 4,
-    "order": 204,
+    "order": 203,
     "batch": "LPO: prepara??o e movimentos principais",
     "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
   },
@@ -1635,7 +1627,7 @@
     "exerciseId": "e94df5cc-688c-4894-8651-26bd0b7cd729",
     "exerciseName": "Clean High Pull",
     "tier": 4,
-    "order": 205,
+    "order": 204,
     "batch": "LPO: prepara??o e movimentos principais",
     "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
   },
@@ -1643,7 +1635,7 @@
     "exerciseId": "f3f156f0-523e-45d9-83e8-026e8299292e",
     "exerciseName": "Muscle Clean",
     "tier": 4,
-    "order": 206,
+    "order": 205,
     "batch": "LPO: prepara??o e movimentos principais",
     "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
   },
@@ -1651,7 +1643,7 @@
     "exerciseId": "1b7764ca-1826-488e-8734-fc88117ed9dd",
     "exerciseName": "Hang Power Clean",
     "tier": 4,
-    "order": 207,
+    "order": 206,
     "batch": "LPO: prepara??o e movimentos principais",
     "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
   },
@@ -1659,7 +1651,7 @@
     "exerciseId": "828d2135-37b8-4e03-8936-1554e4b3e99f",
     "exerciseName": "Power Clean",
     "tier": 4,
-    "order": 208,
+    "order": 207,
     "batch": "LPO: prepara??o e movimentos principais",
     "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
   },
@@ -1667,7 +1659,7 @@
     "exerciseId": "ee45732c-628c-4cb9-8386-b0a58b682fb1",
     "exerciseName": "Clean — aliases: squat clean, full clean",
     "tier": 4,
-    "order": 209,
+    "order": 208,
     "batch": "LPO: prepara??o e movimentos principais",
     "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
   },
@@ -1675,7 +1667,7 @@
     "exerciseId": "c7b1bd07-08d9-4794-8588-0534a607ae50",
     "exerciseName": "Hang Clean",
     "tier": 4,
-    "order": 210,
+    "order": 209,
     "batch": "LPO: prepara??o e movimentos principais",
     "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
   },
@@ -1683,7 +1675,7 @@
     "exerciseId": "3f008308-7990-4c42-8008-56916d3be09e",
     "exerciseName": "Push Press com Barra",
     "tier": 4,
-    "order": 211,
+    "order": 210,
     "batch": "LPO: prepara??o e movimentos principais",
     "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
   },
@@ -1691,7 +1683,7 @@
     "exerciseId": "ac8f7416-2631-427d-8368-d974889c1d14",
     "exerciseName": "Jerk Dip",
     "tier": 4,
-    "order": 212,
+    "order": 211,
     "batch": "LPO: prepara??o e movimentos principais",
     "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
   },
@@ -1699,7 +1691,7 @@
     "exerciseId": "1ad5f03c-0d81-4d28-8d0c-060726c06fb6",
     "exerciseName": "Jerk Drive",
     "tier": 4,
-    "order": 213,
+    "order": 212,
     "batch": "LPO: prepara??o e movimentos principais",
     "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
   },
@@ -1707,7 +1699,7 @@
     "exerciseId": "e5c85899-146d-49f8-8673-5c1c4e04eace",
     "exerciseName": "Push Jerk",
     "tier": 4,
-    "order": 214,
+    "order": 213,
     "batch": "LPO: prepara??o e movimentos principais",
     "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
   },
@@ -1715,7 +1707,7 @@
     "exerciseId": "a1a03a80-fdfe-4d0d-87ca-7b7a3d1b0a60",
     "exerciseName": "Split Jerk",
     "tier": 4,
-    "order": 215,
+    "order": 214,
     "batch": "LPO: prepara??o e movimentos principais",
     "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
   },
@@ -1723,7 +1715,7 @@
     "exerciseId": "c5443faf-a2b5-4ec7-8879-c6b1d38136e5",
     "exerciseName": "Snatch Deadlift",
     "tier": 4,
-    "order": 216,
+    "order": 215,
     "batch": "LPO: prepara??o e movimentos principais",
     "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
   },
@@ -1731,7 +1723,7 @@
     "exerciseId": "0dd16782-2671-4d6e-8cc8-7fa516b7a4c8",
     "exerciseName": "Snatch Pull",
     "tier": 4,
-    "order": 217,
+    "order": 216,
     "batch": "LPO: prepara??o e movimentos principais",
     "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
   },
@@ -1739,7 +1731,7 @@
     "exerciseId": "30dc93d6-27a3-4a69-81e4-c936412ce6a0",
     "exerciseName": "Snatch High Pull",
     "tier": 4,
-    "order": 218,
+    "order": 217,
     "batch": "LPO: prepara??o e movimentos principais",
     "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
   },
@@ -1747,7 +1739,7 @@
     "exerciseId": "67697db2-773d-4120-8305-ffc5c2179f31",
     "exerciseName": "Muscle Snatch",
     "tier": 4,
-    "order": 219,
+    "order": 218,
     "batch": "LPO: prepara??o e movimentos principais",
     "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
   },
@@ -1755,7 +1747,7 @@
     "exerciseId": "839f3abf-c126-4b5d-82f2-bcd3f5eea73c",
     "exerciseName": "Hang Power Snatch",
     "tier": 4,
-    "order": 220,
+    "order": 219,
     "batch": "LPO: prepara??o e movimentos principais",
     "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
   },
@@ -1763,7 +1755,7 @@
     "exerciseId": "4b5a6860-b5e5-4a5f-81db-ed2ffa42b8d0",
     "exerciseName": "Power Snatch",
     "tier": 4,
-    "order": 221,
+    "order": 220,
     "batch": "LPO: prepara??o e movimentos principais",
     "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
   },
@@ -1771,7 +1763,7 @@
     "exerciseId": "1c9d749e-bcdc-46ef-8c61-8f6c62495ad3",
     "exerciseName": "Snatch — aliases: squat snatch, full snatch",
     "tier": 4,
-    "order": 222,
+    "order": 221,
     "batch": "LPO: prepara??o e movimentos principais",
     "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
   },
@@ -1779,7 +1771,7 @@
     "exerciseId": "1fd318ce-de48-455a-8e0a-e2ab9c45681e",
     "exerciseName": "Kettlebell Swing Acima da Cabeça — alias: American swing",
     "tier": 4,
-    "order": 223,
+    "order": 222,
     "batch": "Funcional: transi??es e implementos",
     "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
   },
@@ -1787,7 +1779,7 @@
     "exerciseId": "7a2d55db-be0a-4318-8978-92d32d01c1e7",
     "exerciseName": "Kettlebell Clean Unilateral",
     "tier": 4,
-    "order": 224,
+    "order": 223,
     "batch": "Funcional: transi??es e implementos",
     "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
   },
@@ -1795,7 +1787,7 @@
     "exerciseId": "e70bbf0e-80d4-40ea-888c-8e0358c927ef",
     "exerciseName": "Power Clean com Halteres",
     "tier": 4,
-    "order": 225,
+    "order": 224,
     "batch": "Funcional: transi??es e implementos",
     "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
   },
@@ -1803,7 +1795,7 @@
     "exerciseId": "1c57981e-05f6-498b-8975-2679a3c85d35",
     "exerciseName": "Hang Power Clean com Halteres",
     "tier": 4,
-    "order": 226,
+    "order": 225,
     "batch": "Funcional: transi??es e implementos",
     "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
   },
@@ -1811,7 +1803,7 @@
     "exerciseId": "4291abd4-8b68-4b19-8223-27b5e9f2b4e8",
     "exerciseName": "Snatch Unilateral com Halter",
     "tier": 4,
-    "order": 227,
+    "order": 226,
     "batch": "Funcional: transi??es e implementos",
     "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
   },
@@ -1819,7 +1811,7 @@
     "exerciseId": "59be040d-c5ed-45bb-82c0-b8369829e019",
     "exerciseName": "Burpee",
     "tier": 4,
-    "order": 228,
+    "order": 227,
     "batch": "Funcional: transi??es e implementos",
     "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
   },
@@ -1827,7 +1819,7 @@
     "exerciseId": "cfd75a15-4513-4f01-89a6-5fbd8ecd1574",
     "exerciseName": "Burpee sobre a Barra",
     "tier": 4,
-    "order": 229,
+    "order": 228,
     "batch": "Funcional: transi??es e implementos",
     "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
   },
@@ -1835,7 +1827,7 @@
     "exerciseId": "e63a558c-89d0-44ba-80ab-fdd2f3459092",
     "exerciseName": "Remada nas Argolas",
     "tier": 4,
-    "order": 230,
+    "order": 229,
     "batch": "Funcional: transi??es e implementos",
     "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
   },
@@ -1843,7 +1835,7 @@
     "exerciseId": "9800a359-b8c3-4b4a-86d2-2e62a20b1d50",
     "exerciseName": "Paralelas nas Argolas",
     "tier": 4,
-    "order": 231,
+    "order": 230,
     "batch": "Funcional: transi??es e implementos",
     "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
   },
@@ -1851,7 +1843,7 @@
     "exerciseId": "270f8e74-11d1-4cfd-8219-98dbd47ff372",
     "exerciseName": "Flexão de Braços nas Argolas",
     "tier": 4,
-    "order": 232,
+    "order": 231,
     "batch": "Funcional: transi??es e implementos",
     "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
   },
@@ -1859,7 +1851,7 @@
     "exerciseId": "8d74b7a0-243a-42fd-8755-e984a7c62b22",
     "exerciseName": "Pistol Squat",
     "tier": 4,
-    "order": 233,
+    "order": 232,
     "batch": "Funcional: transi??es e implementos",
     "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
   },
@@ -1867,7 +1859,7 @@
     "exerciseId": "216cde22-ddf3-4f36-88ae-6ee918e2d221",
     "exerciseName": "L-Sit nas Paralelas",
     "tier": 4,
-    "order": 234,
+    "order": 233,
     "batch": "Funcional: transi??es e implementos",
     "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
   },
@@ -1875,7 +1867,7 @@
     "exerciseId": "90c19acb-1cfd-4da3-8a68-ac452ba58e5a",
     "exerciseName": "Saltos Horizontais Consecutivos",
     "tier": 5,
-    "order": 235,
+    "order": 234,
     "batch": "Saltos reativos e sequ?ncias",
     "reason": "Exigem revis?o adicional de contatos sucessivos, obst?culos e aterrissagens; dependem das bases de salto."
   },
@@ -1883,7 +1875,7 @@
     "exerciseId": "97da65a9-0008-45a9-8779-865ae03c2a33",
     "exerciseName": "Salto por Cima da Caixa — alias: box jump-over",
     "tier": 5,
-    "order": 236,
+    "order": 235,
     "batch": "Saltos reativos e sequ?ncias",
     "reason": "Exigem revis?o adicional de contatos sucessivos, obst?culos e aterrissagens; dependem das bases de salto."
   },
@@ -1891,7 +1883,7 @@
     "exerciseId": "f2d4ada3-9397-4a5e-8939-9573a52e2961",
     "exerciseName": "Salto Lateral sobre Obstáculo",
     "tier": 5,
-    "order": 237,
+    "order": 236,
     "batch": "Saltos reativos e sequ?ncias",
     "reason": "Exigem revis?o adicional de contatos sucessivos, obst?culos e aterrissagens; dependem das bases de salto."
   },
@@ -1899,7 +1891,7 @@
     "exerciseId": "a4cefb4f-37cf-4489-8343-c56af23bbfa8",
     "exerciseName": "Saltos sobre Barreiras",
     "tier": 5,
-    "order": 238,
+    "order": 237,
     "batch": "Saltos reativos e sequ?ncias",
     "reason": "Exigem revis?o adicional de contatos sucessivos, obst?culos e aterrissagens; dependem das bases de salto."
   },
@@ -1907,7 +1899,7 @@
     "exerciseId": "a1df9269-072d-411b-81b8-4197aa4a84c8",
     "exerciseName": "Depth Jump — queda da caixa seguida de salto",
     "tier": 5,
-    "order": 239,
+    "order": 238,
     "batch": "Saltos reativos e sequ?ncias",
     "reason": "Exigem revis?o adicional de contatos sucessivos, obst?culos e aterrissagens; dependem das bases de salto."
   },
@@ -1915,7 +1907,7 @@
     "exerciseId": "5e4d8fc5-7566-41da-8589-7c4d90076292",
     "exerciseName": "Flexão Pliométrica",
     "tier": 5,
-    "order": 240,
+    "order": 239,
     "batch": "Saltos reativos e sequ?ncias",
     "reason": "Exigem revis?o adicional de contatos sucessivos, obst?culos e aterrissagens; dependem das bases de salto."
   },
@@ -1923,7 +1915,7 @@
     "exerciseId": "625a2d84-4a60-4342-848a-bb176c4370df",
     "exerciseName": "Clean a Partir de Blocos",
     "tier": 5,
-    "order": 241,
+    "order": 240,
     "batch": "LPO: varia??es t?cnicas e complexos",
     "reason": "Adicionar varia??es t?cnicas ap?s validar movimentos principais e suas recep??es; coordenar m?ltiplas fases sem deformar anatomia."
   },
@@ -1931,7 +1923,7 @@
     "exerciseId": "214278a7-0fb9-4657-8774-73203eb7a0ab",
     "exerciseName": "Tall Clean",
     "tier": 5,
-    "order": 242,
+    "order": 241,
     "batch": "LPO: varia??es t?cnicas e complexos",
     "reason": "Adicionar varia??es t?cnicas ap?s validar movimentos principais e suas recep??es; coordenar m?ltiplas fases sem deformar anatomia."
   },
@@ -1939,7 +1931,7 @@
     "exerciseId": "d8ccf56a-3e42-4deb-8744-61a7bdba6a7a",
     "exerciseName": "Hang Snatch",
     "tier": 5,
-    "order": 243,
+    "order": 242,
     "batch": "LPO: varia??es t?cnicas e complexos",
     "reason": "Adicionar varia??es t?cnicas ap?s validar movimentos principais e suas recep??es; coordenar m?ltiplas fases sem deformar anatomia."
   },
@@ -1947,7 +1939,7 @@
     "exerciseId": "e0f5d67f-493e-4352-834a-456560ecca2b",
     "exerciseName": "Snatch a Partir de Blocos",
     "tier": 5,
-    "order": 244,
+    "order": 243,
     "batch": "LPO: varia??es t?cnicas e complexos",
     "reason": "Adicionar varia??es t?cnicas ap?s validar movimentos principais e suas recep??es; coordenar m?ltiplas fases sem deformar anatomia."
   },
@@ -1955,7 +1947,7 @@
     "exerciseId": "88bd42c5-11d8-41cd-87e3-409c005751e4",
     "exerciseName": "Tall Snatch",
     "tier": 5,
-    "order": 245,
+    "order": 244,
     "batch": "LPO: varia??es t?cnicas e complexos",
     "reason": "Adicionar varia??es t?cnicas ap?s validar movimentos principais e suas recep??es; coordenar m?ltiplas fases sem deformar anatomia."
   },
@@ -1963,7 +1955,7 @@
     "exerciseId": "708862bf-1e56-437b-8ef8-fff5c581fdde",
     "exerciseName": "Snatch Balance",
     "tier": 5,
-    "order": 246,
+    "order": 245,
     "batch": "LPO: varia??es t?cnicas e complexos",
     "reason": "Adicionar varia??es t?cnicas ap?s validar movimentos principais e suas recep??es; coordenar m?ltiplas fases sem deformar anatomia."
   },
@@ -1971,7 +1963,7 @@
     "exerciseId": "82e5d50e-7651-4f1c-88a4-424ad0354896",
     "exerciseName": "Squat Jerk",
     "tier": 5,
-    "order": 247,
+    "order": 246,
     "batch": "LPO: varia??es t?cnicas e complexos",
     "reason": "Adicionar varia??es t?cnicas ap?s validar movimentos principais e suas recep??es; coordenar m?ltiplas fases sem deformar anatomia."
   },
@@ -1979,7 +1971,7 @@
     "exerciseId": "8b4a7da1-fc99-46b6-82ce-22b7f575d709",
     "exerciseName": "Clean and Jerk",
     "tier": 5,
-    "order": 248,
+    "order": 247,
     "batch": "LPO: varia??es t?cnicas e complexos",
     "reason": "Adicionar varia??es t?cnicas ap?s validar movimentos principais e suas recep??es; coordenar m?ltiplas fases sem deformar anatomia."
   },
@@ -1987,7 +1979,7 @@
     "exerciseId": "319d60a2-9774-4b56-85e7-4649cf2d23d7",
     "exerciseName": "Kettlebell Snatch Unilateral",
     "tier": 5,
-    "order": 249,
+    "order": 248,
     "batch": "Kettlebell: coordena??o avan?ada",
     "reason": "Revisar recep??o no antebra?o, passagem do implemento e transi??es antes de aprovar movimentos compostos."
   },
@@ -1995,7 +1987,7 @@
     "exerciseId": "2451bd48-05fb-473e-80cb-b0479bee48f5",
     "exerciseName": "Kettlebell Jerk Unilateral",
     "tier": 5,
-    "order": 250,
+    "order": 249,
     "batch": "Kettlebell: coordena??o avan?ada",
     "reason": "Revisar recep??o no antebra?o, passagem do implemento e transi??es antes de aprovar movimentos compostos."
   },
@@ -2003,7 +1995,7 @@
     "exerciseId": "defa9909-90f4-4278-8351-8bdab5f6b7d4",
     "exerciseName": "Turkish Get-up",
     "tier": 5,
-    "order": 251,
+    "order": 250,
     "batch": "Kettlebell: coordena??o avan?ada",
     "reason": "Revisar recep??o no antebra?o, passagem do implemento e transi??es antes de aprovar movimentos compostos."
   },
@@ -2011,7 +2003,7 @@
     "exerciseId": "f0eeccc0-954b-454d-8aaa-c272830213e8",
     "exerciseName": "Devil Press com Halteres",
     "tier": 5,
-    "order": 252,
+    "order": 251,
     "batch": "Kettlebell: coordena??o avan?ada",
     "reason": "Revisar recep??o no antebra?o, passagem do implemento e transi??es antes de aprovar movimentos compostos."
   },
@@ -2019,7 +2011,7 @@
     "exerciseId": "84d0c069-21f2-4660-8ba1-b47bb09b3e81",
     "exerciseName": "Burpee com Salto por Cima da Caixa",
     "tier": 5,
-    "order": 253,
+    "order": 252,
     "batch": "Gin?stica din?mica e habilidades",
     "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
   },
@@ -2027,7 +2019,7 @@
     "exerciseId": "5c64df12-58dd-4840-8494-54b6fe10b54b",
     "exerciseName": "Kipping Pull-up",
     "tier": 5,
-    "order": 254,
+    "order": 253,
     "batch": "Gin?stica din?mica e habilidades",
     "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
   },
@@ -2035,7 +2027,7 @@
     "exerciseId": "2ec2e5b6-c015-4d08-8d4d-9577c410f143",
     "exerciseName": "Butterfly Pull-up",
     "tier": 5,
-    "order": 255,
+    "order": 254,
     "batch": "Gin?stica din?mica e habilidades",
     "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
   },
@@ -2043,7 +2035,7 @@
     "exerciseId": "3f882b66-3ba6-430c-8996-32179546dacd",
     "exerciseName": "Chest-to-Bar Pull-up",
     "tier": 5,
-    "order": 256,
+    "order": 255,
     "batch": "Gin?stica din?mica e habilidades",
     "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
   },
@@ -2051,7 +2043,7 @@
     "exerciseId": "a9c79cda-74c6-4fff-8b2a-01f3a0e4c91c",
     "exerciseName": "Toes-to-Bar",
     "tier": 5,
-    "order": 257,
+    "order": 256,
     "batch": "Gin?stica din?mica e habilidades",
     "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
   },
@@ -2059,7 +2051,7 @@
     "exerciseId": "eee0b56d-e70a-4c5f-8e33-32032f8b6c2f",
     "exerciseName": "Knees-to-Elbows",
     "tier": 5,
-    "order": 258,
+    "order": 257,
     "batch": "Gin?stica din?mica e habilidades",
     "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
   },
@@ -2067,7 +2059,7 @@
     "exerciseId": "b034a035-e699-4b70-858f-9f131820545e",
     "exerciseName": "Muscle-up na Barra",
     "tier": 5,
-    "order": 259,
+    "order": 258,
     "batch": "Gin?stica din?mica e habilidades",
     "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
   },
@@ -2075,7 +2067,7 @@
     "exerciseId": "66f7980f-4e11-4bd7-8a38-c45d5fe23e29",
     "exerciseName": "Muscle-up nas Argolas",
     "tier": 5,
-    "order": 260,
+    "order": 259,
     "batch": "Gin?stica din?mica e habilidades",
     "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
   },
@@ -2083,7 +2075,7 @@
     "exerciseId": "067c23df-07bc-4110-8022-e026d6697199",
     "exerciseName": "Handstand Push-up Estrito",
     "tier": 5,
-    "order": 261,
+    "order": 260,
     "batch": "Gin?stica din?mica e habilidades",
     "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
   },
@@ -2091,7 +2083,7 @@
     "exerciseId": "87bb8075-09af-43d8-813d-19b257bb67eb",
     "exerciseName": "Kipping Handstand Push-up",
     "tier": 5,
-    "order": 262,
+    "order": 261,
     "batch": "Gin?stica din?mica e habilidades",
     "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
   },
@@ -2099,7 +2091,7 @@
     "exerciseId": "df51e789-ae36-4ffc-8636-72e0d458ca4d",
     "exerciseName": "Wall Walk",
     "tier": 5,
-    "order": 263,
+    "order": 262,
     "batch": "Gin?stica din?mica e habilidades",
     "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
   },
@@ -2107,7 +2099,7 @@
     "exerciseId": "c9e30495-151c-4a1f-8e64-b5ea8ce767bb",
     "exerciseName": "Handstand Walk",
     "tier": 5,
-    "order": 264,
+    "order": 263,
     "batch": "Gin?stica din?mica e habilidades",
     "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
   },
@@ -2115,7 +2107,7 @@
     "exerciseId": "eab742e2-9380-4dfa-86fc-459d84157b6c",
     "exerciseName": "Subida na Corda",
     "tier": 5,
-    "order": 265,
+    "order": 264,
     "batch": "Gin?stica din?mica e habilidades",
     "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
   },
@@ -2123,7 +2115,7 @@
     "exerciseId": "3d8e35e1-3414-49c4-8100-923294135403",
     "exerciseName": "Pular Corda com Giro Duplo — alias: double-under",
     "tier": 5,
-    "order": 266,
+    "order": 265,
     "batch": "Corda: giro duplo",
     "reason": "Sincronizar dois giros da corda por salto ap?s validar o giro simples e o ciclo de aterrissagem."
   }

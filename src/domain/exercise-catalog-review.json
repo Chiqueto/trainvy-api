@@ -9,15 +9,6 @@
     "sourceIds": ["press", "ace"]
   },
   {
-    "id": "00000000-0000-4000-8000-000000000102",
-    "name": "Supino Reto",
-    "family": "Musculação tradicional — peito",
-    "groups": ["RESISTANCE"],
-    "primary": ["CHEST"],
-    "secondary": ["TRICEPS", "SHOULDERS"],
-    "sourceIds": ["press", "ace"]
-  },
-  {
     "id": "00000000-0000-4000-8000-000000000103",
     "name": "Supino Inclinado com Halteres",
     "family": "Musculação tradicional — peito",
@@ -45,15 +36,6 @@
     "secondary": ["ADDUCTORS", "CORE", "BACK"],
     "sourceIds": ["legs", "glutes", "ace"],
     "notes": "Isquiotibiais coativam, mas não são tratados como alvo equivalente a flexões de joelho; adutores auxiliam a extensão do quadril."
-  },
-  {
-    "id": "00000000-0000-4000-8000-000000000106",
-    "name": "Agachamento",
-    "family": "Musculação tradicional — pernas e quadril",
-    "groups": ["RESISTANCE"],
-    "primary": ["QUADRICEPS", "GLUTES"],
-    "secondary": ["ADDUCTORS", "CORE", "BACK"],
-    "sourceIds": ["legs", "glutes", "ace"]
   },
   {
     "id": "00000000-0000-4000-8000-000000000107",
@@ -662,14 +644,7 @@
     "family": "Musculação tradicional — costas",
     "groups": ["RESISTANCE"],
     "primary": ["BACK"],
-    "secondary": [
-      "BICEPS",
-      "SHOULDERS",
-      "FOREARMS",
-      "CORE",
-      "GLUTES",
-      "HAMSTRINGS"
-    ],
+    "secondary": ["BICEPS", "SHOULDERS", "FOREARMS", "CORE", "GLUTES", "HAMSTRINGS"],
     "sourceIds": ["ace", "upper-anatomy"]
   },
   {
@@ -796,14 +771,7 @@
     "family": "Ginástica e movimentos funcionais",
     "groups": ["CALISTHENICS", "CONDITIONING"],
     "primary": ["BACK"],
-    "secondary": [
-      "BICEPS",
-      "SHOULDERS",
-      "CORE",
-      "HIP_FLEXORS",
-      "GLUTES",
-      "FOREARMS"
-    ],
+    "secondary": ["BICEPS", "SHOULDERS", "CORE", "HIP_FLEXORS", "GLUTES", "FOREARMS"],
     "sourceIds": ["crossfit", "legs", "press"]
   },
   {
@@ -967,14 +935,7 @@
     "family": "Ginástica e movimentos funcionais",
     "groups": ["CALISTHENICS", "CONDITIONING"],
     "primary": ["BACK"],
-    "secondary": [
-      "BICEPS",
-      "SHOULDERS",
-      "CORE",
-      "HIP_FLEXORS",
-      "GLUTES",
-      "FOREARMS"
-    ],
+    "secondary": ["BICEPS", "SHOULDERS", "CORE", "HIP_FLEXORS", "GLUTES", "FOREARMS"],
     "sourceIds": ["crossfit", "legs", "press"]
   },
   {
@@ -1069,7 +1030,7 @@
   },
   {
     "id": "46e31e5f-585b-4a3b-8b06-f6bed13440b5",
-    "name": "Crucifixo no Cabo na Altura do Peito",
+    "name": "Crossover na Polia Média",
     "family": "Musculação tradicional — peito",
     "groups": ["RESISTANCE"],
     "primary": ["CHEST"],
@@ -1190,16 +1151,7 @@
     "family": "Condicionamento e transportes",
     "groups": ["CONDITIONING"],
     "primary": ["QUADRICEPS", "GLUTES"],
-    "secondary": [
-      "HAMSTRINGS",
-      "CALVES",
-      "CHEST",
-      "BACK",
-      "SHOULDERS",
-      "TRICEPS",
-      "BICEPS",
-      "CORE"
-    ],
+    "secondary": ["HAMSTRINGS", "CALVES", "CHEST", "BACK", "SHOULDERS", "TRICEPS", "BICEPS", "CORE"],
     "sourceIds": ["crossfit", "locomotion", "upper-anatomy"]
   },
   {
@@ -1217,14 +1169,7 @@
     "family": "Ginástica e movimentos funcionais",
     "groups": ["CALISTHENICS", "CONDITIONING"],
     "primary": ["BACK"],
-    "secondary": [
-      "BICEPS",
-      "SHOULDERS",
-      "CORE",
-      "HIP_FLEXORS",
-      "GLUTES",
-      "FOREARMS"
-    ],
+    "secondary": ["BICEPS", "SHOULDERS", "CORE", "HIP_FLEXORS", "GLUTES", "FOREARMS"],
     "sourceIds": ["crossfit", "legs", "press"]
   },
   {
@@ -1819,14 +1764,7 @@
     "family": "Condicionamento e transportes",
     "groups": ["CARRIES", "RESISTANCE", "CORE_STABILITY"],
     "primary": ["CORE", "BACK"],
-    "secondary": [
-      "FOREARMS",
-      "SHOULDERS",
-      "BICEPS",
-      "GLUTES",
-      "QUADRICEPS",
-      "CALVES"
-    ],
+    "secondary": ["FOREARMS", "SHOULDERS", "BICEPS", "GLUTES", "QUADRICEPS", "CALVES"],
     "sourceIds": ["ace", "upper-anatomy", "locomotion"]
   },
   {
@@ -1858,11 +1796,20 @@
   },
   {
     "id": "b9859cd9-6ed6-4e63-8fd0-500e8cf8d553",
-    "name": "Crucifixo na Máquina — aliases: peck deck, pec deck, voador",
+    "name": "Peck Deck",
     "family": "Musculação tradicional — peito",
     "groups": ["RESISTANCE"],
     "primary": ["CHEST"],
     "secondary": ["SHOULDERS"],
+    "sourceIds": ["press", "ace"]
+  },
+  {
+    "id": "6ca42bbc-3724-45ec-98ed-36fb53af260a",
+    "name": "Crucifixo na Máquina",
+    "family": "Musculação tradicional — peito",
+    "groups": ["RESISTANCE"],
+    "primary": ["CHEST"],
+    "secondary": ["SHOULDERS", "BICEPS"],
     "sourceIds": ["press", "ace"]
   },
   {
@@ -2134,15 +2081,7 @@
     "family": "Condicionamento e transportes",
     "groups": ["CONDITIONING"],
     "primary": ["SHOULDERS"],
-    "secondary": [
-      "BACK",
-      "BICEPS",
-      "TRICEPS",
-      "FOREARMS",
-      "CORE",
-      "QUADRICEPS",
-      "GLUTES"
-    ],
+    "secondary": ["BACK", "BICEPS", "TRICEPS", "FOREARMS", "CORE", "QUADRICEPS", "GLUTES"],
     "sourceIds": ["crossfit", "locomotion", "upper-anatomy"]
   },
   {
@@ -2174,7 +2113,7 @@
   },
   {
     "id": "daf02b04-9308-4b8f-8047-d4a5bb86d079",
-    "name": "Crossover no Cabo Alto",
+    "name": "Crossover na Polia Alta",
     "family": "Musculação tradicional — peito",
     "groups": ["RESISTANCE"],
     "primary": ["CHEST"],
@@ -2201,7 +2140,7 @@
   },
   {
     "id": "dd8854e2-5652-4ffb-86bc-dbf61b42bd04",
-    "name": "Crucifixo no Cabo Baixo",
+    "name": "Crossover na Polia Baixa",
     "family": "Musculação tradicional — peito",
     "groups": ["RESISTANCE"],
     "primary": ["CHEST"],
@@ -2296,13 +2235,7 @@
     "family": "Condicionamento e transportes",
     "groups": ["CONDITIONING"],
     "primary": ["QUADRICEPS", "GLUTES", "HAMSTRINGS", "CALVES"],
-    "secondary": [
-      "HIP_FLEXORS",
-      "HIP_ABDUCTORS",
-      "ADDUCTORS",
-      "CORE",
-      "TIBIALIS_ANTERIOR"
-    ],
+    "secondary": ["HIP_FLEXORS", "HIP_ABDUCTORS", "ADDUCTORS", "CORE", "TIBIALIS_ANTERIOR"],
     "sourceIds": ["crossfit", "locomotion", "upper-anatomy"]
   },
   {
@@ -2464,15 +2397,7 @@
     "family": "Condicionamento e transportes",
     "groups": ["CARRIES", "RESISTANCE", "CORE_STABILITY"],
     "primary": ["SHOULDERS", "CORE"],
-    "secondary": [
-      "TRICEPS",
-      "BACK",
-      "FOREARMS",
-      "GLUTES",
-      "QUADRICEPS",
-      "CALVES",
-      "HIP_ABDUCTORS"
-    ],
+    "secondary": ["TRICEPS", "BACK", "FOREARMS", "GLUTES", "QUADRICEPS", "CALVES", "HIP_ABDUCTORS"],
     "sourceIds": ["ace", "upper-anatomy", "locomotion"]
   }
 ]

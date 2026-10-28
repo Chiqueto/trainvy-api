@@ -1,5 +1,6 @@
 import { Prisma } from "../generated/prisma/client.js";
 import { prisma } from "../lib/db.js";
+import { GLOBAL_EXERCISE_ALIASES } from "./exercise-catalog-aliases.js";
 
 /**
  * Resolução canônica de exercício por nome exato normalizado (LOWER(TRIM(name))).
@@ -59,6 +60,10 @@ export async function resolveCanonicalExerciseMap(params: {
   }
 
   // Para cada nome original, resolver o id canônico
+  const globalIds = new Set(accessibleExercises.filter((e) => e.ownerUserId === null).map((e) => e.id));
+  for (const [alias, targetId] of GLOBAL_EXERCISE_ALIASES) {
+    if (globalIds.has(targetId) && !globalMap.has(alias)) globalMap.set(alias, targetId);
+  }
   for (const originalName of names) {
     const key = originalName.trim().toLowerCase();
     const matchedId = userMap.get(key) ?? globalMap.get(key);

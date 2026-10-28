@@ -12,7 +12,7 @@ import { cleanupTestUsers, createTestUser } from "../helpers/test-db.js";
 
 const canonical = JSON.parse(
   readFileSync(
-    new URL("../../src/domain/peck-deck-anatomy.json", import.meta.url),
+    new URL("../fixtures/peck-deck-anatomy-initial.json", import.meta.url),
     "utf8",
   ),
 );
@@ -25,7 +25,7 @@ const targetId = "b9859cd9-6ed6-4e63-8fd0-500e8cf8d553";
 
 const machineCanonical = JSON.parse(
   readFileSync(
-    new URL("../../src/domain/machine-chest-press-anatomy.json", import.meta.url),
+    new URL("../fixtures/machine-chest-press-anatomy-initial.json", import.meta.url),
     "utf8",
   ),
 );

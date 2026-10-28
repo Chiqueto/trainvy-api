@@ -1,0 +1,108 @@
+{
+  "version": "2026-10-28.2",
+  "reviewedAt": "2026-10-28T17:30:00.000Z",
+  "variant": "Crucifixo sentado na máquina com pegadores, encosto e cotovelos levemente flexionados; sem apoios de antebraço.",
+  "aliases": [
+    "crucifixo máquina",
+    "machine fly",
+    "voador com pegadores"
+  ],
+  "participants": [
+    {
+      "id": "PECTORALIS_MAJOR",
+      "label": "Peitoral maior",
+      "muscleGroup": "CHEST",
+      "role": "PRIMARY",
+      "aliases": [
+        "peitoral",
+        "peito"
+      ],
+      "regions": [
+        {
+          "id": "PECTORALIS_MAJOR_CLAVICULAR",
+          "label": "Porção clavicular",
+          "aliases": [
+            "peitoral superior"
+          ]
+        },
+        {
+          "id": "PECTORALIS_MAJOR_STERNOCOSTAL",
+          "label": "Porção esternocostal",
+          "aliases": [
+            "peitoral esternocostal",
+            "peitoral médio",
+            "peitoral inferior"
+          ]
+        }
+      ],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "SAETERBAKKEN_2020",
+        "WELSCH_2005"
+      ]
+    },
+    {
+      "id": "DELTOID_ANTERIOR",
+      "label": "Deltoide anterior",
+      "muscleGroup": "SHOULDERS",
+      "role": "SECONDARY",
+      "aliases": [
+        "ombro anterior",
+        "deltoide frontal"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "SAETERBAKKEN_2020",
+        "WELSCH_2005"
+      ]
+    },
+    {
+      "id": "BICEPS_BRACHII",
+      "label": "Bíceps braquial",
+      "muscleGroup": "BICEPS",
+      "role": "SECONDARY",
+      "aliases": [
+        "bíceps"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "SAETERBAKKEN_2020"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "SAETERBAKKEN_2020",
+      "title": "Saeterbakken et al. — muscle activation in barbell bench press and dumbbell flyes (2020)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7675616/",
+      "limitation": "Dezessete homens treinados em 6RM; EMG não determina hipertrofia nem esforço individual."
+    },
+    {
+      "id": "WELSCH_2005",
+      "title": "Welsch et al. — electromyographic activity during three upper-body lifts (2005)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15903389/",
+      "limitation": "Doze participantes, EMG apenas do peitoral maior e deltoide anterior; não estabelece ênfase regional."
+    },
+    {
+      "id": "ACE_CHEST_FLY",
+      "title": "ACE — Lying Chest Fly",
+      "url": "https://www.acefitness.org/resources/everyone/exercise-library/21/lying-chest-fly/",
+      "limitation": "Referência técnica de pegada neutra e punhos alinhados; não é ensaio de EMG nem demonstra superioridade de uma pegada."
+    },
+    {
+      "id": "MACHINE_FLY_EQUIPMENT",
+      "title": "Life Fitness — Insignia Series Pectoral Fly/Rear Deltoid",
+      "url": "https://www.lifefitness.com/en-us/catalog/strength-training/selectorized/insignia-series-pectoral-fly-rear-deltoid",
+      "limitation": "Referência do equipamento e pegadores; extrapolação anatômica do gesto de adução horizontal, sem equivalência quantitativa entre EMG com halteres e máquina."
+    }
+  ],
+  "notes": "Peitoral maior primário; deltoide anterior e bíceps como participantes secundários. A participação do bíceps estabilizando a flexão do cotovelo é inferência anatômica. Não usar este cadastro para Peck Deck com apoio de antebraços. Não se estabelece ênfase regional.",
+  "instructions": {
+    "description": "Adução horizontal na máquina com pegadores, sem apoio de antebraços.",
+    "setup": "Sente com costas no encosto e pés apoiados. Segure os pegadores à altura do peito, com cotovelos levemente flexionados.",
+    "execution": "Aproxime os pegadores em arco à frente do peito mantendo a flexão dos cotovelos. Reabra de forma controlada até uma amplitude confortável.",
+    "tips": "Mantenha o tronco apoiado. Esta variação usa pegadores; o Peck Deck usa apoios de antebraço. Participação muscular ilustrativa."
+  }
+}

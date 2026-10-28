@@ -55,25 +55,31 @@
   },
   {
     "id": "b9859cd9-6ed6-4e63-8fd0-500e8cf8d553",
-    "name": "Crucifixo na Máquina — aliases: peck deck, pec deck, voador",
+    "name": "Peck Deck",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito"
+  },
+  {
+    "id": "6ca42bbc-3724-45ec-98ed-36fb53af260a",
+    "name": "Crucifixo na Máquina",
     "isUnilateral": false,
     "family": "Musculação tradicional — peito"
   },
   {
     "id": "46e31e5f-585b-4a3b-8b06-f6bed13440b5",
-    "name": "Crucifixo no Cabo na Altura do Peito",
+    "name": "Crossover na Polia Média",
     "isUnilateral": false,
     "family": "Musculação tradicional — peito"
   },
   {
     "id": "daf02b04-9308-4b8f-8047-d4a5bb86d079",
-    "name": "Crossover no Cabo Alto",
+    "name": "Crossover na Polia Alta",
     "isUnilateral": false,
     "family": "Musculação tradicional — peito"
   },
   {
     "id": "dd8854e2-5652-4ffb-86bc-dbf61b42bd04",
-    "name": "Crucifixo no Cabo Baixo",
+    "name": "Crossover na Polia Baixa",
     "isUnilateral": false,
     "family": "Musculação tradicional — peito"
   },

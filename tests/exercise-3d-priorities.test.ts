@@ -19,7 +19,7 @@ describe("3D production plan integrity", () => {
     for (const item of plan) {
       expect(item.exerciseName).toBe(names.get(item.exerciseId));
       expect(item.reason.length).toBeGreaterThan(30);
-      expect(AdminExerciseCatalog.safeParse([{id: item.exerciseId, name: item.exerciseName, isUnilateral: false, family: null, updatedAt: "2026-10-27T12:00:00Z", priority3d: item, muscles: [], media: []}]).success).toBe(true);
+      expect(AdminExerciseCatalog.safeParse([{id: item.exerciseId, name: item.exerciseName, isUnilateral: false, family: null, updatedAt: "2026-10-27T12:00:00Z", priority3d: item, groups: ["RESISTANCE"], review: null, muscles: [], media: []}]).success).toBe(true);
     }
   });
 });

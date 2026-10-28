@@ -28,9 +28,9 @@ describe("Reviewed catalog coverage and biomechanics", () => {
       JSON.parse(readFileSync(new URL("../fixtures/exercise-catalog-review-initial.json", import.meta.url), "utf8")),
     );
   });
-  it("covers all 266 IDs without aliases or missing classifications", () => {
-    expect(REVIEWED_EXERCISES).toHaveLength(266);
-    expect(CANONICAL_GLOBAL_CATALOG).toHaveLength(53);
+  it("covers all current IDs without aliases or missing classifications", () => {
+    expect(REVIEWED_EXERCISES).toHaveLength(265);
+    expect(CANONICAL_GLOBAL_CATALOG).toHaveLength(51);
     for (const exercise of [...CANONICAL_GLOBAL_CATALOG, ...expansion]) {
       expect(REVIEWED_EXERCISES_BY_ID.get(exercise.id)?.name).toBe(
         exercise.name,

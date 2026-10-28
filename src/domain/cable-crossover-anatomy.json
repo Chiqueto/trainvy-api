@@ -1,0 +1,221 @@
+{
+  "46e31e5f-585b-4a3b-8b06-f6bed13440b5": {
+    "version": "2026-10-28.2",
+    "reviewedAt": "2026-10-28T17:30:00.000Z",
+    "variant": "Crossover bilateral em pé na polia média, com cotovelos levemente flexionados.",
+    "aliases": [
+      "cross over na Polia Média",
+      "crucifixo no cabo na altura do peito"
+    ],
+    "participants": [
+      {
+        "id": "PECTORALIS_MAJOR",
+        "label": "Peitoral maior",
+        "muscleGroup": "CHEST",
+        "role": "PRIMARY",
+        "aliases": [
+          "peitoral",
+          "peito"
+        ],
+        "regions": [
+          {
+            "id": "PECTORALIS_MAJOR_CLAVICULAR",
+            "label": "Porção clavicular",
+            "aliases": [
+              "peitoral superior"
+            ]
+          },
+          {
+            "id": "PECTORALIS_MAJOR_STERNOCOSTAL",
+            "label": "Porção esternocostal",
+            "aliases": [
+              "peitoral esternocostal",
+              "peitoral médio",
+              "peitoral inferior"
+            ]
+          }
+        ],
+        "emphasizedRegionIds": [],
+        "sourceIds": [
+          "CABLE_EMG_2012"
+        ]
+      },
+      {
+        "id": "DELTOID_ANTERIOR",
+        "label": "Deltoide anterior",
+        "muscleGroup": "SHOULDERS",
+        "role": "SECONDARY",
+        "aliases": [
+          "ombro anterior",
+          "deltoide frontal"
+        ],
+        "regions": [],
+        "emphasizedRegionIds": [],
+        "sourceIds": [
+          "CABLE_EMG_2012"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "CABLE_EMG_2012",
+        "title": "Schanke — Electromyographical analysis of the pectoralis major muscle during various chest exercises (2012)",
+        "url": "https://core.ac.uk/download/pdf/10596984.pdf",
+        "limitation": "Comparação aguda incluindo crossover inclinado à frente e pec deck. Não comparou diretamente as três alturas de polia; as trajetórias são distinções mecânicas editoriais, sem ranking de ativação ou hipertrofia."
+      }
+    ],
+    "notes": "Peitoral maior primário e deltoide anterior secundário. Trajetória definida pela altura da polia; participação dos estabilizadores do tronco, escápula e cotovelo é inferência anatômica. Sem ênfase regional quantitativa ou isolamento. Cores são ilustrativas.",
+    "instructions": {
+      "description": "Adução dos braços no crossover na polia média, com peitoral maior como alvo.",
+      "setup": "Ajuste as duas polias à altura do peito. Segure os pegadores e avance com base estável e cotovelos levemente flexionados.",
+      "execution": "Aproxime os pegadores horizontalmente à frente do peito. Reabra controlando pelo mesmo arco.",
+      "tips": "Preserve a leve flexão dos cotovelos e a estabilidade do tronco. A altura da polia muda a linha de resistência; não isola uma porção do peitoral."
+    }
+  },
+  "daf02b04-9308-4b8f-8047-d4a5bb86d079": {
+    "version": "2026-10-28.2",
+    "reviewedAt": "2026-10-28T17:30:00.000Z",
+    "variant": "Crossover bilateral em pé na polia alta, com cotovelos levemente flexionados.",
+    "aliases": [
+      "cross over na Polia Alta",
+      "crossover no cabo alto"
+    ],
+    "participants": [
+      {
+        "id": "PECTORALIS_MAJOR",
+        "label": "Peitoral maior",
+        "muscleGroup": "CHEST",
+        "role": "PRIMARY",
+        "aliases": [
+          "peitoral",
+          "peito"
+        ],
+        "regions": [
+          {
+            "id": "PECTORALIS_MAJOR_CLAVICULAR",
+            "label": "Porção clavicular",
+            "aliases": [
+              "peitoral superior"
+            ]
+          },
+          {
+            "id": "PECTORALIS_MAJOR_STERNOCOSTAL",
+            "label": "Porção esternocostal",
+            "aliases": [
+              "peitoral esternocostal",
+              "peitoral médio",
+              "peitoral inferior"
+            ]
+          }
+        ],
+        "emphasizedRegionIds": [],
+        "sourceIds": [
+          "CABLE_EMG_2012"
+        ]
+      },
+      {
+        "id": "DELTOID_ANTERIOR",
+        "label": "Deltoide anterior",
+        "muscleGroup": "SHOULDERS",
+        "role": "SECONDARY",
+        "aliases": [
+          "ombro anterior",
+          "deltoide frontal"
+        ],
+        "regions": [],
+        "emphasizedRegionIds": [],
+        "sourceIds": [
+          "CABLE_EMG_2012"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "CABLE_EMG_2012",
+        "title": "Schanke — Electromyographical analysis of the pectoralis major muscle during various chest exercises (2012)",
+        "url": "https://core.ac.uk/download/pdf/10596984.pdf",
+        "limitation": "Comparação aguda incluindo crossover inclinado à frente e pec deck. Não comparou diretamente as três alturas de polia; as trajetórias são distinções mecânicas editoriais, sem ranking de ativação ou hipertrofia."
+      }
+    ],
+    "notes": "Peitoral maior primário e deltoide anterior secundário. Trajetória definida pela altura da polia; participação dos estabilizadores do tronco, escápula e cotovelo é inferência anatômica. Sem ênfase regional quantitativa ou isolamento. Cores são ilustrativas.",
+    "instructions": {
+      "description": "Adução dos braços no crossover na polia alta, com peitoral maior como alvo.",
+      "setup": "Ajuste as duas polias acima dos ombros. Segure os pegadores e avance com base estável e cotovelos levemente flexionados.",
+      "execution": "Aproxime os pegadores para baixo e para dentro, à frente da parte inferior do tórax. Retorne controlando pelo mesmo arco.",
+      "tips": "Preserve a leve flexão dos cotovelos e a estabilidade do tronco. A altura da polia muda a linha de resistência; não isola uma porção do peitoral."
+    }
+  },
+  "dd8854e2-5652-4ffb-86bc-dbf61b42bd04": {
+    "version": "2026-10-28.2",
+    "reviewedAt": "2026-10-28T17:30:00.000Z",
+    "variant": "Crossover bilateral em pé na polia baixa, com cotovelos levemente flexionados.",
+    "aliases": [
+      "cross over na Polia Baixa",
+      "crucifixo no cabo baixo"
+    ],
+    "participants": [
+      {
+        "id": "PECTORALIS_MAJOR",
+        "label": "Peitoral maior",
+        "muscleGroup": "CHEST",
+        "role": "PRIMARY",
+        "aliases": [
+          "peitoral",
+          "peito"
+        ],
+        "regions": [
+          {
+            "id": "PECTORALIS_MAJOR_CLAVICULAR",
+            "label": "Porção clavicular",
+            "aliases": [
+              "peitoral superior"
+            ]
+          },
+          {
+            "id": "PECTORALIS_MAJOR_STERNOCOSTAL",
+            "label": "Porção esternocostal",
+            "aliases": [
+              "peitoral esternocostal",
+              "peitoral médio",
+              "peitoral inferior"
+            ]
+          }
+        ],
+        "emphasizedRegionIds": [],
+        "sourceIds": [
+          "CABLE_EMG_2012"
+        ]
+      },
+      {
+        "id": "DELTOID_ANTERIOR",
+        "label": "Deltoide anterior",
+        "muscleGroup": "SHOULDERS",
+        "role": "SECONDARY",
+        "aliases": [
+          "ombro anterior",
+          "deltoide frontal"
+        ],
+        "regions": [],
+        "emphasizedRegionIds": [],
+        "sourceIds": [
+          "CABLE_EMG_2012"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "CABLE_EMG_2012",
+        "title": "Schanke — Electromyographical analysis of the pectoralis major muscle during various chest exercises (2012)",
+        "url": "https://core.ac.uk/download/pdf/10596984.pdf",
+        "limitation": "Comparação aguda incluindo crossover inclinado à frente e pec deck. Não comparou diretamente as três alturas de polia; as trajetórias são distinções mecânicas editoriais, sem ranking de ativação ou hipertrofia."
+      }
+    ],
+    "notes": "Peitoral maior primário e deltoide anterior secundário. Trajetória definida pela altura da polia; participação dos estabilizadores do tronco, escápula e cotovelo é inferência anatômica. Sem ênfase regional quantitativa ou isolamento. Cores são ilustrativas.",
+    "instructions": {
+      "description": "Adução dos braços no crossover na polia baixa, com peitoral maior como alvo.",
+      "setup": "Ajuste as duas polias próximas ao chão. Segure os pegadores e avance com base estável e cotovelos levemente flexionados.",
+      "execution": "Aproxime os pegadores para cima e para dentro, à frente do peito. Retorne controlando pelo mesmo arco.",
+      "tips": "Preserve a leve flexão dos cotovelos e a estabilidade do tronco. A altura da polia muda a linha de resistência; não isola uma porção do peitoral."
+    }
+  }
+}

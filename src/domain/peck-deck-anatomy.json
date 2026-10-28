@@ -1,20 +1,29 @@
 {
-  "version": "2026-10-28.1",
-  "reviewedAt": "2026-10-28T00:00:00.000Z",
+  "version": "2026-10-28.2",
+  "reviewedAt": "2026-10-28T17:30:00.000Z",
   "variant": "Peck deck sentado, com encosto e apoios acolchoados nos antebraços; cotovelos flexionados e adução horizontal dos braços.",
-  "aliases": ["peck deck", "pec deck", "voador", "crucifixo na máquina"],
+  "aliases": [
+    "peck deck",
+    "pec deck",
+    "voador com apoio de antebraços"
+  ],
   "participants": [
     {
       "id": "PECTORALIS_MAJOR",
       "label": "Peitoral maior",
       "muscleGroup": "CHEST",
       "role": "PRIMARY",
-      "aliases": ["peitoral", "peito"],
+      "aliases": [
+        "peitoral",
+        "peito"
+      ],
       "regions": [
         {
           "id": "PECTORALIS_MAJOR_CLAVICULAR",
           "label": "Porção clavicular",
-          "aliases": ["peitoral superior"]
+          "aliases": [
+            "peitoral superior"
+          ]
         },
         {
           "id": "PECTORALIS_MAJOR_STERNOCOSTAL",
@@ -27,7 +36,10 @@
         }
       ],
       "emphasizedRegionIds": [],
-      "sourceIds": ["ACE_PEC_DECK", "MARCHETTI_PEC_DECK"]
+      "sourceIds": [
+        "ACE_PEC_DECK",
+        "MARCHETTI_PEC_DECK"
+      ]
     },
     {
       "id": "DELTOID_ANTERIOR",
@@ -41,7 +53,9 @@
       ],
       "regions": [],
       "emphasizedRegionIds": [],
-      "sourceIds": ["MARCHETTI_PEC_DECK"]
+      "sourceIds": [
+        "MARCHETTI_PEC_DECK"
+      ]
     }
   ],
   "sources": [

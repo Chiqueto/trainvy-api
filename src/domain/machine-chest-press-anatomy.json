@@ -1,6 +1,6 @@
 {
-  "version": "2026-10-28.1",
-  "reviewedAt": "2026-10-28T00:00:00.000Z",
+  "version": "2026-10-28.2",
+  "reviewedAt": "2026-10-28T17:30:00.000Z",
   "variant": "Supino na máquina sentado com encosto vertical, pegadores na altura do peitoral médio e pés no chão; empurre horizontal anterior com extensão controlada dos cotovelos.",
   "aliases": [
     "supino na máquina",
@@ -17,7 +17,10 @@
       "label": "Peitoral maior",
       "muscleGroup": "CHEST",
       "role": "PRIMARY",
-      "aliases": ["peitoral", "peito"],
+      "aliases": [
+        "peitoral",
+        "peito"
+      ],
       "regions": [
         {
           "id": "PECTORALIS_MAJOR_STERNOCOSTAL",
@@ -31,14 +34,15 @@
         {
           "id": "PECTORALIS_MAJOR_CLAVICULAR",
           "label": "Porção clavicular",
-          "aliases": ["peitoral superior", "peitoral clavicular"]
+          "aliases": [
+            "peitoral superior",
+            "peitoral clavicular"
+          ]
         }
       ],
       "emphasizedRegionIds": [],
       "sourceIds": [
-        "CORATELLA_CHEST_PRESS_2020",
-        "SAETERBAKKEN_CHEST_PRESS_2011",
-        "SCHICK_CHEST_PRESS_2010"
+        "CHEST_PRESS_2023"
       ]
     },
     {
@@ -46,12 +50,15 @@
       "label": "Tríceps braquial",
       "muscleGroup": "TRICEPS",
       "role": "SECONDARY",
-      "aliases": ["tríceps", "triceps braquial", "tríceps do braço"],
+      "aliases": [
+        "tríceps",
+        "triceps braquial",
+        "tríceps do braço"
+      ],
       "regions": [],
       "emphasizedRegionIds": [],
       "sourceIds": [
-        "CORATELLA_CHEST_PRESS_2020",
-        "SAETERBAKKEN_CHEST_PRESS_2011"
+        "CHEST_PRESS_2023"
       ]
     },
     {
@@ -67,36 +74,23 @@
       "regions": [],
       "emphasizedRegionIds": [],
       "sourceIds": [
-        "CORATELLA_CHEST_PRESS_2020",
-        "SAETERBAKKEN_CHEST_PRESS_2011"
+        "CHEST_PRESS_2023"
       ]
     }
   ],
   "sources": [
     {
-      "id": "CORATELLA_CHEST_PRESS_2020",
-      "title": "Coratella et al. — Specific prime movers excitation during free-weight bench press variations and chest press machine in competitive bodybuilders (2020)",
-      "url": "https://doi.org/10.1080/17461391.2019.1655101",
-      "limitation": "Estudo com 10 fisiculturistas competitivos avaliando amplitude RMS de EMG na máquina de supino sentado em comparação com variações livres. Demonstra recrutamento robusto do peitoral maior com participação sinergista do tríceps e deltoide anterior. Não mede hipertrofia longitudinal nem substitui calibração individual."
-    },
-    {
-      "id": "SAETERBAKKEN_CHEST_PRESS_2011",
-      "title": "Saeterbakken et al. — A comparison of muscle activity and 1-RM strength of three chest-press exercises with different stability requirements (2011)",
-      "url": "https://doi.org/10.1080/02640414.2010.543916",
-      "limitation": "Comparação de ativação eletromiográfica sob diferentes exigências de estabilização articular em homens treinados. Demonstra como trajetórias guiadas reduzem a demanda de estabilizadores tridimensionais, preservando a ação do peitoral e extensores do cotovelo."
-    },
-    {
-      "id": "SCHICK_CHEST_PRESS_2010",
-      "title": "Schick et al. — A comparison of muscle activation between a Smith machine and free weight bench press (2010)",
-      "url": "https://doi.org/10.1519/JSC.0b013e3181cc2237",
-      "limitation": "Investigou ativação motora entre supino livre e guiado em indivíduos treinados e destreinados. As conclusões apoiam que restrições fixas reduzem a necessidade de estabilização do ombro, permitindo sobrecarga localizada no motor primário."
+      "id": "CHEST_PRESS_2023",
+      "title": "Comparison of Muscle Activity between the Horizontal Bench Press and the Seated Chest Press Exercises Using Several Grips (2023)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10203828/",
+      "limitation": "Comparação aguda de EMG em homens treinados, dependente da máquina e pegada. Não determina ângulo ideal universal, hipertrofia ou risco de lesão."
     }
   ],
-  "notes": "Peitoral maior como motor primário no plano de empurrar horizontal, auxiliado pelos sinergistas tríceps braquial e deltoide anterior. A trajetória guiada da máquina oferece estabilidade externa pelo encosto, diminuindo o estresse de equilíbrio tridimensional. As regiões nomeadas refletem a anatomia músculo-esquelética sem atribuir isolamento absoluto ou medições de EMG em tempo real. Regulagens de banco devem alinhar as manoplas à linha média do tórax com cotovelos a ~45-60° do tronco para proteção articular.",
+  "notes": "Empurrar horizontal sentado com costas apoiadas. Peitoral maior primário; tríceps e deltoide anterior secundários. Encosto, amplitude, cadência e angulações da ilustração são decisões editoriais, não ótimo universal nem medida de EMG.",
   "instructions": {
     "description": "Empurrar horizontal na máquina de supino sentado com encosto vertical, tendo o peitoral maior como alvo principal e tríceps braquial e deltoide anterior como sinergistas.",
     "setup": "Ajuste o assento para que as manoplas fiquem alinhadas à altura média do peitoral (linha dos mamilos / meio do esterno). Apoie as costas firmemente no encosto, mantenha os pés apoiados no chão e as escápulas estabilizadas.",
     "execution": "Segure as manoplas com pegada firme e punhos neutros. Empurre à frente de maneira controlada até quase a extensão total dos braços, sem travar bruscamente os cotovelos. Retorne controlando a descida até sentir o alongamento confortável do peitoral.",
-    "tips": "Mantenha os cotovelos a aproximadamente 45° a 60° em relação ao tronco para proteger a articulação glenoumeral e evitar sobrecarga na cápsula anterior."
+    "tips": "Mantenha as costas apoiadas, punhos alinhados e cotovelos abaixo da linha dos ombros. Ajuste a amplitude ao equipamento e ao conforto individual; evite recuar os pegadores atrás do corpo."
   }
 }

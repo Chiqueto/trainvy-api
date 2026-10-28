@@ -5,7 +5,7 @@ import { ExerciseAnatomySchema, anatomySearchTerms, getExerciseAnatomy } from ".
 import { REVIEWED_EXERCISES_BY_ID } from "../../src/domain/exercise-catalog-review.js";
 import { getDatabaseUrl } from "../../src/lib/db.js";
 const id = "d555deb1-6eef-436d-8377-9427ac267697";
-const review = ExerciseAnatomySchema.parse(JSON.parse(readFileSync(new URL("../../src/domain/flat-dumbbell-fly-anatomy.json", import.meta.url), "utf8")));
+const review = ExerciseAnatomySchema.parse(JSON.parse(readFileSync(new URL("../fixtures/flat-dumbbell-fly-anatomy-initial.json", import.meta.url), "utf8")));
 const sql = readFileSync(new URL("../../prisma/migrations/20261028152000_flat_dumbbell_fly_anatomy/migration.sql", import.meta.url), "utf8").replace(/^BEGIN;\s*$/m, "").replace(/^COMMIT;\s*$/m, "");
 describe("flat dumbbell fly review", () => {
   it("agrees with the versioned classification and exposes its anatomical search terms", () => {
