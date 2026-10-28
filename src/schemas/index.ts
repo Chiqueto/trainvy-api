@@ -1,4 +1,5 @@
 import z from "zod";
+import { ExerciseAnatomySchema } from "../domain/exercise-anatomy.js";
 import {
   advancedPrescriptionShape,
   plannedAdvancedPrescriptionShape,
@@ -565,6 +566,7 @@ export const ExerciseResponseSchema = z.object({
   isUnilateral: z.boolean().default(false).optional(),
   hasMedia: z.boolean().default(false),
   muscles: z.array(ExerciseMuscleResponseSchema).default([]),
+  anatomy: ExerciseAnatomySchema.nullable().optional(),
 });
 
 export const ExerciseCatalogVersionResponseSchema = z.object({
@@ -585,6 +587,7 @@ export const ExerciseMediaParamsSchema = z.object({
 });
 
 export const ExerciseMediaResponseSchema = z.object({
+  anatomy: ExerciseAnatomySchema.nullable().optional(),
   exerciseId: z.uuid(),
   hasMedia: z.boolean(),
   mediaType: ExerciseMediaTypeSchema.nullable(),

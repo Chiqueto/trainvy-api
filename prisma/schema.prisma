@@ -211,6 +211,7 @@ model Exercise {
   ownerUser    User?    @relation(fields: [ownerUserId], references: [id], onDelete: Cascade)
   name         String
   isUnilateral Boolean  @default(false)
+  anatomyReview Json?
   createdAt    DateTime @default(now()) @db.Timestamptz()
   updatedAt    DateTime @updatedAt @db.Timestamptz()
 

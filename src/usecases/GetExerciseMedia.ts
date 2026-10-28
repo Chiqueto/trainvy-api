@@ -1,4 +1,8 @@
 import { ExerciseInstructions } from "../domain/canonical-media-catalog.js";
+import {
+  getExerciseAnatomy,
+  type ExerciseAnatomy,
+} from "../domain/exercise-anatomy.js";
 import { NotFoundError } from "../errors/index.js";
 import { ExerciseMediaType } from "../generated/prisma/enums.js";
 import { prisma } from "../lib/db.js";
@@ -9,6 +13,7 @@ export interface GetExerciseMediaInputDto {
 }
 
 export interface GetExerciseMediaOutputDto {
+  anatomy?: ExerciseAnatomy | null;
   exerciseId: string;
   hasMedia: boolean;
   mediaType: ExerciseMediaType | null;
@@ -21,10 +26,13 @@ export interface GetExerciseMediaOutputDto {
 }
 
 export class GetExerciseMedia {
-  async execute(dto: GetExerciseMediaInputDto): Promise<GetExerciseMediaOutputDto> {
+  async execute(
+    dto: GetExerciseMediaInputDto,
+  ): Promise<GetExerciseMediaOutputDto> {
     const exercise = await prisma.exercise.findUnique({
       where: { id: dto.exerciseId },
       include: {
+        muscles: true,
         media: {
           where: { isActive: true },
           take: 1,
@@ -46,17 +54,22 @@ export class GetExerciseMedia {
     }
 
     const activeMedia = exercise.media[0];
+    const anatomy = getExerciseAnatomy(
+      exercise.anatomyReview,
+      exercise.muscles,
+    );
 
     // Caso não possua mídia vinculada ou esteja inativa
     if (!activeMedia) {
       return {
         exerciseId: exercise.id,
+        anatomy,
         hasMedia: false,
         mediaType: null,
         startImagePath: null,
         endImagePath: null,
         motionPath: null,
-        instructions: null,
+        instructions: anatomy?.instructions ?? null,
         attributionName: null,
         attributionUrl: null,
       };
@@ -64,12 +77,15 @@ export class GetExerciseMedia {
 
     return {
       exerciseId: exercise.id,
+      anatomy,
       hasMedia: true,
       mediaType: activeMedia.mediaType,
       startImagePath: activeMedia.startImagePath,
       endImagePath: activeMedia.endImagePath,
       motionPath: activeMedia.motionPath,
-      instructions: activeMedia.instructions as unknown as ExerciseInstructions,
+      instructions:
+        anatomy?.instructions ??
+        (activeMedia.instructions as unknown as ExerciseInstructions),
       attributionName: activeMedia.attributionName,
       attributionUrl: activeMedia.attributionUrl,
     };

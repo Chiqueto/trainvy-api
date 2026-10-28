@@ -6,6 +6,7 @@ import fastifySwagger from "@fastify/swagger";
 import Fastify from "fastify";
 import {
   jsonSchemaTransform,
+  jsonSchemaTransformObject,
   serializerCompiler,
   validatorCompiler,
 } from "fastify-type-provider-zod";
@@ -53,6 +54,7 @@ await app.register(fastifySwagger, {
     ],
   },
   transform: jsonSchemaTransform,
+  transformObject: jsonSchemaTransformObject,
 });
 
 await app.register(WorkoutPlanRoutes, { prefix: "/workout-plans" });

@@ -1,4 +1,5 @@
 import z from "zod";
+import { ExerciseAnatomySchema } from "../domain/exercise-anatomy.js";
 
 import { ExerciseTrainingGroup } from "../domain/exercise-catalog-review.js";
 import { MuscleGroup, MuscleRole } from "../generated/prisma/enums.js";
@@ -42,6 +43,7 @@ export const AdminExerciseCatalog = z.array(
     family: z.string().nullable(),
     updatedAt: z.string(),
     groups: z.array(ExerciseTrainingGroup),
+    anatomy: ExerciseAnatomySchema.nullable().optional(),
     review: z
       .object({
         version: z.string(),

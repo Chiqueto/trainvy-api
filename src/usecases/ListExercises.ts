@@ -1,4 +1,10 @@
 import { MuscleGroup, MuscleRole, Prisma } from "../generated/prisma/client.js";
+import {
+  getExerciseAnatomy,
+  anatomySearchTerms,
+  broadMuscleSearchTerms,
+  type ExerciseAnatomy,
+} from "../domain/exercise-anatomy.js";
 import { prisma } from "../lib/db.js";
 
 interface InputDto {
@@ -16,6 +22,7 @@ export interface ExerciseOutputDto {
   ownerUserId: string | null;
   isUnilateral: boolean;
   hasMedia: boolean;
+  anatomy?: ExerciseAnatomy | null;
   muscles: Array<{
     id: string;
     muscleGroup: MuscleGroup;
@@ -65,6 +72,7 @@ export class ListExercises {
         name: true,
         ownerUserId: true,
         isUnilateral: true,
+        anatomyReview: true,
         media: {
           where: { isActive: true },
           select: { id: true },
@@ -114,7 +122,15 @@ export class ListExercises {
     const matchingExercises = normalizedQuery
       ? deduplicatedExercises
           .filter((exercise) =>
-            normalizeExerciseSearch(exercise.name).includes(normalizedQuery),
+            [
+              exercise.name,
+              ...anatomySearchTerms(
+                getExerciseAnatomy(exercise.anatomyReview, exercise.muscles),
+              ),
+              ...broadMuscleSearchTerms(exercise.muscles),
+            ].some((term) =>
+              normalizeExerciseSearch(term).includes(normalizedQuery),
+            ),
           )
           .sort((a, b) => {
             const aHasHistory = exercisedIds.has(a.id) ? 0 : 1;
@@ -148,14 +164,17 @@ export class ListExercises {
           return a.name.localeCompare(b.name);
         });
 
-    const mappedExercises: ExerciseOutputDto[] = matchingExercises.map((ex) => ({
-      id: ex.id,
-      name: ex.name,
-      ownerUserId: ex.ownerUserId,
-      isUnilateral: ex.isUnilateral,
-      hasMedia: ex.media.length > 0,
-      muscles: ex.muscles,
-    }));
+    const mappedExercises: ExerciseOutputDto[] = matchingExercises.map(
+      (ex) => ({
+        id: ex.id,
+        name: ex.name,
+        ownerUserId: ex.ownerUserId,
+        isUnilateral: ex.isUnilateral,
+        hasMedia: ex.media.length > 0,
+        muscles: ex.muscles,
+        anatomy: getExerciseAnatomy(ex.anatomyReview, ex.muscles),
+      }),
+    );
 
     return dto.limit === undefined
       ? mappedExercises

@@ -1,4 +1,5 @@
 import priorityPlan from "../domain/exercise-3d-priority.json" with { type: "json" };
+import { getExerciseAnatomy } from "../domain/exercise-anatomy.js";
 import expansion from "../domain/exercise-catalog-expansion.json" with { type: "json" };
 import {
   CATALOG_REVIEW_SOURCES,
@@ -31,6 +32,7 @@ export class ListAdminExercises {
         null,
       updatedAt: e.updatedAt.toISOString(),
       groups: REVIEWED_EXERCISES_BY_ID.get(e.id)?.groups ?? [],
+      anatomy: getExerciseAnatomy(e.anatomyReview, e.muscles),
       review: (() => {
         const review = REVIEWED_EXERCISES_BY_ID.get(e.id);
         return review

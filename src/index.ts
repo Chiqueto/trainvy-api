@@ -6,6 +6,7 @@ import fastifyApiReference from "@scalar/fastify-api-reference";
 import Fastify from "fastify";
 import {
   jsonSchemaTransform,
+  jsonSchemaTransformObject,
   serializerCompiler,
   validatorCompiler,
   ZodTypeProvider,
@@ -81,6 +82,7 @@ await app.register(fastifySwagger, {
     ],
   },
   transform: jsonSchemaTransform,
+  transformObject: jsonSchemaTransformObject,
 });
 
 await app.register(fastifyCors, {
