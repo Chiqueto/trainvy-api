@@ -454,6 +454,7 @@ describe("AI usage recording and admin authorization", () => {
       { userId: caller.id, feature: "CHAT" },
       undefined,
       "ERROR",
+      "Rate limit exceeded",
     );
     login(caller);
     expect((await app.inject({ url: "/admin/ai-usage" })).statusCode).toBe(403);
@@ -474,6 +475,13 @@ describe("AI usage recording and admin authorization", () => {
     expect(response.json().totals.estimatedCostUsd).toBeCloseTo(0.000773, 9);
     expect(response.json().byUser).toHaveLength(1);
     expect(response.json().daily[0].calls).toBe(2);
+    expect(response.json().recentErrors).toHaveLength(1);
+    expect(response.json().recentErrors[0]).toMatchObject({
+      userId: caller.id,
+      feature: "CHAT",
+      status: "ERROR",
+      errorMessage: "Rate limit exceeded",
+    });
     expect(
       (await app.inject({ url: "/admin/ai-usage?days=999" })).statusCode,
     ).toBe(400);
@@ -493,6 +501,7 @@ describe("AI usage recording and admin authorization", () => {
       await prisma.aiUsageEvent.findFirst({ where: { userId: caller.id } }),
     ).toMatchObject({
       status: "ERROR",
+      errorMessage: "Provider failed",
       inputTokens: null,
       estimatedCostUsd: null,
     });

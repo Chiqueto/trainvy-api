@@ -342,8 +342,15 @@ export const aiRoutes = async (app: FastifyInstance) => {
           await recordAiUsage({ userId, feature: workoutSessionId ? "SESSION_CHAT" : "CHAT",
             hasAudio: messages.some(m => m.parts?.some(p => p.type === "file" && p.mediaType?.startsWith("audio/"))) }, usage);
         },
-        onError: async () => {
-          await recordAiUsage({ userId, feature: workoutSessionId ? "SESSION_CHAT" : "CHAT" }, undefined, "ERROR");
+        onError: async ({ error }) => {
+          const errorMessage =
+            error instanceof Error ? error.message : String(error);
+          await recordAiUsage(
+            { userId, feature: workoutSessionId ? "SESSION_CHAT" : "CHAT" },
+            undefined,
+            "ERROR",
+            errorMessage,
+          );
         },
       });
 

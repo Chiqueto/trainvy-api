@@ -694,6 +694,7 @@ model AiUsageEvent {
   feature          String
   model            String
   status           String
+  errorMessage     String?
   inputTokens      Int?
   outputTokens     Int?
   reasoningTokens  Int?
@@ -708,6 +709,7 @@ model AiUsageEvent {
   @@index([createdAt])
   @@index([userId, createdAt])
   @@index([feature, createdAt])
+  @@index([status, createdAt])
 }
 
 model WorkoutSessionFeedback {

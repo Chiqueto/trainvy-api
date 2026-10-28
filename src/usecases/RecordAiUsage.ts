@@ -11,6 +11,7 @@ export async function recordAiUsage(
   context: AiUsageContext,
   usage?: Partial<LanguageModelUsage>,
   status = "SUCCESS",
+  errorMessage?: string | null,
 ) {
   try {
     await prisma.aiUsageEvent.create({
@@ -19,6 +20,7 @@ export async function recordAiUsage(
         feature: context.feature,
         model: AI_MODEL,
         status,
+        errorMessage: errorMessage ? errorMessage.trim().slice(0, 4000) : null,
         ...estimateAiUsage(usage, context.hasAudio),
       },
     });
@@ -36,10 +38,13 @@ export async function trackAiGeneration<
     await recordAiUsage(context, result.usage);
     return result;
   } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : String(error);
     await recordAiUsage(
       context,
       NoObjectGeneratedError.isInstance(error) ? error.usage : undefined,
       "ERROR",
+      errorMessage,
     );
     throw error;
   }

@@ -45,7 +45,7 @@ export class GetAdminAiUsage {
       createdAt: { gte: from, lte: to },
       ...(query.userId ? { userId: query.userId } : {}),
     };
-    const [total, features, users, errors, recent, first, daily] =
+    const [total, features, users, errors, recent, first, daily, recentErrors] =
       await Promise.all([
         prisma.aiUsageEvent.aggregate({ where, ...aggregation }),
         prisma.aiUsageEvent.groupBy({
@@ -76,6 +76,14 @@ export class GetAdminAiUsage {
         WHERE "createdAt" >= ${from} AND "createdAt" <= ${to}
           AND (${query.userId ?? null}::text IS NULL OR "userId" = ${query.userId ?? null})
         GROUP BY date ORDER BY date`,
+        prisma.aiUsageEvent.findMany({
+          where: { ...where, status: "ERROR" },
+          include: {
+            user: { select: { id: true, name: true, email: true } },
+          },
+          orderBy: [{ createdAt: "desc" }, { id: "desc" }],
+          take: 50,
+        }),
       ]);
     const topUsers = users
       .sort(
@@ -126,8 +134,20 @@ export class GetAdminAiUsage {
       })),
       recent: recent.map((e) => ({
         ...e,
+        errorMessage: e.errorMessage ?? null,
         estimatedCostUsd:
           e.estimatedCostUsd === null ? null : Number(e.estimatedCostUsd),
+        createdAt: e.createdAt.toISOString(),
+      })),
+      recentErrors: recentErrors.map((e) => ({
+        id: e.id,
+        userId: e.userId,
+        userName: e.user?.name ?? "Usuário removido",
+        userEmail: e.user?.email ?? "",
+        feature: e.feature,
+        model: e.model,
+        status: e.status,
+        errorMessage: e.errorMessage ?? null,
         createdAt: e.createdAt.toISOString(),
       })),
     };
