@@ -2098,7 +2098,7 @@
     "family": "Musculação tradicional — peito",
     "groups": ["RESISTANCE"],
     "primary": ["CHEST"],
-    "secondary": ["SHOULDERS"],
+    "secondary": ["SHOULDERS", "BICEPS"],
     "sourceIds": ["press", "ace"]
   },
   {

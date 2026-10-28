@@ -1,0 +1,94 @@
+{
+  "version": "2026-10-28.1",
+  "reviewedAt": "2026-10-28T00:00:00.000Z",
+  "variant": "Crucifixo bilateral com halteres em banco horizontal, cotovelos levemente flexionados e adução horizontal dos ombros.",
+  "aliases": [
+    "crucifixo reto com halteres"
+  ],
+  "participants": [
+    {
+      "id": "PECTORALIS_MAJOR",
+      "label": "Peitoral maior",
+      "muscleGroup": "CHEST",
+      "role": "PRIMARY",
+      "aliases": [
+        "peitoral",
+        "peito"
+      ],
+      "regions": [
+        {
+          "id": "PECTORALIS_MAJOR_CLAVICULAR",
+          "label": "Porção clavicular",
+          "aliases": [
+            "peitoral superior"
+          ]
+        },
+        {
+          "id": "PECTORALIS_MAJOR_STERNOCOSTAL",
+          "label": "Porção esternocostal",
+          "aliases": [
+            "peitoral esternocostal",
+            "peitoral médio",
+            "peitoral inferior"
+          ]
+        }
+      ],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "SAETERBAKKEN_2020",
+        "WELSCH_2005"
+      ]
+    },
+    {
+      "id": "DELTOID_ANTERIOR",
+      "label": "Deltoide anterior",
+      "muscleGroup": "SHOULDERS",
+      "role": "SECONDARY",
+      "aliases": [
+        "ombro anterior",
+        "deltoide frontal"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "SAETERBAKKEN_2020",
+        "WELSCH_2005"
+      ]
+    },
+    {
+      "id": "BICEPS_BRACHII",
+      "label": "Bíceps braquial",
+      "muscleGroup": "BICEPS",
+      "role": "SECONDARY",
+      "aliases": [
+        "bíceps"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "SAETERBAKKEN_2020"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "SAETERBAKKEN_2020",
+      "title": "Saeterbakken et al. — muscle activation in barbell bench press and dumbbell flyes (2020)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7675616/",
+      "limitation": "Dezessete homens treinados em 6RM; EMG não determina hipertrofia nem esforço individual."
+    },
+    {
+      "id": "WELSCH_2005",
+      "title": "Welsch et al. — electromyographic activity during three upper-body lifts (2005)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15903389/",
+      "limitation": "Doze participantes, EMG apenas do peitoral maior e deltoide anterior; não estabelece ênfase regional."
+    }
+  ],
+  "notes": "Peitoral maior como alvo; deltoide anterior e bíceps braquial como participantes secundários. A participação como estabilizador do cotovelo é inferência anatômica. Sem ênfase regional estabelecida. A lista e a amplitude são ilustrativas, não medidas de EMG nem prescrição individual.",
+  "instructions": {
+    "description": "Adução horizontal dos braços com halteres, com foco no peitoral maior.",
+    "setup": "Deite no banco reto com pés apoiados e segure os halteres acima do peito.",
+    "execution": "Abra os braços em arco, mantendo os cotovelos levemente flexionados; retorne suavemente pelo mesmo caminho.",
+    "tips": "Mantenha o tronco apoiado e use uma amplitude confortável. A pose é ilustrativa."
+  }
+}
