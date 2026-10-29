@@ -26,7 +26,18 @@ export class SaveAiMessages {
     for (const msg of dto.messages) {
       if (!msg.id) continue;
 
-      const payload = msg as unknown as Prisma.InputJsonValue;
+      // Never retain original multimodal bytes/URLs in conversation history.
+      const payload = {
+        ...msg,
+        parts: msg.parts.map((part) =>
+          part.type === "file"
+            ? {
+                type: "text",
+                text: `[Anexo ${part.filename ?? part.mediaType}: conteúdo original não retido]`,
+              }
+            : part,
+        ),
+      } as unknown as Prisma.InputJsonValue;
       const rawCreatedAt = (msg as { createdAt?: Date | string }).createdAt;
       const createdAt = rawCreatedAt ? new Date(rawCreatedAt) : new Date();
 

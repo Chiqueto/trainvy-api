@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Fastify, { FastifyInstance } from "fastify";
+import { generateObject } from "ai";
 import {
   serializerCompiler,
   validatorCompiler,
@@ -10,6 +11,11 @@ import { auth } from "../../src/lib/auth.js";
 import { prisma } from "../../src/lib/db.js";
 import { coachPrescriptionRoutes } from "../../src/routes/coach-prescription.js";
 import { ActivateWorkoutPlan } from "../../src/usecases/ActivateWorkoutPlan.js";
+
+vi.mock("ai", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("ai")>()),
+  generateObject: vi.fn(),
+}));
 
 describe("Coach Workout Prescriptions Integration Tests", () => {
   let app: FastifyInstance;
@@ -108,6 +114,17 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
         name: "Prescribing Coach",
         email: `presc-coach-${Date.now()}@coach.test`,
         accountType: "COACH",
+        professionalRegistration: {
+          create: {
+            fullName: "Verified Fixture",
+            cref: "123456-G",
+            region: "SP",
+            category: "Bacharel",
+            status: "VERIFIED",
+            verifiedAt: new Date(),
+            validUntil: new Date("2099-01-01"),
+          },
+        },
         accountSetupCompletedAt: new Date(),
       },
     });
@@ -130,6 +147,17 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
         name: "Limited Coach",
         email: `limited-coach-${Date.now()}@coach.test`,
         accountType: "COACH",
+        professionalRegistration: {
+          create: {
+            fullName: "Verified Fixture",
+            cref: "123456-G",
+            region: "SP",
+            category: "Bacharel",
+            status: "VERIFIED",
+            verifiedAt: new Date(),
+            validUntil: new Date("2099-01-01"),
+          },
+        },
         accountSetupCompletedAt: new Date(),
       },
     });
@@ -289,6 +317,7 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
       method: "PUT",
       url: `/coach/prescriptions/${draft.id}`,
       payload: {
+        version: 1,
         name: "Rascunho Atualizado v2",
         notes: "Adicionado mais descanso",
         workoutDays: validWorkoutDays,
@@ -320,6 +349,7 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
     const res = await app.inject({
       method: "POST",
       url: `/coach/prescriptions/${draft.id}/send`,
+      payload: { version: 1, approval: true },
     });
 
     expect(res.statusCode).toBe(200);
@@ -331,6 +361,14 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
   it("PUT /coach/prescriptions/:id — bloqueia edição de prescrição já enviada (imutabilidade)", async () => {
     const sent = await prisma.workoutPrescription.create({
       data: {
+        approvedByUserId: coachUser.id,
+        approvedAt: new Date(),
+        approvedVersion: 1,
+        approvedSnapshot: {
+          name: "Prescrição Já Enviada",
+          notes: null,
+          payload: { workoutDays: validWorkoutDays },
+        },
         coachId: coachUser.id,
         athleteId: athleteUser.id,
         name: "Prescrição Já Enviada",
@@ -349,6 +387,7 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
       method: "PUT",
       url: `/coach/prescriptions/${sent.id}`,
       payload: {
+        version: 1,
         name: "Tentativa de alteração silenciosa",
         workoutDays: validWorkoutDays,
       },
@@ -362,6 +401,14 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
   it("GET /me/prescriptions/:id — 404 se outro atleta tentar acessar prescrição alheia (IDOR)", async () => {
     const sent = await prisma.workoutPrescription.create({
       data: {
+        approvedByUserId: coachUser.id,
+        approvedAt: new Date(),
+        approvedVersion: 1,
+        approvedSnapshot: {
+          name: "Prescrição Exclusiva",
+          notes: null,
+          payload: { workoutDays: validWorkoutDays },
+        },
         coachId: coachUser.id,
         athleteId: athleteUser.id,
         name: "Prescrição Exclusiva",
@@ -387,6 +434,14 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
   it("POST /me/prescriptions/:id/accept — atleta aceita prescrição: cria WorkoutPlan inativo e preserva ownership", async () => {
     const sent = await prisma.workoutPrescription.create({
       data: {
+        approvedByUserId: coachUser.id,
+        approvedAt: new Date(),
+        approvedVersion: 1,
+        approvedSnapshot: {
+          name: "Planejamento Aceito pelo Aluno",
+          notes: null,
+          payload: { workoutDays: validWorkoutDays },
+        },
         coachId: coachUser.id,
         athleteId: athleteUser.id,
         name: "Planejamento Aceito pelo Aluno",
@@ -436,6 +491,14 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
   it("POST /me/prescriptions/:id/accept — idempotência em requisições repetidas", async () => {
     const sent = await prisma.workoutPrescription.create({
       data: {
+        approvedByUserId: coachUser.id,
+        approvedAt: new Date(),
+        approvedVersion: 1,
+        approvedSnapshot: {
+          name: "Prescrição Teste Idempotência",
+          notes: null,
+          payload: { workoutDays: validWorkoutDays },
+        },
         coachId: coachUser.id,
         athleteId: athleteUser.id,
         name: "Prescrição Teste Idempotência",
@@ -487,6 +550,14 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
 
     const sent = await prisma.workoutPrescription.create({
       data: {
+        approvedByUserId: coachUser.id,
+        approvedAt: new Date(),
+        approvedVersion: 1,
+        approvedSnapshot: {
+          name: "Prescrição com Vínculo Revogado",
+          notes: null,
+          payload: { workoutDays: validWorkoutDays },
+        },
         coachId: coachUser.id,
         athleteId: athleteUser.id,
         name: "Prescrição com Vínculo Revogado",
@@ -523,6 +594,14 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
   it("POST /me/prescriptions/:id/decline — atleta recusa prescrição", async () => {
     const sent = await prisma.workoutPrescription.create({
       data: {
+        approvedByUserId: coachUser.id,
+        approvedAt: new Date(),
+        approvedVersion: 1,
+        approvedSnapshot: {
+          name: "Prescrição Recusada",
+          notes: null,
+          payload: { workoutDays: validWorkoutDays },
+        },
         coachId: coachUser.id,
         athleteId: athleteUser.id,
         name: "Prescrição Recusada",
@@ -551,6 +630,14 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
   it("POST /coach/prescriptions/:id/cancel — treinador cancela prescrição pendente", async () => {
     const sent = await prisma.workoutPrescription.create({
       data: {
+        approvedByUserId: coachUser.id,
+        approvedAt: new Date(),
+        approvedVersion: 1,
+        approvedSnapshot: {
+          name: "Prescrição Cancelada pelo Treinador",
+          notes: null,
+          payload: { workoutDays: validWorkoutDays },
+        },
         coachId: coachUser.id,
         athleteId: athleteUser.id,
         name: "Prescrição Cancelada pelo Treinador",
@@ -578,6 +665,14 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
   it("Ativação voluntária posterior do plano aceito via ActivateWorkoutPlan", async () => {
     const sent = await prisma.workoutPrescription.create({
       data: {
+        approvedByUserId: coachUser.id,
+        approvedAt: new Date(),
+        approvedVersion: 1,
+        approvedSnapshot: {
+          name: "Plano para Ativação Voluntária",
+          notes: null,
+          payload: { workoutDays: validWorkoutDays },
+        },
         coachId: coachUser.id,
         athleteId: athleteUser.id,
         name: "Plano para Ativação Voluntária",
@@ -645,6 +740,14 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
 
     const sent = await prisma.workoutPrescription.create({
       data: {
+        approvedByUserId: coachUser.id,
+        approvedAt: new Date(),
+        approvedVersion: 1,
+        approvedSnapshot: {
+          name: "Prescrição com Alternativas Duplicadas",
+          notes: null,
+          payload: { workoutDays: daysWithDuplicateAlternatives },
+        },
         coachId: coachUser.id,
         athleteId: athleteUser.id,
         name: "Prescrição com Alternativas Duplicadas",
@@ -730,6 +833,15 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
     });
 
     it("POST /coach/prescriptions/ai-generate — 200 com estrutura completa gerada para treinador autorizado", async () => {
+      vi.mocked(generateObject).mockResolvedValueOnce({
+        object: {
+          name: "Proposta revisável",
+          notes: null,
+          workoutDays: [
+            { ...validWorkoutDays[0], estimatedDurationInMinutes: 60 },
+          ],
+        },
+      } as never);
       vi.spyOn(auth.api, "getSession").mockResolvedValueOnce({
         user: coachUser,
         session: { id: "s-coach", userId: coachUser.id } as any,
@@ -766,4 +878,3 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
     });
   });
 });
-

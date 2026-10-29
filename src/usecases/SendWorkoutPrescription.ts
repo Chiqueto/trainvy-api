@@ -5,14 +5,20 @@ import {
 } from "../domain/coach-prescription.js";
 import { prisma } from "../lib/db.js";
 import { GetCommercialContext } from "./GetCommercialContext.js";
+import { effectiveProfessionalStatus } from "../domain/professional-verification.js";
+import { prescriptionApprovalMode } from "../domain/prescription-approval.js";
 
 export class SendWorkoutPrescription {
   async execute({
     coachId,
     prescriptionId,
+    expectedVersion,
+    approval,
   }: {
     coachId: string;
     prescriptionId: string;
+    expectedVersion: number;
+    approval: true;
   }) {
     const commercialContext = await new GetCommercialContext().execute({
       userId: coachId,
@@ -21,6 +27,12 @@ export class SendWorkoutPrescription {
 
     return await prisma.$transaction(
       async (tx) => {
+        await tx.$queryRaw`SELECT id FROM "user" WHERE id = ${coachId} FOR UPDATE`;
+        const currentContext = await new GetCommercialContext().execute({
+          userId: coachId,
+          client: tx,
+        });
+        assertCoachCanPrescribe(currentContext);
         // Bloqueio pessimista de linha no PostgreSQL para serializar envio, cancelamento e edições
         await tx.$queryRaw`SELECT id FROM "WorkoutPrescription" WHERE id = ${prescriptionId} FOR UPDATE`;
 
@@ -41,6 +53,15 @@ export class SendWorkoutPrescription {
           );
         }
 
+        if (approval !== true || !Number.isInteger(expectedVersion))
+          throw new CoachPrescriptionError("EXPLICIT_APPROVAL_REQUIRED", 400);
+        if (prescription.version !== expectedVersion)
+          throw new CoachPrescriptionError(
+            "CONCURRENCY_CONFLICT",
+            409,
+            "A versão revisada foi alterada. Revise novamente antes de aprovar.",
+          );
+
         if (prescription.status === "CANCELLED") {
           throw new CoachPrescriptionError(
             "PRESCRIPTION_ALREADY_CANCELLED",
@@ -58,6 +79,7 @@ export class SendWorkoutPrescription {
         }
 
         // Vínculo ativo obrigatório no momento exato do envio
+        await tx.$queryRaw`SELECT id FROM "CoachAthlete" WHERE "coachId" = ${coachId} AND "athleteId" = ${prescription.athleteId} FOR UPDATE`;
         const link = await tx.coachAthlete.findFirst({
           where: {
             coachId,
@@ -75,7 +97,8 @@ export class SendWorkoutPrescription {
         }
 
         // Validação completa do payload snapshot antes do envio
-        const rawPayload = prescription.payload as unknown as PrescriptionPayload;
+        const rawPayload =
+          prescription.payload as unknown as PrescriptionPayload;
         if (!rawPayload?.workoutDays || rawPayload.workoutDays.length === 0) {
           throw new CoachPrescriptionError(
             "INVALID_PRESCRIPTION_PAYLOAD",
@@ -100,6 +123,20 @@ export class SendWorkoutPrescription {
           where: { id: prescription.id },
           data: {
             status: "SENT",
+            approvedByUserId: coachId,
+            approvedAt: new Date(),
+            approvedVersion: prescription.version,
+            approvedSnapshot: {
+              verificationMode:
+                effectiveProfessionalStatus(
+                  currentContext.professionalVerification,
+                ) === "VERIFIED"
+                  ? "VERIFIED"
+                  : "TEST",
+              name: prescription.name,
+              notes: prescription.notes,
+              payload: prescription.payload,
+            },
             sentAt: new Date(),
           },
           include: {
@@ -117,6 +154,10 @@ export class SendWorkoutPrescription {
           name: updated.name,
           notes: updated.notes,
           version: updated.version,
+          approvedByUserId: updated.approvedByUserId,
+          approvedAt: updated.approvedAt?.toISOString() ?? null,
+          approvedVersion: updated.approvedVersion,
+          approvalMode: prescriptionApprovalMode(updated),
           acceptedWorkoutPlanId: updated.acceptedWorkoutPlanId,
           sentAt: updated.sentAt?.toISOString() ?? null,
           respondedAt: updated.respondedAt?.toISOString() ?? null,

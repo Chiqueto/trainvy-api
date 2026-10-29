@@ -1,5 +1,9 @@
 # 02 — Papéis e Permissões
 
+## Atualização — 29/10/2026
+
+Recursos profissionais agora exigem CREF/habilitação com verificação vigente no backend, além de perfil, assinatura e vínculo. Alunos mantêm planos pessoais manuais e importação confirmada. IA personalizada é restrita ao profissional verificado e publicação exige aprovação explícita da versão. As descrições históricas abaixo devem ser lidas com essa atualização: [implementação e operação](17-PROFESSIONAL-VERIFICATION-AND-AI-MODES.md).
+
 ## Estado implementado — Task 4.1
 
 `User.accountType` (ATHLETE/COACH) é independente de `User.systemRole` (USER/ADMIN).

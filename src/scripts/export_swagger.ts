@@ -11,6 +11,7 @@ import {
   validatorCompiler,
 } from "fastify-type-provider-zod";
 
+import { professionalVerificationRoutes } from "../routes/professional-verification.js";
 import { adminRoutes } from "../routes/admin.js";
 import { aiRoutes } from "../routes/ai.js";
 import { coachRoutes } from "../routes/coach.js";
@@ -66,6 +67,7 @@ await app.register(meRoutes, { prefix: "/me" });
 await app.register(aiRoutes, { prefix: "/ai" });
 await app.register(commercialRoutes);
 await app.register(coachRoutes);
+await app.register(professionalVerificationRoutes);
 await app.register(coachPrescriptionRoutes);
 await app.register(coachProgressRoutes);
 await app.register(coachTemplateRoutes);

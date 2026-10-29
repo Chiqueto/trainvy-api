@@ -24,6 +24,17 @@ describe("TASK 6.2B.1 — Prescrições de Treino: Concorrência, Integridade e 
         name: `Coach ${prefix}`,
         email,
         accountType: "COACH",
+        professionalRegistration: {
+          create: {
+            fullName: "Verified Fixture",
+            cref: "123456-G",
+            region: "SP",
+            category: "Bacharel",
+            status: "VERIFIED",
+            verifiedAt: new Date(),
+            validUntil: new Date("2099-01-01"),
+          },
+        },
         accountSetupCompletedAt: new Date(),
       },
     });
@@ -151,21 +162,40 @@ describe("TASK 6.2B.1 — Prescrições de Treino: Concorrência, Integridade e 
         workoutDays: sampleDays,
       }),
       new SendWorkoutPrescription().execute({
+        approval: true,
+        expectedVersion: 1,
         coachId: coach.id,
         prescriptionId: draft.id,
       }),
     ]);
 
-    // O envio precisa ter sucesso
-    expect(sendResult.status).toBe("fulfilled");
+    // Either operation can acquire the lock first. A changed version cannot be published.
+    expect(
+      [editResult, sendResult].filter((r) => r.status === "fulfilled"),
+    ).toHaveLength(1);
 
     // Verifica no banco de dados o estado final
     const inDb = await prisma.workoutPrescription.findUniqueOrThrow({
       where: { id: draft.id },
     });
 
-    expect(inDb.status).toBe("SENT");
-    expect(inDb.sentAt).not.toBeNull();
+    if (sendResult.status === "fulfilled") {
+      expect(inDb.status).toBe("SENT");
+      expect(inDb.sentAt).not.toBeNull();
+      expect(inDb.approvedVersion).toBe(1);
+      expect(inDb.approvedSnapshot).toMatchObject({
+        name: "Planejamento Base",
+      });
+    } else {
+      expect(editResult.status).toBe("fulfilled");
+      expect(sendResult.reason).toMatchObject({
+        code: "CONCURRENCY_CONFLICT",
+        status: 409,
+      });
+      expect(inDb.status).toBe("DRAFT");
+      expect(inDb.version).toBe(2);
+      expect(inDb.approvedAt).toBeNull();
+    }
 
     // Se a edição falhou, deve ter sido rejeitada com código 409
     if (editResult.status === "rejected") {
@@ -187,6 +217,8 @@ describe("TASK 6.2B.1 — Prescrições de Treino: Concorrência, Integridade e 
     // Dispara envio e cancelamento simultaneamente
     await Promise.allSettled([
       new SendWorkoutPrescription().execute({
+        approval: true,
+        expectedVersion: 1,
         coachId: coach.id,
         prescriptionId: draft.id,
       }),
@@ -208,6 +240,8 @@ describe("TASK 6.2B.1 — Prescrições de Treino: Concorrência, Integridade e 
     if (finalInDb.status === "CANCELLED") {
       await expect(
         new SendWorkoutPrescription().execute({
+          approval: true,
+          expectedVersion: 1,
           coachId: coach.id,
           prescriptionId: draft.id,
         }),
@@ -226,6 +260,8 @@ describe("TASK 6.2B.1 — Prescrições de Treino: Concorrência, Integridade e 
     });
 
     await new SendWorkoutPrescription().execute({
+      approval: true,
+      expectedVersion: 1,
       coachId: coach.id,
       prescriptionId: draft.id,
     });
@@ -283,6 +319,8 @@ describe("TASK 6.2B.1 — Prescrições de Treino: Concorrência, Integridade e 
     });
 
     await new SendWorkoutPrescription().execute({
+      approval: true,
+      expectedVersion: 1,
       coachId: coach.id,
       prescriptionId: draft.id,
     });
@@ -325,6 +363,8 @@ describe("TASK 6.2B.1 — Prescrições de Treino: Concorrência, Integridade e 
     });
 
     await new SendWorkoutPrescription().execute({
+      approval: true,
+      expectedVersion: 1,
       coachId: coach.id,
       prescriptionId: draft.id,
     });
@@ -377,6 +417,8 @@ describe("TASK 6.2B.1 — Prescrições de Treino: Concorrência, Integridade e 
     });
 
     await new SendWorkoutPrescription().execute({
+      approval: true,
+      expectedVersion: 1,
       coachId: coach.id,
       prescriptionId: draft.id,
     });
@@ -414,10 +456,14 @@ describe("TASK 6.2B.1 — Prescrições de Treino: Concorrência, Integridade e 
 
     const [res1, res2] = await Promise.allSettled([
       new SendWorkoutPrescription().execute({
+        approval: true,
+        expectedVersion: 1,
         coachId: coach.id,
         prescriptionId: draft.id,
       }),
       new SendWorkoutPrescription().execute({
+        approval: true,
+        expectedVersion: 1,
         coachId: coach.id,
         prescriptionId: draft.id,
       }),
@@ -450,6 +496,8 @@ describe("TASK 6.2B.1 — Prescrições de Treino: Concorrência, Integridade e 
     });
 
     await new SendWorkoutPrescription().execute({
+      approval: true,
+      expectedVersion: 1,
       coachId: coach.id,
       prescriptionId: draft.id,
     });
@@ -501,6 +549,8 @@ describe("TASK 6.2B.1 — Prescrições de Treino: Concorrência, Integridade e 
         linkId: link.id,
       }),
       new SendWorkoutPrescription().execute({
+        approval: true,
+        expectedVersion: 1,
         coachId: coach.id,
         prescriptionId: draft.id,
       }),
@@ -604,6 +654,8 @@ describe("TASK 6.2B.1 — Prescrições de Treino: Concorrência, Integridade e 
     });
 
     await new SendWorkoutPrescription().execute({
+      approval: true,
+      expectedVersion: 1,
       coachId: coach.id,
       prescriptionId: draft.id,
     });
@@ -648,6 +700,8 @@ describe("TASK 6.2B.1 — Prescrições de Treino: Concorrência, Integridade e 
     });
 
     await new SendWorkoutPrescription().execute({
+      approval: true,
+      expectedVersion: 1,
       coachId: coach.id,
       prescriptionId: draft.id,
     });

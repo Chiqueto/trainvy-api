@@ -1,8 +1,11 @@
+import { prescriptionApprovalMode } from "../domain/prescription-approval.js";
 import {
   CoachPrescriptionError,
   PrescriptionPayload,
 } from "../domain/coach-prescription.js";
 import { prisma } from "../lib/db.js";
+import { assertCoachCanPrescribe } from "../domain/coach-prescription.js";
+import { GetCommercialContext } from "./GetCommercialContext.js";
 
 export class GetWorkoutPrescriptionDetails {
   async execute({
@@ -34,6 +37,20 @@ export class GetWorkoutPrescriptionDetails {
 
     const isCoach = prescription.coachId === userId;
     const isAthlete = prescription.athleteId === userId;
+    if (isCoach) {
+      assertCoachCanPrescribe(
+        await new GetCommercialContext().execute({ userId }),
+      );
+      const link = await prisma.coachAthlete.findFirst({
+        where: {
+          coachId: userId,
+          athleteId: prescription.athleteId,
+          status: "ACTIVE",
+        },
+      });
+      if (!link)
+        throw new CoachPrescriptionError("PRESCRIPTION_NOT_FOUND", 404);
+    }
 
     if (!isCoach && !isAthlete) {
       throw new CoachPrescriptionError(
@@ -60,6 +77,10 @@ export class GetWorkoutPrescriptionDetails {
       name: prescription.name,
       notes: prescription.notes,
       version: prescription.version,
+      approvedByUserId: prescription.approvedByUserId,
+      approvedAt: prescription.approvedAt?.toISOString() ?? null,
+      approvedVersion: prescription.approvedVersion,
+      approvalMode: prescriptionApprovalMode(prescription),
       acceptedWorkoutPlanId: prescription.acceptedWorkoutPlanId,
       sentAt: prescription.sentAt?.toISOString() ?? null,
       respondedAt: prescription.respondedAt?.toISOString() ?? null,

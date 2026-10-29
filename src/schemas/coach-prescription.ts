@@ -89,7 +89,7 @@ export const CreatePrescriptionDraftBodySchema = z.object({
 export const UpdatePrescriptionDraftBodySchema = z.object({
   name: z.string().trim().min(1, "Nome do planejamento é obrigatório").max(100),
   notes: z.string().trim().max(1000).optional().nullable(),
-  version: z.number().int().positive().optional(),
+  version: z.number().int().positive(),
   workoutDays: z
     .array(WorkoutDayDraftSchema)
     .min(1, "O planejamento deve conter pelo menos 1 dia"),
@@ -147,6 +147,10 @@ export const PrescriptionItemResponseSchema = z.object({
   name: z.string(),
   notes: z.string().nullable(),
   version: z.number(),
+  approvedByUserId: z.string().nullable().optional(),
+  approvedAt: z.string().nullable().optional(),
+  approvedVersion: z.number().nullable().optional(),
+  approvalMode: z.enum(["VERIFIED", "TEST", "UNVERIFIED"]).optional(),
   acceptedWorkoutPlanId: z.string().nullable(),
   sentAt: z.string().nullable(),
   respondedAt: z.string().nullable(),
@@ -186,6 +190,7 @@ export const GenerateCoachPrescriptionDraftBodySchema = z.object({
 });
 
 export const GenerateCoachPrescriptionDraftResponseSchema = z.object({
+  status: z.literal("DRAFT"),
   name: z.string(),
   notes: z.string().nullable().optional(),
   workoutDays: z.array(

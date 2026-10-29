@@ -27,12 +27,25 @@ describe("TASK 6.2A — Coach Athlete Overview & IDOR Protection", () => {
         name: `Coach ${prefix}`,
         email,
         accountType: "COACH",
+        professionalRegistration: {
+          create: {
+            fullName: "Verified Fixture",
+            cref: "123456-G",
+            region: "SP",
+            category: "Bacharel",
+            status: "VERIFIED",
+            verifiedAt: new Date(),
+            validUntil: new Date("2099-01-01"),
+          },
+        },
         accountSetupCompletedAt: accountSetupCompleted ? new Date() : null,
       },
     });
 
     if (hasActiveSubscription) {
-      const entitlements = [{ entitlement: "COACH_DASHBOARD", limitValue: null }];
+      const entitlements = [
+        { entitlement: "COACH_DASHBOARD", limitValue: null },
+      ];
       if (hasManageAthletesEntitlement) {
         entitlements.push({ entitlement: "MANAGE_ATHLETES", limitValue: 10 });
       }
@@ -134,7 +147,9 @@ describe("TASK 6.2A — Coach Athlete Overview & IDOR Protection", () => {
         coachId: coachA.id,
         athleteId: athleteB.id,
       }),
-    ).rejects.toThrow("Aluno não encontrado ou vínculo inativo com este treinador.");
+    ).rejects.toThrow(
+      "Aluno não encontrado ou vínculo inativo com este treinador.",
+    );
   });
 
   it("3. Revogação imediata: acesso é bloqueado assim que o vínculo é encerrado", async () => {
@@ -171,7 +186,9 @@ describe("TASK 6.2A — Coach Athlete Overview & IDOR Protection", () => {
         coachId: coach.id,
         athleteId: athlete.id,
       }),
-    ).rejects.toThrow("Aluno não encontrado ou vínculo inativo com este treinador.");
+    ).rejects.toThrow(
+      "Aluno não encontrado ou vínculo inativo com este treinador.",
+    );
   });
 
   it("4. Rejeita acesso se o treinador não possui entitlement MANAGE_ATHLETES", async () => {
@@ -201,6 +218,8 @@ describe("TASK 6.2A — Coach Athlete Overview & IDOR Protection", () => {
         coachId: athleteCaller.id,
         athleteId: targetAthlete.id,
       }),
-    ).rejects.toThrow("Apenas contas do tipo treinador (COACH) podem gerenciar alunos.");
+    ).rejects.toThrow(
+      "Apenas contas do tipo treinador (COACH) podem gerenciar alunos.",
+    );
   });
 });

@@ -1,3 +1,5 @@
+> Atualização de 29/10/2026: alunos usam o Organizador de Treinos, com importação revisada e confirmada; geração personalizada fica restrita ao profissional verificado. Publicação exige aprovação explícita da versão. As funcionalidades históricas abaixo devem ser lidas conforme [a implementação atual](17-PROFESSIONAL-VERIFICATION-AND-AI-MODES.md).
+
 # 05 — IA e RAG
 
 > Decisão em 27/10/2026: RAG/biblioteca ficam fora do escopo atual. A IA usa dados estruturados do atleta. Medição de tokens/custo é operacional e exclusiva do admin, sem cobrança. As seções de RAG abaixo são referências futuras. Ver [implementação atual](15-PLAN-EDITING-FEEDBACK-AI-USAGE.md).

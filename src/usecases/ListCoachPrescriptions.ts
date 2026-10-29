@@ -1,5 +1,11 @@
+import { prescriptionApprovalMode } from "../domain/prescription-approval.js";
 import { PrescriptionPayload } from "../domain/coach-prescription.js";
 import { prisma } from "../lib/db.js";
+import {
+  assertCoachCanPrescribe,
+  CoachPrescriptionError,
+} from "../domain/coach-prescription.js";
+import { GetCommercialContext } from "./GetCommercialContext.js";
 
 export class ListCoachPrescriptions {
   async execute({
@@ -9,6 +15,15 @@ export class ListCoachPrescriptions {
     coachId: string;
     athleteId: string;
   }) {
+    assertCoachCanPrescribe(
+      await new GetCommercialContext().execute({ userId: coachId }),
+    );
+    if (
+      !(await prisma.coachAthlete.findFirst({
+        where: { coachId, athleteId, status: "ACTIVE" },
+      }))
+    )
+      throw new CoachPrescriptionError("ATHLETE_NOT_FOUND", 404);
     const prescriptions = await prisma.workoutPrescription.findMany({
       where: {
         coachId,
@@ -30,6 +45,10 @@ export class ListCoachPrescriptions {
       name: p.name,
       notes: p.notes,
       version: p.version,
+      approvedByUserId: p.approvedByUserId,
+      approvedAt: p.approvedAt?.toISOString() ?? null,
+      approvedVersion: p.approvedVersion,
+      approvalMode: prescriptionApprovalMode(p),
       acceptedWorkoutPlanId: p.acceptedWorkoutPlanId,
       sentAt: p.sentAt?.toISOString() ?? null,
       respondedAt: p.respondedAt?.toISOString() ?? null,

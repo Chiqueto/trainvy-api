@@ -11,6 +11,8 @@ import { WeekDay } from "../generated/prisma/enums.js";
 import { prisma } from "../lib/db.js";
 
 interface InputDto {
+  importProvenance?: Prisma.InputJsonValue;
+  importPreviewHash?: string;
   userId: string;
   name: string;
   activate?: boolean;
@@ -121,6 +123,8 @@ export class CreateWorkoutPlan {
             data: {
               id: crypto.randomUUID(),
               name: dto.name,
+              importProvenance: dto.importProvenance,
+              importPreviewHash: dto.importPreviewHash,
               userId: dto.userId,
               isActive: shouldActivate,
               workoutDays: {

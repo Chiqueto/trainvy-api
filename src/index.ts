@@ -15,6 +15,7 @@ import z from "zod";
 
 import { auth, authBaseUrl, trustedOrigins } from "./lib/auth.js";
 import { env } from "./lib/env.js";
+import { professionalVerificationRoutes } from "./routes/professional-verification.js";
 import { adminRoutes } from "./routes/admin.js";
 import { aiRoutes } from "./routes/ai.js";
 import { coachRoutes } from "./routes/coach.js";
@@ -124,6 +125,7 @@ await app.register(sessionFeedbackRoutes);
 await app.register(sportsProfileRoutes);
 await app.register(commercialRoutes);
 await app.register(coachRoutes);
+await app.register(professionalVerificationRoutes);
 await app.register(coachPrescriptionRoutes);
 await app.register(coachProgressRoutes);
 await app.register(coachTemplateRoutes);
@@ -229,4 +231,3 @@ export default async function handler(
   await app.ready();
   app.server.emit("request", req, res);
 }
-

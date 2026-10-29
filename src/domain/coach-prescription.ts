@@ -1,3 +1,7 @@
+import {
+  assertProfessionalAccess,
+  type ProfessionalAccess,
+} from "./professional-verification.js";
 import { hasEntitlement } from "./commercial.js";
 
 export class CoachPrescriptionError extends Error {
@@ -12,6 +16,8 @@ export class CoachPrescriptionError extends Error {
 }
 
 export interface CoachCommercialContext {
+  crefVerificationRequired?: boolean;
+  professionalVerification?: ProfessionalAccess | null;
   accountType: string;
   accountSetupCompletedAt: string | null;
   entitlements: { key: string; limitValue: number | null }[];
@@ -73,6 +79,11 @@ export function assertCoachCanPrescribe(context: CoachCommercialContext): void {
       "Conclua a configuração inicial da sua conta antes de prescrever treinos.",
     );
   }
+
+  assertProfessionalAccess(
+    context.professionalVerification,
+    context.crefVerificationRequired,
+  );
 
   // @ts-expect-error key type conversion
   if (!hasEntitlement(context, "ASSIGN_WORKOUTS")) {

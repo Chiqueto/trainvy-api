@@ -1,3 +1,4 @@
+import z from "zod";
 import { fromNodeHeaders } from "better-auth/node";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import {
@@ -197,6 +198,10 @@ export const coachPrescriptionRoutes: FastifyPluginAsyncZod = async (app) => {
     {
       schema: {
         operationId: "sendWorkoutPrescription",
+        body: z.strictObject({
+          version: z.number().int().positive(),
+          approval: z.literal(true),
+        }),
         tags: ["Coach"],
         summary: "Enviar prescrição em rascunho para o aluno",
         params: PrescriptionIdParamsSchema,
@@ -219,6 +224,8 @@ export const coachPrescriptionRoutes: FastifyPluginAsyncZod = async (app) => {
 
         const useCase = new SendWorkoutPrescription();
         const result = await useCase.execute({
+          expectedVersion: request.body.version,
+          approval: request.body.approval,
           coachId: session.user.id,
           prescriptionId: request.params.id,
         });

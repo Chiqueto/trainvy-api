@@ -1,16 +1,26 @@
 import { UIMessage } from "ai";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
-import { clearToolCallsCache, getAiTools } from "../../src/ai/tools.js";
+import {
+  clearToolCallsCache,
+  getProfessionalAiTools,
+} from "../../src/ai/tools.js";
 import { NotFoundError } from "../../src/errors/index.js";
-import { WeekDay, WorkoutSessionOrigin } from "../../src/generated/prisma/enums.js";
+import {
+  WeekDay,
+  WorkoutSessionOrigin,
+} from "../../src/generated/prisma/enums.js";
 import { prisma } from "../../src/lib/db.js";
-import { CreateAiConversation, generateCleanTitle } from "../../src/usecases/CreateAiConversation.js";
+import {
+  CreateAiConversation,
+  generateCleanTitle,
+} from "../../src/usecases/CreateAiConversation.js";
 import { DeleteAiConversation } from "../../src/usecases/DeleteAiConversation.js";
 import { GetAiConversation } from "../../src/usecases/GetAiConversation.js";
 import { ListAiConversations } from "../../src/usecases/ListAiConversations.js";
 import { SaveAiMessages } from "../../src/usecases/SaveAiMessages.js";
-import { cleanupTestUsers, createTestUser } from "../helpers/test-db.js";
+import { cleanupTestUsers } from "../helpers/test-db.js";
+import { createVerifiedTestCoach } from "../helpers/verified-coach.js";
 
 const VALID_7_DAYS = [
   {
@@ -30,7 +40,13 @@ const VALID_7_DAYS = [
     estimatedDurationInSeconds: 3600,
     coverImageUrl: null,
     exercises: [
-      { order: 1, name: "Agachamento", sets: 3, reps: 10, restTimeInSeconds: 60 },
+      {
+        order: 1,
+        name: "Agachamento",
+        sets: 3,
+        reps: 10,
+        restTimeInSeconds: 60,
+      },
     ],
   },
   {
@@ -48,7 +64,13 @@ const VALID_7_DAYS = [
     estimatedDurationInSeconds: 3600,
     coverImageUrl: null,
     exercises: [
-      { order: 1, name: "Desenvolvimento", sets: 3, reps: 10, restTimeInSeconds: 60 },
+      {
+        order: 1,
+        name: "Desenvolvimento",
+        sets: 3,
+        reps: 10,
+        restTimeInSeconds: 60,
+      },
     ],
   },
   {
@@ -112,7 +134,7 @@ describe("Coach AI - Chat Persistente e Confiabilidade (Task 2.8)", () => {
 
   describe("CreateAiConversation & ListAiConversations", () => {
     it("cria conversa automaticamente a partir da mensagem e lista ordenada por updatedAt DESC", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       createdUserIds.push(user.id);
 
       const createUsecase = new CreateAiConversation();
@@ -138,8 +160,8 @@ describe("Coach AI - Chat Persistente e Confiabilidade (Task 2.8)", () => {
     });
 
     it("isola conversas entre usuários distintos", async () => {
-      const userA = await createTestUser();
-      const userB = await createTestUser();
+      const userA = await createVerifiedTestCoach();
+      const userB = await createVerifiedTestCoach();
       createdUserIds.push(userA.id, userB.id);
 
       const createUsecase = new CreateAiConversation();
@@ -168,8 +190,8 @@ describe("Coach AI - Chat Persistente e Confiabilidade (Task 2.8)", () => {
 
   describe("GetAiConversation & Ownership", () => {
     it("retorna conversa e mensagens para o dono, mas rejeita com 404/NotFoundError para outro usuário", async () => {
-      const userA = await createTestUser();
-      const userB = await createTestUser();
+      const userA = await createVerifiedTestCoach();
+      const userB = await createVerifiedTestCoach();
       createdUserIds.push(userA.id, userB.id);
 
       const createUsecase = new CreateAiConversation();
@@ -198,7 +220,7 @@ describe("Coach AI - Chat Persistente e Confiabilidade (Task 2.8)", () => {
 
   describe("SaveAiMessages - Preservação de UIMessage completa", () => {
     it("persiste e reconstrói UIMessage com texto, approval-responded e output-available", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       createdUserIds.push(user.id);
 
       const createUsecase = new CreateAiConversation();
@@ -261,10 +283,10 @@ describe("Coach AI - Chat Persistente e Confiabilidade (Task 2.8)", () => {
 
   describe("DeleteAiConversation - Recursos Criados são Independentes", () => {
     it("deleta apenas conversa e mensagens; NÃO deleta planos ou periodizações criados", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       createdUserIds.push(user.id);
 
-      const tools = getAiTools(user.id);
+      const tools = getProfessionalAiTools(user.id);
       const createUsecase = new CreateAiConversation();
       const deleteUsecase = new DeleteAiConversation();
 
@@ -309,10 +331,10 @@ describe("Coach AI - Chat Persistente e Confiabilidade (Task 2.8)", () => {
 
   describe("Durable Idempotency com AiToolExecution", () => {
     it("persiste execução em banco e evita duplicações mesmo após limpar o cache em memória", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       createdUserIds.push(user.id);
 
-      const tools = getAiTools(user.id);
+      const tools = getProfessionalAiTools(user.id);
       const toolCallId = "durable-call-999";
 
       const input = {
@@ -363,7 +385,7 @@ describe("Coach AI - Chat Persistente e Confiabilidade (Task 2.8)", () => {
 
   describe("Isolamento Estrito de Contexto (Sessão vs Chat Geral)", () => {
     it("não vaza conversas de sessão no chat geral e permite filtrar por workoutSessionId", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       createdUserIds.push(user.id);
 
       const createUsecase = new CreateAiConversation();
@@ -432,8 +454,8 @@ describe("Coach AI - Chat Persistente e Confiabilidade (Task 2.8)", () => {
   });
 
   describe("Mensagens Multimodais (Áudios e Documentos PDF)", () => {
-    it("persiste e recupera mensagens com áudio gravado e documentos PDF", async () => {
-      const user = await createTestUser();
+    it("preserva referências textuais de áudio e PDF sem reter os originais", async () => {
+      const user = await createVerifiedTestCoach();
       createdUserIds.push(user.id);
 
       const createUsecase = new CreateAiConversation();
@@ -497,14 +519,14 @@ describe("Coach AI - Chat Persistente e Confiabilidade (Task 2.8)", () => {
 
       expect(loaded.messages.length).toBe(3);
       const audioMsg = loaded.messages[0] as any;
-      expect(audioMsg.parts[1].type).toBe("file");
-      expect(audioMsg.parts[1].mediaType).toBe("audio/webm");
-      expect(audioMsg.parts[1].filename).toBe("audio-treino.webm");
+      expect(audioMsg.parts[1].type).toBe("text");
+      expect(audioMsg.parts[1].text).toContain("audio-treino.webm");
+      expect(JSON.stringify(audioMsg)).not.toContain("base64");
 
       const docMsg = loaded.messages[1] as any;
-      expect(docMsg.parts[1].type).toBe("file");
-      expect(docMsg.parts[1].mediaType).toBe("application/pdf");
-      expect(docMsg.parts[1].filename).toBe("ficha-personal.pdf");
+      expect(docMsg.parts[1].type).toBe("text");
+      expect(docMsg.parts[1].text).toContain("ficha-personal.pdf");
+      expect(JSON.stringify(docMsg)).not.toContain("base64");
     });
   });
 });

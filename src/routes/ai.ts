@@ -1,13 +1,37 @@
 import { google } from "@ai-sdk/google";
-import { convertToModelMessages, stepCountIs, streamText, UIMessage } from "ai";
+import {
+  convertToModelMessages,
+  stepCountIs,
+  generateText,
+  streamText,
+  createUIMessageStream,
+  createUIMessageStreamResponse,
+  UIMessage,
+} from "ai";
 import { fromNodeHeaders } from "better-auth/node";
 import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
 
-import { getInSessionSystemPrompt, getSystemPrompt } from "../ai/system-prompt.js";
-import { getAiTools, getSessionAiTools } from "../ai/tools.js";
-import { AiRateLimitError, InvalidTimezoneError, NotFoundError } from "../errors/index.js";
+import {
+  ORGANIZER_PROMPT,
+  ORGANIZER_REDIRECT,
+  requestsPersonalPrescription,
+  safeOrganizerResponse,
+} from "../domain/ai-organizer-policy.js";
+import { validateAiUpload } from "../domain/ai-upload.js";
+import {
+  getAiTools,
+  getSessionAiTools,
+  getProfessionalAiTools,
+} from "../ai/tools.js";
+import { GetCommercialContext } from "../usecases/GetCommercialContext.js";
+import { getSystemPrompt } from "../ai/system-prompt.js";
+import {
+  AiRateLimitError,
+  InvalidTimezoneError,
+  NotFoundError,
+} from "../errors/index.js";
 import { auth } from "../lib/auth.js";
 import { prisma } from "../lib/db.js";
 import {
@@ -68,7 +92,9 @@ function getFirstUserMessageSummary(messages: UIMessage[]): string | null {
   return null;
 }
 
-export function sanitizeMessagesForRevokedHistory(messages: UIMessage[]): UIMessage[] {
+export function sanitizeMessagesForRevokedHistory(
+  messages: UIMessage[],
+): UIMessage[] {
   const historyToolNames = new Set([
     "getWeeklyTrainingAnalytics",
     "getMuscleTrainingAnalytics",
@@ -82,9 +108,15 @@ export function sanitizeMessagesForRevokedHistory(messages: UIMessage[]): UIMess
   return messages.map((msg) => {
     if (!Array.isArray(msg.parts)) return msg;
     const sanitizedParts = msg.parts.map((part: any) => {
-      const name = part.type === "dynamic-tool" ? part.toolName : part.type?.replace(/^tool-/, "");
+      const name =
+        part.type === "dynamic-tool"
+          ? part.toolName
+          : part.type?.replace(/^tool-/, "");
       if (historyToolNames.has(name) && "output" in part) {
-        return { ...part, output: { notice: "O acesso ao histórico foi revogado pelo atleta." } };
+        return {
+          ...part,
+          output: { notice: "O acesso ao histórico foi revogado pelo atleta." },
+        };
       }
       if (
         part.type === "tool-invocation" &&
@@ -122,7 +154,18 @@ export const aiRoutes = async (app: FastifyInstance) => {
         sessionExerciseId: z.string().uuid().optional(),
       }),
       body: z.object({
-        messages: z.array(z.any()),
+        messages: z
+          .array(
+            z
+              .object({
+                id: z.string().max(200),
+                role: z.enum(["user", "assistant"]),
+                parts: z.array(z.any()).max(100),
+              })
+              .passthrough(),
+          )
+          .min(1)
+          .max(100),
         conversationId: z.string().uuid().optional(),
         timezone: z.string().max(255).optional(),
         workoutSessionId: z.string().uuid().optional(),
@@ -142,6 +185,8 @@ export const aiRoutes = async (app: FastifyInstance) => {
 
       const userId = session.user.id;
       const userName = session.user.name;
+      const identity = await new GetCommercialContext().execute({ userId });
+      const professionalMode = identity.professionalAccessGranted;
 
       // Proteção de cotas e rate limit persistente para o Beta
       try {
@@ -243,7 +288,8 @@ export const aiRoutes = async (app: FastifyInstance) => {
 
           if (!existing) {
             return reply.status(404).send({
-              error: "Conversa não encontrada ou não pertence a esta sessão de treino.",
+              error:
+                "Conversa não encontrada ou não pertence a esta sessão de treino.",
               code: "NOT_FOUND",
             });
           }
@@ -288,7 +334,7 @@ export const aiRoutes = async (app: FastifyInstance) => {
           throw error;
         }
 
-        systemPrompt = getInSessionSystemPrompt(userName);
+        systemPrompt = ORGANIZER_PROMPT;
       } else {
         // Chat geral fora do treino - isolado de qualquer sessão de treino
         if (conversationId) {
@@ -318,7 +364,9 @@ export const aiRoutes = async (app: FastifyInstance) => {
         }
 
         try {
-          tools = getAiTools(userId, { timezone, conversationId });
+          tools = professionalMode
+            ? getProfessionalAiTools(userId, { timezone, conversationId })
+            : getAiTools(userId, { timezone, conversationId });
         } catch (error) {
           if (error instanceof InvalidTimezoneError) {
             return reply.status(400).send({
@@ -329,33 +377,96 @@ export const aiRoutes = async (app: FastifyInstance) => {
           throw error;
         }
 
-        systemPrompt = getSystemPrompt(userName);
+        systemPrompt = professionalMode
+          ? getSystemPrompt(userName)
+          : ORGANIZER_PROMPT;
       }
 
-      const result = streamText({
-        model: google("gemini-2.5-flash"),
-        system: systemPrompt,
-        messages: await convertToModelMessages(messages),
-        stopWhen: stepCountIs(10),
-        tools,
-        onStepFinish: async ({ usage }) => {
-          await recordAiUsage({ userId, feature: workoutSessionId ? "SESSION_CHAT" : "CHAT",
-            hasAudio: messages.some(m => m.parts?.some(p => p.type === "file" && p.mediaType?.startsWith("audio/"))) }, usage);
-        },
-        onError: async ({ error }) => {
-          const errorMessage =
-            error instanceof Error ? error.message : String(error);
-          await recordAiUsage(
-            { userId, feature: workoutSessionId ? "SESSION_CHAT" : "CHAT" },
-            undefined,
-            "ERROR",
-            errorMessage,
-          );
-        },
-      });
+      try {
+        for (const message of messages)
+          for (const part of message.parts ?? []) {
+            if (part.type === "file")
+              validateAiUpload({
+                fileUrl: part.url,
+                mediaType: part.mediaType,
+                filename: part.filename,
+              });
+          }
+      } catch {
+        return reply.status(400).send({
+          error: "Arquivo inválido. Use a importação de fichas.",
+          code: "INVALID_UPLOAD",
+        });
+      }
+      if (professionalMode && !workoutSessionId) {
+        const result = streamText({
+          model: google("gemini-2.5-flash"),
+          system: systemPrompt,
+          messages: await convertToModelMessages(messages),
+          tools,
+          stopWhen: stepCountIs(10),
+          onStepFinish: async ({ usage }) => {
+            await recordAiUsage({ userId, feature: "CHAT" }, usage);
+          },
+        });
+        const response = result.toUIMessageStreamResponse({
+          originalMessages: messages,
+          onFinish: async ({ messages: finalMessages }) => {
+            await new SaveAiMessages().execute({
+              userId,
+              conversationId: conversationId!,
+              messages: finalMessages,
+            });
+          },
+        });
+        reply.status(response.status);
+        response.headers.forEach((v, k) => reply.header(k, v));
+        reply.header("x-conversation-id", conversationId);
+        return reply.send(response.body);
+      }
+      const lastUserText =
+        messages
+          .filter((m) => m.role === "user")
+          .at(-1)
+          ?.parts.filter((p) => p.type === "text")
+          .map((p) => p.text)
+          .join(" ") ?? "";
+      const result = requestsPersonalPrescription(lastUserText)
+        ? { text: ORGANIZER_REDIRECT }
+        : await generateText({
+            model: google("gemini-2.5-flash"),
+            system: systemPrompt,
+            messages: await convertToModelMessages(messages),
+            stopWhen: stepCountIs(10),
+            tools,
+            onStepFinish: async ({ usage }) => {
+              await recordAiUsage(
+                {
+                  userId,
+                  feature: workoutSessionId ? "SESSION_CHAT" : "CHAT",
+                  hasAudio: messages.some((m) =>
+                    m.parts?.some(
+                      (p) =>
+                        p.type === "file" && p.mediaType?.startsWith("audio/"),
+                    ),
+                  ),
+                },
+                usage,
+              );
+            },
+          });
 
-      const response = result.toUIMessageStreamResponse({
+      const answer =
+        professionalMode && !workoutSessionId
+          ? result.text
+          : safeOrganizerResponse(result.text);
+      const stream = createUIMessageStream({
         originalMessages: messages,
+        execute: ({ writer }) => {
+          writer.write({ type: "text-start", id: "organizer" });
+          writer.write({ type: "text-delta", id: "organizer", delta: answer });
+          writer.write({ type: "text-end", id: "organizer" });
+        },
         onFinish: async ({ messages: finalMessages }) => {
           try {
             const saveAiMessages = new SaveAiMessages();
@@ -370,6 +481,7 @@ export const aiRoutes = async (app: FastifyInstance) => {
         },
       });
 
+      const response = createUIMessageStreamResponse({ stream });
       reply.status(response.status);
       response.headers.forEach((value, key) => reply.header(key, value));
       reply.header("x-conversation-id", conversationId);

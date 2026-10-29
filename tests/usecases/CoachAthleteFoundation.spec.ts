@@ -34,15 +34,27 @@ describe("TASK 6.1 — Coach ↔ Athlete Foundation", () => {
         name: `Coach ${prefix}`,
         email,
         accountType: "COACH",
+        professionalRegistration: {
+          create: {
+            fullName: "Verified Fixture",
+            cref: "123456-G",
+            region: "SP",
+            category: "Bacharel",
+            status: "VERIFIED",
+            verifiedAt: new Date(),
+            validUntil: new Date("2099-01-01"),
+          },
+        },
         accountSetupCompletedAt: accountSetupCompleted ? new Date() : null,
       },
     });
 
     if (hasActiveSubscription) {
       // Cria plano customizado para testar limite específico ou reutiliza plano COACH
-      const planCode = customAthleteLimit !== undefined
-        ? `TEST_COACH_${customAthleteLimit}_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`
-        : `TEST_COACH_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
+      const planCode =
+        customAthleteLimit !== undefined
+          ? `TEST_COACH_${customAthleteLimit}_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`
+          : `TEST_COACH_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
 
       const plan = await prisma.plan.create({
         data: {
@@ -115,7 +127,9 @@ describe("TASK 6.1 — Coach ↔ Athlete Foundation", () => {
     });
 
     it("impede que coach sem setup inicial crie convite", async () => {
-      const coach = await createCoach("no-setup", { accountSetupCompleted: false });
+      const coach = await createCoach("no-setup", {
+        accountSetupCompleted: false,
+      });
       const useCase = new CreateCoachInvitation();
 
       await expect(
@@ -127,7 +141,9 @@ describe("TASK 6.1 — Coach ↔ Athlete Foundation", () => {
     });
 
     it("impede que coach sem assinatura/entitlement crie convite", async () => {
-      const coach = await createCoach("no-sub", { hasActiveSubscription: false });
+      const coach = await createCoach("no-sub", {
+        hasActiveSubscription: false,
+      });
       const useCase = new CreateCoachInvitation();
 
       await expect(
@@ -199,7 +215,9 @@ describe("TASK 6.1 — Coach ↔ Athlete Foundation", () => {
       const coachA = await createCoach("coach-a");
       const coachB = await createCoach("coach-b");
 
-      const inv = await new CreateCoachInvitation().execute({ coachId: coachA.id });
+      const inv = await new CreateCoachInvitation().execute({
+        coachId: coachA.id,
+      });
       const cancelUseCase = new CancelCoachInvitation();
 
       await expect(
@@ -214,9 +232,13 @@ describe("TASK 6.1 — Coach ↔ Athlete Foundation", () => {
   describe("3. Preview de Convites", () => {
     it("retorna preview válido com informações públicas do treinador", async () => {
       const coach = await createCoach("preview-coach");
-      const inv = await new CreateCoachInvitation().execute({ coachId: coach.id });
+      const inv = await new CreateCoachInvitation().execute({
+        coachId: coach.id,
+      });
 
-      const preview = await new GetInvitationPreview().execute({ token: inv.token });
+      const preview = await new GetInvitationPreview().execute({
+        token: inv.token,
+      });
 
       expect(preview.isValid).toBe(true);
       expect(preview.coach?.id).toBe(coach.id);
@@ -235,14 +257,18 @@ describe("TASK 6.1 — Coach ↔ Athlete Foundation", () => {
 
     it("informa invalidade para convite cancelado", async () => {
       const coach = await createCoach("preview-cancelled");
-      const inv = await new CreateCoachInvitation().execute({ coachId: coach.id });
+      const inv = await new CreateCoachInvitation().execute({
+        coachId: coach.id,
+      });
 
       await new CancelCoachInvitation().execute({
         coachId: coach.id,
         invitationId: inv.id,
       });
 
-      const preview = await new GetInvitationPreview().execute({ token: inv.token });
+      const preview = await new GetInvitationPreview().execute({
+        token: inv.token,
+      });
       expect(preview.isValid).toBe(false);
       expect(preview.reason).toBe("CANCELLED");
     });
@@ -253,7 +279,9 @@ describe("TASK 6.1 — Coach ↔ Athlete Foundation", () => {
       const coach = await createCoach("accept-coach");
       const athlete = await createAthlete("accept-athlete");
 
-      const inv = await new CreateCoachInvitation().execute({ coachId: coach.id });
+      const inv = await new CreateCoachInvitation().execute({
+        coachId: coach.id,
+      });
       const acceptResult = await new AcceptCoachInvitation().execute({
         athleteId: athlete.id,
         token: inv.token,
@@ -277,7 +305,9 @@ describe("TASK 6.1 — Coach ↔ Athlete Foundation", () => {
       const athlete1 = await createAthlete("reuse-athlete-1");
       const athlete2 = await createAthlete("reuse-athlete-2");
 
-      const inv = await new CreateCoachInvitation().execute({ coachId: coach.id });
+      const inv = await new CreateCoachInvitation().execute({
+        coachId: coach.id,
+      });
 
       // Primeiro aceite sucede
       await new AcceptCoachInvitation().execute({
@@ -299,7 +329,9 @@ describe("TASK 6.1 — Coach ↔ Athlete Foundation", () => {
 
     it("impede que o treinador aceite seu próprio convite (autoassociação)", async () => {
       const coach = await createCoach("self-link-coach");
-      const inv = await new CreateCoachInvitation().execute({ coachId: coach.id });
+      const inv = await new CreateCoachInvitation().execute({
+        coachId: coach.id,
+      });
 
       await expect(
         new AcceptCoachInvitation().execute({
@@ -314,8 +346,12 @@ describe("TASK 6.1 — Coach ↔ Athlete Foundation", () => {
 
     it("impede que atleta sem setup concluído aceite convite", async () => {
       const coach = await createCoach("athlete-setup-coach");
-      const athlete = await createAthlete("no-setup-ath", { accountSetupCompleted: false });
-      const inv = await new CreateCoachInvitation().execute({ coachId: coach.id });
+      const athlete = await createAthlete("no-setup-ath", {
+        accountSetupCompleted: false,
+      });
+      const inv = await new CreateCoachInvitation().execute({
+        coachId: coach.id,
+      });
 
       await expect(
         new AcceptCoachInvitation().execute({
@@ -333,8 +369,12 @@ describe("TASK 6.1 — Coach ↔ Athlete Foundation", () => {
       const coach2 = await createCoach("c2-multi");
       const athlete = await createAthlete("athlete-multi");
 
-      const inv1 = await new CreateCoachInvitation().execute({ coachId: coach1.id });
-      const inv2 = await new CreateCoachInvitation().execute({ coachId: coach2.id });
+      const inv1 = await new CreateCoachInvitation().execute({
+        coachId: coach1.id,
+      });
+      const inv2 = await new CreateCoachInvitation().execute({
+        coachId: coach2.id,
+      });
 
       // Vincula ao coach 1
       await new AcceptCoachInvitation().execute({
@@ -363,9 +403,15 @@ describe("TASK 6.1 — Coach ↔ Athlete Foundation", () => {
       const athlete2 = await createAthlete("ath-lim-2");
       const athlete3 = await createAthlete("ath-lim-3");
 
-      const inv1 = await new CreateCoachInvitation().execute({ coachId: coach.id });
-      const inv2 = await new CreateCoachInvitation().execute({ coachId: coach.id });
-      const inv3 = await new CreateCoachInvitation().execute({ coachId: coach.id });
+      const inv1 = await new CreateCoachInvitation().execute({
+        coachId: coach.id,
+      });
+      const inv2 = await new CreateCoachInvitation().execute({
+        coachId: coach.id,
+      });
+      const inv3 = await new CreateCoachInvitation().execute({
+        coachId: coach.id,
+      });
 
       // 1º aluno aceita
       await new AcceptCoachInvitation().execute({
@@ -402,18 +448,34 @@ describe("TASK 6.1 — Coach ↔ Athlete Foundation", () => {
 
   describe("6. Listagem de Alunos Ativos e Dados do Treinador", () => {
     it("retorna lista de alunos ativos e limites sem vazar dados de outros treinadores", async () => {
-      const coachA = await createCoach("list-coach-a", { customAthleteLimit: 5 });
-      const coachB = await createCoach("list-coach-b", { customAthleteLimit: 5 });
+      const coachA = await createCoach("list-coach-a", {
+        customAthleteLimit: 5,
+      });
+      const coachB = await createCoach("list-coach-b", {
+        customAthleteLimit: 5,
+      });
       const athleteA = await createAthlete("ath-a");
       const athleteB = await createAthlete("ath-b");
 
-      const invA = await new CreateCoachInvitation().execute({ coachId: coachA.id });
-      const invB = await new CreateCoachInvitation().execute({ coachId: coachB.id });
+      const invA = await new CreateCoachInvitation().execute({
+        coachId: coachA.id,
+      });
+      const invB = await new CreateCoachInvitation().execute({
+        coachId: coachB.id,
+      });
 
-      await new AcceptCoachInvitation().execute({ athleteId: athleteA.id, token: invA.token });
-      await new AcceptCoachInvitation().execute({ athleteId: athleteB.id, token: invB.token });
+      await new AcceptCoachInvitation().execute({
+        athleteId: athleteA.id,
+        token: invA.token,
+      });
+      await new AcceptCoachInvitation().execute({
+        athleteId: athleteB.id,
+        token: invB.token,
+      });
 
-      const listA = await new ListCoachAthletes().execute({ coachId: coachA.id });
+      const listA = await new ListCoachAthletes().execute({
+        coachId: coachA.id,
+      });
 
       expect(listA.activeCount).toBe(1);
       expect(listA.limit).toBe(5);
@@ -425,11 +487,15 @@ describe("TASK 6.1 — Coach ↔ Athlete Foundation", () => {
 
   describe("7. Revogação de Vínculos e Preservação de Dados", () => {
     it("permite ao treinador revogar vínculo e libera a vaga para novo aluno", async () => {
-      const coach = await createCoach("revoke-coach", { customAthleteLimit: 1 });
+      const coach = await createCoach("revoke-coach", {
+        customAthleteLimit: 1,
+      });
       const athlete1 = await createAthlete("ath-rev-1");
       const athlete2 = await createAthlete("ath-rev-2");
 
-      const inv1 = await new CreateCoachInvitation().execute({ coachId: coach.id });
+      const inv1 = await new CreateCoachInvitation().execute({
+        coachId: coach.id,
+      });
       const link1 = await new AcceptCoachInvitation().execute({
         athleteId: athlete1.id,
         token: inv1.token,
@@ -450,7 +516,9 @@ describe("TASK 6.1 — Coach ↔ Athlete Foundation", () => {
       expect(linkInDb?.revokedAt).not.toBeNull();
 
       // Agora a vaga foi liberada: coach pode convidar e aceitar atleta 2
-      const inv2 = await new CreateCoachInvitation().execute({ coachId: coach.id });
+      const inv2 = await new CreateCoachInvitation().execute({
+        coachId: coach.id,
+      });
       const link2 = await new AcceptCoachInvitation().execute({
         athleteId: athlete2.id,
         token: inv2.token,
@@ -462,7 +530,9 @@ describe("TASK 6.1 — Coach ↔ Athlete Foundation", () => {
       const coach = await createCoach("ath-revoke-c");
       const athlete = await createAthlete("ath-revoke-a");
 
-      const inv = await new CreateCoachInvitation().execute({ coachId: coach.id });
+      const inv = await new CreateCoachInvitation().execute({
+        coachId: coach.id,
+      });
       const link = await new AcceptCoachInvitation().execute({
         athleteId: athlete.id,
         token: inv.token,
@@ -487,7 +557,9 @@ describe("TASK 6.1 — Coach ↔ Athlete Foundation", () => {
       const athlete = await createAthlete("auth-a");
       const intruder = await createAthlete("intruder");
 
-      const inv = await new CreateCoachInvitation().execute({ coachId: coach.id });
+      const inv = await new CreateCoachInvitation().execute({
+        coachId: coach.id,
+      });
       const link = await new AcceptCoachInvitation().execute({
         athleteId: athlete.id,
         token: inv.token,
@@ -516,7 +588,9 @@ describe("TASK 6.1 — Coach ↔ Athlete Foundation", () => {
         },
       });
 
-      const inv = await new CreateCoachInvitation().execute({ coachId: coach.id });
+      const inv = await new CreateCoachInvitation().execute({
+        coachId: coach.id,
+      });
       const link = await new AcceptCoachInvitation().execute({
         athleteId: athlete.id,
         token: inv.token,
@@ -542,10 +616,17 @@ describe("TASK 6.1 — Coach ↔ Athlete Foundation", () => {
       const coach = await createCoach("me-coach");
       const athlete = await createAthlete("me-athlete");
 
-      const inv = await new CreateCoachInvitation().execute({ coachId: coach.id });
-      await new AcceptCoachInvitation().execute({ athleteId: athlete.id, token: inv.token });
+      const inv = await new CreateCoachInvitation().execute({
+        coachId: coach.id,
+      });
+      await new AcceptCoachInvitation().execute({
+        athleteId: athlete.id,
+        token: inv.token,
+      });
 
-      const rel = await new GetAthleteCoachRelationship().execute({ athleteId: athlete.id });
+      const rel = await new GetAthleteCoachRelationship().execute({
+        athleteId: athlete.id,
+      });
       expect(rel.hasCoach).toBe(true);
       expect(rel.relationship?.coachId).toBe(coach.id);
       expect(rel.relationship?.coachName).toBe(coach.name);
@@ -554,7 +635,9 @@ describe("TASK 6.1 — Coach ↔ Athlete Foundation", () => {
     it("retorna hasCoach=false quando não há treinador vinculado ou após revogação", async () => {
       const athlete = await createAthlete("no-coach-athlete");
 
-      const relBefore = await new GetAthleteCoachRelationship().execute({ athleteId: athlete.id });
+      const relBefore = await new GetAthleteCoachRelationship().execute({
+        athleteId: athlete.id,
+      });
       expect(relBefore.hasCoach).toBe(false);
       expect(relBefore.relationship).toBeNull();
     });

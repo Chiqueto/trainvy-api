@@ -8,6 +8,8 @@ import {
 import { sanitizeAndNormalizeAlternatives } from "../domain/exercise-alternatives.js";
 import { WeekDay } from "../generated/prisma/enums.js";
 import { prisma } from "../lib/db.js";
+import { prescriptionApprovalMode } from "../domain/prescription-approval.js";
+import { readProfessionalVerificationPolicy } from "./ProfessionalVerificationPolicy.js";
 
 export class AcceptWorkoutPrescription {
   async execute({
@@ -19,6 +21,7 @@ export class AcceptWorkoutPrescription {
   }) {
     return await prisma.$transaction(
       async (tx) => {
+        const verificationPolicy = await readProfessionalVerificationPolicy(tx);
         // 1. Bloqueio pessimista de linha no PostgreSQL para serializar aceites concorrentes
         await tx.$queryRaw`SELECT id FROM "WorkoutPrescription" WHERE id = ${prescriptionId} FOR UPDATE`;
 
@@ -95,7 +98,30 @@ export class AcceptWorkoutPrescription {
           );
         }
 
+        if (
+          !prescription.approvedAt ||
+          prescription.approvedByUserId !== prescription.coachId ||
+          prescription.approvedVersion !== prescription.version ||
+          !prescription.approvedSnapshot
+        )
+          throw new CoachPrescriptionError(
+            "PROFESSIONAL_APPROVAL_REQUIRED",
+            403,
+            "Esta prescrição não possui aprovação verificável. Peça uma nova versão ao profissional.",
+          );
+
+        if (
+          prescriptionApprovalMode(prescription) === "TEST" &&
+          verificationPolicy.required
+        )
+          throw new CoachPrescriptionError(
+            "TEST_PRESCRIPTION_DISABLED",
+            403,
+            "Esta aprovação foi feita em modo de testes. Solicite uma nova prescrição revisada pelo profissional verificado.",
+          );
+
         // 3. Verificar se o vínculo Coach-Athlete ainda está ativo no exato momento do aceite
+        await tx.$queryRaw`SELECT id FROM "CoachAthlete" WHERE "coachId" = ${prescription.coachId} AND "athleteId" = ${athleteId} FOR UPDATE`;
         const activeLink = await tx.coachAthlete.findFirst({
           where: {
             coachId: prescription.coachId,

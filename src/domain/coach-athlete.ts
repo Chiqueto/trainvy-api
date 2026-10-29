@@ -1,3 +1,7 @@
+import {
+  assertProfessionalAccess,
+  type ProfessionalAccess,
+} from "./professional-verification.js";
 import crypto from "node:crypto";
 
 import { getEntitlementLimit, hasEntitlement } from "./commercial.js";
@@ -13,7 +17,10 @@ export class CoachAthleteError extends Error {
   }
 }
 
-export function generateInvitationToken(): { token: string; tokenHash: string } {
+export function generateInvitationToken(): {
+  token: string;
+  tokenHash: string;
+} {
   const token = crypto.randomBytes(32).toString("hex");
   const tokenHash = hashInvitationToken(token);
   return { token, tokenHash };
@@ -24,12 +31,16 @@ export function hashInvitationToken(token: string): string {
 }
 
 export interface CoachCommercialContext {
+  crefVerificationRequired?: boolean;
+  professionalVerification?: ProfessionalAccess | null;
   accountType: string;
   accountSetupCompletedAt: string | null;
   entitlements: { key: string; limitValue: number | null }[];
 }
 
-export function assertCoachCanManageAthletes(context: CoachCommercialContext): void {
+export function assertCoachCanManageAthletes(
+  context: CoachCommercialContext,
+): void {
   if (context.accountType !== "COACH") {
     throw new CoachAthleteError(
       "ONLY_COACHES_ALLOWED",
@@ -46,6 +57,11 @@ export function assertCoachCanManageAthletes(context: CoachCommercialContext): v
     );
   }
 
+  assertProfessionalAccess(
+    context.professionalVerification,
+    context.crefVerificationRequired,
+  );
+
   // @ts-expect-error key type conversion
   if (!hasEntitlement(context, "MANAGE_ATHLETES")) {
     throw new CoachAthleteError(
@@ -56,7 +72,9 @@ export function assertCoachCanManageAthletes(context: CoachCommercialContext): v
   }
 }
 
-export function getCoachAthleteLimit(context: CoachCommercialContext): number | null | undefined {
+export function getCoachAthleteLimit(
+  context: CoachCommercialContext,
+): number | null | undefined {
   // @ts-expect-error key type conversion
   return getEntitlementLimit(context, "MANAGE_ATHLETES");
 }
@@ -113,4 +131,3 @@ export function resolveSharingTemporalFloor(link: {
   }
   return link.evolutionSharedAt ?? link.createdAt;
 }
-

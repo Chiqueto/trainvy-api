@@ -41,6 +41,11 @@ export const SignupIntentResponseSchema = z.object({
   expiresAt: IsoTimestamp,
 });
 export const CommercialContextSchema = z.object({
+  crefVerificationRequired: z.boolean(),
+  professionalAccessGranted: z.boolean(),
+  professionalVerification: z
+    .object({ status: z.string(), validUntil: z.string().nullable() })
+    .nullable(),
   accountType: z.enum(AccountType),
   systemRole: z.enum(SystemRole),
   accountSetupCompletedAt: IsoTimestamp.nullable(),

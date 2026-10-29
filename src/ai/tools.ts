@@ -1,4 +1,4 @@
-import { advancedPrescriptionShape } from '../schemas/advanced-prescription.js';
+import { advancedPrescriptionShape } from "../schemas/advanced-prescription.js";
 import { tool } from "ai";
 import z from "zod";
 import { GetSportsProfile } from "../usecases/SportsProfile.js";
@@ -25,10 +25,6 @@ import { UpsertUserTrainData } from "../usecases/UpsertUserTrainData.js";
 import { GetSessionAiContext } from "../usecases/GetSessionAiContext.js";
 import { ProposeSessionSets } from "../usecases/ProposeSessionSets.js";
 import { CreateForgottenWorkoutDraft } from "../usecases/CreateForgottenWorkoutDraft.js";
-
-
-
-
 
 export const aiExerciseSchema = z.object({
   ...advancedPrescriptionShape,
@@ -101,7 +97,9 @@ export const aiWorkoutDaySchema = z
       .boolean()
       .optional()
       .default(false)
-      .describe("Se é dia de descanso (true) ou dia de treino (false). No modelo sequencial, gere apenas treinos reais (isRest: false)"),
+      .describe(
+        "Se é dia de descanso (true) ou dia de treino (false). No modelo sequencial, gere apenas treinos reais (isRest: false)",
+      ),
     estimatedDurationInSeconds: z
       .number()
       .int()
@@ -166,7 +164,9 @@ export const aiWorkoutPlanInputSchema = z.object({
   name: z
     .string()
     .min(1)
-    .describe("Nome do plano de treino (ex: Hipertrofia ABC ou Upper/Lower 4x)"),
+    .describe(
+      "Nome do plano de treino (ex: Hipertrofia ABC ou Upper/Lower 4x)",
+    ),
   workoutDays: aiWorkoutDaysArraySchema.describe(
     "Array com os treinos que compõem a rotina sequencial do plano (ex: Treino A, Treino B, Treino C...). Não inclua dias de descanso fictícios.",
   ),
@@ -236,7 +236,7 @@ const TIMEZONE_REQUIRED_RESULT = {
   message: "Não há timezone disponível para calcular este período.",
 };
 
-export function getAiTools(userId: string, context: AiToolsContext = {}) {
+function getLegacyAiTools(userId: string, context: AiToolsContext = {}) {
   const timezone = context.timezone
     ? validateIanaTimezone(context.timezone)
     : undefined;
@@ -308,7 +308,9 @@ export function getAiTools(userId: string, context: AiToolsContext = {}) {
         gamificationTheme: z
           .enum(GamificationTheme)
           .optional()
-          .describe("Tema de gamificação preferido (ALL, ANIMES, VEHICLES, ANIMALS, MOVIES_SERIES)"),
+          .describe(
+            "Tema de gamificação preferido (ALL, ANIMES, VEHICLES, ANIMALS, MOVIES_SERIES)",
+          ),
       }),
       execute: async (params) => {
         const upsertUserTrainData = new UpsertUserTrainData();
@@ -323,15 +325,16 @@ export function getAiTools(userId: string, context: AiToolsContext = {}) {
       },
     }),
 
-
     getSportsProfile: tool({
-      description: "Consulta objetivos, experiência, equipamentos disponíveis e restrições declaradas pelo próprio atleta. Use antes de sugerir ou adaptar treinos; campos vazios significam informação não fornecida, não ausência de restrições.",
+      description:
+        "Consulta objetivos, experiência, equipamentos disponíveis e restrições declaradas pelo próprio atleta. Use antes de sugerir ou adaptar treinos; campos vazios significam informação não fornecida, não ausência de restrições.",
       inputSchema: z.object({}),
       execute: async () => new GetSportsProfile().execute(userId),
     }),
 
     getRecentTrainingFeedback: tool({
-      description: "Consulta as últimas 10 avaliações pós-treino do próprio atleta (sensação, dor, fadiga, sono e notas). Requer consentimento de histórico. Use antes de comentar recuperação; são relatos subjetivos, não diagnóstico. Não recebe IDs de outros usuários.",
+      description:
+        "Consulta as últimas 10 avaliações pós-treino do próprio atleta (sensação, dor, fadiga, sono e notas). Requer consentimento de histórico. Use antes de comentar recuperação; são relatos subjetivos, não diagnóstico. Não recebe IDs de outros usuários.",
       inputSchema: z.object({}),
       execute: async () => new GetRecentTrainingFeedback().execute(userId),
     }),
@@ -533,25 +536,64 @@ export function getAiTools(userId: string, context: AiToolsContext = {}) {
       description:
         "Cria um rascunho de recuperação de treino esquecido/passado relatado pelo atleta no chat. Não grava sessões de treino reais (WorkoutSession). Não invente horários: se o atleta souber apenas o dia, omita startedAt e completedAt. Os IDs dos exercícios devem ser obtidos pelo searchExercises. O atleta precisará revisar e confirmar explicitamente na interface.",
       inputSchema: z.object({
-        date: z.string().describe("Data do treino no formato YYYY-MM-DD no fuso do atleta"),
-        title: z.string().describe("Título do treino esquecido (ex: 'Treino de Peito e Tríceps')"),
-        workoutPlanId: z.string().uuid().optional().describe("ID do plano apenas se o atleta referenciou um existente"),
-        workoutDayId: z.string().uuid().optional().describe("ID do dia apenas se o atleta referenciou um dia existente"),
-        startedAt: z.string().optional().describe("Horário de início ISO apenas se o atleta informou horário real"),
-        completedAt: z.string().optional().describe("Horário de término ISO apenas se o atleta informou horário real"),
+        date: z
+          .string()
+          .describe("Data do treino no formato YYYY-MM-DD no fuso do atleta"),
+        title: z
+          .string()
+          .describe(
+            "Título do treino esquecido (ex: 'Treino de Peito e Tríceps')",
+          ),
+        workoutPlanId: z
+          .string()
+          .uuid()
+          .optional()
+          .describe("ID do plano apenas se o atleta referenciou um existente"),
+        workoutDayId: z
+          .string()
+          .uuid()
+          .optional()
+          .describe(
+            "ID do dia apenas se o atleta referenciou um dia existente",
+          ),
+        startedAt: z
+          .string()
+          .optional()
+          .describe(
+            "Horário de início ISO apenas se o atleta informou horário real",
+          ),
+        completedAt: z
+          .string()
+          .optional()
+          .describe(
+            "Horário de término ISO apenas se o atleta informou horário real",
+          ),
         exercises: z
           .array(
             z.object({
               order: z.number().int().min(1),
-              exerciseId: z.string().uuid().describe("ID do exercício obtido via searchExercises"),
+              exerciseId: z
+                .string()
+                .uuid()
+                .describe("ID do exercício obtido via searchExercises"),
               sets: z
                 .array(
                   z.object({
                     order: z.number().int().min(1),
                     type: z.enum(["WARMUP", "WORKING"]).default("WORKING"),
                     weightKg: z.number().min(0).describe("Carga em kg"),
-                    reps: z.number().int().min(1).describe("Número de repetições"),
-                    rir: z.number().int().min(0).max(10).optional().describe("RIR apenas se informado explicitamente"),
+                    reps: z
+                      .number()
+                      .int()
+                      .min(1)
+                      .describe("Número de repetições"),
+                    rir: z
+                      .number()
+                      .int()
+                      .min(0)
+                      .max(10)
+                      .optional()
+                      .describe("RIR apenas se informado explicitamente"),
                   }),
                 )
                 .min(1, "Ao menos uma série necessária por exercício"),
@@ -817,7 +859,7 @@ export interface SessionAiToolsContext {
   timezone?: string;
 }
 
-export function getSessionAiTools(
+function getLegacySessionAiTools(
   userId: string,
   context: SessionAiToolsContext,
 ) {
@@ -850,7 +892,9 @@ export function getSessionAiTools(
               type: z
                 .enum(["WARMUP", "WORKING"])
                 .default("WORKING")
-                .describe("Tipo da série: WARMUP (aquecimento) ou WORKING (válida/trabalho)"),
+                .describe(
+                  "Tipo da série: WARMUP (aquecimento) ou WORKING (válida/trabalho)",
+                ),
               weightKg: z
                 .number()
                 .min(0)
@@ -959,4 +1003,64 @@ export function getSessionAiTools(
       },
     }),
   };
+}
+
+export function getAiTools(userId: string, context: AiToolsContext = {}) {
+  const tools = getLegacyAiTools(userId, context);
+  return {
+    getPlanningOverview: tools.getPlanningOverview,
+    getWorkoutPlan: tools.getWorkoutPlan,
+    getPeriodization: tools.getPeriodization,
+    getUserTrainData: tools.getUserTrainData,
+    getSportsProfile: tools.getSportsProfile,
+    getRecentTrainingFeedback: tools.getRecentTrainingFeedback,
+    getRecentTrainingHistory: tools.getRecentTrainingHistory,
+    getWorkoutHistorySession: tools.getWorkoutHistorySession,
+    searchExercises: tools.searchExercises,
+    getExerciseEvolution: tools.getExerciseEvolution,
+    getWeeklyTrainingAnalytics: tools.getWeeklyTrainingAnalytics,
+    getMuscleTrainingAnalytics: tools.getMuscleTrainingAnalytics,
+  };
+}
+export function getSessionAiTools(
+  userId: string,
+  context: SessionAiToolsContext,
+) {
+  const tools = getLegacySessionAiTools(userId, context);
+  return { getSessionAiContext: tools.getSessionAiContext };
+}
+
+// Only the backend selects this factory. Every execution rechecks persisted identity,
+// so a pending approval cannot retain access after suspension or expiry.
+export function getProfessionalAiTools(
+  userId: string,
+  context: AiToolsContext = {},
+) {
+  const tools = getLegacyAiTools(userId, context);
+  for (const tool of Object.values(tools)) {
+    const execute = tool.execute;
+    if (execute)
+      Object.assign(tool, {
+        execute: async (...args: Parameters<typeof execute>) => {
+          const { GetCommercialContext } =
+            await import("../usecases/GetCommercialContext.js");
+          const { assertProfessionalAccess } =
+            await import("../domain/professional-verification.js");
+          const { CoachAthleteError } =
+            await import("../domain/coach-athlete.js");
+          const identity = await new GetCommercialContext().execute({ userId });
+          if (
+            identity.accountType !== "COACH" ||
+            !identity.accountSetupCompletedAt
+          )
+            throw new CoachAthleteError("ONLY_COACHES_ALLOWED", 403);
+          assertProfessionalAccess(
+            identity.professionalVerification,
+            identity.crefVerificationRequired,
+          );
+          return (execute as (...a: unknown[]) => unknown)(...args);
+        },
+      });
+  }
+  return tools;
 }

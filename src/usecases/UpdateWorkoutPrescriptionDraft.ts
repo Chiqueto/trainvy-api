@@ -137,6 +137,13 @@ export class UpdateWorkoutPrescriptionDraft {
 
     return await prisma.$transaction(
       async (tx) => {
+        await tx.$queryRaw`SELECT id FROM "user" WHERE id = ${dto.coachId} FOR UPDATE`;
+        assertCoachCanPrescribe(
+          await new GetCommercialContext().execute({
+            userId: dto.coachId,
+            client: tx,
+          }),
+        );
         // Bloqueio pessimista de linha no PostgreSQL para serializar edições e envios
         await tx.$queryRaw`SELECT id FROM "WorkoutPrescription" WHERE id = ${dto.prescriptionId} FOR UPDATE`;
 
@@ -178,6 +185,7 @@ export class UpdateWorkoutPrescriptionDraft {
         }
 
         // Vínculo ativo obrigatório no momento da edição
+        await tx.$queryRaw`SELECT id FROM "CoachAthlete" WHERE "coachId" = ${dto.coachId} AND "athleteId" = ${prescription.athleteId} FOR UPDATE`;
         const link = await tx.coachAthlete.findFirst({
           where: {
             coachId: dto.coachId,

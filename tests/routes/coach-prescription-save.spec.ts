@@ -35,6 +35,10 @@ vi.mock("../../src/usecases/GetCommercialContext.js", () => ({
     execute() {
       return {
         accountType: "COACH",
+        professionalVerification: {
+          status: "VERIFIED",
+          validUntil: "2099-01-01T00:00:00Z",
+        },
         accountSetupCompletedAt: "2026-01-01",
         entitlements: [{ key: "ASSIGN_WORKOUTS", limitValue: null }],
       };

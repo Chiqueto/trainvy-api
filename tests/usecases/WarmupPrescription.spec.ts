@@ -1,8 +1,14 @@
 import { afterAll, afterEach, describe, expect, it } from "vitest";
 
 import { getSystemPrompt } from "../../src/ai/system-prompt.js";
-import { aiExerciseSchema, getAiTools } from "../../src/ai/tools.js";
-import { WeekDay, WorkoutSessionOrigin } from "../../src/generated/prisma/enums.js";
+import {
+  aiExerciseSchema,
+  getProfessionalAiTools,
+} from "../../src/ai/tools.js";
+import {
+  WeekDay,
+  WorkoutSessionOrigin,
+} from "../../src/generated/prisma/enums.js";
 import { prisma } from "../../src/lib/db.js";
 import { CreatePeriodizationDraftFromAI } from "../../src/usecases/CreatePeriodizationDraftFromAI.js";
 import { CreateWorkoutPlan } from "../../src/usecases/CreateWorkoutPlan.js";
@@ -12,11 +18,11 @@ import { StartFreeWorkoutSession } from "../../src/usecases/StartFreeWorkoutSess
 import { StartWorkoutSession } from "../../src/usecases/StartWorkoutSession.js";
 import {
   cleanupTestUsers,
-  createTestUser,
   createTestWorkoutDay,
   createTestWorkoutExercise,
   createTestWorkoutPlan,
 } from "../helpers/test-db.js";
+import { createVerifiedTestCoach } from "../helpers/verified-coach.js";
 
 describe("Warmup Prescription & AI Support (Task 2.8.2)", () => {
   const testUserIds: string[] = [];
@@ -32,7 +38,7 @@ describe("Warmup Prescription & AI Support (Task 2.8.2)", () => {
 
   describe("Parte A: Warmup Persistence & Snapshots", () => {
     it("CreateWorkoutPlan sem warmupSets -> persiste warmupSets = 0 por padrão", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       testUserIds.push(user.id);
 
       const createWorkoutPlan = new CreateWorkoutPlan();
@@ -69,7 +75,7 @@ describe("Warmup Prescription & AI Support (Task 2.8.2)", () => {
     });
 
     it("CreateWorkoutPlan com warmupSets -> persiste valor informado", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       testUserIds.push(user.id);
 
       const createWorkoutPlan = new CreateWorkoutPlan();
@@ -110,17 +116,23 @@ describe("Warmup Prescription & AI Support (Task 2.8.2)", () => {
       expect(plan.workoutDays[0].exercises[1].sets).toBe(3);
 
       const squat = await prisma.workoutExercise.findFirst({
-        where: { name: "Agachamento Livre", workoutDay: { workoutPlanId: plan.id } },
+        where: {
+          name: "Agachamento Livre",
+          workoutDay: { workoutPlanId: plan.id },
+        },
       });
       expect(squat?.warmupSets).toBe(2);
       expect(squat?.sets).toBe(4);
     });
 
     it("DuplicateWorkoutPlan -> copia fielmente warmupSets", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       testUserIds.push(user.id);
 
-      const plan = await createTestWorkoutPlan(user.id, { name: "Original", isActive: false });
+      const plan = await createTestWorkoutPlan(user.id, {
+        name: "Original",
+        isActive: false,
+      });
       const day = await createTestWorkoutDay(plan.id, { name: "Superior" });
       await createTestWorkoutExercise(day.id, {
         name: "Desenvolvimento Halteres",
@@ -140,14 +152,17 @@ describe("Warmup Prescription & AI Support (Task 2.8.2)", () => {
       expect(duplicated.workoutDays[0].exercises[0].sets).toBe(3);
 
       const duplicatedDb = await prisma.workoutExercise.findFirst({
-        where: { name: "Desenvolvimento Halteres", workoutDay: { workoutPlanId: duplicated.id } },
+        where: {
+          name: "Desenvolvimento Halteres",
+          workoutDay: { workoutPlanId: duplicated.id },
+        },
       });
       expect(duplicatedDb?.warmupSets).toBe(2);
       expect(duplicatedDb?.sets).toBe(3);
     });
 
     it("CreatePeriodizationDraftFromAI -> persiste warmupSets nos blocos e planos criados", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       testUserIds.push(user.id);
 
       const createPeriodizationDraft = new CreatePeriodizationDraftFromAI();
@@ -175,12 +190,48 @@ describe("Warmup Prescription & AI Support (Task 2.8.2)", () => {
                     },
                   ],
                 },
-                { name: "Terça", weekDay: WeekDay.TUESDAY, isRest: true, estimatedDurationInSeconds: 0, exercises: [] },
-                { name: "Quarta", weekDay: WeekDay.WEDNESDAY, isRest: true, estimatedDurationInSeconds: 0, exercises: [] },
-                { name: "Quinta", weekDay: WeekDay.THURSDAY, isRest: true, estimatedDurationInSeconds: 0, exercises: [] },
-                { name: "Sexta", weekDay: WeekDay.FRIDAY, isRest: true, estimatedDurationInSeconds: 0, exercises: [] },
-                { name: "Sábado", weekDay: WeekDay.SATURDAY, isRest: true, estimatedDurationInSeconds: 0, exercises: [] },
-                { name: "Domingo", weekDay: WeekDay.SUNDAY, isRest: true, estimatedDurationInSeconds: 0, exercises: [] },
+                {
+                  name: "Terça",
+                  weekDay: WeekDay.TUESDAY,
+                  isRest: true,
+                  estimatedDurationInSeconds: 0,
+                  exercises: [],
+                },
+                {
+                  name: "Quarta",
+                  weekDay: WeekDay.WEDNESDAY,
+                  isRest: true,
+                  estimatedDurationInSeconds: 0,
+                  exercises: [],
+                },
+                {
+                  name: "Quinta",
+                  weekDay: WeekDay.THURSDAY,
+                  isRest: true,
+                  estimatedDurationInSeconds: 0,
+                  exercises: [],
+                },
+                {
+                  name: "Sexta",
+                  weekDay: WeekDay.FRIDAY,
+                  isRest: true,
+                  estimatedDurationInSeconds: 0,
+                  exercises: [],
+                },
+                {
+                  name: "Sábado",
+                  weekDay: WeekDay.SATURDAY,
+                  isRest: true,
+                  estimatedDurationInSeconds: 0,
+                  exercises: [],
+                },
+                {
+                  name: "Domingo",
+                  weekDay: WeekDay.SUNDAY,
+                  isRest: true,
+                  estimatedDurationInSeconds: 0,
+                  exercises: [],
+                },
               ],
             },
           },
@@ -196,10 +247,13 @@ describe("Warmup Prescription & AI Support (Task 2.8.2)", () => {
     });
 
     it("StartWorkoutSession -> faz snapshot de plannedWarmupSets = exercise.warmupSets", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       testUserIds.push(user.id);
 
-      const plan = await createTestWorkoutPlan(user.id, { name: "Plano Ativo", isActive: true });
+      const plan = await createTestWorkoutPlan(user.id, {
+        name: "Plano Ativo",
+        isActive: true,
+      });
       const day = await createTestWorkoutDay(plan.id, { name: "Dia de Perna" });
       await createTestWorkoutExercise(day.id, {
         name: "Leg Press",
@@ -230,7 +284,7 @@ describe("Warmup Prescription & AI Support (Task 2.8.2)", () => {
     });
 
     it("FREE session -> não inventa plannedWarmupSets (permanece nulo)", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       testUserIds.push(user.id);
 
       const startFree = new StartFreeWorkoutSession();
@@ -296,10 +350,10 @@ describe("Warmup Prescription & AI Support (Task 2.8.2)", () => {
     });
 
     it("proposeWorkoutPlan e createWorkoutPlanDraft preservam warmupSets", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       testUserIds.push(user.id);
 
-      const tools = getAiTools(user.id);
+      const tools = getProfessionalAiTools(user.id);
 
       const workoutPlanInput = {
         name: "Plano IA com Aquecimento",
@@ -320,30 +374,75 @@ describe("Warmup Prescription & AI Support (Task 2.8.2)", () => {
               },
             ],
           },
-          { name: "Terça", weekDay: "TUESDAY" as const, isRest: true, estimatedDurationInSeconds: 0, exercises: [] },
-          { name: "Quarta", weekDay: "WEDNESDAY" as const, isRest: true, estimatedDurationInSeconds: 0, exercises: [] },
-          { name: "Quinta", weekDay: "THURSDAY" as const, isRest: true, estimatedDurationInSeconds: 0, exercises: [] },
-          { name: "Sexta", weekDay: "FRIDAY" as const, isRest: true, estimatedDurationInSeconds: 0, exercises: [] },
-          { name: "Sábado", weekDay: "SATURDAY" as const, isRest: true, estimatedDurationInSeconds: 0, exercises: [] },
-          { name: "Domingo", weekDay: "SUNDAY" as const, isRest: true, estimatedDurationInSeconds: 0, exercises: [] },
+          {
+            name: "Terça",
+            weekDay: "TUESDAY" as const,
+            isRest: true,
+            estimatedDurationInSeconds: 0,
+            exercises: [],
+          },
+          {
+            name: "Quarta",
+            weekDay: "WEDNESDAY" as const,
+            isRest: true,
+            estimatedDurationInSeconds: 0,
+            exercises: [],
+          },
+          {
+            name: "Quinta",
+            weekDay: "THURSDAY" as const,
+            isRest: true,
+            estimatedDurationInSeconds: 0,
+            exercises: [],
+          },
+          {
+            name: "Sexta",
+            weekDay: "FRIDAY" as const,
+            isRest: true,
+            estimatedDurationInSeconds: 0,
+            exercises: [],
+          },
+          {
+            name: "Sábado",
+            weekDay: "SATURDAY" as const,
+            isRest: true,
+            estimatedDurationInSeconds: 0,
+            exercises: [],
+          },
+          {
+            name: "Domingo",
+            weekDay: "SUNDAY" as const,
+            isRest: true,
+            estimatedDurationInSeconds: 0,
+            exercises: [],
+          },
         ],
       };
 
       // 1. Proposta pura
-      const proposed = await (tools.proposeWorkoutPlan.execute as any)(workoutPlanInput, {
-        toolCallId: "call_prop_1",
-      });
+      const proposed = await (tools.proposeWorkoutPlan.execute as any)(
+        workoutPlanInput,
+        {
+          toolCallId: "call_prop_1",
+        },
+      );
       expect(proposed.status).toBe("PROPOSED");
       expect(proposed.plan.workoutDays[0].exercises[0].warmupSets).toBe(2);
 
       // 2. Draft de escrita
-      const draftResult = await (tools.createWorkoutPlanDraft.execute as any)(workoutPlanInput, {
-        toolCallId: "call_draft_1",
-      });
+      const draftResult = await (tools.createWorkoutPlanDraft.execute as any)(
+        workoutPlanInput,
+        {
+          toolCallId: "call_draft_1",
+        },
+      );
       expect(draftResult.status).toBe("SAVED_DRAFT");
 
       const savedDb = await prisma.workoutExercise.findFirst({
-        where: { name: "Supino Reto com Barra", workoutDay: { workoutPlanId: draftResult.planId } },
+        where: {
+          name: "Supino Reto com Barra",
+          workoutDay: { workoutPlanId: draftResult.planId },
+        },
       });
       expect(savedDb?.warmupSets).toBe(2);
       expect(savedDb?.sets).toBe(3);

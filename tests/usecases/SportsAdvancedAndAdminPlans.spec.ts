@@ -1,3 +1,4 @@
+import { SendWorkoutPrescription } from "../../src/usecases/SendWorkoutPrescription.js";
 import Fastify from "fastify";
 import {
   serializerCompiler,
@@ -113,35 +114,80 @@ describe("Optional sports profile and body fat", () => {
   it("saves birth date and goals atomically with the initial metrics, deriving age on the server", async () => {
     const owner = await user();
     login(owner);
-    const response = await app.inject({ method: "PUT", url: "/me", payload: {
-      weightInGrams: 75500, heightInCentimeters: 175,
-      birthDate: "1998-05-20", trainingGoals: "  Ganhar força  ",
-    } });
+    const response = await app.inject({
+      method: "PUT",
+      url: "/me",
+      payload: {
+        weightInGrams: 75500,
+        heightInCentimeters: 175,
+        birthDate: "1998-05-20",
+        trainingGoals: "  Ganhar força  ",
+      },
+    });
     expect(response.statusCode).toBe(200);
-    expect(response.json()).toMatchObject({ birthDate: "1998-05-20", age: ageFromBirthDate("1998-05-20") });
-    const stored = await prisma.user.findUniqueOrThrow({ where: { id: owner.id } });
+    expect(response.json()).toMatchObject({
+      birthDate: "1998-05-20",
+      age: ageFromBirthDate("1998-05-20"),
+    });
+    const stored = await prisma.user.findUniqueOrThrow({
+      where: { id: owner.id },
+    });
     expect(stored.birthDate?.toISOString()).toBe("1998-05-20T00:00:00.000Z");
     expect(stored.trainingGoals).toBe("Ganhar força");
-    const logs = await prisma.userMetricLog.findMany({ where: { userId: owner.id } });
+    const logs = await prisma.userMetricLog.findMany({
+      where: { userId: owner.id },
+    });
     expect(logs).toHaveLength(1);
     expect(logs[0].age).toBe(ageFromBirthDate("1998-05-20"));
   });
   it("keeps legacy accounts accessible and completes missing profile fields without rewriting metric history", async () => {
-    const owner = await user(), other = await user();
+    const owner = await user(),
+      other = await user();
     login(owner);
     const metrics = { weightInGrams: 80000, heightInCentimeters: 180, age: 25 };
     await new UpsertUserTrainData().execute({ userId: owner.id, ...metrics });
-    expect(await new GetUserTrainData().execute({ userId: owner.id })).toMatchObject({ age: 25, birthDate: null });
-    expect(await new GetSportsProfile().execute(owner.id)).toMatchObject({ birthDate: null, trainingGoals: null });
-    const response = await app.inject({ method: "PATCH", url: "/me/sports-profile", payload: { birthDate: "1990-11-01", trainingGoals: "Condicionamento" } });
+    expect(
+      await new GetUserTrainData().execute({ userId: owner.id }),
+    ).toMatchObject({ age: 25, birthDate: null });
+    expect(await new GetSportsProfile().execute(owner.id)).toMatchObject({
+      birthDate: null,
+      trainingGoals: null,
+    });
+    const response = await app.inject({
+      method: "PATCH",
+      url: "/me/sports-profile",
+      payload: { birthDate: "1990-11-01", trainingGoals: "Condicionamento" },
+    });
     expect(response.statusCode).toBe(200);
-    expect(response.json()).toMatchObject({ birthDate: "1990-11-01", trainingGoals: "Condicionamento" });
-    expect(await new GetUserTrainData().execute({ userId: owner.id })).toMatchObject({ age: ageFromBirthDate("1990-11-01") });
-    expect(await prisma.userMetricLog.findMany({ where: { userId: owner.id }, select: { age: true } })).toEqual([{ age: 25 }]);
-    expect(await new GetSportsProfile().execute(other.id)).toMatchObject({ birthDate: null, trainingGoals: null });
+    expect(response.json()).toMatchObject({
+      birthDate: "1990-11-01",
+      trainingGoals: "Condicionamento",
+    });
+    expect(
+      await new GetUserTrainData().execute({ userId: owner.id }),
+    ).toMatchObject({ age: ageFromBirthDate("1990-11-01") });
+    expect(
+      await prisma.userMetricLog.findMany({
+        where: { userId: owner.id },
+        select: { age: true },
+      }),
+    ).toEqual([{ age: 25 }]);
+    expect(await new GetSportsProfile().execute(other.id)).toMatchObject({
+      birthDate: null,
+      trainingGoals: null,
+    });
     // A legacy caller's age cannot replace age calculated from a known birth date.
-    await new UpsertUserTrainData().execute({ userId: owner.id, ...metrics, age: 99 });
-    expect(await new GetUserTrainData().execute({ userId: owner.id })).toMatchObject({ age: ageFromBirthDate("1990-11-01"), birthDate: "1990-11-01" });
+    await new UpsertUserTrainData().execute({
+      userId: owner.id,
+      ...metrics,
+      age: 99,
+    });
+    expect(
+      await new GetUserTrainData().execute({ userId: owner.id }),
+    ).toMatchObject({
+      age: ageFromBirthDate("1990-11-01"),
+      birthDate: "1990-11-01",
+    });
   });
   it("rejects invalid birth dates and blank onboarding goals before any write", async () => {
     const owner = await user();
@@ -152,11 +198,20 @@ describe("Optional sports profile and body fat", () => {
       { birthDate: "2025-01-01", trainingGoals: "Força" },
       { birthDate: "1998-05-20", trainingGoals: "   " },
     ]) {
-      const response = await app.inject({ method: "PUT", url: "/me", payload: { ...payload, weightInGrams: 70000, heightInCentimeters: 170 } });
+      const response = await app.inject({
+        method: "PUT",
+        url: "/me",
+        payload: { ...payload, weightInGrams: 70000, heightInCentimeters: 170 },
+      });
       expect(response.statusCode).toBe(400);
     }
-    expect(await prisma.userMetricLog.count({ where: { userId: owner.id } })).toBe(0);
-    expect((await prisma.user.findUniqueOrThrow({ where: { id: owner.id } })).birthDate).toBeNull();
+    expect(
+      await prisma.userMetricLog.count({ where: { userId: owner.id } }),
+    ).toBe(0);
+    expect(
+      (await prisma.user.findUniqueOrThrow({ where: { id: owner.id } }))
+        .birthDate,
+    ).toBeNull();
   });
   it("persists optional sports data without generating biometric logs or changing another user", async () => {
     const owner = await user(),
@@ -431,7 +486,21 @@ describe("Advanced prescriptions stay separate from performed sets", () => {
       athlete = await user();
     await prisma.user.update({
       where: { id: coach.id },
-      data: { accountType: "COACH", accountSetupCompletedAt: new Date() },
+      data: {
+        accountType: "COACH",
+        professionalRegistration: {
+          create: {
+            fullName: "Verified Fixture",
+            cref: "123456-G",
+            region: "SP",
+            category: "Bacharel",
+            status: "VERIFIED",
+            verifiedAt: new Date(),
+            validUntil: new Date("2099-01-01"),
+          },
+        },
+        accountSetupCompletedAt: new Date(),
+      },
     });
     const plan = await prisma.plan.create({
       data: {
@@ -471,6 +540,12 @@ describe("Advanced prescriptions stay separate from performed sets", () => {
       templateId: template.id,
       athleteId: athlete.id,
     });
+    await new SendWorkoutPrescription().execute({
+      coachId: coach.id,
+      prescriptionId: sent.prescription.id,
+      expectedVersion: sent.prescription.version,
+      approval: true,
+    });
     const accepted = await new AcceptWorkoutPrescription().execute({
       athleteId: athlete.id,
       prescriptionId: sent.prescription.id,
@@ -500,7 +575,21 @@ describe("Administrative plan creation and dynamic permissions", () => {
     login(admin);
     await prisma.user.update({
       where: { id: coach.id },
-      data: { accountType: "COACH", accountSetupCompletedAt: new Date() },
+      data: {
+        accountType: "COACH",
+        professionalRegistration: {
+          create: {
+            fullName: "Verified Fixture",
+            cref: "123456-G",
+            region: "SP",
+            category: "Bacharel",
+            status: "VERIFIED",
+            verifiedAt: new Date(),
+            validUntil: new Date("2099-01-01"),
+          },
+        },
+        accountSetupCompletedAt: new Date(),
+      },
     });
     const input = payload();
     const result = await app.inject({

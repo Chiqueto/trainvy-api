@@ -61,6 +61,17 @@ describe("Coach Athlete Progress & Training History (Task 6.3)", () => {
         name: "Treinador Alpha",
         email: `coach-alpha-${Date.now()}@trainvy.test`,
         accountType: "COACH",
+        professionalRegistration: {
+          create: {
+            fullName: "Verified Fixture",
+            cref: "123456-G",
+            region: "SP",
+            category: "Bacharel",
+            status: "VERIFIED",
+            verifiedAt: new Date(),
+            validUntil: new Date("2099-01-01"),
+          },
+        },
         accountSetupCompletedAt: new Date(),
       },
     });
@@ -84,6 +95,17 @@ describe("Coach Athlete Progress & Training History (Task 6.3)", () => {
         name: "Treinador Beta",
         email: `coach-beta-${Date.now()}@trainvy.test`,
         accountType: "COACH",
+        professionalRegistration: {
+          create: {
+            fullName: "Verified Fixture",
+            cref: "123456-G",
+            region: "SP",
+            category: "Bacharel",
+            status: "VERIFIED",
+            verifiedAt: new Date(),
+            validUntil: new Date("2099-01-01"),
+          },
+        },
         accountSetupCompletedAt: new Date(),
       },
     });
@@ -107,6 +129,17 @@ describe("Coach Athlete Progress & Training History (Task 6.3)", () => {
         name: "Treinador Sem Plano",
         email: `coach-noplan-${Date.now()}@trainvy.test`,
         accountType: "COACH",
+        professionalRegistration: {
+          create: {
+            fullName: "Verified Fixture",
+            cref: "123456-G",
+            region: "SP",
+            category: "Bacharel",
+            status: "VERIFIED",
+            verifiedAt: new Date(),
+            validUntil: new Date("2099-01-01"),
+          },
+        },
         accountSetupCompletedAt: new Date(),
       },
     });
@@ -179,7 +212,9 @@ describe("Coach Athlete Progress & Training History (Task 6.3)", () => {
         workoutPlanNameSnapshot: "Plano Antigo",
         workoutDayNameSnapshot: "Treino A",
         startedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
-        completedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000 + 3600 * 1000),
+        completedAt: new Date(
+          Date.now() - 10 * 24 * 60 * 60 * 1000 + 3600 * 1000,
+        ),
         sessionExercises: {
           create: {
             exerciseId: canonicalExercise.id,
@@ -192,7 +227,9 @@ describe("Coach Athlete Progress & Training History (Task 6.3)", () => {
                   type: "WARMUP",
                   weightInGrams: 40000,
                   reps: 15,
-                  completedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000 + 600 * 1000),
+                  completedAt: new Date(
+                    Date.now() - 10 * 24 * 60 * 60 * 1000 + 600 * 1000,
+                  ),
                 },
                 {
                   order: 2,
@@ -200,7 +237,9 @@ describe("Coach Athlete Progress & Training History (Task 6.3)", () => {
                   weightInGrams: 100000, // PR Antigo: 100kg
                   reps: 10,
                   rir: 2,
-                  completedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000 + 1200 * 1000),
+                  completedAt: new Date(
+                    Date.now() - 10 * 24 * 60 * 60 * 1000 + 1200 * 1000,
+                  ),
                 },
               ],
             },
@@ -230,7 +269,9 @@ describe("Coach Athlete Progress & Training History (Task 6.3)", () => {
                   weightInGrams: 80000, // Carga recente: 80kg
                   reps: 8,
                   rir: 1,
-                  completedAt: new Date(Date.now() - 24 * 60 * 60 * 1000 + 1000 * 1000),
+                  completedAt: new Date(
+                    Date.now() - 24 * 60 * 60 * 1000 + 1000 * 1000,
+                  ),
                 },
               ],
             },
@@ -603,7 +644,11 @@ describe("Coach Athlete Progress & Training History (Task 6.3)", () => {
     // Restaura vínculo e autorização para inspecionar payload completo
     await prisma.coachAthlete.update({
       where: { id: activeLinkA.id },
-      data: { status: "ACTIVE", evolutionShared: true, includePreviousHistory: true },
+      data: {
+        status: "ACTIVE",
+        evolutionShared: true,
+        includePreviousHistory: true,
+      },
     });
 
     setUser(coachA);
@@ -668,7 +713,9 @@ describe("Coach Athlete Progress & Training History (Task 6.3)", () => {
     expect(res.statusCode).toBe(200);
     const exercises = res.json();
     expect(Array.isArray(exercises)).toBe(true);
-    expect(exercises.some((e: any) => e.id === canonicalExercise.id)).toBe(true);
+    expect(exercises.some((e: any) => e.id === canonicalExercise.id)).toBe(
+      true,
+    );
   });
 
   it("20. Endpoints do próprio atleta continuam funcionando normalmente sem regressão", async () => {
@@ -709,7 +756,11 @@ describe("Coach Athlete Progress & Training History (Task 6.3)", () => {
     // Revoga vínculo 1
     await prisma.coachAthlete.update({
       where: { id: link1.id },
-      data: { status: "REVOKED", revokedAt: new Date(), evolutionShared: false },
+      data: {
+        status: "REVOKED",
+        revokedAt: new Date(),
+        evolutionShared: false,
+      },
     });
 
     // Vínculo 2 (novo relacionamento estabelecido no futuro)
@@ -833,4 +884,3 @@ describe("Coach Athlete Progress & Training History (Task 6.3)", () => {
     });
   });
 });
-

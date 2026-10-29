@@ -47,6 +47,17 @@ describe("Coach & Athlete HTTP Routes", () => {
         name: "Route Coach",
         email: `route-coach-${Date.now()}@coach.test`,
         accountType: "COACH",
+        professionalRegistration: {
+          create: {
+            fullName: "Verified Fixture",
+            cref: "123456-G",
+            region: "SP",
+            category: "Bacharel",
+            status: "VERIFIED",
+            verifiedAt: new Date(),
+            validUntil: new Date("2099-01-01"),
+          },
+        },
         accountSetupCompletedAt: new Date(),
       },
     });

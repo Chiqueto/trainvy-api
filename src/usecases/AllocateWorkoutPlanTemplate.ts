@@ -70,9 +70,9 @@ export class AllocateWorkoutPlanTemplate {
         athleteId,
         name: template.name,
         notes: notes?.trim() || template.description || null,
-        status: "SENT",
+        status: "DRAFT",
         version: 1,
-        sentAt: now,
+        sentAt: null,
         payload: template.payload as object,
       },
       include: {

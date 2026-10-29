@@ -1,3 +1,4 @@
+import { prescriptionApprovalMode } from "../domain/prescription-approval.js";
 import { PrescriptionPayload } from "../domain/coach-prescription.js";
 import { prisma } from "../lib/db.js";
 
@@ -24,6 +25,10 @@ export class ListAthletePrescriptions {
       name: p.name,
       notes: p.notes,
       version: p.version,
+      approvedByUserId: p.approvedByUserId,
+      approvedAt: p.approvedAt?.toISOString() ?? null,
+      approvedVersion: p.approvedVersion,
+      approvalMode: prescriptionApprovalMode(p),
       acceptedWorkoutPlanId: p.acceptedWorkoutPlanId,
       sentAt: p.sentAt?.toISOString() ?? null,
       respondedAt: p.respondedAt?.toISOString() ?? null,

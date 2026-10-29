@@ -7,7 +7,7 @@ import {
   aiPeriodizationInputSchema,
   aiWorkoutPlanInputSchema,
   clearToolCallsCache,
-  getAiTools,
+  getProfessionalAiTools,
 } from "../../src/ai/tools.js";
 import { ValidationError } from "../../src/errors/index.js";
 import { WeekDay } from "../../src/generated/prisma/enums.js";
@@ -16,9 +16,9 @@ import { CreatePeriodizationDraftFromAI } from "../../src/usecases/CreatePeriodi
 import {
   cleanupTestUsers,
   createTestPeriodization,
-  createTestUser,
   createTestWorkoutPlan,
 } from "../helpers/test-db.js";
+import { createVerifiedTestCoach } from "../helpers/verified-coach.js";
 
 const VALID_7_DAYS = [
   {
@@ -121,10 +121,10 @@ describe("Task 2.6 — IA de Planejamento V1 (Backend)", () => {
 
   describe("1. Ferramentas da IA e Restrições de Ativação", () => {
     it("não disponibiliza nenhuma ferramenta de ativação, desativação, avanço ou conclusão", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       createdUserIds.push(user.id);
 
-      const tools = getAiTools(user.id);
+      const tools = getProfessionalAiTools(user.id);
       const toolNames = Object.keys(tools);
 
       // Ferramentas permitidas
@@ -148,8 +148,8 @@ describe("Task 2.6 — IA de Planejamento V1 (Backend)", () => {
     });
 
     it("getPlanningOverview usa o userId autenticado e isola dados entre usuários", async () => {
-      const userA = await createTestUser({ name: "User A" });
-      const userB = await createTestUser({ name: "User B" });
+      const userA = await createVerifiedTestCoach({ name: "User A" });
+      const userB = await createVerifiedTestCoach({ name: "User B" });
       createdUserIds.push(userA.id, userB.id);
 
       await createTestWorkoutPlan(userA.id, {
@@ -161,7 +161,7 @@ describe("Task 2.6 — IA de Planejamento V1 (Backend)", () => {
         isActive: true,
       });
 
-      const toolsA = getAiTools(userA.id);
+      const toolsA = getProfessionalAiTools(userA.id);
       const overviewA: any = await toolsA.getPlanningOverview.execute(
         {},
         {} as any,
@@ -176,7 +176,7 @@ describe("Task 2.6 — IA de Planejamento V1 (Backend)", () => {
 
   describe("2. createWorkoutPlanDraft", () => {
     it("sempre cria o plano como inativo (isActive = false) e não altera plano ativo existente", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       createdUserIds.push(user.id);
 
       const existingActivePlan = await createTestWorkoutPlan(user.id, {
@@ -184,7 +184,7 @@ describe("Task 2.6 — IA de Planejamento V1 (Backend)", () => {
         isActive: true,
       });
 
-      const tools = getAiTools(user.id);
+      const tools = getProfessionalAiTools(user.id);
       const result: any = await tools.createWorkoutPlanDraft.execute(
         {
           name: "Novo Plano Draft IA",
@@ -210,7 +210,7 @@ describe("Task 2.6 — IA de Planejamento V1 (Backend)", () => {
     });
 
     it("cria plano draft mesmo quando há uma periodização ativa (não conflita)", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       createdUserIds.push(user.id);
 
       // Cria periodização ativa
@@ -220,7 +220,7 @@ describe("Task 2.6 — IA de Planejamento V1 (Backend)", () => {
         startedAt: new Date(),
       });
 
-      const tools = getAiTools(user.id);
+      const tools = getProfessionalAiTools(user.id);
       // Criar draft via IA não tenta ativar, então não lança ActivePeriodizationError
       const result: any = await tools.createWorkoutPlanDraft.execute(
         {
@@ -237,14 +237,14 @@ describe("Task 2.6 — IA de Planejamento V1 (Backend)", () => {
 
   describe("3. proposeWorkoutPlan e Validação de Esquema", () => {
     it("valida e retorna proposta sem gravar nada no banco de dados", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       createdUserIds.push(user.id);
 
       const countBefore = await prisma.workoutPlan.count({
         where: { userId: user.id },
       });
 
-      const tools = getAiTools(user.id);
+      const tools = getProfessionalAiTools(user.id);
       const result: any = await tools.proposeWorkoutPlan.execute(
         {
           name: "Proposta Upper Lower",
@@ -288,14 +288,14 @@ describe("Task 2.6 — IA de Planejamento V1 (Backend)", () => {
 
   describe("4. proposePeriodization", () => {
     it("valida e retorna proposta de periodização sem persistir no banco de dados", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       createdUserIds.push(user.id);
 
       const perCountBefore = await prisma.periodization.count({
         where: { userId: user.id },
       });
 
-      const tools = getAiTools(user.id);
+      const tools = getProfessionalAiTools(user.id);
       const result: any = await tools.proposePeriodization.execute(
         {
           name: "Periodização 8 Semanas",
@@ -349,7 +349,7 @@ describe("Task 2.6 — IA de Planejamento V1 (Backend)", () => {
     const useCase = new CreatePeriodizationDraftFromAI();
 
     it("cria periodização draft com N planos inativos, orders 1..N e timestamps operacionais nulos", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       createdUserIds.push(user.id);
 
       const output = await useCase.execute({
@@ -430,7 +430,7 @@ describe("Task 2.6 — IA de Planejamento V1 (Backend)", () => {
     });
 
     it("reverte todas as alterações (rollback completo) se qualquer bloco falhar", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       createdUserIds.push(user.id);
 
       const periodizationCountBefore = await prisma.periodization.count({
@@ -484,8 +484,8 @@ describe("Task 2.6 — IA de Planejamento V1 (Backend)", () => {
       const prompt = getSystemPrompt("Carlos Eduardo da Silva");
 
       // Primeiro nome
-      expect(prompt).toContain('Carlos');
-      expect(prompt).toContain('NUNCA pergunte o nome do usuário');
+      expect(prompt).toContain("Carlos");
+      expect(prompt).toContain("NUNCA pergunte o nome do usuário");
 
       // Proposta antes de salvar
       expect(prompt).toContain("proposeWorkoutPlan");
@@ -498,16 +498,18 @@ describe("Task 2.6 — IA de Planejamento V1 (Backend)", () => {
 
       // Segurança e guardrails
       expect(prompt).toContain("Não faça diagnósticos médicos");
-      expect(prompt).toContain("Não utilize peso, percentual de gordura ou estética como motivação negativa");
+      expect(prompt).toContain(
+        "Não utilize peso, percentual de gordura ou estética como motivação negativa",
+      );
       expect(prompt).toContain("Não invente features inexistentes");
     });
   });
 
   describe("7. Testes Comportamentais de Fluxo (Proposta -> Confirmação -> Salvamento)", () => {
     it("fluxo de plano: proposta não grava e salvamento após confirmação gera draft inativo", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       createdUserIds.push(user.id);
-      const tools = getAiTools(user.id);
+      const tools = getProfessionalAiTools(user.id);
 
       // Passo 1: Usuário pede plano -> IA chama proposeWorkoutPlan
       const proposalResult: any = await tools.proposeWorkoutPlan.execute(
@@ -545,9 +547,9 @@ describe("Task 2.6 — IA de Planejamento V1 (Backend)", () => {
     });
 
     it("fluxo de periodização: proposta não grava e salvamento após confirmação gera draft inativo atômico", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       createdUserIds.push(user.id);
-      const tools = getAiTools(user.id);
+      const tools = getProfessionalAiTools(user.id);
 
       // Passo 1: Usuário pede periodização -> IA chama proposePeriodization
       const proposalResult: any = await tools.proposePeriodization.execute(
@@ -602,7 +604,7 @@ describe("Task 2.6 — IA de Planejamento V1 (Backend)", () => {
     });
 
     it("declaração de needsApproval: true em tools de escrita e false/ausente em tools puras", () => {
-      const tools = getAiTools("user-1");
+      const tools = getProfessionalAiTools("user-1");
       expect((tools.createWorkoutPlanDraft as any).needsApproval).toBe(true);
       expect((tools.createPeriodizationDraft as any).needsApproval).toBe(true);
       expect((tools.proposeWorkoutPlan as any).needsApproval).toBeFalsy();
@@ -611,9 +613,9 @@ describe("Task 2.6 — IA de Planejamento V1 (Backend)", () => {
     });
 
     it("modelo tenta persistir WorkoutPlan sem approval -> bloqueado e 0 registros criados", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       createdUserIds.push(user.id);
-      const tools = getAiTools(user.id);
+      const tools = getProfessionalAiTools(user.id);
 
       const mockModel = new MockLanguageModelV3({
         doStream: async () => {
@@ -672,9 +674,9 @@ describe("Task 2.6 — IA de Planejamento V1 (Backend)", () => {
     });
 
     it("usuário rejeita approval (approved: false) -> tool negada e 0 registros criados", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       createdUserIds.push(user.id);
-      const tools = getAiTools(user.id);
+      const tools = getProfessionalAiTools(user.id);
 
       const mockModel = new MockLanguageModelV3({
         doStream: async () => {
@@ -763,9 +765,9 @@ describe("Task 2.6 — IA de Planejamento V1 (Backend)", () => {
     });
 
     it("usuário aprova (approved: true) -> cria exatamente um draft inativo", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       createdUserIds.push(user.id);
-      const tools = getAiTools(user.id);
+      const tools = getProfessionalAiTools(user.id);
 
       const mockModel = new MockLanguageModelV3({
         doStream: async () => {
@@ -855,9 +857,9 @@ describe("Task 2.6 — IA de Planejamento V1 (Backend)", () => {
     });
 
     it("double approval / replay com mesmo toolCallId -> idempotente, não cria duplicata", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       createdUserIds.push(user.id);
-      const tools = getAiTools(user.id);
+      const tools = getProfessionalAiTools(user.id);
 
       const inputPlan = {
         name: "Plano Replay Test",
@@ -894,9 +896,9 @@ describe("Task 2.6 — IA de Planejamento V1 (Backend)", () => {
     });
 
     it("periodização com approval: bloqueia sem approval e é idempotente em replay", async () => {
-      const user = await createTestUser();
+      const user = await createVerifiedTestCoach();
       createdUserIds.push(user.id);
-      const tools = getAiTools(user.id);
+      const tools = getProfessionalAiTools(user.id);
 
       const perInput = {
         name: "Ciclo Replay Test",

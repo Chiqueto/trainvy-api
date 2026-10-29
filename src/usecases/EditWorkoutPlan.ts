@@ -77,6 +77,11 @@ export class EditWorkoutPlan {
             "ACTIVE_WORKOUT_SESSION",
           );
         }
+        // The student owns the editable copy; the original approved snapshot remains immutable.
+        await tx.workoutPrescription.updateMany({
+          where: { acceptedWorkoutPlanId: id },
+          data: { acceptedWorkoutPlanId: null },
+        });
         const dayIds = data.workoutDays.flatMap((d) => (d.id ? [d.id] : []));
         const exerciseIds = data.workoutDays.flatMap((d) =>
           d.exercises.flatMap((e) => (e.id ? [e.id] : [])),

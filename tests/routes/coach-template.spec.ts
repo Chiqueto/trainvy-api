@@ -80,6 +80,17 @@ describe("Coach Templates and Custom Exercises Integration Tests", () => {
         name: "Coach Template Test",
         email: `coach-template-${Date.now()}@test.com`,
         accountType: "COACH",
+        professionalRegistration: {
+          create: {
+            fullName: "Verified Fixture",
+            cref: "123456-G",
+            region: "SP",
+            category: "Bacharel",
+            status: "VERIFIED",
+            verifiedAt: new Date(),
+            validUntil: new Date("2099-01-01"),
+          },
+        },
         accountSetupCompletedAt: new Date(),
       },
     });
@@ -116,7 +127,9 @@ describe("Coach Templates and Custom Exercises Integration Tests", () => {
   });
 
   afterAll(async () => {
-    const userIds = [coachUser?.id, athleteUser?.id].filter(Boolean) as string[];
+    const userIds = [coachUser?.id, athleteUser?.id].filter(
+      Boolean,
+    ) as string[];
     if (coachUser?.id) {
       await prisma.workoutPrescription.deleteMany({
         where: { coachId: coachUser.id },
@@ -193,7 +206,7 @@ describe("Coach Templates and Custom Exercises Integration Tests", () => {
     expect(body[0].name).toBe("Modelo Hipertrofia A/B");
   });
 
-  it("POST /coach/templates/:id/allocate — aloca modelo para um aluno com 1 clique (gera prescrição enviada)", async () => {
+  it("POST /coach/templates/:id/allocate — aloca modelo como rascunho sujeito a revisão e aprovação", async () => {
     const template = await prisma.workoutPlanTemplate.findFirstOrThrow({
       where: { coachId: coachUser.id },
     });
@@ -215,7 +228,7 @@ describe("Coach Templates and Custom Exercises Integration Tests", () => {
     expect(res.statusCode).toBe(200);
     const body = res.json();
     expect(body.success).toBe(true);
-    expect(body.prescription.status).toBe("SENT");
+    expect(body.prescription.status).toBe("DRAFT");
     expect(body.prescription.name).toBe(template.name);
     expect(body.prescription.athleteId).toBe(athleteUser.id);
   });

@@ -77,34 +77,35 @@ enum ExerciseMediaType {
 }
 
 model User {
-  id                      String            @id
-  accountType             AccountType       @default(ATHLETE)
-  systemRole              SystemRole        @default(USER)
-  accountSetupCompletedAt DateTime?         @db.Timestamptz()
-  subscription            Subscription?
-  billingCustomers        BillingCustomer[]
-  adminAuditActions       AdminAuditLog[]   @relation("AuditActor")
-  adminAuditTargets       AdminAuditLog[]   @relation("AuditTarget")
-  workoutPlans            WorkoutPlan[]
-  name                    String
-  email                   String
-  emailVerified           Boolean           @default(false)
-  image                   String?
-  createdAt               DateTime          @default(now())
-  updatedAt               DateTime          @updatedAt
-  sessions                Session[]
-  accounts                Account[]
-  weightInGrams           Int?
-  heightInCentimeters     Int?
-  age                     Int?
-  birthDate               DateTime?         @db.Date
-  bodyFatPercentage       Int? // 100 representa 100%
-  trainingGoals           String?
-  experienceLevel         String?
-  availableEquipment      String[]          @default([])
-  trainingRestrictions    String?
-  gamificationTheme       String            @default("ALL")
-  createdExercises        Exercise[]
+  professionalRegistration ProfessionalRegistration?
+  id                       String                    @id
+  accountType              AccountType               @default(ATHLETE)
+  systemRole               SystemRole                @default(USER)
+  accountSetupCompletedAt  DateTime?                 @db.Timestamptz()
+  subscription             Subscription?
+  billingCustomers         BillingCustomer[]
+  adminAuditActions        AdminAuditLog[]           @relation("AuditActor")
+  adminAuditTargets        AdminAuditLog[]           @relation("AuditTarget")
+  workoutPlans             WorkoutPlan[]
+  name                     String
+  email                    String
+  emailVerified            Boolean                   @default(false)
+  image                    String?
+  createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @updatedAt
+  sessions                 Session[]
+  accounts                 Account[]
+  weightInGrams            Int?
+  heightInCentimeters      Int?
+  age                      Int?
+  birthDate                DateTime?                 @db.Date
+  bodyFatPercentage        Int? // 100 representa 100%
+  trainingGoals            String?
+  experienceLevel          String?
+  availableEquipment       String[]                  @default([])
+  trainingRestrictions     String?
+  gamificationTheme        String                    @default("ALL")
+  createdExercises         Exercise[]
 
   workoutSessions            WorkoutSession[]
   periodizations             Periodization[]
@@ -133,14 +134,16 @@ model User {
 }
 
 model WorkoutPlan {
-  id        String    @id @default(uuid())
-  name      String
-  userId    String
-  user      User      @relation(fields: [userId], references: [id])
-  isActive  Boolean   @default(true)
-  deletedAt DateTime? @db.Timestamptz()
-  createdAt DateTime  @default(now()) @db.Timestamptz()
-  updatedAt DateTime  @updatedAt @db.Timestamptz()
+  importProvenance  Json?
+  importPreviewHash String?   @unique
+  id                String    @id @default(uuid())
+  name              String
+  userId            String
+  user              User      @relation(fields: [userId], references: [id])
+  isActive          Boolean   @default(true)
+  deletedAt         DateTime? @db.Timestamptz()
+  createdAt         DateTime  @default(now()) @db.Timestamptz()
+  updatedAt         DateTime  @updatedAt @db.Timestamptz()
 
   workoutDays            WorkoutDay[]
   periodizationPlan      PeriodizationPlan?
@@ -207,14 +210,14 @@ model WorkoutDay {
 }
 
 model Exercise {
-  id           String   @id @default(uuid())
-  ownerUserId  String?
-  ownerUser    User?    @relation(fields: [ownerUserId], references: [id], onDelete: Cascade)
-  name         String
-  isUnilateral Boolean  @default(false)
+  id            String   @id @default(uuid())
+  ownerUserId   String?
+  ownerUser     User?    @relation(fields: [ownerUserId], references: [id], onDelete: Cascade)
+  name          String
+  isUnilateral  Boolean  @default(false)
   anatomyReview Json?
-  createdAt    DateTime @default(now()) @db.Timestamptz()
-  updatedAt    DateTime @updatedAt @db.Timestamptz()
+  createdAt     DateTime @default(now()) @db.Timestamptz()
+  updatedAt     DateTime @updatedAt @db.Timestamptz()
 
   workoutExercises             WorkoutExercise[]    @relation("WorkoutExerciseMain")
   workoutExercisesAlternative1 WorkoutExercise[]    @relation("WorkoutExerciseAlternative1")
@@ -633,6 +636,7 @@ model SignupIntent {
 }
 
 enum AdminAuditAction {
+  PROFESSIONAL_VERIFICATION_POLICY_UPDATED
   EXERCISE_MUSCLES_UPDATED
   PLAN_CREATED
   PLAN_UPDATED
@@ -688,23 +692,23 @@ model AiRequestLog {
 }
 
 model AiUsageEvent {
-  id               String   @id @default(uuid())
-  userId           String
-  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  feature          String
-  model            String
-  status           String
-  errorMessage     String?
-  inputTokens      Int?
-  outputTokens     Int?
-  reasoningTokens  Int?
+  id                String   @id @default(uuid())
+  userId            String
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  feature           String
+  model             String
+  status            String
+  errorMessage      String?
+  inputTokens       Int?
+  outputTokens      Int?
+  reasoningTokens   Int?
   cachedInputTokens Int?
-  estimatedCostUsd Decimal? @db.Decimal(18, 9)
-  inputRate        Decimal  @db.Decimal(12, 6)
-  outputRate       Decimal  @db.Decimal(12, 6)
-  cachedInputRate  Decimal  @db.Decimal(12, 6)
-  pricingVersion   String
-  createdAt        DateTime @default(now()) @db.Timestamptz()
+  estimatedCostUsd  Decimal? @db.Decimal(18, 9)
+  inputRate         Decimal  @db.Decimal(12, 6)
+  outputRate        Decimal  @db.Decimal(12, 6)
+  cachedInputRate   Decimal  @db.Decimal(12, 6)
+  pricingVersion    String
+  createdAt         DateTime @default(now()) @db.Timestamptz()
 
   @@index([createdAt])
   @@index([userId, createdAt])
@@ -827,6 +831,10 @@ enum WorkoutPrescriptionStatus {
 }
 
 model WorkoutPrescription {
+  approvedByUserId      String?
+  approvedAt            DateTime?                 @db.Timestamptz()
+  approvedVersion       Int?
+  approvedSnapshot      Json?
   id                    String                    @id @default(uuid())
   coachId               String
   coach                 User                      @relation("CoachPrescriptions", fields: [coachId], references: [id], onDelete: Cascade)
@@ -943,4 +951,58 @@ model ForgottenWorkoutDraft {
   @@index([userId, status])
   @@index([userId, sessionDate])
   @@index([conversationId])
+}
+
+enum ProfessionalVerificationStatus {
+  PENDING_VERIFICATION
+  VERIFIED
+  REJECTED
+  EXPIRED
+  SUSPENDED
+}
+
+model ProfessionalRegistration {
+  userId       String                           @id
+  user         User                             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fullName     String
+  cref         String
+  region       String
+  category     String
+  status       ProfessionalVerificationStatus   @default(PENDING_VERIFICATION)
+  revision     Int                              @default(1)
+  verifiedAt   DateTime?                        @db.Timestamptz()
+  validUntil   DateTime?                        @db.Timestamptz()
+  publicReason String?
+  updatedAt    DateTime                         @updatedAt @db.Timestamptz()
+  reviews      ProfessionalVerificationReview[]
+
+  @@index([status, updatedAt])
+}
+
+model ProfessionalVerificationReview {
+  registrationSnapshot Json                           @default("{}")
+  id                   String                         @id @default(uuid())
+  userId               String
+  registration         ProfessionalRegistration       @relation(fields: [userId], references: [userId], onDelete: Restrict)
+  reviewerId           String
+  revision             Int
+  result               ProfessionalVerificationStatus
+  sourceUrl            String
+  evidence             String
+  identityMatched      Boolean
+  registrationActive   Boolean
+  scopeConfirmed       Boolean
+  checkedAt            DateTime                       @db.Timestamptz()
+  validUntil           DateTime?                      @db.Timestamptz()
+  createdAt            DateTime                       @default(now()) @db.Timestamptz()
+
+  @@index([userId, createdAt])
+}
+
+model ProfessionalVerificationPolicy {
+  id              String   @id @default("global")
+  required        Boolean  @default(true)
+  revision        Int      @default(1)
+  updatedByUserId String?
+  updatedAt       DateTime @default(now()) @updatedAt @db.Timestamptz()
 }

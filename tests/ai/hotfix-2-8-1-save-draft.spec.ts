@@ -2,10 +2,14 @@ import fs from "fs";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { getSystemPrompt } from "../../src/ai/system-prompt.js";
-import { clearToolCallsCache, getAiTools } from "../../src/ai/tools.js";
+import {
+  clearToolCallsCache,
+  getProfessionalAiTools,
+} from "../../src/ai/tools.js";
 import { prisma } from "../../src/lib/db.js";
 import { CreatePeriodizationDraftFromAI } from "../../src/usecases/CreatePeriodizationDraftFromAI.js";
-import { cleanupTestUsers, createTestUser } from "../helpers/test-db.js";
+import { cleanupTestUsers } from "../helpers/test-db.js";
+import { createVerifiedTestCoach } from "../helpers/verified-coach.js";
 
 describe("Trainvy — Hotfix 2.8.1 — Diagnóstico e Correção do Save da IA", () => {
   const testUserIds: string[] = [];
@@ -18,7 +22,7 @@ describe("Trainvy — Hotfix 2.8.1 — Diagnóstico e Correção do Save da IA",
   });
 
   it("1. Salva atomicamente a periodização realista (3 blocos, 21 dias, múltiplos exercícios) que falhou no teste real", async () => {
-    const user = await createTestUser({ name: "Atleta Voleibol" });
+    const user = await createVerifiedTestCoach({ name: "Atleta Voleibol" });
     testUserIds.push(user.id);
 
     const fixturePath = "tests/fixtures/failed-periodization-draft.json";
@@ -82,16 +86,21 @@ describe("Trainvy — Hotfix 2.8.1 — Diagnóstico e Correção do Save da IA",
   });
 
   it("2. Tool createPeriodizationDraft captura erro, gera log com campos obrigatórios e faz re-throw", async () => {
-    const user = await createTestUser();
+    const user = await createVerifiedTestCoach();
     testUserIds.push(user.id);
 
-    const tools = getAiTools(user.id);
-    const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    const tools = getProfessionalAiTools(user.id);
+    const consoleErrorSpy = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
 
     // Simula erro durante a execução do use case
     const mockError = new Error("Simulação de timeout ou falha de conexão");
     (mockError as any).code = "P2028";
-    vi.spyOn(CreatePeriodizationDraftFromAI.prototype, "execute").mockRejectedValueOnce(mockError);
+    vi.spyOn(
+      CreatePeriodizationDraftFromAI.prototype,
+      "execute",
+    ).mockRejectedValueOnce(mockError);
 
     const fixturePath = "tests/fixtures/failed-periodization-draft.json";
     const payload = JSON.parse(fs.readFileSync(fixturePath, "utf8"));
@@ -103,8 +112,10 @@ describe("Trainvy — Hotfix 2.8.1 — Diagnóstico e Correção do Save da IA",
     ).rejects.toThrow("Simulação de timeout ou falha de conexão");
 
     expect(consoleErrorSpy).toHaveBeenCalled();
-    const logCall = consoleErrorSpy.mock.calls.find((call) =>
-      typeof call[0] === "string" && call[0].includes("[createPeriodizationDraft:error]"),
+    const logCall = consoleErrorSpy.mock.calls.find(
+      (call) =>
+        typeof call[0] === "string" &&
+        call[0].includes("[createPeriodizationDraft:error]"),
     );
 
     expect(logCall).toBeDefined();
@@ -118,7 +129,9 @@ describe("Trainvy — Hotfix 2.8.1 — Diagnóstico e Correção do Save da IA",
     expect(logMessage).toContain("elapsedMs=");
     expect(logMessage).toContain("errorName=Error");
     expect(logMessage).toContain("errorCode=P2028");
-    expect(logMessage).toContain("errorMessage=Simulação de timeout ou falha de conexão");
+    expect(logMessage).toContain(
+      "errorMessage=Simulação de timeout ou falha de conexão",
+    );
 
     // Garantir que NÃO loga dados sensíveis nem exercícios completos
     expect(logMessage).not.toContain("Supino Reto com Barra");
@@ -128,21 +141,27 @@ describe("Trainvy — Hotfix 2.8.1 — Diagnóstico e Correção do Save da IA",
   });
 
   it("3. Falha na transação não deixa Periodization parcial nem WorkoutPlans órfãos", async () => {
-    const user = await createTestUser();
+    const user = await createVerifiedTestCoach();
     testUserIds.push(user.id);
 
     // Contagem antes
-    const plansBefore = await prisma.workoutPlan.count({ where: { userId: user.id } });
-    const periodizationsBefore = await prisma.periodization.count({ where: { userId: user.id } });
+    const plansBefore = await prisma.workoutPlan.count({
+      where: { userId: user.id },
+    });
+    const periodizationsBefore = await prisma.periodization.count({
+      where: { userId: user.id },
+    });
 
     const fixturePath = "tests/fixtures/failed-periodization-draft.json";
     const payload = JSON.parse(fs.readFileSync(fixturePath, "utf8"));
 
     // Injeta falha forçada no tx.periodizationPlan.create para simular abort no final da transação
-    vi.spyOn(prisma, "$transaction").mockImplementationOnce(async (callback: any) => {
-      // Simula transação que falha após criar alguns itens
-      throw new Error("P2028: Transaction API error: transaction timed out");
-    });
+    vi.spyOn(prisma, "$transaction").mockImplementationOnce(
+      async (callback: any) => {
+        // Simula transação que falha após criar alguns itens
+        throw new Error("P2028: Transaction API error: transaction timed out");
+      },
+    );
 
     const usecase = new CreatePeriodizationDraftFromAI();
     await expect(
@@ -156,8 +175,12 @@ describe("Trainvy — Hotfix 2.8.1 — Diagnóstico e Correção do Save da IA",
     ).rejects.toThrow("P2028");
 
     // Verifica que NENHUM registro órfão sobreviveu
-    const plansAfter = await prisma.workoutPlan.count({ where: { userId: user.id } });
-    const periodizationsAfter = await prisma.periodization.count({ where: { userId: user.id } });
+    const plansAfter = await prisma.workoutPlan.count({
+      where: { userId: user.id },
+    });
+    const periodizationsAfter = await prisma.periodization.count({
+      where: { userId: user.id },
+    });
 
     expect(plansAfter).toBe(plansBefore);
     expect(periodizationsAfter).toBe(periodizationsBefore);
@@ -168,46 +191,63 @@ describe("Trainvy — Hotfix 2.8.1 — Diagnóstico e Correção do Save da IA",
 
     expect(prompt).toContain("Tratamento de Erros de Salvamento");
     expect(prompt).toContain("NUNCA invente ou presuma causas técnicas");
-    expect(prompt).toContain("Não consegui salvar o rascunho. Ocorreu um erro interno durante a gravação.");
+    expect(prompt).toContain(
+      "Não consegui salvar o rascunho. Ocorreu um erro interno durante a gravação.",
+    );
     expect(prompt).toContain("A proposta continua nesta conversa.");
-    expect(prompt).toContain("NUNCA desmonte a periodização em vários planos avulsos");
+    expect(prompt).toContain(
+      "NUNCA desmonte a periodização em vários planos avulsos",
+    );
   });
 
   it("5. Retry após falha com novo toolCallId persiste com sucesso e replay com mesmo toolCallId mantém idempotência", async () => {
-    const user = await createTestUser();
+    const user = await createVerifiedTestCoach();
     testUserIds.push(user.id);
 
-    const tools = getAiTools(user.id);
+    const tools = getProfessionalAiTools(user.id);
     const fixturePath = "tests/fixtures/failed-periodization-draft.json";
     const payload = JSON.parse(fs.readFileSync(fixturePath, "utf8"));
 
     // 1ª tentativa falha
-    vi.spyOn(CreatePeriodizationDraftFromAI.prototype, "execute").mockRejectedValueOnce(
-      new Error("Timeout temporário"),
-    );
+    vi.spyOn(
+      CreatePeriodizationDraftFromAI.prototype,
+      "execute",
+    ).mockRejectedValueOnce(new Error("Timeout temporário"));
 
     const firstToolCallId = "call-failed-1";
     await expect(
-      (tools.createPeriodizationDraft as any).execute(payload, { toolCallId: firstToolCallId }),
+      (tools.createPeriodizationDraft as any).execute(payload, {
+        toolCallId: firstToolCallId,
+      }),
     ).rejects.toThrow("Timeout temporário");
 
     // 2ª tentativa (retry do usuário) com novo toolCallId salva normalmente
     const retryToolCallId = "call-retry-2";
-    const retryResult = await (tools.createPeriodizationDraft as any).execute(payload, {
-      toolCallId: retryToolCallId,
-    });
+    const retryResult = await (tools.createPeriodizationDraft as any).execute(
+      payload,
+      {
+        toolCallId: retryToolCallId,
+      },
+    );
 
     expect(retryResult.status).toBe("SAVED_DRAFT");
     expect(retryResult.periodizationId).toBeDefined();
 
     // 3ª tentativa (replay com mesmo retryToolCallId) não cria duplicata e retorna do cache
-    const periodizationsCountBefore = await prisma.periodization.count({ where: { userId: user.id } });
-
-    const replayResult = await (tools.createPeriodizationDraft as any).execute(payload, {
-      toolCallId: retryToolCallId,
+    const periodizationsCountBefore = await prisma.periodization.count({
+      where: { userId: user.id },
     });
 
-    const periodizationsCountAfter = await prisma.periodization.count({ where: { userId: user.id } });
+    const replayResult = await (tools.createPeriodizationDraft as any).execute(
+      payload,
+      {
+        toolCallId: retryToolCallId,
+      },
+    );
+
+    const periodizationsCountAfter = await prisma.periodization.count({
+      where: { userId: user.id },
+    });
 
     expect(replayResult.periodizationId).toBe(retryResult.periodizationId);
     expect(periodizationsCountAfter).toBe(periodizationsCountBefore);
