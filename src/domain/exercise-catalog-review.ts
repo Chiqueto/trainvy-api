@@ -44,6 +44,10 @@ export const CATALOG_REVIEW_SOURCES: Record<
     title: "Leg press and variants — systematic review (2020)",
     url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC7369968/",
   },
+  "prone-curl-hamstrings": { title: "Maeo et al. — seated versus prone leg curl (2021)", url: "https://pubmed.ncbi.nlm.nih.gov/33009197/" },
+  "prone-curl-ankle": { title: "Cadeo et al. — ankle position during prone leg curl (2023)", url: "https://pubmed.ncbi.nlm.nih.gov/37194431/" },
+  "prone-curl-gastrocnemius": { title: "Marchetti et al. — knee/ankle positions during prone leg curl (2021)", url: "https://pubmed.ncbi.nlm.nih.gov/31469769/" },
+  "prone-curl-flexors": { title: "Maeo et al. — individual knee flexors in eccentric training (2024)", url: "https://pubmed.ncbi.nlm.nih.gov/38857522/" },
   glutes: {
     title: "Gluteus maximus in strength exercises — systematic review (2020)",
     url: "https://pubmed.ncbi.nlm.nih.gov/32132843/",

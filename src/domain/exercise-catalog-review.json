@@ -91,8 +91,9 @@
     "family": "Musculação tradicional — pernas e quadril",
     "groups": ["RESISTANCE"],
     "primary": ["HAMSTRINGS"],
-    "secondary": ["CALVES"],
-    "sourceIds": ["legs", "glutes", "ace"]
+    "secondary": ["CALVES", "HIP_FLEXORS", "ADDUCTORS"],
+    "sourceIds": ["prone-curl-hamstrings", "prone-curl-ankle", "prone-curl-gastrocnemius", "prone-curl-flexors"],
+    "notes": "Revisão individual 2026-10-30.1: mesa flexora bilateral de bruços; isquiotibiais principais, gastrocnêmio, sartório e grácil auxiliares. Sem ênfase regional ou intensidade representada pelas cores."
   },
   {
     "id": "00000000-0000-4000-8000-000000000113",
