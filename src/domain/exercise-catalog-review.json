@@ -71,8 +71,9 @@
     "family": "Musculação tradicional — pernas e quadril",
     "groups": ["RESISTANCE"],
     "primary": ["QUADRICEPS"],
-    "secondary": [],
-    "sourceIds": ["legs", "glutes", "ace"]
+    "secondary": ["HAMSTRINGS"],
+    "sourceIds": ["leg-extension-quads", "leg-extension-hip", "leg-extension-coactivation"],
+    "notes": "Quadríceps primário; bíceps femoral secundário por coativação estabilizadora antagonista, sem esforço equivalente. Revisão individual 2026-10-30.1, sem ênfase regional."
   },
   {
     "id": "00000000-0000-4000-8000-000000000111",
