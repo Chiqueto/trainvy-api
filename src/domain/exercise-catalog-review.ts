@@ -28,6 +28,18 @@ export const CATALOG_REVIEW_SOURCES: Record<
     title: "Bench press and dumbbell flyes — comparative study (2020)",
     url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC7675616/",
   },
+  "seated-curl-hamstrings": {
+    title: "Maeo et al. — seated versus prone leg curl (2021)",
+    url: "https://pubmed.ncbi.nlm.nih.gov/33009197/",
+  },
+  "seated-curl-ankle": {
+    title: "Lisboa et al. — ankle position during seated leg curl (2026)",
+    url: "https://pubmed.ncbi.nlm.nih.gov/41609763/",
+  },
+  "seated-curl-flexors": {
+    title: "Maeo et al. — knee flexors during lengthened eccentric training (2024)",
+    url: "https://pubmed.ncbi.nlm.nih.gov/38857522/",
+  },
   legs: {
     title: "Leg press and variants — systematic review (2020)",
     url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC7369968/",

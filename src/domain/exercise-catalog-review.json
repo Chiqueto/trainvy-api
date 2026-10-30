@@ -81,8 +81,9 @@
     "family": "Musculação tradicional — pernas e quadril",
     "groups": ["RESISTANCE"],
     "primary": ["HAMSTRINGS"],
-    "secondary": ["CALVES"],
-    "sourceIds": ["legs", "glutes", "ace"]
+    "secondary": ["CALVES", "HIP_FLEXORS", "ADDUCTORS"],
+    "sourceIds": ["seated-curl-hamstrings", "seated-curl-ankle", "seated-curl-flexors"],
+    "notes": "Revisão individual 2026-10-30.1: flexora sentada bilateral; isquiotibiais principais e gastrocnêmio, sartório e grácil auxiliares. Sem ênfase regional ou inferência de esforço por cor."
   },
   {
     "id": "00000000-0000-4000-8000-000000000112",
