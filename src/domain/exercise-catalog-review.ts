@@ -21,6 +21,9 @@ export const CATALOG_REVIEW_SOURCES: Record<
   string,
   { title: string; url: string }
 > = {
+  "leg-press-emg": { title: "Da Silva et al. - Leg press muscle activation (2008)", url: "https://pubmed.ncbi.nlm.nih.gov/18545207/" },
+  "leg-press-kinematics": { title: "Martín-Fuentes et al. - Inclined leg press EMG and kinematics (2020)", url: "https://doi.org/10.3390/ijerph17228698" },
+  "leg-press-2026": { title: "Kinoshita et al. - Knee extension versus leg press (2026)", url: "https://pubmed.ncbi.nlm.nih.gov/41630124/" },
   "hack-trunk": { title: "Clark et al. - Trunk Muscle Activation in the Back and Hack Squat (2019)", url: "https://doi.org/10.1519/JSC.0000000000002144" },
   "hack-anatomy": { title: "Arnold et al. - A Model of the Lower Limb for Analysis of Human Movement (2010)", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC2903973/" },
   "leg-extension-quads": {"title":"Akima et al. — Neuromuscular activation of the quadriceps femoris, including the vastus intermedius, during isokinetic knee extensions (2023)","url":"https://doi.org/10.1038/s41598-023-34532-x"},

@@ -52,8 +52,8 @@
     "family": "Musculação tradicional — pernas e quadril",
     "groups": ["RESISTANCE"],
     "primary": ["QUADRICEPS", "GLUTES"],
-    "secondary": ["ADDUCTORS", "HAMSTRINGS", "CALVES"],
-    "sourceIds": ["legs", "glutes", "ace"],
+    "secondary": ["ADDUCTORS", "HAMSTRINGS", "CALVES", "HIP_ABDUCTORS"],
+    "sourceIds": ["leg-press-emg", "leg-press-kinematics", "leg-press-2026"],
     "notes": "Posteriores e gastrocnêmio são sinergistas/coativadores, sem presumir a mesma contribuição dos quadríceps."
   },
   {

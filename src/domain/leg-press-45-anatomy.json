@@ -1,0 +1,263 @@
+{
+  "version": "2026-10-30.1",
+  "reviewedAt": "2026-10-30T17:10:00.000Z",
+  "variant": "Leg Press 45° bilateral, pelve e costas apoiadas, encosto a 30° do chão, pés no meio da plataforma vertical e joelhos aproximadamente entre 15° e 95° de flexão.",
+  "aliases": [
+    "leg press 45",
+    "leg press 45°",
+    "leg press 45 graus",
+    "leg press inclinado",
+    "45 degree leg press"
+  ],
+  "participants": [
+    {
+      "id": "RECTUS_FEMORIS",
+      "label": "Reto femoral",
+      "muscleGroup": "QUADRICEPS",
+      "role": "PRIMARY",
+      "aliases": [
+        "quadríceps",
+        "quadriceps"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010",
+        "KINOSHITA_2026",
+        "DA_SILVA_2008"
+      ]
+    },
+    {
+      "id": "VASTUS_LATERALIS",
+      "label": "Vasto lateral",
+      "muscleGroup": "QUADRICEPS",
+      "role": "PRIMARY",
+      "aliases": [
+        "quadríceps"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010",
+        "KINOSHITA_2026",
+        "DA_SILVA_2008"
+      ]
+    },
+    {
+      "id": "VASTUS_MEDIALIS",
+      "label": "Vasto medial",
+      "muscleGroup": "QUADRICEPS",
+      "role": "PRIMARY",
+      "aliases": [
+        "quadríceps"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010",
+        "KINOSHITA_2026"
+      ]
+    },
+    {
+      "id": "VASTUS_INTERMEDIUS",
+      "label": "Vasto intermédio",
+      "muscleGroup": "QUADRICEPS",
+      "role": "PRIMARY",
+      "aliases": [
+        "vasto intermediário",
+        "quadríceps"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010",
+        "KINOSHITA_2026"
+      ]
+    },
+    {
+      "id": "GLUTEUS_MAXIMUS",
+      "label": "Glúteo máximo",
+      "muscleGroup": "GLUTES",
+      "role": "PRIMARY",
+      "aliases": [
+        "glúteos",
+        "gluteus maximus"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010",
+        "KINOSHITA_2026",
+        "DA_SILVA_2008"
+      ]
+    },
+    {
+      "id": "ADDUCTOR_MAGNUS",
+      "label": "Adutor magno",
+      "muscleGroup": "ADDUCTORS",
+      "role": "SECONDARY",
+      "aliases": [
+        "grande adutor",
+        "adductor magnus",
+        "adutores"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010",
+        "KINOSHITA_2026"
+      ]
+    },
+    {
+      "id": "BICEPS_FEMORIS",
+      "label": "Bíceps femoral",
+      "muscleGroup": "HAMSTRINGS",
+      "role": "SECONDARY",
+      "aliases": [
+        "posteriores da coxa",
+        "isquiotibiais"
+      ],
+      "regions": [
+        {
+          "id": "BICEPS_FEMORIS_LONG_HEAD",
+          "label": "Cabeça longa do bíceps femoral",
+          "aliases": [
+            "bíceps femoral cabeça longa"
+          ]
+        },
+        {
+          "id": "BICEPS_FEMORIS_SHORT_HEAD",
+          "label": "Cabeça curta do bíceps femoral",
+          "aliases": [
+            "bíceps femoral cabeça curta"
+          ]
+        }
+      ],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010",
+        "DA_SILVA_2008"
+      ]
+    },
+    {
+      "id": "SEMITENDINOSUS",
+      "label": "Semitendíneo",
+      "muscleGroup": "HAMSTRINGS",
+      "role": "SECONDARY",
+      "aliases": [
+        "semitendinoso",
+        "semitendinosus",
+        "posteriores da coxa",
+        "isquiotibiais"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "SEMIMEMBRANOSUS",
+      "label": "Semimembranáceo",
+      "muscleGroup": "HAMSTRINGS",
+      "role": "SECONDARY",
+      "aliases": [
+        "semimembranoso",
+        "semimembranosus",
+        "posteriores da coxa",
+        "isquiotibiais"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "GASTROCNEMIUS",
+      "label": "Gastrocnêmio",
+      "muscleGroup": "CALVES",
+      "role": "SECONDARY",
+      "aliases": [
+        "gastrocnémio",
+        "panturrilha",
+        "gémeos"
+      ],
+      "regions": [
+        {
+          "id": "GASTROCNEMIUS_MEDIAL_HEAD",
+          "label": "Cabeça medial do gastrocnêmio",
+          "aliases": [
+            "gastrocnêmio medial"
+          ]
+        },
+        {
+          "id": "GASTROCNEMIUS_LATERAL_HEAD",
+          "label": "Cabeça lateral do gastrocnêmio",
+          "aliases": [
+            "gastrocnêmio lateral"
+          ]
+        }
+      ],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010",
+        "DA_SILVA_2008"
+      ]
+    },
+    {
+      "id": "GLUTEUS_MEDIUS",
+      "label": "Glúteo médio",
+      "muscleGroup": "HIP_ABDUCTORS",
+      "role": "SECONDARY",
+      "aliases": [
+        "gluteus medius",
+        "abdutores do quadril"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "MARTIN_FUENTES_2020"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "DA_SILVA_2008",
+      "title": "Da Silva et al. — Analysis of muscle activation during different leg press exercises at submaximum effort levels (2008)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18545207/",
+      "limitation": "Quatorze mulheres, variações de leg press incluindo 45°, a 40%/80% de 1RM; EMG de reto femoral, vasto lateral, bíceps femoral, gastrocnêmio e glúteo máximo. Não individualiza todas as cabeças ou estabilizadores; sem inferir isolamento, intensidade real ou hipertrofia pela cor."
+    },
+    {
+      "id": "MARTIN_FUENTES_2020",
+      "title": "Martín-Fuentes et al. — Muscle Activation and Kinematic Analysis during the Inclined Leg Press Exercise in Young Females (2020)",
+      "url": "https://doi.org/10.3390/ijerph17228698",
+      "limitation": "Dez mulheres treinadas, leg press inclinado, EMG de vasto medial oblíquo, vasto lateral, reto femoral e glúteo médio; joelhos de 0° a 90°, pés em altura média. Não encontrou isolamento pela largura/rotação testadas. Malha destaca o vasto medial inteiro, sem afirmar ênfase regional."
+    },
+    {
+      "id": "LARSEN_2025",
+      "title": "Larsen et al. — Knee flexion range of motion does not influence muscle hypertrophy of the quadriceps femoris during leg press training in resistance-trained individuals (2025)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40113586/",
+      "limitation": "Vinte e três participantes treinados, unilateral por oito semanas, comparação de amplitudes. Contextualiza a incerteza de amplitude ótima; não valida uma amplitude bilateral universal ou o encosto desta ilustração."
+    },
+    {
+      "id": "KINOSHITA_2026",
+      "title": "Kinoshita et al. — Hypertrophic Effects of Single- versus Multi-Joint Exercise: A Direct Comparison between Knee Extension and Leg Press (2026)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41630124/",
+      "limitation": "Dezessete adultos destreinados, comparação unilateral por 12 semanas e experimento de EMG. Sustenta participação de vastos, glúteo máximo e adutor magno no leg press; não transferir magnitudes para esta máquina a 45°. Reto femoral participa da extensão do joelho sem presumir a mesma resposta de hipertrofia dos vastos."
+    },
+    {
+      "id": "ARNOLD_2010",
+      "title": "Arnold et al. — A Model of the Lower Limb for Analysis of Human Movement (2010)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2903973/",
+      "limitation": "Modelo musculoesquelético, não experimento de leg press. Complementa a inferência anatômica dos extensores e coestabilizadores; inclusão de semitendíneo, semimembranáceo e cabeças não medidas separadamente não representa comprovação de intensidade ou hipertrofia individual."
+    }
+  ],
+  "notes": "Quadríceps e glúteo máximo principais; adutor magno, isquiotibiais, gastrocnêmio e glúteo médio auxiliares/coestabilizadores. Bíceps femoral e gastrocnêmio têm evidência de EMG no leg press 45°; demais componentes dos isquiotibiais e ambas as cabeças são inferência anatômica, sem igualdade de esforço. Glúteo médio pertence aqui ao grupo funcional HIP_ABDUCTORS para distinguir seu papel estabilizador do glúteo máximo principal, sem duplicar grupos. Não há ênfase regional estabelecida, isolamento pela posição dos pés ou promessa de segurança/hipertrofia. Tronco e mãos podem estabilizar o apoio, sem medição ou destaque individual neste mapa não exaustivo. Cor neutra não significa inatividade. Encosto, plataforma vertical, amplitude e cadência são escolhas ilustrativas; preservar pelve apoiada e ajustar individualmente.",
+  "instructions": {
+    "description": "Extensão bilateral de joelhos e quadris no Leg Press 45°, com pelve e costas apoiadas.",
+    "setup": "Ajuste o encosto, as travas e a carga. Sente com quadril e costas apoiados e coloque os pés inteiros no meio da plataforma, aproximadamente à largura dos ombros. Segure as alças e libere o trenó conforme o equipamento.",
+    "execution": "Aproxime a plataforma de forma controlada, flexionando joelhos e quadris sem levantar a pelve ou os calcanhares. Faça uma pausa breve na amplitude confortável e empurre a plataforma suavemente, sem travar os joelhos.",
+    "tips": "Mantenha os joelhos na direção dos pés e acione as travas ao terminar. A ilustração usa trilhos a 45°, encosto a 30° do chão e cerca de 15° a 95° de flexão dos joelhos; ajuste a amplitude ao equipamento e à orientação individual. As cores indicam participação muscular ilustrativa, sem medição de EMG ou intensidade real de esforço."
+  }
+}
