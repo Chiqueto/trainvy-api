@@ -1,3 +1,5 @@
+> 30/10/2026: [AI pessoal e aceites separados de IA/3D](19-FEATURE-TERMS-AND-PERSONAL-AI.md) atualizam o bloqueio de geracao pessoal deste documento. Regras profissionais para terceiros permanecem vigentes.
+
 # 02 — Papéis e Permissões
 
 ## Atualização — 29/10/2026

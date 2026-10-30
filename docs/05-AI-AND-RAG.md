@@ -1,3 +1,5 @@
+> 30/10/2026: [AI pessoal e aceites separados de IA/3D](19-FEATURE-TERMS-AND-PERSONAL-AI.md) atualizam o bloqueio de geracao pessoal deste documento. Regras profissionais para terceiros permanecem vigentes.
+
 > Atualização de 29/10/2026: alunos usam o Organizador de Treinos, com importação revisada e confirmada; geração personalizada fica restrita ao profissional verificado. Publicação exige aprovação explícita da versão. As funcionalidades históricas abaixo devem ser lidas conforme [a implementação atual](17-PROFESSIONAL-VERIFICATION-AND-AI-MODES.md).
 
 # 05 — IA e RAG

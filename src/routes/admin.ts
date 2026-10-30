@@ -1,6 +1,8 @@
 import type { FastifyRequest } from "fastify";
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import z from "zod";
+import { ListFeatureTermsEvidence } from "../usecases/ListFeatureTermsEvidence.js";
+import { featureKeys } from "../domain/feature-terms.js";
 
 import { AdminError, requireAdmin } from "../lib/require-admin.js";
 import * as s from "../schemas/admin.js";
@@ -60,6 +62,13 @@ export const adminRoutes: FastifyPluginAsyncZod = async (app) => {
       .send({ error: "Internal server error", code: "INTERNAL_SERVER_ERROR" });
   });
   const queries = new AdminQueries();
+  app.get("/feature-terms", {
+    schema: {
+      operationId: "listFeatureTermsEvidence", tags: ["Admin"], summary: "Read restricted acknowledgement evidence and recent access events",
+      querystring: z.object({ userId: z.string().min(1).optional(), feature: z.enum(featureKeys).optional(), cursor: z.string().uuid().optional(), limit: z.coerce.number().int().min(1).max(100).default(25) }),
+      response: response(z.object({ items: z.array(z.object({ id: z.string(), userId: z.string(), feature: z.string(), version: z.string(), textHash: z.string(), title: z.string(), text: z.string(), acceptedAt: z.string(), ipAddress: z.string(), userAgent: z.string().nullable(), accessCount: z.number(), recentAccessEvents: z.array(z.object({ id: z.string(), context: z.string(), createdAt: z.string() })) })), nextCursor: z.string().nullable() })),
+    },
+  }, request => new ListFeatureTermsEvidence().execute(actor(request), request.query));
   app.put("/exercises/:exerciseId/muscles", {
     schema: { operationId: "updateAdminExerciseMuscles", tags: ["Admin"],
       summary: "Update global exercise muscles with audit and conflict protection",

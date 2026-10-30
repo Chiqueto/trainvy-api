@@ -1,5 +1,6 @@
 import { advancedPrescriptionShape } from "../schemas/advanced-prescription.js";
 import { tool } from "ai";
+import { FeatureTerms } from "../usecases/FeatureTerms.js";
 import z from "zod";
 import { GetSportsProfile } from "../usecases/SportsProfile.js";
 
@@ -1028,6 +1029,28 @@ export function getSessionAiTools(
 ) {
   const tools = getLegacySessionAiTools(userId, context);
   return { getSessionAiContext: tools.getSessionAiContext };
+}
+
+// Personal drafts only: no coach/athlete IDs or professional publication tools.
+export function getPersonalPlanningAiTools(userId: string, context: AiToolsContext = {}) {
+  const legacy = getLegacyAiTools(userId, context);
+  const planning = {
+    proposeWorkoutPlan: legacy.proposeWorkoutPlan,
+    createWorkoutPlanDraft: legacy.createWorkoutPlanDraft,
+    proposePeriodization: legacy.proposePeriodization,
+    createPeriodizationDraft: legacy.createPeriodizationDraft,
+  };
+  for (const [name, definition] of Object.entries(planning)) {
+    const execute = definition.execute!;
+    Object.assign(definition, {
+      execute: async (...args: Parameters<typeof execute>) => {
+        const callId = (args[1] as { toolCallId?: string } | undefined)?.toolCallId;
+        await new FeatureTerms().authorize(userId, "AI_WORKOUT", `${context.conversationId ?? "chat"}:${name}:${callId ?? "proposal"}`);
+        return (execute as (...a: unknown[]) => unknown)(...args);
+      },
+    });
+  }
+  return { ...getAiTools(userId, context), ...planning };
 }
 
 // Only the backend selects this factory. Every execution rechecks persisted identity,

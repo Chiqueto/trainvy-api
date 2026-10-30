@@ -1,3 +1,4 @@
+import { featureTermsRoutes } from "./routes/feature-terms.js";
 import "dotenv/config";
 
 import fastifyCors from "@fastify/cors";
@@ -126,6 +127,7 @@ await app.register(sportsProfileRoutes);
 await app.register(commercialRoutes);
 await app.register(coachRoutes);
 await app.register(professionalVerificationRoutes);
+await app.register(featureTermsRoutes);
 await app.register(coachPrescriptionRoutes);
 await app.register(coachProgressRoutes);
 await app.register(coachTemplateRoutes);

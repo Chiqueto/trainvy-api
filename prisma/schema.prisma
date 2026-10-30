@@ -77,6 +77,7 @@ enum ExerciseMediaType {
 }
 
 model User {
+  featureTermsAcceptances FeatureTermsAcceptance[]
   professionalRegistration ProfessionalRegistration?
   id                       String                    @id
   accountType              AccountType               @default(ATHLETE)
@@ -1005,4 +1006,30 @@ model ProfessionalVerificationPolicy {
   revision        Int      @default(1)
   updatedByUserId String?
   updatedAt       DateTime @default(now()) @updatedAt @db.Timestamptz()
+}
+
+// Evidence is append-only through the API; new terms require a new acceptance.
+model FeatureTermsAcceptance {
+  id String @id @default(uuid())
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Restrict)
+  feature String
+  version String
+  textHash String
+  title String
+  text String
+  acceptedAt DateTime @default(now()) @db.Timestamptz()
+  ipAddress String
+  userAgent String?
+  accessEvents FeatureAccessEvent[]
+  @@unique([userId, feature, version, textHash])
+  @@index([userId, acceptedAt])
+}
+model FeatureAccessEvent {
+  id String @id @default(uuid())
+  acceptanceId String
+  acceptance FeatureTermsAcceptance @relation(fields: [acceptanceId], references: [id], onDelete: Restrict)
+  context String
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  @@index([acceptanceId, createdAt])
 }

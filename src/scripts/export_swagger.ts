@@ -1,3 +1,4 @@
+import { featureTermsRoutes } from "../routes/feature-terms.js";
 import { execSync } from "node:child_process";
 import fs from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -68,6 +69,7 @@ await app.register(aiRoutes, { prefix: "/ai" });
 await app.register(commercialRoutes);
 await app.register(coachRoutes);
 await app.register(professionalVerificationRoutes);
+await app.register(featureTermsRoutes);
 await app.register(coachPrescriptionRoutes);
 await app.register(coachProgressRoutes);
 await app.register(coachTemplateRoutes);

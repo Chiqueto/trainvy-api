@@ -1,3 +1,5 @@
+> 30/10/2026: [AI pessoal e aceites separados de IA/3D](19-FEATURE-TERMS-AND-PERSONAL-AI.md) atualizam o bloqueio de geracao pessoal deste documento. Regras profissionais para terceiros permanecem vigentes.
+
 > Atualização: a [flag administrativa de testes e a busca CREF](18-ADMIN-CREF-TEST-MODE.md) permitem dispensar temporariamente a exigência de verificação, sem alterar o cadastro para VERIFIED.
 
 # Verificação profissional e modos de IA — 29/10/2026
