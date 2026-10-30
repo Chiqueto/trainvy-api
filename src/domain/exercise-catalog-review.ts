@@ -21,6 +21,8 @@ export const CATALOG_REVIEW_SOURCES: Record<
   string,
   { title: string; url: string }
 > = {
+  "hack-trunk": { title: "Clark et al. - Trunk Muscle Activation in the Back and Hack Squat (2019)", url: "https://doi.org/10.1519/JSC.0000000000002144" },
+  "hack-anatomy": { title: "Arnold et al. - A Model of the Lower Limb for Analysis of Human Movement (2010)", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC2903973/" },
   "leg-extension-quads": {"title":"Akima et al. — Neuromuscular activation of the quadriceps femoris, including the vastus intermedius, during isokinetic knee extensions (2023)","url":"https://doi.org/10.1038/s41598-023-34532-x"},
   "leg-extension-hip": {"title":"Larsen et al. — The effects of hip flexion angle on quadriceps femoris muscle hypertrophy in the leg extension exercise (2025)","url":"https://pubmed.ncbi.nlm.nih.gov/39699974/"},
   "leg-extension-coactivation": {"title":"Co-Activation, Estimated Anterior and Posterior Cruciate Ligament Forces, and Motor Unit Activation Strategies during the Time Course of Fatigue (2018)","url":"https://pubmed.ncbi.nlm.nih.gov/30248892/"},

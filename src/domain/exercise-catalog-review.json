@@ -1388,8 +1388,8 @@
     "family": "Musculação tradicional — pernas e quadril",
     "groups": ["RESISTANCE"],
     "primary": ["QUADRICEPS", "GLUTES"],
-    "secondary": ["ADDUCTORS"],
-    "sourceIds": ["legs", "glutes", "ace"]
+    "secondary": ["ADDUCTORS", "CORE", "BACK"],
+    "sourceIds": ["hack-trunk", "hack-anatomy"]
   },
   {
     "id": "7e47d431-f834-461d-85f7-bbae415c34f9",
