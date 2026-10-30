@@ -21,6 +21,10 @@ export const CATALOG_REVIEW_SOURCES: Record<
   string,
   { title: string; url: string }
 > = {
+  "hip-thrust-biomechanics": {"title":"Brazil et al. — A comprehensive biomechanical analysis of the barbell hip thrust (2021)","url":"https://doi.org/10.1371/journal.pone.0249307"},
+  "hip-thrust-emg": {"title":"Kennedy et al. — Electromyographic differences between the barbell hip thrust and barbell glute bridge (2024; online 2022)","url":"https://doi.org/10.1080/14763141.2022.2074875"},
+  "hip-thrust-training": {"title":"Plotkin et al. — Hip thrust and back squat training elicit similar gluteus muscle hypertrophy (2023)","url":"https://doi.org/10.3389/fphys.2023.1279170"},
+  "hip-thrust-trunk": {"title":"Andersen et al. — Electromyographic Comparison of Barbell Deadlift, Hex Bar Deadlift, and Hip Thrust Exercises (2018)","url":"https://doi.org/10.1519/JSC.0000000000001826"},
   "stiff-variants": { title: "Coratella et al. - Romanian and stiff-leg deadlift comparison (2022)", url: "https://doi.org/10.3390/ijerph19031903" },
   "stiff-hamstrings": { title: "Boyer et al. - Individual hamstring activation during stiff-leg deadlift (2021)", url: "https://pubmed.ncbi.nlm.nih.gov/33678131/" },
   "stiff-trunk": { title: "Iversen et al. - Conventional and elastic resistance in stiff-leg deadlift (2017)", url: "https://doi.org/10.1080/17461391.2017.1337229" },

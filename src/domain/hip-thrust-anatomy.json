@@ -1,0 +1,278 @@
+{
+  "version": "2026-10-30.1",
+  "reviewedAt": "2026-10-30T19:00:00.000Z",
+  "variant": "Elevação pélvica bilateral com barra acolchoada, apoio torácico em banco estável e pés no chão; extensão até alinhar tronco e coxas, sem hiperextensão lombar.",
+  "aliases": [
+    "elevação pélvica",
+    "elevação pélvica com barra",
+    "barbell hip thrust",
+    "hip thrust com barra"
+  ],
+  "participants": [
+    {
+      "id": "GLUTEUS_MAXIMUS",
+      "label": "Glúteo máximo",
+      "muscleGroup": "GLUTES",
+      "role": "PRIMARY",
+      "aliases": [
+        "glúteos",
+        "gluteus maximus"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "KENNEDY_2024",
+        "PLOTKIN_2023"
+      ]
+    },
+    {
+      "id": "BICEPS_FEMORIS",
+      "label": "Bíceps femoral — cabeça longa",
+      "muscleGroup": "HAMSTRINGS",
+      "role": "SECONDARY",
+      "aliases": [
+        "posteriores da coxa",
+        "isquiotibiais"
+      ],
+      "regions": [
+        {
+          "id": "BICEPS_FEMORIS_LONG_HEAD",
+          "label": "Cabeça longa do bíceps femoral",
+          "aliases": [
+            "bíceps femoral cabeça longa"
+          ]
+        }
+      ],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "KENNEDY_2024",
+        "BRAZIL_2021",
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "SEMITENDINOSUS",
+      "label": "Semitendíneo",
+      "muscleGroup": "HAMSTRINGS",
+      "role": "SECONDARY",
+      "aliases": [
+        "semitendinoso",
+        "semitendinosus",
+        "posteriores da coxa",
+        "isquiotibiais"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "KENNEDY_2024",
+        "BRAZIL_2021",
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "SEMIMEMBRANOSUS",
+      "label": "Semimembranáceo",
+      "muscleGroup": "HAMSTRINGS",
+      "role": "SECONDARY",
+      "aliases": [
+        "semimembranoso",
+        "semimembranosus",
+        "posteriores da coxa",
+        "isquiotibiais"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010",
+        "BRAZIL_2021"
+      ]
+    },
+    {
+      "id": "ADDUCTOR_MAGNUS",
+      "label": "Adutor magno",
+      "muscleGroup": "ADDUCTORS",
+      "role": "SECONDARY",
+      "aliases": [
+        "grande adutor",
+        "adductor magnus",
+        "adutores"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010",
+        "BRAZIL_2021"
+      ]
+    },
+    {
+      "id": "RECTUS_FEMORIS",
+      "label": "Reto femoral",
+      "muscleGroup": "QUADRICEPS",
+      "role": "SECONDARY",
+      "aliases": [
+        "quadríceps",
+        "quadriceps"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "KENNEDY_2024",
+        "BRAZIL_2021",
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "VASTUS_LATERALIS",
+      "label": "Vasto lateral",
+      "muscleGroup": "QUADRICEPS",
+      "role": "SECONDARY",
+      "aliases": [
+        "quadríceps"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "KENNEDY_2024",
+        "BRAZIL_2021",
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "VASTUS_MEDIALIS",
+      "label": "Vasto medial",
+      "muscleGroup": "QUADRICEPS",
+      "role": "SECONDARY",
+      "aliases": [
+        "quadríceps"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "KENNEDY_2024",
+        "BRAZIL_2021",
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "VASTUS_INTERMEDIUS",
+      "label": "Vasto intermédio",
+      "muscleGroup": "QUADRICEPS",
+      "role": "SECONDARY",
+      "aliases": [
+        "vasto intermediário",
+        "quadríceps"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010",
+        "BRAZIL_2021"
+      ]
+    },
+    {
+      "id": "GLUTEUS_MEDIUS",
+      "label": "Glúteo médio",
+      "muscleGroup": "HIP_ABDUCTORS",
+      "role": "SECONDARY",
+      "aliases": [
+        "gluteus medius",
+        "abdutores do quadril"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "KENNEDY_2024",
+        "PLOTKIN_2023"
+      ]
+    },
+    {
+      "id": "RECTUS_ABDOMINIS",
+      "label": "Reto abdominal",
+      "muscleGroup": "CORE",
+      "role": "SECONDARY",
+      "aliases": [
+        "abdômen",
+        "abdominais",
+        "rectus abdominis"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "BRAZIL_2021"
+      ]
+    },
+    {
+      "id": "EXTERNAL_OBLIQUE",
+      "label": "Oblíquo externo",
+      "muscleGroup": "CORE",
+      "role": "SECONDARY",
+      "aliases": [
+        "oblíquos",
+        "external oblique",
+        "abdômen"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "BRAZIL_2021"
+      ]
+    },
+    {
+      "id": "ERECTOR_SPINAE",
+      "label": "Eretores da coluna",
+      "muscleGroup": "BACK",
+      "role": "SECONDARY",
+      "aliases": [
+        "eretor da espinha",
+        "eretores espinhais",
+        "lombar",
+        "erector spinae"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANDERSEN_2018",
+        "BRAZIL_2021"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "BRAZIL_2021",
+      "title": "Brazil et al. — A comprehensive biomechanical analysis of the barbell hip thrust (2021)",
+      "url": "https://doi.org/10.1371/journal.pone.0249307",
+      "limitation": "Dezenove homens treinados, três repetições a 70% de 1RM. Demanda extensora de quadril, joelho e tronco. Momentos articulares não isolam músculos; abdômen como estabilizador é inferência anatômica, sem EMG abdominal específico. Apoios e ângulos ilustrativos não são ideais universais."
+    },
+    {
+      "id": "KENNEDY_2024",
+      "title": "Kennedy et al. — Electromyographic differences between the barbell hip thrust and barbell glute bridge (2024; online 2022)",
+      "url": "https://doi.org/10.1080/14763141.2022.2074875",
+      "limitation": "Dez homens; EMG de glúteo máximo/médio, bíceps femoral e vasto lateral. Hip thrust com banco não equivale à ponte no chão. Não mediu todos os vastos, semimembranáceo ou adutor magno e não comprova hipertrofia."
+    },
+    {
+      "id": "PLOTKIN_2023",
+      "title": "Plotkin et al. — Hip thrust and back squat training elicit similar gluteus muscle hypertrophy (2023)",
+      "url": "https://doi.org/10.3389/fphys.2023.1279170",
+      "limitation": "Nove semanas em 34 iniciantes. EMG inicial não previu consistentemente hipertrofia. Não permite prometer ativação máxima ou crescimento de todos os sinergistas; sem ênfase regional prescrita."
+    },
+    {
+      "id": "ANDERSEN_2018",
+      "title": "Andersen et al. — Electromyographic Comparison of Barbell Deadlift, Hex Bar Deadlift, and Hip Thrust Exercises (2018)",
+      "url": "https://doi.org/10.1519/JSC.0000000000001826",
+      "limitation": "Treze homens treinados, tentativas de 1RM; EMG de glúteo máximo, bíceps femoral e eretores. Sem medição separada dos componentes lombares/torácicos ou equivalência entre EMG e forças."
+    },
+    {
+      "id": "ARNOLD_2010",
+      "title": "Arnold et al. — A Model of the Lower Limb for Analysis of Human Movement (2010)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2903973/",
+      "limitation": "Modelo anatômico de membros inferiores, não ensaio de hip thrust. Fundamenta extensão do quadril pela cabeça longa dos isquiotibiais e adutor magno e a ação extensora do quadríceps. Seleção de semimembranáceo e vasto intermédio é inferência anatômica, sem EMG específico nesta revisão."
+    }
+  ],
+  "notes": "Glúteo máximo principal, sem preferência regional. Isquiotibiais biarticulares, adutor magno, quadríceps e glúteo médio são auxiliares; reto abdominal, oblíquo externo e eretores estabilizam o tronco. Papel do abdômen, adutor magno, semimembranáceo e vasto intermédio é inferência anatômica, não medição direta nestes ensaios. Glúteo médio usa o grupo funcional HIP_ABDUCTORS, preservando GLUTES como grupo primário sem duplicação. Cabeça curta do bíceps femoral não estende o quadril e não é destacada; neutralidade não significa inatividade. Mapa não exaustivo: cores categóricas não indicam EMG, força, porcentagem ou hipertrofia. Banco a 42 cm e canelas aproximadamente verticais no alto são escolhas de ilustração ajustadas à malha; não são prescrição universal. Tronco estável sem simulação de vértebras individuais.",
+  "instructions": {
+    "description": "Elevação pélvica com barra e apoio torácico no banco, dirigida à extensão do quadril.",
+    "setup": "Apoie a parte superior das costas na borda de um banco firme e mantenha os pés inteiros no chão, à largura dos quadris. Posicione a barra com proteção acolchoada sobre a dobra dos quadris e segure-a para estabilizar.",
+    "execution": "Eleve o quadril até alinhar tronco e coxas, sem arquear a lombar. Faça uma pausa breve no alto e desça de forma controlada, mantendo os pés e o apoio das costas estáveis. Retorne suavemente pela extensão do quadril.",
+    "tips": "Mantenha o abdômen firme e os joelhos acompanhando os pés. A ilustração usa canelas aproximadamente verticais no alto; altura do banco, posição dos pés e amplitude exigem ajuste individual. As cores indicam participação muscular ilustrativa, sem medição de EMG ou intensidade real de esforço."
+  }
+}
