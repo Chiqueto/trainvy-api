@@ -21,6 +21,10 @@ export const CATALOG_REVIEW_SOURCES: Record<
   string,
   { title: string; url: string }
 > = {
+  "hip-abduction-machine": {"title":"de Almeida Paz et al. — Hip abduction machine is better than free weights to target the gluteus medius while minimizing tensor fascia latae activation (2022)","url":"https://doi.org/10.1016/j.jbmt.2022.01.001"},
+  "hip-abduction-force": {"title":"Hoch et al. — Tensor Fasciae Latae and Gluteus Maximus Muscles: Do They Contribute to Hip Abduction? (2025)","url":"https://doi.org/10.1002/jor.26036"},
+  "hip-abduction-flexion": {"title":"Fujisawa et al. — Hip Muscle Activity during Isometric Contraction of Hip Abduction (2014)","url":"https://doi.org/10.1589/jpts.26.187"},
+  "hip-kinesiology": {"title":"Neumann — Kinesiology of the Hip: A Focus on Muscular Actions (2010)","url":"https://doi.org/10.2519/jospt.2010.3025"},
   "hip-thrust-biomechanics": {"title":"Brazil et al. — A comprehensive biomechanical analysis of the barbell hip thrust (2021)","url":"https://doi.org/10.1371/journal.pone.0249307"},
   "hip-thrust-emg": {"title":"Kennedy et al. — Electromyographic differences between the barbell hip thrust and barbell glute bridge (2024; online 2022)","url":"https://doi.org/10.1080/14763141.2022.2074875"},
   "hip-thrust-training": {"title":"Plotkin et al. — Hip thrust and back squat training elicit similar gluteus muscle hypertrophy (2023)","url":"https://doi.org/10.3389/fphys.2023.1279170"},

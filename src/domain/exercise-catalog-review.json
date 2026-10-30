@@ -134,10 +134,21 @@
     "id": "00000000-0000-4000-8000-000000000115",
     "name": "Cadeira Abdutora",
     "family": "Musculação tradicional — pernas e quadril",
-    "groups": ["RESISTANCE"],
-    "primary": ["HIP_ABDUCTORS"],
-    "secondary": ["GLUTES"],
-    "sourceIds": ["legs", "glutes", "ace"],
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "HIP_ABDUCTORS"
+    ],
+    "secondary": [
+      "GLUTES"
+    ],
+    "sourceIds": [
+      "hip-abduction-machine",
+      "hip-abduction-force",
+      "hip-abduction-flexion",
+      "hip-kinesiology"
+    ],
     "notes": "HIP_ABDUCTORS representa principalmente glúteos médio/mínimo e tensor da fáscia lata; GLUTES representa principalmente glúteo máximo."
   },
   {

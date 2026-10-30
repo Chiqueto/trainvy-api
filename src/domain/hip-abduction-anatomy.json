@@ -1,0 +1,113 @@
+{
+  "version": "2026-10-30.1",
+  "reviewedAt": "2026-10-30T19:20:00.000Z",
+  "variant": "Cadeira abdutora bilateral sentada com encosto, almofadas externas às coxas e apoios móveis dos pés; quadris/joelhos flexionados a cerca de 90°, pelve e tronco estáveis.",
+  "aliases": [
+    "cadeira abdutora",
+    "abdução de quadril na máquina sentada",
+    "seated hip abduction",
+    "seated hip abduction machine"
+  ],
+  "participants": [
+    {
+      "id": "GLUTEUS_MEDIUS",
+      "label": "Glúteo médio",
+      "muscleGroup": "HIP_ABDUCTORS",
+      "role": "PRIMARY",
+      "aliases": [
+        "gluteus medius",
+        "abdutores do quadril"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "PAZ_2022",
+        "HOCH_2025"
+      ]
+    },
+    {
+      "id": "GLUTEUS_MINIMUS",
+      "label": "Glúteo mínimo",
+      "muscleGroup": "HIP_ABDUCTORS",
+      "role": "PRIMARY",
+      "aliases": [
+        "gluteus minimus",
+        "pequeno glúteo",
+        "abdutores do quadril"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "NEUMANN_2010",
+        "HOCH_2025"
+      ]
+    },
+    {
+      "id": "TENSOR_FASCIAE_LATAE",
+      "label": "Tensor da fáscia lata",
+      "muscleGroup": "HIP_ABDUCTORS",
+      "role": "PRIMARY",
+      "aliases": [
+        "tensor fasciae latae",
+        "tensor da fascia lata",
+        "TFL",
+        "abdutores do quadril"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "PAZ_2022",
+        "NEUMANN_2010"
+      ]
+    },
+    {
+      "id": "GLUTEUS_MAXIMUS",
+      "label": "Glúteo máximo",
+      "muscleGroup": "GLUTES",
+      "role": "SECONDARY",
+      "aliases": [
+        "gluteus maximus",
+        "glúteos"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "FUJISAWA_2014",
+        "HOCH_2025"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "PAZ_2022",
+      "title": "de Almeida Paz et al. — Hip abduction machine is better than free weights to target the gluteus medius while minimizing tensor fascia latae activation (2022)",
+      "url": "https://doi.org/10.1016/j.jbmt.2022.01.001",
+      "limitation": "Onze homens, dez repetições máximas, EMG de glúteo médio e tensor da fáscia lata na máquina, clamshell e abdução deitada. Menor amplitude relativa de TFL não significa inatividade ou mudança automática de seu papel motor; sem medir glúteo mínimo ou hipertrofia."
+    },
+    {
+      "id": "HOCH_2025",
+      "title": "Hoch et al. — Tensor Fasciae Latae and Gluteus Maximus Muscles: Do They Contribute to Hip Abduction? (2025)",
+      "url": "https://doi.org/10.1002/jor.26036",
+      "limitation": "Dez participantes, bloqueios nervosos sequenciais, abdução deitada com flexão de 30°, posição neutra e extensão de 30°. Sustenta contribuição de glúteos médio/mínimo e máximo, mas não quantifica a máquina sentada a 90° nem prescreve ranking para esta ilustração."
+    },
+    {
+      "id": "FUJISAWA_2014",
+      "title": "Fujisawa et al. — Hip Muscle Activity during Isometric Contraction of Hip Abduction (2014)",
+      "url": "https://doi.org/10.1589/jpts.26.187",
+      "limitation": "Vinte e sete homens, abdução isométrica com flexão de 0° a 80° e intensidades relativas. Glúteo máximo e TFL variam com a flexão. Não equivale à execução dinâmica a 90°; não se destaca uma região como isolada nem se transfere a magnitude de EMG."
+    },
+    {
+      "id": "NEUMANN_2010",
+      "title": "Neumann — Kinesiology of the Hip: A Focus on Muscular Actions (2010)",
+      "url": "https://doi.org/10.2519/jospt.2010.3025",
+      "limitation": "Referência cinesiológica, não ensaio específico desta máquina. Glúteos médio/mínimo e TFL pertencem ao conjunto motor abdutor. A classificação primária é funcional; não indica igual contribuição, intensidade ou força entre os três."
+    }
+  ],
+  "notes": "Preserva HIP_ABDUCTORS principal e GLUTES secundário. Glúteos médio/mínimo e TFL são apresentados como conjunto motor abdutor, sem afirmar contribuições iguais ou que o TFL domina o exercício. Papel primário não é ranking de EMG: TFL participa mesmo quando sua amplitude relativa é menor. Glúteo máximo é sinergista relevante, com destaque amplo sem isolamento de fibras superiores ou preferência regional quantificada. Glúteo mínimo é profundo e pode ficar encoberto pela anatomia superficial; não se pinta um vizinho como substituto. Mapa não exaustivo: encosto, assento e alças ajudam a estabilizar; neutralidade do tronco não significa ausência de coativação. Amplitude de 5° a 35° por lado e flexão de cerca de 90° são escolhas ilustrativas, não ângulos ideais ou protocolo individual. As cores não representam porcentagens, medição de EMG, força ou hipertrofia.",
+  "instructions": {
+    "description": "Abdução bilateral do quadril na máquina sentada, com costas e pelve apoiadas.",
+    "setup": "Ajuste o assento e a abertura inicial. Apoie as costas no encosto, a parte externa das coxas nas almofadas e os pés nos suportes móveis. Segure as alças laterais para estabilizar o tronco.",
+    "execution": "Abra as pernas empurrando as almofadas para fora, com os joelhos acompanhando os pés. Faça uma pausa breve na abertura confortável. Feche lentamente resistindo à carga, sem bater as placas, e volte a abrir suavemente.",
+    "tips": "Mantenha a pelve estável, sem balançar ou inclinar o tronco para ganhar amplitude. A ilustração usa quadris e joelhos flexionados a cerca de 90°, com abertura de 5° a 35° por lado; ajuste ao aparelho e à orientação individual. As cores indicam participação muscular ilustrativa, sem medição de EMG ou intensidade real de esforço."
+  }
+}
