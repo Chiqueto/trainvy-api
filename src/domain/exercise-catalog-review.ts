@@ -21,6 +21,9 @@ export const CATALOG_REVIEW_SOURCES: Record<
   string,
   { title: string; url: string }
 > = {
+  "horizontal-press-seated": { title: "Abelleira-Lamela et al. - Seated leg press EMG comparison (2024)", url: "https://doi.org/10.3390/app14167390" },
+  "horizontal-press-quads": { title: "Guerra de Sá et al. - Horizontal leg press, including unrestricted condition (2025)", url: "https://pubmed.ncbi.nlm.nih.gov/40954655/" },
+  "horizontal-press-calf": { title: "Tassi et al. - Gastrocnemius during horizontal leg press (1999)", url: "https://pubmed.ncbi.nlm.nih.gov/10499208/" },
   "leg-press-emg": { title: "Da Silva et al. - Leg press muscle activation (2008)", url: "https://pubmed.ncbi.nlm.nih.gov/18545207/" },
   "leg-press-kinematics": { title: "Martín-Fuentes et al. - Inclined leg press EMG and kinematics (2020)", url: "https://doi.org/10.3390/ijerph17228698" },
   "leg-press-2026": { title: "Kinoshita et al. - Knee extension versus leg press (2026)", url: "https://pubmed.ncbi.nlm.nih.gov/41630124/" },

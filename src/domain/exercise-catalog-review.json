@@ -62,8 +62,8 @@
     "family": "Musculação tradicional — pernas e quadril",
     "groups": ["RESISTANCE"],
     "primary": ["QUADRICEPS", "GLUTES"],
-    "secondary": ["ADDUCTORS", "HAMSTRINGS", "CALVES"],
-    "sourceIds": ["legs", "glutes", "ace"]
+    "secondary": ["ADDUCTORS", "HAMSTRINGS", "CALVES", "TIBIALIS_ANTERIOR"],
+    "sourceIds": ["horizontal-press-seated", "horizontal-press-quads", "horizontal-press-calf"]
   },
   {
     "id": "00000000-0000-4000-8000-000000000110",
