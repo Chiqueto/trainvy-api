@@ -1,0 +1,245 @@
+{
+  "version": "2026-10-30.1",
+  "reviewedAt": "2026-10-30T18:20:00.000Z",
+  "variant": "Stiff bilateral com barra livre e pegada pronada, iniciado em pé; joelhos a 10° fixos, pés apoiados, quadril para trás e descida até abaixo dos joelhos, sem tocar o chão.",
+  "aliases": [
+    "stiff",
+    "stiff com barra",
+    "stiff-leg deadlift",
+    "stiff leg deadlift",
+    "levantamento terra com pernas quase estendidas"
+  ],
+  "participants": [
+    {
+      "id": "BICEPS_FEMORIS",
+      "label": "Bíceps femoral — cabeça longa",
+      "muscleGroup": "HAMSTRINGS",
+      "role": "PRIMARY",
+      "aliases": [
+        "posteriores da coxa",
+        "isquiotibiais"
+      ],
+      "regions": [
+        {
+          "id": "BICEPS_FEMORIS_LONG_HEAD",
+          "label": "Cabeça longa do bíceps femoral",
+          "aliases": [
+            "bíceps femoral cabeça longa"
+          ]
+        }
+      ],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "BOYER_2021",
+        "MORIN_2026"
+      ]
+    },
+    {
+      "id": "SEMITENDINOSUS",
+      "label": "Semitendíneo",
+      "muscleGroup": "HAMSTRINGS",
+      "role": "PRIMARY",
+      "aliases": [
+        "semitendinoso",
+        "semitendinosus",
+        "posteriores da coxa",
+        "isquiotibiais"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "BOYER_2021",
+        "MORIN_2026"
+      ]
+    },
+    {
+      "id": "SEMIMEMBRANOSUS",
+      "label": "Semimembranáceo",
+      "muscleGroup": "HAMSTRINGS",
+      "role": "PRIMARY",
+      "aliases": [
+        "semimembranoso",
+        "semimembranosus",
+        "posteriores da coxa",
+        "isquiotibiais"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "BOYER_2021",
+        "MORIN_2026"
+      ]
+    },
+    {
+      "id": "GLUTEUS_MAXIMUS",
+      "label": "Glúteo máximo",
+      "muscleGroup": "GLUTES",
+      "role": "PRIMARY",
+      "aliases": [
+        "glúteos",
+        "gluteus maximus"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "CORATELLA_2022",
+        "IVERSEN_2017"
+      ]
+    },
+    {
+      "id": "ADDUCTOR_MAGNUS",
+      "label": "Adutor magno",
+      "muscleGroup": "ADDUCTORS",
+      "role": "SECONDARY",
+      "aliases": [
+        "grande adutor",
+        "adductor magnus",
+        "adutores"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "EXTERNAL_OBLIQUE",
+      "label": "Oblíquo externo",
+      "muscleGroup": "CORE",
+      "role": "SECONDARY",
+      "aliases": [
+        "oblíquos",
+        "external oblique",
+        "abdômen"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "IVERSEN_2017"
+      ]
+    },
+    {
+      "id": "ERECTOR_SPINAE",
+      "label": "Eretores da coluna",
+      "muscleGroup": "BACK",
+      "role": "SECONDARY",
+      "aliases": [
+        "eretor da espinha",
+        "eretores espinhais",
+        "lombar",
+        "erector spinae"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "CORATELLA_2022",
+        "IVERSEN_2017"
+      ]
+    },
+    {
+      "id": "FLEXOR_DIGITORUM_PROFUNDUS",
+      "label": "Flexor profundo dos dedos",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "flexor digitorum profundus",
+        "pegada"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_HAND"
+      ]
+    },
+    {
+      "id": "FLEXOR_DIGITORUM_SUPERFICIALIS",
+      "label": "Flexor superficial dos dedos",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "flexor digitorum superficialis",
+        "pegada"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_HAND"
+      ]
+    },
+    {
+      "id": "FLEXOR_CARPI_ULNARIS",
+      "label": "Flexor ulnar do carpo",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "flexor carpi ulnaris",
+        "punho"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_HAND"
+      ]
+    },
+    {
+      "id": "EXTENSOR_CARPI_RADIALIS_BREVIS",
+      "label": "Extensor radial curto do carpo",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "extensor carpi radialis brevis",
+        "punho"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_HAND"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "CORATELLA_2022",
+      "title": "Coratella et al. — An Electromyographic Analysis of Romanian, Step-Romanian, and Stiff-Leg Deadlift: Implication for Resistance Training (2022)",
+      "url": "https://doi.org/10.3390/ijerph19031903",
+      "limitation": "Dez fisiculturistas, comparação das três variantes a 80% de 1RM, com joelhos estendidos no Stiff. Sustenta distinção entre variantes, glúteo máximo, posteriores e eretores; não comprova ângulo ideal ou hipertrofia. Os 10° ilustrativos de joelho evitam representar travamento, sem equivalência exata ao protocolo."
+    },
+    {
+      "id": "BOYER_2021",
+      "title": "Boyer et al. — Individual differences in the distribution of activation among the hamstring muscle heads during stiff-leg Deadlift and Nordic hamstring exercises (2021)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33678131/",
+      "limitation": "Vinte participantes, EMG de bíceps femoral, semitendíneo e semimembranáceo. Diferenças entre pessoas impedem tratar uma cor como ranking universal. Cabeça longa do bíceps femoral é selecionada pela ação de extensão do quadril; sem ênfase regional quantitativa."
+    },
+    {
+      "id": "MORIN_2026",
+      "title": "Morin et al. — Neuromechanical Determinants of Muscle-Specific Hamstring Damage and Hypertrophy across Exercises: An EMG-Informed Modeling Approach (2026)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42735209/",
+      "limitation": "Modelagem informada por EMG de semimembranáceo, semitendíneo e cabeça longa do bíceps femoral; experimentos agudo e longitudinal. Forças modeladas não explicaram as adaptações específicas do Stiff. Não transferir magnitudes, prescrever ênfase individual ou apresentar a animação como simulação muscular."
+    },
+    {
+      "id": "IVERSEN_2017",
+      "title": "Iversen et al. — Multiple-joint exercises using elastic resistance bands vs. conventional resistance-training equipment: A cross-over study (2017)",
+      "url": "https://doi.org/10.1080/17461391.2017.1337229",
+      "limitation": "Vinte e nove homens/mulheres, incluindo Stiff com barra e elásticos. Fundamenta participação de extensores e oblíquo externo. Não transferir magnitudes entre resistências ou afirmar medição separada de cada componente do grupo eretor."
+    },
+    {
+      "id": "ARNOLD_2010",
+      "title": "Arnold et al. — A Model of the Lower Limb for Analysis of Human Movement (2010)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2903973/",
+      "limitation": "Modelo anatômico dos membros inferiores, não ensaio de Stiff. Sustenta ações dos extensores e auxílio do adutor magno. Cabeça curta do bíceps femoral não cruza o quadril; possível coestabilização do joelho não a torna alvo primário deste hinge."
+    },
+    {
+      "id": "OPENSTAX_HAND",
+      "title": "OpenStax Anatomy and Physiology 2e — Muscles of the Pectoral Girdle and Upper Limbs, seção 11.5",
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-5-muscles-of-the-pectoral-girdle-and-upper-limbs",
+      "limitation": "Referência anatômica de flexores dos dedos e estabilizadores do punho; classificação da sustentação da barra é inferência biomecânica. Não fornece EMG específico do Stiff ou intensidade individual dos músculos da pegada."
+    }
+  ],
+  "notes": "Principais: cabeça longa do bíceps femoral, semitendíneo, semimembranáceo e glúteo máximo. Auxiliares: adutor magno, eretores da coluna e oblíquo externo; flexores superficial/profundo dos dedos, flexor ulnar do carpo e extensor radial curto do carpo sustentam/estabilizam a pegada por inferência anatômica. Componentes lombares/torácicos dos eretores e porções disponíveis dos músculos da pegada são ilustrados conjuntamente, sem EMG individual. Não há ênfase regional quantificada. Cabeça curta do bíceps femoral, quadríceps e outros estabilizadores podem coativar, mas não são alvos primários da extensão do quadril. O flexor radial do carpo não é individualizado por correspondência ambígua na malha; não se pinta um vizinho como substituto. Mapa não exaustivo, neutro não significa inativo. Joelhos a 10°, tronco como segmento estável e amplitude abaixo dos joelhos são escolhas ilustrativas; não representam travamento, ângulo ideal, simulação de forças ou garantia clínica.",
+  "instructions": {
+    "description": "Stiff bilateral com barra: flexão e extensão do quadril com joelhos quase estendidos e tronco estável.",
+    "setup": "Comece em pé, com os pés à largura dos quadris e a barra à frente das coxas em pegada pronada. Mantenha uma leve flexão dos joelhos, sem travá-los, e os braços alongados.",
+    "execution": "Leve o quadril para trás enquanto inclina o tronco e desce a barra próxima das pernas, mantendo a pequena flexão dos joelhos. Pare na amplitude que permita preservar o controle do tronco, faça uma pausa breve e retorne estendendo o quadril, sem se inclinar para trás no topo.",
+    "tips": "Mantenha os pés inteiros apoiados e não puxe a barra dobrando os cotovelos. A ilustração usa cerca de 10° de flexão fixa dos joelhos e desce até abaixo deles, sem apoiar a barra no chão. Ajuste a amplitude à mobilidade e à orientação individual. As cores indicam participação muscular ilustrativa, sem medição de EMG ou intensidade real de esforço."
+  }
+}

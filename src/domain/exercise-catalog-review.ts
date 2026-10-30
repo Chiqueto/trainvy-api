@@ -21,6 +21,9 @@ export const CATALOG_REVIEW_SOURCES: Record<
   string,
   { title: string; url: string }
 > = {
+  "stiff-variants": { title: "Coratella et al. - Romanian and stiff-leg deadlift comparison (2022)", url: "https://doi.org/10.3390/ijerph19031903" },
+  "stiff-hamstrings": { title: "Boyer et al. - Individual hamstring activation during stiff-leg deadlift (2021)", url: "https://pubmed.ncbi.nlm.nih.gov/33678131/" },
+  "stiff-trunk": { title: "Iversen et al. - Conventional and elastic resistance in stiff-leg deadlift (2017)", url: "https://doi.org/10.1080/17461391.2017.1337229" },
   "horizontal-press-seated": { title: "Abelleira-Lamela et al. - Seated leg press EMG comparison (2024)", url: "https://doi.org/10.3390/app14167390" },
   "horizontal-press-quads": { title: "Guerra de Sá et al. - Horizontal leg press, including unrestricted condition (2025)", url: "https://pubmed.ncbi.nlm.nih.gov/40954655/" },
   "horizontal-press-calf": { title: "Tassi et al. - Gastrocnemius during horizontal leg press (1999)", url: "https://pubmed.ncbi.nlm.nih.gov/10499208/" },

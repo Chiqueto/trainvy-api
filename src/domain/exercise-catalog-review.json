@@ -102,7 +102,7 @@
     "groups": ["RESISTANCE"],
     "primary": ["HAMSTRINGS", "GLUTES"],
     "secondary": ["BACK", "CORE", "ADDUCTORS", "FOREARMS"],
-    "sourceIds": ["deadlift", "glutes", "ace"]
+    "sourceIds": ["stiff-variants", "stiff-hamstrings", "stiff-trunk"]
   },
   {
     "id": "00000000-0000-4000-8000-000000000114",
