@@ -3066,12 +3066,16 @@
       "ADDUCTORS"
     ],
     "secondary": [
-      "CORE"
+      "CORE",
+      "BACK",
+      "HAMSTRINGS",
+      "HIP_ABDUCTORS",
+      "FOREARMS"
     ],
     "sourceIds": [
-      "legs",
-      "glutes",
-      "ace"
+      "sumo-squat-emg",
+      "sumo-squat-moments",
+      "hack-anatomy"
     ]
   },
   {
