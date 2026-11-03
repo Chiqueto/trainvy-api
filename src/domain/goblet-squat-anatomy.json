@@ -1,0 +1,244 @@
+{
+  "version": "2026-11-03.1",
+  "reviewedAt": "2026-11-03T15:00:00.000Z",
+  "variant": "Agachamento Goblet com halter vertical junto ao peito em concha; pés à largura dos ombros com rotação externa de 20°, tronco ereto (~75°) e joelhos flexionados a ~105°.",
+  "aliases": [
+    "agachamento goblet",
+    "goblet squat",
+    "agachamento cálice",
+    "agachamento com halter no peito",
+    "agachamento com kettlebell no peito"
+  ],
+  "participants": [
+    {
+      "id": "RECTUS_FEMORIS",
+      "label": "Reto femoral",
+      "muscleGroup": "QUADRICEPS",
+      "role": "PRIMARY",
+      "aliases": [
+        "quadríceps",
+        "quadriceps"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "COLLINS_2021",
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "VASTUS_LATERALIS",
+      "label": "Vasto lateral",
+      "muscleGroup": "QUADRICEPS",
+      "role": "PRIMARY",
+      "aliases": [
+        "quadríceps"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "COLLINS_2021",
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "VASTUS_MEDIALIS",
+      "label": "Vasto medial",
+      "muscleGroup": "QUADRICEPS",
+      "role": "PRIMARY",
+      "aliases": [
+        "quadríceps"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "COLLINS_2021",
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "VASTUS_INTERMEDIUS",
+      "label": "Vasto intermédio",
+      "muscleGroup": "QUADRICEPS",
+      "role": "PRIMARY",
+      "aliases": [
+        "vasto intermediário",
+        "quadríceps"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "GLUTEUS_MAXIMUS",
+      "label": "Glúteo máximo",
+      "muscleGroup": "GLUTES",
+      "role": "PRIMARY",
+      "aliases": [
+        "glúteos",
+        "gluteus maximus"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010",
+        "YAVUZ_2015"
+      ]
+    },
+    {
+      "id": "ADDUCTOR_MAGNUS",
+      "label": "Adutor magno",
+      "muscleGroup": "ADDUCTORS",
+      "role": "SECONDARY",
+      "aliases": [
+        "grande adutor",
+        "adductor magnus",
+        "adutores"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "RECTUS_ABDOMINIS",
+      "label": "Reto abdominal",
+      "muscleGroup": "CORE",
+      "role": "SECONDARY",
+      "aliases": [
+        "abdômen",
+        "abdominais",
+        "rectus abdominis"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "CLARK_2019",
+        "YAVUZ_2015"
+      ]
+    },
+    {
+      "id": "EXTERNAL_OBLIQUE",
+      "label": "Oblíquo externo",
+      "muscleGroup": "CORE",
+      "role": "SECONDARY",
+      "aliases": [
+        "oblíquos",
+        "external oblique",
+        "abdômen"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "CLARK_2019"
+      ]
+    },
+    {
+      "id": "ERECTOR_SPINAE",
+      "label": "Eretores da coluna",
+      "muscleGroup": "BACK",
+      "role": "SECONDARY",
+      "aliases": [
+        "eretor da espinha",
+        "eretores espinhais",
+        "lombar",
+        "erector spinae"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "CLARK_2019",
+        "GULLETT_2009"
+      ]
+    },
+    {
+      "id": "ANTERIOR_DELTOID",
+      "label": "Deltoide anterior",
+      "muscleGroup": "SHOULDERS",
+      "role": "SECONDARY",
+      "aliases": [
+        "deltoide",
+        "ombros",
+        "anterior deltoid"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "YAVUZ_2015"
+      ]
+    },
+    {
+      "id": "BICEPS_BRACHII",
+      "label": "Bíceps braquial",
+      "muscleGroup": "BICEPS",
+      "role": "SECONDARY",
+      "aliases": [
+        "bíceps",
+        "biceps brachii"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "YAVUZ_2015"
+      ]
+    },
+    {
+      "id": "FOREARM_FLEXORS",
+      "label": "Flexores do antebraço",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "antebraço",
+        "antebraços",
+        "forearms"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "YAVUZ_2015"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "COLLINS_2021",
+      "title": "Collins et al. — Differences in Muscle Activity and Kinetics Between the Goblet Squat and Landmine Squat in Men and Women (2021)",
+      "url": "https://doi.org/10.1519/JSC.0000000000003254",
+      "limitation": "Vinte participantes (homens e mulheres), avaliação de EMG de vasto medial, vasto lateral, bíceps femoral e forças verticais. Fundamenta a alta demanda nos vastos e a predominância vertical de forças; não mediu diretamente adutores ou músculos do tronco, nem estabelece prescrição universal de carga."
+    },
+    {
+      "id": "YAVUZ_2015",
+      "title": "Yavuz et al. — Kinematic and EMG activities during front and back squat variations in maximum load conditions (2015)",
+      "url": "https://doi.org/10.1080/02640414.2014.984240",
+      "limitation": "Investigação cinesiológica e de EMG em variações anteriores e posteriores de agachamento. Mostra que o carregamento anterior exige postura significativamente mais ereta do tronco, reduzindo o braço de momento lombar enquanto mantém alta ativação dos extensores do joelho; os dados de barra não devem ser transpostos cegamente para o halter em taça."
+    },
+    {
+      "id": "GULLETT_2009",
+      "title": "Gullett et al. — A biomechanical comparison of back and front squats in healthy trained individuals (2009)",
+      "url": "https://doi.org/10.1519/JSC.0b013e31818546bb",
+      "limitation": "Demonstrou menor estresse compressivo e de cisalhamento na coluna lombar com carregamento anterior sob ativação semelhante de quadríceps. Não avaliou participantes com halter nem determina magnitude de esforço para indivíduos destreinados."
+    },
+    {
+      "id": "CLARK_2019",
+      "title": "Clark, Lambert e Hunter — Trunk Muscle Activation in the Back and Hack Squat at the Same Relative Loads (2019)",
+      "url": "https://doi.org/10.1519/JSC.0000000000002144",
+      "limitation": "Avaliou EMG dos estabilizadores do tronco (reto abdominal, oblíquo externo e eretores). Fundamenta a coativação em 360° para sustentação da coluna sob torque anterior."
+    },
+    {
+      "id": "ARNOLD_2010",
+      "title": "Arnold et al. — A Model of the Lower Limb for Analysis of Human Movement (2010)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2903973/",
+      "limitation": "Modelo musculoesquelético de membros inferiores. Fundamenta o papel do adutor magno como extensor e estabilizador do quadril em alta flexão."
+    }
+  ],
+  "notes": "Quadríceps (vastos e reto femoral) e glúteo máximo atuam como motores primários na extensão do joelho e quadril. A carga anterior (halter sustentado junto ao peito) altera o centro de massa do sistema, exigindo um tronco marcadamente mais ereto em comparação ao agachamento com barra nas costas, o que modera o momento flexor sobre a coluna lombar. Reto abdominal, oblíquos e eretores da coluna agem em coativação isométrica para estabilizar o gradil costal e a pelve. Membros superiores (deltoide anterior, bíceps braquial e flexores do antebraço) exercem contração isométrica sustentada para manter o halter acolhido ao esterno. O adutor magno auxilia a extensão do quadril na fase profunda. O mapa anatômico é ilustrativo e não exaustivo: a cor neutra não indica inatividade absoluta. As cores não representam percentuais de ativação, medições de EMG em tempo real ou esforço dinâmico.",
+  "instructions": {
+    "description": "Agachamento bilateral livre com halter segurado verticalmente junto ao peito em pegada cálice.",
+    "setup": "Em pé, segure um halter na vertical junto ao peito, apoiando a parte superior da carga nas palmas das mãos em formato de concha e mantendo os cotovelos apontados para baixo. Posicione os pés ligeiramente mais largos que os ombros, com as pontas apontando discretamente para fora (~20°).",
+    "execution": "Inicie o movimento flexionando os quadris e joelhos simultaneamente, descendo de forma controlada enquanto mantém o peito elevado e o tronco estável. Desça até que os quadris fiquem alinhados ou ligeiramente abaixo dos joelhos, com os cotovelos passando por dentro das coxas. Faça uma breve pausa na amplitude baixa e empurre o solo pelo centro dos pés para subir de maneira suave até a extensão completa.",
+    "tips": "Mantenha o halter sempre colado ao esterno para evitar que a carga puxe o tronco para a frente. Evite deixar os joelhos colapsarem para dentro (valgo dinâmico); empurre-os na direção dos dedos dos pés. As cores anatômicas representam papéis musculares ilustrativos e fundamentados na biomecânica, sem medição de EMG em tempo real."
+  }
+}
