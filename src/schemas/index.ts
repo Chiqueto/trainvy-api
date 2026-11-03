@@ -1352,6 +1352,16 @@ export const UpdateUserAiConsentBodySchema = z.object({
   aiTrainingHistoryAccess: z.boolean(),
 });
 
+export const AiQuotaStatusResponseSchema = z.object({
+  currentDailyCount: z.number().int(),
+  remainingDailyQuota: z.number().int(),
+  dailyLimit: z.number().int(),
+  resetAt: z.string(),
+  isAthlete: z.boolean(),
+  planName: z.string().nullable(),
+});
+export type AiQuotaStatusResponse = z.infer<typeof AiQuotaStatusResponseSchema>;
+
 // ==========================================
 // Task 6.5B — Forgotten Workout Recovery Schemas
 // ==========================================

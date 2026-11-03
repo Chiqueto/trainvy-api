@@ -48,8 +48,12 @@ import {
   SuccessResponseSchema,
   UpdateUserAiConsentBodySchema,
   UserAiConsentResponseSchema,
+  AiQuotaStatusResponseSchema,
 } from "../schemas/index.js";
-import { CheckAndConsumeAiQuota } from "../usecases/CheckAndConsumeAiQuota.js";
+import {
+  CheckAndConsumeAiQuota,
+  type CheckAndConsumeAiQuotaOutput,
+} from "../usecases/CheckAndConsumeAiQuota.js";
 import { recordAiUsage } from "../usecases/RecordAiUsage.js";
 import { CreateAiConversation } from "../usecases/CreateAiConversation.js";
 import { DeleteAiConversation } from "../usecases/DeleteAiConversation.js";
@@ -192,9 +196,10 @@ export const aiRoutes = async (app: FastifyInstance) => {
       const professionalMode = identity.professionalAccessGranted;
 
       // Proteção de cotas e rate limit persistente para o Beta
+      let quotaResult: CheckAndConsumeAiQuotaOutput | null = null;
       try {
         const checkQuota = new CheckAndConsumeAiQuota();
-        await checkQuota.execute({ userId });
+        quotaResult = await checkQuota.execute({ userId });
       } catch (error) {
         if (error instanceof AiRateLimitError) {
           return reply.status(429).send({
@@ -545,6 +550,14 @@ export const aiRoutes = async (app: FastifyInstance) => {
       reply.status(response.status);
       response.headers.forEach((value, key) => reply.header(key, value));
       reply.header("x-conversation-id", conversationId);
+      if (quotaResult) {
+        reply.header(
+          "x-ai-quota-remaining",
+          quotaResult.remainingDailyQuota.toString(),
+        );
+        reply.header("x-ai-quota-limit", quotaResult.dailyLimit.toString());
+        reply.header("x-ai-quota-reset", quotaResult.resetAt);
+      }
       return reply.send(response.body);
     },
   });
@@ -819,6 +832,36 @@ export const aiRoutes = async (app: FastifyInstance) => {
         }
         throw error;
       }
+    },
+  });
+
+  // 8. Get AI Quota: GET /ai/quota
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: "GET",
+    url: "/quota",
+    schema: {
+      tags: ["AI"],
+      summary: "Get AI usage quota and limits for authenticated user",
+      response: {
+        200: AiQuotaStatusResponseSchema,
+        401: ErrorSchema,
+        500: ErrorSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const session = await auth.api.getSession({
+        headers: fromNodeHeaders(request.headers),
+      });
+
+      if (!session) {
+        return reply
+          .status(401)
+          .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+      }
+
+      const checkQuota = new CheckAndConsumeAiQuota();
+      const status = await checkQuota.getStatus(session.user.id);
+      return reply.status(200).send(status);
     },
   });
 };

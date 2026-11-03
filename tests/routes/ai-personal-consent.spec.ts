@@ -15,7 +15,21 @@ vi.mock("../../src/usecases/FeatureTerms.js", () => ({ FeatureTerms: class {
   async authorize(...args: unknown[]) { state.audits(...args); }
 } }));
 vi.mock("../../src/usecases/GetCommercialContext.js", () => ({ GetCommercialContext: class { async execute() { return { professionalAccessGranted: false }; } } }));
-vi.mock("../../src/usecases/CheckAndConsumeAiQuota.js", () => ({ CheckAndConsumeAiQuota: class { async execute() {} } }));
+vi.mock("../../src/usecases/CheckAndConsumeAiQuota.js", () => ({
+  CheckAndConsumeAiQuota: class {
+    async execute() {}
+    async getStatus() {
+      return {
+        currentDailyCount: 1,
+        remainingDailyQuota: 4,
+        dailyLimit: 5,
+        resetAt: "2026-11-04T00:00:00.000Z",
+        isAthlete: true,
+        planName: "Atleta Grátis",
+      };
+    }
+  },
+}));
 vi.mock("../../src/usecases/RecordAiUsage.js", () => ({ recordAiUsage: vi.fn() }));
 vi.mock("../../src/ai/tools.js", () => ({ getAiTools: vi.fn(() => ({})), getSessionAiTools: vi.fn(() => ({})), getProfessionalAiTools: vi.fn(() => ({})), getPersonalPlanningAiTools: vi.fn(() => ({})) }));
 vi.mock("ai", async original => ({ ...(await original<typeof import("ai")>()), generateText: vi.fn(), streamText: vi.fn() }));
@@ -51,5 +65,26 @@ describe("personal AI generation gate", () => {
     vi.mocked(generateText).mockRejectedValueOnce(new Error("Provider unavailable"));
     expect((await request("Pode me ajudar a ganhar força?")).statusCode).toBe(500);
     expect(streamText).not.toHaveBeenCalled();
+  });
+
+  it("retorna o status da cota do usuário em GET /ai/quota", async () => {
+    const app = Fastify();
+    app.setValidatorCompiler(validatorCompiler);
+    app.setSerializerCompiler(serializerCompiler);
+    await app.register(aiRoutes, { prefix: "/ai" });
+    try {
+      const response = await app.inject({ method: "GET", url: "/ai/quota" });
+      expect(response.statusCode).toBe(200);
+      expect(response.json()).toEqual({
+        currentDailyCount: 1,
+        remainingDailyQuota: 4,
+        dailyLimit: 5,
+        resetAt: "2026-11-04T00:00:00.000Z",
+        isAthlete: true,
+        planName: "Atleta Grátis",
+      });
+    } finally {
+      await app.close();
+    }
   });
 });

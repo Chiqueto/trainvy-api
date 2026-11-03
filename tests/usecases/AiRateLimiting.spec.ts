@@ -138,4 +138,71 @@ describe("AI Beta Rate Limiting & Safe Quotas (Task 5.1)", () => {
     });
     expect(usage?.count).toBe(3);
   });
+
+  it("resolve limite diário de 5 mensagens para atleta e retorna status correto", async () => {
+    const user = await createTestUser(`athlete-default-${Date.now()}@test.com`);
+    const limiter = new CheckAndConsumeAiQuota();
+
+    const statusBefore = await limiter.getStatus(user.id);
+    expect(statusBefore.dailyLimit).toBe(5);
+    expect(statusBefore.currentDailyCount).toBe(0);
+    expect(statusBefore.remainingDailyQuota).toBe(5);
+    expect(statusBefore.isAthlete).toBe(true);
+
+    const result = await limiter.execute({ userId: user.id });
+    expect(result.dailyLimit).toBe(5);
+    expect(result.currentDailyCount).toBe(1);
+    expect(result.remainingDailyQuota).toBe(4);
+
+    const statusAfter = await limiter.getStatus(user.id);
+    expect(statusAfter.currentDailyCount).toBe(1);
+    expect(statusAfter.remainingDailyQuota).toBe(4);
+  });
+
+  it("respeita alteração dinâmica do limite configurada no plano via admin", async () => {
+    const user = await createTestUser(`athlete-admin-plan-${Date.now()}@test.com`);
+    const planCode = `TEST_PLAN_${Date.now()}`;
+    const plan = await prisma.plan.create({
+      data: {
+        code: planCode,
+        name: "Plano Teste Admin",
+        audience: "ATHLETE",
+        monthlyPriceInCents: 0,
+        currency: "BRL",
+        entitlements: {
+          create: [{ entitlement: "AI_CHAT", limitValue: 8 }],
+        },
+      },
+    });
+
+    await prisma.subscription.create({
+      data: {
+        userId: user.id,
+        planId: plan.id,
+        status: "ACTIVE",
+        priceInCentsSnapshot: 0,
+        currencySnapshot: "BRL",
+      },
+    });
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { accountSetupCompletedAt: new Date() },
+    });
+
+    const limiter = new CheckAndConsumeAiQuota();
+    const status1 = await limiter.getStatus(user.id);
+    expect(status1.dailyLimit).toBe(8);
+    expect(status1.remainingDailyQuota).toBe(8);
+
+    // Simula a alteração feita pelo admin no /admin/plans para 12 mensagens
+    await prisma.planEntitlement.updateMany({
+      where: { planId: plan.id, entitlement: "AI_CHAT" },
+      data: { limitValue: 12 },
+    });
+
+    const status2 = await limiter.getStatus(user.id);
+    expect(status2.dailyLimit).toBe(12);
+    expect(status2.remainingDailyQuota).toBe(12);
+  });
 });
