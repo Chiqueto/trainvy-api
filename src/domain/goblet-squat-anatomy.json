@@ -1,13 +1,12 @@
 {
-  "version": "2026-11-03.1",
-  "reviewedAt": "2026-11-03T15:00:00.000Z",
-  "variant": "Agachamento Goblet com halter vertical junto ao peito em concha; pés à largura dos ombros com rotação externa de 20°, tronco ereto (~75°) e joelhos flexionados a ~105°.",
+  "version": "2026-11-03.2",
+  "reviewedAt": "2026-11-03T18:50:00.000Z",
+  "variant": "Agachamento Goblet bilateral com halter junto ao esterno, mãos apoiando a cabeça superior; pés com rotação externa ilustrativa de 20°, tronco estável e profundidade próxima da paralela.",
   "aliases": [
     "agachamento goblet",
     "goblet squat",
     "agachamento cálice",
-    "agachamento com halter no peito",
-    "agachamento com kettlebell no peito"
+    "agachamento com halter no peito"
   ],
   "participants": [
     {
@@ -22,8 +21,8 @@
       "regions": [],
       "emphasizedRegionIds": [],
       "sourceIds": [
-        "COLLINS_2021",
-        "ARNOLD_2010"
+        "ARNOLD_2010",
+        "YAVUZ_2015"
       ]
     },
     {
@@ -116,8 +115,7 @@
       "regions": [],
       "emphasizedRegionIds": [],
       "sourceIds": [
-        "CLARK_2019",
-        "YAVUZ_2015"
+        "CLARK_2019"
       ]
     },
     {
@@ -167,7 +165,7 @@
       "regions": [],
       "emphasizedRegionIds": [],
       "sourceIds": [
-        "YAVUZ_2015"
+        "OPENSTAX_UPPER"
       ]
     },
     {
@@ -182,7 +180,7 @@
       "regions": [],
       "emphasizedRegionIds": [],
       "sourceIds": [
-        "YAVUZ_2015"
+        "OPENSTAX_UPPER"
       ]
     },
     {
@@ -198,7 +196,64 @@
       "regions": [],
       "emphasizedRegionIds": [],
       "sourceIds": [
-        "YAVUZ_2015"
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "BICEPS_FEMORIS",
+      "label": "Bíceps femoral — cabeça longa",
+      "muscleGroup": "HAMSTRINGS",
+      "role": "SECONDARY",
+      "aliases": [
+        "posteriores da coxa",
+        "isquiotibiais"
+      ],
+      "regions": [
+        {
+          "id": "BICEPS_FEMORIS_LONG_HEAD",
+          "label": "Cabeça longa do bíceps femoral",
+          "aliases": [
+            "bíceps femoral cabeça longa"
+          ]
+        }
+      ],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "COLLINS_2021"
+      ]
+    },
+    {
+      "id": "SEMITENDINOSUS",
+      "label": "Semitendíneo",
+      "muscleGroup": "HAMSTRINGS",
+      "role": "SECONDARY",
+      "aliases": [
+        "semitendinoso",
+        "semitendinosus",
+        "posteriores da coxa",
+        "isquiotibiais"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "COLLINS_2021"
+      ]
+    },
+    {
+      "id": "SEMIMEMBRANOSUS",
+      "label": "Semimembranáceo",
+      "muscleGroup": "HAMSTRINGS",
+      "role": "SECONDARY",
+      "aliases": [
+        "semimembranoso",
+        "semimembranosus",
+        "posteriores da coxa",
+        "isquiotibiais"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010"
       ]
     }
   ],
@@ -206,39 +261,45 @@
     {
       "id": "COLLINS_2021",
       "title": "Collins et al. — Differences in Muscle Activity and Kinetics Between the Goblet Squat and Landmine Squat in Men and Women (2021)",
-      "url": "https://doi.org/10.1519/JSC.0000000000003254",
-      "limitation": "Vinte participantes (homens e mulheres), avaliação de EMG de vasto medial, vasto lateral, bíceps femoral e forças verticais. Fundamenta a alta demanda nos vastos e a predominância vertical de forças; não mediu diretamente adutores ou músculos do tronco, nem estabelece prescrição universal de carga."
+      "url": "https://doi.org/10.1519/JSC.0000000000004094",
+      "limitation": "Trinta e dois participantes (16 homens/16 mulheres), cinco repetições com 30% da massa corporal. EMG de vastos medial/lateral, semitendíneo e bíceps femoral; forças de reação do solo. Não mediu reto femoral, glúteos, abdômen ou braços; sem ângulo ideal universal ou previsão de hipertrofia."
     },
     {
       "id": "YAVUZ_2015",
       "title": "Yavuz et al. — Kinematic and EMG activities during front and back squat variations in maximum load conditions (2015)",
       "url": "https://doi.org/10.1080/02640414.2014.984240",
-      "limitation": "Investigação cinesiológica e de EMG em variações anteriores e posteriores de agachamento. Mostra que o carregamento anterior exige postura significativamente mais ereta do tronco, reduzindo o braço de momento lombar enquanto mantém alta ativação dos extensores do joelho; os dados de barra não devem ser transpostos cegamente para o halter em taça."
+      "limitation": "Doze participantes, agachamentos frontais e posteriores com barra sob carga máxima. Menor inclinação do tronco no frontal não define a postura de todo Goblet; sem transferência de magnitudes, ângulo seguro ou garantia de redução de carga lombar."
     },
     {
       "id": "GULLETT_2009",
       "title": "Gullett et al. — A biomechanical comparison of back and front squats in healthy trained individuals (2009)",
       "url": "https://doi.org/10.1519/JSC.0b013e31818546bb",
-      "limitation": "Demonstrou menor estresse compressivo e de cisalhamento na coluna lombar com carregamento anterior sob ativação semelhante de quadríceps. Não avaliou participantes com halter nem determina magnitude de esforço para indivíduos destreinados."
+      "limitation": "Quinze participantes, comparação de agachamentos com barra e análise do joelho. Não demonstrou menor cisalhamento lombar no Goblet. As forças de cisalhamento no joelho não diferiram entre variantes; não se promete proteção articular."
     },
     {
       "id": "CLARK_2019",
       "title": "Clark, Lambert e Hunter — Trunk Muscle Activation in the Back and Hack Squat at the Same Relative Loads (2019)",
       "url": "https://doi.org/10.1519/JSC.0000000000002144",
-      "limitation": "Avaliou EMG dos estabilizadores do tronco (reto abdominal, oblíquo externo e eretores). Fundamenta a coativação em 360° para sustentação da coluna sob torque anterior."
+      "limitation": "Dez homens, back squat e hack squat a quatro cargas relativas. Não avaliou Goblet. Uso para estabilização do tronco é extrapolação anatômica/editorial, sem EMG individual ou intensidade inferida nesta variante."
     },
     {
       "id": "ARNOLD_2010",
       "title": "Arnold et al. — A Model of the Lower Limb for Analysis of Human Movement (2010)",
       "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2903973/",
-      "limitation": "Modelo musculoesquelético de membros inferiores. Fundamenta o papel do adutor magno como extensor e estabilizador do quadril em alta flexão."
+      "limitation": "Modelo anatômico dos membros inferiores, não estudo de Goblet. Fundamenta extensores de joelho/quadril e auxílio do adutor magno e semimembranáceo, sem forças medidas na animação."
+    },
+    {
+      "id": "OPENSTAX_UPPER",
+      "title": "OpenStax Anatomy and Physiology 2e — Muscles of the Pectoral Girdle and Upper Limbs",
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-5-muscles-of-the-pectoral-girdle-and-upper-limbs",
+      "limitation": "Referência anatômica para flexão do ombro/cotovelo e sustentação manual. Papéis de deltoide anterior, bíceps e flexores são inferências de sustentação do halter; não foram medidos no estudo de Collins ou Yavuz."
     }
   ],
-  "notes": "Quadríceps (vastos e reto femoral) e glúteo máximo atuam como motores primários na extensão do joelho e quadril. A carga anterior (halter sustentado junto ao peito) altera o centro de massa do sistema, exigindo um tronco marcadamente mais ereto em comparação ao agachamento com barra nas costas, o que modera o momento flexor sobre a coluna lombar. Reto abdominal, oblíquos e eretores da coluna agem em coativação isométrica para estabilizar o gradil costal e a pelve. Membros superiores (deltoide anterior, bíceps braquial e flexores do antebraço) exercem contração isométrica sustentada para manter o halter acolhido ao esterno. O adutor magno auxilia a extensão do quadril na fase profunda. O mapa anatômico é ilustrativo e não exaustivo: a cor neutra não indica inatividade absoluta. As cores não representam percentuais de ativação, medições de EMG em tempo real ou esforço dinâmico.",
+  "notes": "Quadríceps e glúteo máximo são principais; adutor magno e isquiotibiais auxiliam/coestabilizam. Bíceps femoral e semitendíneo foram medidos diretamente no Goblet por Collins; semimembranáceo é inferência anatômica. Estabilização do tronco e sustentação do halter por deltoide anterior, bíceps e flexores são inferências, sem EMG específico desses participantes nesta revisão. Não se promete menor cisalhamento lombar, ângulo seguro ou superioridade clínica com base em estudos de front squat com barra. Rotação de pés a 20°, inclinação do tronco de 3° a 15° e profundidade próxima da paralela são escolhas da ilustração, não prescrição universal. Mapa não exaustivo, sem ênfase regional quantificada; neutro não significa inativo. Categorias de cor não representam porcentagens de ativação ou intensidade real de esforço.",
   "instructions": {
     "description": "Agachamento bilateral livre com halter segurado verticalmente junto ao peito em pegada cálice.",
-    "setup": "Em pé, segure um halter na vertical junto ao peito, apoiando a parte superior da carga nas palmas das mãos em formato de concha e mantendo os cotovelos apontados para baixo. Posicione os pés ligeiramente mais largos que os ombros, com as pontas apontando discretamente para fora (~20°).",
+    "setup": "Em pé, segure um halter na vertical junto ao peito, sustentando a borda inferior da cabeça superior com as duas mãos em concha e mantendo os cotovelos apontados para baixo. Afaste os pés aproximadamente à largura dos ombros, com leve rotação para fora; a ilustração usa cerca de 20°.",
     "execution": "Inicie o movimento flexionando os quadris e joelhos simultaneamente, descendo de forma controlada enquanto mantém o peito elevado e o tronco estável. Desça até que os quadris fiquem alinhados ou ligeiramente abaixo dos joelhos, com os cotovelos passando por dentro das coxas. Faça uma breve pausa na amplitude baixa e empurre o solo pelo centro dos pés para subir de maneira suave até a extensão completa.",
-    "tips": "Mantenha o halter sempre colado ao esterno para evitar que a carga puxe o tronco para a frente. Evite deixar os joelhos colapsarem para dentro (valgo dinâmico); empurre-os na direção dos dedos dos pés. As cores anatômicas representam papéis musculares ilustrativos e fundamentados na biomecânica, sem medição de EMG em tempo real."
+    "tips": "Mantenha o halter próximo do esterno e os pés inteiros apoiados. Os joelhos acompanham as pontas dos pés. Ajuste a amplitude para preservar o controle do tronco e dos apoios, sem forçar a profundidade. Ângulos e cadência são ilustrativos; as cores indicam participação muscular, sem medição de EMG ou intensidade real de esforço."
   }
 }

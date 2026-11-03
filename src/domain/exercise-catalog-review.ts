@@ -21,7 +21,7 @@ export const CATALOG_REVIEW_SOURCES: Record<
   string,
   { title: string; url: string }
 > = {
-  "goblet-squat-emg": {"title":"Collins et al. — Differences in Muscle Activity and Kinetics Between the Goblet Squat and Landmine Squat in Men and Women (2021)","url":"https://doi.org/10.1519/JSC.0000000000003254"},
+  "goblet-squat-emg": {"title":"Collins et al. — Differences in Muscle Activity and Kinetics Between the Goblet Squat and Landmine Squat in Men and Women (2021)","url":"https://doi.org/10.1519/JSC.0000000000004094"},
   "goblet-squat-kinematics": {"title":"Yavuz et al. — Kinematic and EMG activities during front and back squat variations in maximum load conditions (2015)","url":"https://doi.org/10.1080/02640414.2014.984240"},
   "hip-abduction-machine": {"title":"de Almeida Paz et al. — Hip abduction machine is better than free weights to target the gluteus medius while minimizing tensor fascia latae activation (2022)","url":"https://doi.org/10.1016/j.jbmt.2022.01.001"},
   "hip-abduction-force": {"title":"Hoch et al. — Tensor Fasciae Latae and Gluteus Maximus Muscles: Do They Contribute to Hip Abduction? (2025)","url":"https://doi.org/10.1002/jor.26036"},

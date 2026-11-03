@@ -3989,7 +3989,8 @@
       "BACK",
       "SHOULDERS",
       "BICEPS",
-      "FOREARMS"
+      "FOREARMS",
+      "HAMSTRINGS"
     ],
     "sourceIds": [
       "goblet-squat-emg",

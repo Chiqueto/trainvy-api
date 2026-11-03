@@ -27,10 +27,11 @@ const muscles = [
   { muscleGroup: "SHOULDERS", role: "SECONDARY" },
   { muscleGroup: "BICEPS", role: "SECONDARY" },
   { muscleGroup: "FOREARMS", role: "SECONDARY" },
+  { muscleGroup: "HAMSTRINGS", role: "SECONDARY" },
 ] as const;
 const sql = readFileSync(
   new URL(
-    "../../prisma/migrations/20261103130000_goblet_squat_9e9f7973_anatomy/migration.sql",
+    "../../prisma/migrations/20261103190000_goblet_contact_k602/migration.sql",
     import.meta.url,
   ),
   "utf8",
@@ -49,6 +50,7 @@ describe("goblet squat anatomical review", () => {
       "SHOULDERS",
       "BICEPS",
       "FOREARMS",
+      "HAMSTRINGS",
     ]);
     expect(getExerciseAnatomy(review, [...muscles])).toEqual(review);
     expect(getExerciseAnatomy(review, muscles.slice(0, 1))).toBeNull();
@@ -73,7 +75,7 @@ describe("goblet squat anatomical review", () => {
     );
     expect(
       JSON.parse(
-        /SET "anatomyReview"='(.+)'::jsonb/.exec(sql)![1].replaceAll("''", "'"),
+        /SET "anatomyReview"='(.+?)'::jsonb/.exec(sql)![1].replaceAll("''", "'"),
       ),
     ).toEqual(review);
   });
