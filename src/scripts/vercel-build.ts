@@ -14,7 +14,15 @@ import { execSync } from "node:child_process";
  */
 function runCommand(command: string) {
   console.log(`[vercel:build] Executing: ${command}`);
-  execSync(command, { stdio: "inherit" });
+  try {
+    execSync(command, { stdio: "inherit" });
+  } catch (error) {
+    const failure = error as { status?: number | null; signal?: string | null };
+    console.error(
+      `[vercel:build] Falha no comando "${command}" (exit code: ${failure.status ?? "indisponível"}${failure.signal ? `, signal: ${failure.signal}` : ""}). Veja os diagnósticos acima.`,
+    );
+    process.exit(failure.status && failure.status > 0 ? failure.status : 1);
+  }
 }
 
 function main() {
@@ -43,7 +51,7 @@ function main() {
   }
 
   console.log("[vercel:build] Compilando TypeScript...");
-  runCommand("npx tsc");
+  runCommand("npx tsc --pretty false");
 
   console.log("[vercel:build] Build finalizado com sucesso!");
 }
