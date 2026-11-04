@@ -1,0 +1,132 @@
+{
+  "version": "2026-11-04.1",
+  "reviewedAt": "2026-11-04T18:35:00.000Z",
+  "variant": "Elevação bilateral de panturrilhas em pé na máquina, joelhos quase estendidos, ombros nas almofadas e antepés apoiados na plataforma.",
+  "aliases": [
+    "panturrilha em pé",
+    "elevação de panturrilhas em pé",
+    "standing calf raise",
+    "standing machine calf raise"
+  ],
+  "participants": [
+    {
+      "id": "GASTROCNEMIUS_MEDIAL",
+      "label": "Gastrocnêmio medial",
+      "muscleGroup": "CALVES",
+      "role": "PRIMARY",
+      "aliases": [
+        "gastrocnêmio",
+        "panturrilha medial"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "MAEO_2023",
+        "UGBOLUE_2021"
+      ]
+    },
+    {
+      "id": "GASTROCNEMIUS_LATERAL",
+      "label": "Gastrocnêmio lateral",
+      "muscleGroup": "CALVES",
+      "role": "PRIMARY",
+      "aliases": [
+        "gastrocnêmio",
+        "panturrilha lateral"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "MAEO_2023",
+        "UGBOLUE_2021"
+      ]
+    },
+    {
+      "id": "SOLEUS",
+      "label": "Sóleo",
+      "muscleGroup": "CALVES",
+      "role": "PRIMARY",
+      "aliases": [
+        "soleus",
+        "panturrilha"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "MAEO_2023",
+        "UGBOLUE_2021"
+      ]
+    },
+    {
+      "id": "FIBULARIS_LONGUS",
+      "label": "Fibular longo",
+      "muscleGroup": "CALVES",
+      "role": "SECONDARY",
+      "aliases": [
+        "peroneal longo",
+        "fibularis longus"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "UGBOLUE_2021"
+      ]
+    },
+    {
+      "id": "FIBULARIS_BREVIS",
+      "label": "Fibular curto",
+      "muscleGroup": "CALVES",
+      "role": "SECONDARY",
+      "aliases": [
+        "peroneal curto",
+        "fibularis brevis"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "UGBOLUE_2021"
+      ]
+    },
+    {
+      "id": "TIBIALIS_ANTERIOR",
+      "label": "Tibial anterior",
+      "muscleGroup": "TIBIALIS_ANTERIOR",
+      "role": "SECONDARY",
+      "aliases": [
+        "tibial anterior"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "UGBOLUE_2021"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "MAEO_2023",
+      "title": "Maeo et al. — Triceps surae muscle hypertrophy is greater after standing versus seated calf-raise training (2023)",
+      "url": "https://doi.org/10.3389/fphys.2023.1272106",
+      "limitation": "Quatorze adultos não treinados, 12 semanas, uma perna em pé e outra sentada. Gastrocnêmios cresceram mais em pé e sóleo em ambas. Não comprova ângulo ideal ou resposta individual; a máquina ilustrada não representa todas as condições do estudo."
+    },
+    {
+      "id": "UGBOLUE_2021",
+      "title": "Ugbolue et al. — Electromyographic Assessment of the Lower Leg Muscles during Standing Heel Raise (2021)",
+      "url": "https://doi.org/10.3390/healthcare9040465",
+      "limitation": "Dez mulheres e dez homens, elevação em pé com pé no solo; EMG de gastrocnêmios, sóleo, fibulares e tibial anterior. Participação lateral e antagonista é estabilização/coativação ilustrativa; não mede intensidade na máquina com plataforma elevada."
+    },
+    {
+      "id": "ARNOLD_2010",
+      "title": "Arnold et al. — A Model of the Lower Limb for Analysis of Human Movement (2010)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2903973/",
+      "limitation": "Modelo anatômico dos membros inferiores; não é ensaio da máquina e não fornece intensidade ou resposta individual."
+    }
+  ],
+  "notes": "Motores principais: gastrocnêmios medial e lateral e sóleo, todos pertencentes ao tríceps sural. Fibulares e tibial anterior são participantes secundários por coativação/estabilização, não alvos isolados. Um grupo amplo pode conter músculos individuais com papéis distintos; CALVES mantém papel principal. A cor é categórica, não EMG ou esforço. Amplitude e cadência do rig são ilustrativas e não existe ângulo universal ou promessa de hipertrofia individual.",
+  "instructions": {
+    "description": "Elevação bilateral de panturrilhas em pé na máquina, com os antepés apoiados.",
+    "setup": "Ajuste as almofadas sobre os ombros. Apoie a parte anterior dos pés na plataforma, com os calcanhares livres e joelhos quase estendidos, sem travá-los.",
+    "execution": "Eleve os calcanhares suavemente pela flexão plantar. Faça uma breve pausa e desça com controle até uma amplitude confortável, mantendo o apoio dos antepés.",
+    "tips": "Mantenha o tronco estável e evite impulsos. Ajuste a amplitude à sua mobilidade e à máquina disponível. As cores indicam participação muscular ilustrativa, sem medir EMG ou intensidade real de esforço."
+  }
+}

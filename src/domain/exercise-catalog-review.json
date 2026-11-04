@@ -312,11 +312,13 @@
     "primary": [
       "CALVES"
     ],
-    "secondary": [],
+    "secondary": [
+      "TIBIALIS_ANTERIOR"
+    ],
     "sourceIds": [
-      "legs",
-      "glutes",
-      "ace"
+      "standing-calf-training",
+      "standing-calf-emg",
+      "hack-anatomy"
     ]
   },
   {

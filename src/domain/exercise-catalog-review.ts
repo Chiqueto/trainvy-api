@@ -21,6 +21,8 @@ export const CATALOG_REVIEW_SOURCES: Record<
   string,
   { title: string; url: string }
 > = {
+  "standing-calf-training": { title: "Maeo et al. — standing versus seated calf-raise training (2023)", url: "https://doi.org/10.3389/fphys.2023.1272106" },
+  "standing-calf-emg": { title: "Ugbolue et al. — EMG of lower-leg muscles during standing heel raise (2021)", url: "https://doi.org/10.3390/healthcare9040465" },
   "sumo-squat-emg": {"title":"Coratella et al. — The Activation of Gluteal, Thigh, and Lower Back Muscles in Different Squat Variations Performed by Competitive Bodybuilders (2021)","url":"https://doi.org/10.3390/ijerph18020772"},
   "sumo-squat-moments": {"title":"Hopkins et al. — Greater squat stance width alters three-dimensional hip moment demands (2024)","url":"https://doi.org/10.1016/j.jbiomech.2024.112391"},
   "goblet-squat-emg": {"title":"Collins et al. — Differences in Muscle Activity and Kinetics Between the Goblet Squat and Landmine Squat in Men and Women (2021)","url":"https://doi.org/10.1519/JSC.0000000000004094"},

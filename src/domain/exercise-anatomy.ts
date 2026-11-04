@@ -96,9 +96,14 @@ export function getExerciseAnatomy(
 ): ExerciseAnatomy | null {
   const result = ExerciseAnatomySchema.safeParse(value);
   if (!result.success) return null;
-  const pairs = new Set(
-    result.data.participants.map((p) => `${p.role}:${p.muscleGroup}`),
-  );
+  // A broad group has one stored role, while individual muscles in that group
+  // may have different roles. A primary participant makes its parent primary.
+  const groupRoles = new Map<string, string>();
+  for (const p of result.data.participants) {
+    if (!groupRoles.has(p.muscleGroup) || p.role === "PRIMARY")
+      groupRoles.set(p.muscleGroup, p.role);
+  }
+  const pairs = new Set([...groupRoles].map(([group, role]) => `${role}:${group}`));
   if (
     muscles.length !== pairs.size ||
     muscles.some((m) => !pairs.has(`${m.role}:${m.muscleGroup}`))
