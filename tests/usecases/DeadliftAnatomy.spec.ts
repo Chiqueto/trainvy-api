@@ -6,7 +6,7 @@ import { REVIEWED_EXERCISES_BY_ID } from "../../src/domain/exercise-catalog-revi
 import { getDatabaseUrl } from "../../src/lib/db.js";
 
 const id = "00000000-0000-4000-8000-000000000140";
-const review = ExerciseAnatomySchema.parse(JSON.parse(readFileSync(new URL("../../src/domain/deadlift-anatomy.json", import.meta.url), "utf8")));
+const review = ExerciseAnatomySchema.parse(JSON.parse(readFileSync(new URL("../fixtures/deadlift-anatomy-v1.json", import.meta.url), "utf8")));
 const sql = readFileSync(new URL("../../prisma/migrations/20261104152000_deadlift_000140/migration.sql", import.meta.url), "utf8").replace(/^BEGIN;\s*$/m, "").replace(/^COMMIT;\s*$/m, "");
 const muscles = [
   { muscleGroup: "GLUTES", role: "PRIMARY" }, { muscleGroup: "QUADRICEPS", role: "PRIMARY" }, { muscleGroup: "HAMSTRINGS", role: "PRIMARY" },

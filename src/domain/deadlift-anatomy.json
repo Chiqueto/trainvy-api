@@ -1,6 +1,6 @@
 {
-  "version": "2026-11-04.1",
-  "reviewedAt": "2026-11-04T15:00:00.000Z",
+  "version": "2026-11-04.2",
+  "reviewedAt": "2026-11-04T16:15:00.000Z",
   "variant": "Levantamento terra convencional bilateral com barra livre a partir do chão, base estreita, pegada pronada fora dos joelhos e extensão de quadril e joelhos.",
   "aliases": [
     "levantamento terra",
@@ -276,12 +276,46 @@
       "sourceIds": [
         "OPENSTAX_HAND"
       ]
+    },
+    {
+      "id": "LATISSIMUS_DORSI",
+      "label": "Latíssimo do dorso",
+      "aliases": [
+        "dorsal",
+        "grande dorsal",
+        "latissimus dorsi"
+      ],
+      "muscleGroup": "BACK",
+      "role": "SECONDARY",
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "GARCIA_JAEN_2022",
+        "BEGGS_2011"
+      ]
+    },
+    {
+      "id": "TRAPEZIUS",
+      "label": "Trapézio",
+      "aliases": [
+        "trapezio",
+        "trapézio",
+        "trapezius"
+      ],
+      "muscleGroup": "BACK",
+      "role": "SECONDARY",
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "GARCIA_JAEN_2022",
+        "BEGGS_2011"
+      ]
     }
   ],
   "sources": [
     {
       "id": "HERVE_2025",
-      "title": "Hervé et al. — Biomechanical analysis of conventional and sumo deadlift (2025)",
+      "title": "Hanen et al. — Biomechanical analysis of conventional and sumo deadlift (2025)",
       "url": "https://doi.org/10.3389/fbioe.2025.1597209",
       "limitation": "Trinta homens treinados, barra a 85% de 1RM. Cinemática 3D, forças e EMG de nove músculos; resultados variam ao longo da repetição. Não determina ângulo ideal, força individual ou hipertrofia."
     },
@@ -302,13 +336,25 @@
       "title": "Kwon et al. — Center of pressure and conventional deadlift (2026)",
       "url": "https://doi.org/10.1186/s13102-026-02119-4",
       "limitation": "Vinte e oito homens treinados; posição do centro de pressão alterou momentos e EMG. Versão antecipada; não estabelece posição universal."
+    },
+    {
+      "id": "GARCIA_JAEN_2022",
+      "title": "García-Jaén et al. — Can the craniocervical position modulate trunk muscle activation during a deadlift? (2022)",
+      "url": "https://rua.ua.es/dspace/bitstream/10045/130072/1/Garcia-Jaen_etal_2022_JPES.pdf",
+      "limitation": "Estudo preliminar de três homens treinados com 50% de 1RM, EMG de latíssimo, trapézio e eretores; amostra pequena sem potência para estabelecer diferenças entre condições. Não comprova força individual, hipertrofia ou posição cervical ideal."
+    },
+    {
+      "id": "BEGGS_2011",
+      "title": "Beggs — Comparison of Muscle Activation and Kinematics During the Deadlift Using a Double-Pronated and Overhand/Underhand Grip (2011)",
+      "url": "https://uknowledge.uky.edu/gradschool_theses/87/",
+      "limitation": "Dissertação com dez pessoas treinadas, cargas de 60% e 80% de 1RM; mediu latíssimo e trapézio superior nas variações de pegada. Não define esforço individual ou hipertrofia."
     }
   ],
-  "notes": "Classificação funcional editorial: glúteo máximo, quadríceps e isquiotibiais principais; adutor magno, eretores, abdômen e músculos da pegada secundários. Não é ranking por EMG ou força. A malha não indica esforço real; neutro não significa inativo. A postura é ilustrativa, não prescrição de ângulo universal.",
+  "notes": "Classificação funcional editorial: glúteo máximo, quadríceps e isquiotibiais principais; adutor magno, eretores, abdômen e músculos da pegada secundários. Não é ranking por EMG ou força. A malha não indica esforço real; neutro não significa inativo. A postura é ilustrativa, não prescrição de ângulo universal. Latíssimo do dorso e trapézio contribuem para a sustentação e estabilização dos ombros e da barra; sua participação não equivale a remo, ranking de intensidade ou medida de força. Evidência específica da parte superior das costas permanece limitada.",
   "instructions": {
     "description": "Levantamento terra convencional com barra livre, iniciando com as anilhas apoiadas no chão.",
-    "setup": "Posicione os pés aproximadamente à largura dos quadris, sob a barra. Flexione quadris e joelhos e segure a barra por fora dos joelhos com os braços alongados.",
-    "execution": "Empurre o chão e estenda quadris e joelhos para erguer a barra próxima das pernas, até ficar ereto. Desça de forma controlada, flexionando quadris e joelhos, e apoie as anilhas no chão antes da próxima repetição.",
-    "tips": "Mantenha o tronco estável e os pés apoiados. Ajuste a posição inicial à sua estrutura e orientação individual. As cores mostram participação muscular ilustrativa, sem medir EMG ou intensidade real de esforço."
+    "setup": "Posicione os pés aproximadamente à largura dos quadris, com a barra próxima ao meio dos pés. Flexione quadris e joelhos até alcançar a barra com as mãos fora dos joelhos, mantendo os braços alongados e a canela próxima da barra.",
+    "execution": "Empurre o chão com os pés apoiados e estenda joelhos e quadris para levantar a barra próxima das pernas até ficar ereto. Na descida, conduza o quadril para trás e flexione os joelhos conforme a barra retorna ao chão.",
+    "tips": "Mantenha o tronco estável, os braços alongados e a barra próxima do corpo; a inclinação da canela varia com a pessoa e a fase. As cores mostram participação muscular ilustrativa, sem medir EMG ou intensidade real de esforço."
   }
 }
