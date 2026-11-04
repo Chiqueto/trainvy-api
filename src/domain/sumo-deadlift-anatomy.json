@@ -1,0 +1,335 @@
+{
+  "version": "2026-11-04.1",
+  "reviewedAt": "2026-11-04T15:40:00.000Z",
+  "variant": "Levantamento terra sumô bilateral com barra livre iniciada no chão, base ampla e pés rodados para fora, com pegada pronada entre os joelhos.",
+  "aliases": [
+    "levantamento terra sumô",
+    "terra sumô",
+    "sumo deadlift",
+    "sumo barbell deadlift"
+  ],
+  "participants": [
+    {
+      "id": "RECTUS_FEMORIS",
+      "label": "Reto femoral",
+      "muscleGroup": "QUADRICEPS",
+      "role": "PRIMARY",
+      "aliases": [
+        "quadríceps",
+        "quadriceps"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "HANEN_2025",
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "VASTUS_LATERALIS",
+      "label": "Vasto lateral",
+      "muscleGroup": "QUADRICEPS",
+      "role": "PRIMARY",
+      "aliases": [
+        "quadríceps"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "HANEN_2025",
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "VASTUS_MEDIALIS",
+      "label": "Vasto medial",
+      "muscleGroup": "QUADRICEPS",
+      "role": "PRIMARY",
+      "aliases": [
+        "quadríceps"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "HANEN_2025",
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "VASTUS_INTERMEDIUS",
+      "label": "Vasto intermédio",
+      "muscleGroup": "QUADRICEPS",
+      "role": "PRIMARY",
+      "aliases": [
+        "vasto intermediário",
+        "quadríceps"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "HANEN_2025",
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "GLUTEUS_MAXIMUS",
+      "label": "Glúteo máximo",
+      "muscleGroup": "GLUTES",
+      "role": "PRIMARY",
+      "aliases": [
+        "glúteos",
+        "gluteus maximus"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "HANEN_2025",
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "ADDUCTOR_MAGNUS",
+      "label": "Adutor magno",
+      "muscleGroup": "ADDUCTORS",
+      "role": "PRIMARY",
+      "aliases": [
+        "grande adutor",
+        "adductor magnus",
+        "adutores"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "HANEN_2025",
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "RECTUS_ABDOMINIS",
+      "label": "Reto abdominal",
+      "muscleGroup": "CORE",
+      "role": "SECONDARY",
+      "aliases": [
+        "abdômen",
+        "abdominais",
+        "rectus abdominis"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "HANEN_2025",
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "EXTERNAL_OBLIQUE",
+      "label": "Oblíquo externo",
+      "muscleGroup": "CORE",
+      "role": "SECONDARY",
+      "aliases": [
+        "oblíquos",
+        "external oblique",
+        "abdômen"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "HANEN_2025",
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "ERECTOR_SPINAE",
+      "label": "Eretores da coluna",
+      "muscleGroup": "BACK",
+      "role": "SECONDARY",
+      "aliases": [
+        "eretor da espinha",
+        "eretores espinhais",
+        "lombar",
+        "erector spinae"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "HANEN_2025",
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "BICEPS_FEMORIS",
+      "label": "Bíceps femoral — cabeça longa",
+      "muscleGroup": "HAMSTRINGS",
+      "role": "SECONDARY",
+      "aliases": [
+        "posteriores da coxa",
+        "isquiotibiais"
+      ],
+      "regions": [
+        {
+          "id": "BICEPS_FEMORIS_LONG_HEAD",
+          "label": "Cabeça longa do bíceps femoral",
+          "aliases": [
+            "bíceps femoral cabeça longa"
+          ]
+        }
+      ],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "HANEN_2025",
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "SEMITENDINOSUS",
+      "label": "Semitendíneo",
+      "muscleGroup": "HAMSTRINGS",
+      "role": "SECONDARY",
+      "aliases": [
+        "semitendinoso",
+        "semitendinosus",
+        "posteriores da coxa",
+        "isquiotibiais"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "HANEN_2025",
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "SEMIMEMBRANOSUS",
+      "label": "Semimembranáceo",
+      "muscleGroup": "HAMSTRINGS",
+      "role": "SECONDARY",
+      "aliases": [
+        "semimembranoso",
+        "semimembranosus",
+        "posteriores da coxa",
+        "isquiotibiais"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "HANEN_2025",
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "FLEXOR_DIGITORUM_SUPERFICIALIS",
+      "label": "Flexor superficial dos dedos",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "flexor digitorum superficialis",
+        "pegada"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_HAND"
+      ]
+    },
+    {
+      "id": "FLEXOR_DIGITORUM_PROFUNDUS",
+      "label": "Flexor profundo dos dedos",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "flexor digitorum profundus",
+        "pegada"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_HAND"
+      ]
+    },
+    {
+      "id": "FLEXOR_CARPI_ULNARIS",
+      "label": "Flexor ulnar do carpo",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "flexor carpi ulnaris",
+        "punho"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_HAND"
+      ]
+    },
+    {
+      "id": "EXTENSOR_CARPI_RADIALIS_BREVIS",
+      "label": "Extensor radial curto do carpo",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "extensor carpi radialis brevis",
+        "punho"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_HAND"
+      ]
+    },
+    {
+      "id": "ADDUCTOR_LONGUS",
+      "label": "Adutor longo",
+      "muscleGroup": "ADDUCTORS",
+      "aliases": [
+        "adductor longus",
+        "adutores",
+        "parte interna da coxa"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "role": "PRIMARY",
+      "sourceIds": [
+        "ARNOLD_2010"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "HANEN_2025",
+      "title": "Hanen et al. — Biomechanical analysis of conventional and sumo deadlift (2025)",
+      "url": "https://doi.org/10.3389/fbioe.2025.1597209",
+      "limitation": "Trinta homens treinados a 85% de 1RM, análise 3D, força e EMG de nove músculos. A barra parte do solo, com mãos dentro dos joelhos e pés rodados para fora. Resultados variam por fase; o pico do adutor magno não diferiu entre variantes. Não implica isolamento, hipertrofia ou ângulo universal."
+    },
+    {
+      "id": "ESCAMILLA_2002",
+      "title": "Escamilla et al. — An electromyographic analysis of sumo and conventional style deadlifts (2002)",
+      "url": "https://doi.org/10.1097/00005768-200204000-00019",
+      "limitation": "Comparação das duas técnicas por EMG em intervalos de flexão do joelho. Resultados são dependentes do protocolo e não quantificam hipertrofia ou força de músculos individuais."
+    },
+    {
+      "id": "ESCAMILLA_2000",
+      "title": "Escamilla et al. — A three-dimensional biomechanical analysis of sumo and conventional style deadlifts (2000)",
+      "url": "https://doi.org/10.1097/00005768-200007000-00013",
+      "limitation": "Análise 3D de atletas; base média sumô 70 cm e pés a 42 graus, com variação individual. A cinemática ilustrada não é prescrição nem reproduz exatamente esses participantes."
+    },
+    {
+      "id": "ARNOLD_2010",
+      "title": "Arnold et al. — A Model of the Lower Limb for Analysis of Human Movement (2010)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2903973/",
+      "limitation": "Modelo anatômico do membro inferior; atribuições não medidas diretamente em sumô são inferência funcional."
+    },
+    {
+      "id": "OPENSTAX_HAND",
+      "title": "OpenStax Anatomy and Physiology 2e — Upper Limbs",
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-5-muscles-of-the-pectoral-girdle-and-upper-limbs",
+      "limitation": "Anatomia dos flexores dos dedos e estabilizadores do punho; participação na pegada é inferência funcional."
+    }
+  ],
+  "notes": "Classificação editorial funcional preserva glúteos, quadríceps e adutores como principais e posteriores, costas, abdômen e antebraços como secundários. Não é ranking de EMG ou força, não implica isolamento dos adutores nem ausência de atividade em áreas neutras. Não há ênfase regional quantificada. Largura, rotação dos pés e amplitude são escolhas ilustrativas do rig.",
+  "instructions": {
+    "description": "Levantamento terra sumô com barra livre, partindo do chão com base ampla.",
+    "setup": "Afaste os pés além da largura dos quadris e aponte-os para fora. Com a barra sobre o meio dos pés, flexione quadris e joelhos e segure-a por dentro dos joelhos, com braços alongados.",
+    "execution": "Empurre o chão com os pés apoiados e estenda quadris e joelhos, conduzindo a barra próxima ao corpo até ficar ereto. Desça com controle e apoie as anilhas no chão antes da repetição seguinte.",
+    "tips": "Mantenha os joelhos acompanhando a direção dos pés e o tronco estável. Ajuste a abertura e a rotação dos pés à sua estrutura e orientação individual. As cores indicam participação muscular ilustrativa, sem medir EMG ou intensidade real de esforço."
+  }
+}
