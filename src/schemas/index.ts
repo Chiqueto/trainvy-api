@@ -1541,3 +1541,95 @@ export const ListActiveForgottenWorkoutDraftsQuerySchema = z.object({
 export const ListActiveForgottenWorkoutDraftsResponseSchema = z.object({
   drafts: z.array(ForgottenWorkoutDraftSchema),
 });
+
+// ─── Push Notifications & Preferences ─────────────────────────────────
+
+export const RegisterPushSubscriptionBodySchema = z.object({
+  endpoint: z.string().url(),
+  p256dh: z.string().min(1),
+  auth: z.string().min(1),
+  userAgent: z.string().optional(),
+});
+export type RegisterPushSubscriptionBody = z.infer<
+  typeof RegisterPushSubscriptionBodySchema
+>;
+
+export const RegisterPushSubscriptionResponseSchema = z.object({
+  id: z.string(),
+});
+
+export const RevokePushSubscriptionBodySchema = z.object({
+  endpoint: z.string().url(),
+});
+export type RevokePushSubscriptionBody = z.infer<
+  typeof RevokePushSubscriptionBodySchema
+>;
+
+export const RevokePushSubscriptionResponseSchema = z.object({
+  success: z.boolean(),
+});
+
+export const NotificationItemSchema = z.object({
+  id: z.string(),
+  type: z.string(),
+  title: z.string(),
+  body: z.string(),
+  data: z.unknown().nullable(),
+  readAt: z.string().datetime().nullable(),
+  sentAt: z.string().datetime(),
+});
+
+export const ListNotificationsQuerySchema = z.object({
+  cursor: z.string().optional(),
+  limit: z.coerce.number().int().min(1).max(50).default(20),
+});
+export type ListNotificationsQuery = z.infer<
+  typeof ListNotificationsQuerySchema
+>;
+
+export const ListNotificationsResponseSchema = z.object({
+  notifications: z.array(NotificationItemSchema),
+  unreadCount: z.number(),
+  nextCursor: z.string().nullable(),
+});
+
+export const MarkNotificationReadParamsSchema = z.object({
+  id: z.string(),
+});
+export type MarkNotificationReadParams = z.infer<
+  typeof MarkNotificationReadParamsSchema
+>;
+
+export const MarkNotificationReadResponseSchema = z.object({
+  success: z.boolean(),
+});
+
+export const MarkAllNotificationsReadResponseSchema = z.object({
+  success: z.boolean(),
+  count: z.number(),
+});
+
+export const NotificationPreferencesSchema = z.object({
+  streakReminder: z.boolean(),
+  streakReminderHour: z.number().int().min(0).max(23),
+  coachLinked: z.boolean(),
+  workoutAssigned: z.boolean(),
+});
+export type NotificationPreferences = z.infer<
+  typeof NotificationPreferencesSchema
+>;
+
+export const UpdateNotificationPreferencesBodySchema = z.object({
+  streakReminder: z.boolean().optional(),
+  streakReminderHour: z.number().int().min(0).max(23).optional(),
+  coachLinked: z.boolean().optional(),
+  workoutAssigned: z.boolean().optional(),
+});
+export type UpdateNotificationPreferencesBody = z.infer<
+  typeof UpdateNotificationPreferencesBodySchema
+>;
+
+export const CronStreakRemindersResponseSchema = z.object({
+  sent: z.number(),
+});
+

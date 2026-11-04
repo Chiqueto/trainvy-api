@@ -34,6 +34,10 @@ import { workoutSessionRecoveryRoutes } from "../routes/workout-session-recovery
 import { workoutEditRoutes } from "../routes/workout-edit.js";
 import { sessionFeedbackRoutes } from "../routes/session-feedback.js";
 import { sportsProfileRoutes } from "../routes/sports-profile.js";
+import { pushSubscriptionRoutes } from "../routes/push-subscriptions.js";
+import { notificationRoutes } from "../routes/notifications.js";
+import { notificationPreferencesRoutes } from "../routes/notification-preferences.js";
+import { cronRoutes } from "../routes/cron.js";
 
 const app = Fastify({
   bodyLimit: 25 * 1024 * 1024,
@@ -82,6 +86,10 @@ await app.register(sessionFeedbackRoutes);
 await app.register(sportsProfileRoutes);
 await app.register(feedbackRoutes, { prefix: "/feedback" });
 await app.register(historyRoutes, { prefix: "/history" });
+await app.register(pushSubscriptionRoutes, { prefix: "/push-subscriptions" });
+await app.register(notificationRoutes, { prefix: "/notifications" });
+await app.register(notificationPreferencesRoutes, { prefix: "/notification-preferences" });
+await app.register(cronRoutes, { prefix: "/cron" });
 
 await app.ready();
 const swaggerSpec = app.swagger();

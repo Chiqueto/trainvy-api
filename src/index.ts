@@ -38,6 +38,10 @@ import { workoutSessionRecoveryRoutes } from "./routes/workout-session-recovery.
 import { workoutEditRoutes } from "./routes/workout-edit.js";
 import { sessionFeedbackRoutes } from "./routes/session-feedback.js";
 import { sportsProfileRoutes } from "./routes/sports-profile.js";
+import { pushSubscriptionRoutes } from "./routes/push-subscriptions.js";
+import { notificationRoutes } from "./routes/notifications.js";
+import { notificationPreferencesRoutes } from "./routes/notification-preferences.js";
+import { cronRoutes } from "./routes/cron.js";
 
 const isVercel = Boolean(process.env.VERCEL);
 
@@ -133,6 +137,10 @@ await app.register(coachProgressRoutes);
 await app.register(coachTemplateRoutes);
 await app.register(feedbackRoutes, { prefix: "/feedback" });
 await app.register(adminRoutes, { prefix: "/admin" });
+await app.register(pushSubscriptionRoutes, { prefix: "/push-subscriptions" });
+await app.register(notificationRoutes, { prefix: "/notifications" });
+await app.register(notificationPreferencesRoutes, { prefix: "/notification-preferences" });
+await app.register(cronRoutes, { prefix: "/cron" });
 
 app.withTypeProvider<ZodTypeProvider>().route({
   method: "GET",

@@ -129,6 +129,9 @@ model User {
   aiTrainingHistoryConsentAt DateTime?               @db.Timestamptz()
   workoutSetProposals        WorkoutSetProposal[]
   forgottenWorkoutDrafts     ForgottenWorkoutDraft[]
+  pushSubscriptions          PushSubscription[]
+  notifications              Notification[]
+  notificationPreferences    NotificationPreferences?
 
   @@unique([email])
   @@map("user")
@@ -1033,3 +1036,49 @@ model FeatureAccessEvent {
   createdAt DateTime @default(now()) @db.Timestamptz()
   @@index([acceptanceId, createdAt])
 }
+
+model PushSubscription {
+  id        String   @id @default(uuid())
+  userId    String
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  userAgent String?
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  updatedAt DateTime @updatedAt @db.Timestamptz()
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("push_subscription")
+}
+
+model Notification {
+  id     String    @id @default(uuid())
+  userId String
+  type   String
+  title  String
+  body   String
+  data   Json?
+  readAt DateTime? @db.Timestamptz()
+  sentAt DateTime  @default(now()) @db.Timestamptz()
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, readAt])
+  @@index([userId, sentAt])
+  @@map("notification")
+}
+
+model NotificationPreferences {
+  userId             String  @id
+  streakReminder     Boolean @default(true)
+  streakReminderHour Int     @default(8)
+  coachLinked        Boolean @default(true)
+  workoutAssigned    Boolean @default(true)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notification_preferences")
+}
+
