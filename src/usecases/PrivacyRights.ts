@@ -1,4 +1,5 @@
 import { CoachAthleteError } from "../domain/coach-athlete.js";
+import { maskedStoredCpf } from "../domain/protected-cpf.js";
 import { Prisma } from "../generated/prisma/client.js";
 import { prisma } from "../lib/db.js";
 
@@ -54,7 +55,12 @@ export class PrivacyRights {
       {
         exportedAt: new Date().toISOString(),
         formatVersion: "1.0.0",
-        user,
+        user: {
+          ...user,
+          professionalRegistration: user.professionalRegistration
+            ? { ...user.professionalRegistration, cpf: maskedStoredCpf(user.professionalRegistration.cpf) }
+            : null,
+        },
         accessLogs,
       },
       null,

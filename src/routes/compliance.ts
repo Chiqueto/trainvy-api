@@ -44,7 +44,8 @@ export const complianceRoutes: FastifyPluginAsyncZod = async (app) => {
         code: "VALIDATION_ERROR",
         error: "Revise os dados informados.",
       });
-    request.log.error(e);
+    // Prisma errors may contain write arguments, including submitted identity.
+    request.log.error({ code: "COMPLIANCE_OPERATION_FAILED" }, "Compliance operation failed");
     return reply.code(500).send({
       code: "INTERNAL_ERROR",
       error: "Não foi possível concluir a operação.",

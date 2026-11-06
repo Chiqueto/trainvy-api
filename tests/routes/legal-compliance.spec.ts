@@ -13,6 +13,7 @@ import {
 } from "../../src/domain/compliance.js";
 import { accessLogExpiry } from "../../src/usecases/ApplicationAccessLogs.js";
 import { assertProfessionalAccess } from "../../src/domain/professional-verification.js";
+import { isProtectedCpf, maskedStoredCpf } from "../../src/domain/protected-cpf.js";
 import {
   SAFETY_REDIRECT,
   safeOrganizerResponse,
@@ -256,6 +257,9 @@ describe("Legal authorization, consent evidence and governance", () => {
       evidence,
     );
     expect(state.registration.crefVerificationStatus).toBe("DECLARED_ACTIVE");
+    expect(isProtectedCpf(state.registration.cpf)).toBe(true);
+    expect(state.registration.cpf).not.toContain("52998224725");
+    expect(maskedStoredCpf(state.registration.cpf)).toBe("***.***.***-25");
     expect(state.acceptances[0].metadataJson).toEqual({
       cref_informed: "123456-G/SP",
       cpf_informed: "***",

@@ -19,7 +19,8 @@
     "test:watch": "vitest",
     "seed:compliance": "tsx src/scripts/seed-compliance.ts",
     "docs:compliance": "tsx src/scripts/seed-compliance.ts --docs-only",
-    "export:compliance": "tsx src/scripts/export-compliance.ts"
+    "export:compliance": "tsx src/scripts/export-compliance.ts",
+    "privacy:protect-cpf": "tsx src/scripts/protect-professional-cpfs.ts"
   },
   "engines": {
     "node": "24.x"

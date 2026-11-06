@@ -995,6 +995,7 @@ enum ProfessionalVerificationStatus {
 }
 
 model ProfessionalRegistration {
+  // Salted scrypt digest + display suffix. Never write a plaintext CPF.
   cpf String?
   crefVerificationStatus String @default("UNVERIFIED_SANDBOX")
   crefDeclaredAt DateTime? @db.Timestamptz()

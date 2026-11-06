@@ -5,19 +5,27 @@ import {
   AI_SAFETY_PROMPT,
   sanitizePayloadForLLM,
 } from "../domain/compliance.js";
-import { assertHealthConsent } from "../usecases/LegalCompliance.js";
+import {
+  assertAthleteHealthConsent,
+  assertHealthConsent,
+} from "../usecases/LegalCompliance.js";
 
 // Runs on every provider step, including fresh tool results in multi-step chats.
 export function privateModel(
   identities: string[] = [],
   consentUserId?: string,
+  consentSubject: "SELF" | "ATHLETE" = "SELF",
 ) {
   return wrapLanguageModel({
     model: google("gemini-2.5-flash"),
     middleware: {
       specificationVersion: "v3",
       transformParams: async ({ params }) => {
-        if (consentUserId) await assertHealthConsent(consentUserId);
+        if (consentUserId) {
+          if (consentSubject === "ATHLETE")
+            await assertAthleteHealthConsent(consentUserId);
+          else await assertHealthConsent(consentUserId);
+        }
         return {
           ...params,
           prompt: [

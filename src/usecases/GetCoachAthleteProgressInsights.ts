@@ -1,5 +1,5 @@
 import { privateModel } from "../ai/private-model.js";
-import { assertHealthConsent } from "./LegalCompliance.js";
+import { assertAthleteHealthConsent } from "./LegalCompliance.js";
 import { generateObject } from "ai";
 import z from "zod";
 import { trackAiGeneration } from "./RecordAiUsage.js";
@@ -60,7 +60,7 @@ export class GetCoachAthleteProgressInsights {
     });
 
     const getOverview = new GetCoachAthleteProgressOverview();
-    await assertHealthConsent(input.athleteId);
+    await assertAthleteHealthConsent(input.athleteId);
     const overview = await getOverview.execute({
       coachId: input.coachId,
       athleteId: input.athleteId,
@@ -131,7 +131,7 @@ ${muscleDistributionText}
 
     try {
       const { object } = await trackAiGeneration({ userId: input.coachId, feature: "COACH_INSIGHTS" }, () => generateObject({
-        model: privateModel([athleteName], input.athleteId),
+        model: privateModel([athleteName], input.athleteId, "ATHLETE"),
         schema: AiInsightsObjectSchema,
         system: `Você é um consultor sênior de inteligência artificial em fisiologia do exercício, biomecânica e periodização de musculação do Trainvy.
 Sua missão é analisar dados reais de histórico de treinos de um aluno para fornecer um diagnóstico analítico de alto nível para o seu Personal Trainer.

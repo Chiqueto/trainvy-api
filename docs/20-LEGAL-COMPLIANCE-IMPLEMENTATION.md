@@ -51,3 +51,19 @@ O seed normal continua insert-only. Para publicar explicitamente o conteúdo can
 Atualização aplicada e conferida no banco configurado: os quatro contratos e a matriz passaram para 1.0.1; a declaração CREF permaneceu em 1.0.0. As seis revisões anteriores foram preservadas, totalizando onze revisões. Não havia aceites registrados. Conteúdo, títulos, hashes das revisões e ambas as cópias Markdown foram comparados com a fonte canônica.
 
 Onboarding e perfil permitem leitura integral em modal com rolagem. Termos e Política compartilham a declaração solicitada, com evidências individuais por documento; saúde/IA conserva checkbox separado e inicialmente desmarcado. Um envio registra apenas aceites pendentes, preserva confirmações parciais e exige nova escolha se a versão mudar. O formulário profissional usa a declaração CREF solicitada e o mesmo leitor integral.
+
+## Cadastro profissional e proteção de CPF — 06/11/2026
+
+Sem `professionalAccessGranted`, a área profissional não exibe mais o bloco de demonstração/rascunhos, seu atalho de IA ou o link de prescrições anteriores. O formulário deixa de anunciar modo demonstração. A condição de liberação permanece a fornecida pela API.
+
+O formulário aplica as máscaras `000.000.000-00` e `000000-G`/`000000-P`, normaliza CPF para envio e limpa seu valor após sucesso. A validação dos dígitos verificadores continua obrigatória no backend. O CPF não é gravado no armazenamento do navegador.
+
+Como o fluxo não recupera o CPF integral, `ProfessionalRegistration.cpf` passa a armazenar um hash irreversível scrypt (N=32768, r=8, p=3), salt aleatório de 16 bytes e somente os dois últimos dígitos para exibição. Não há chave de criptografia ou novo segredo de ambiente. A API administrativa e a exportação do titular retornam apenas a máscara; o hash não é exposto. Falhas inesperadas de compliance são registradas sem o objeto de erro que poderia conter argumentos de persistência.
+
+`npm run privacy:protect-cpf` migra registros legados de forma repetível, usa atualização condicional para preservar alterações concorrentes e imprime somente contagens. Aplicado no banco configurado nesta data: um registro convertido e nenhum CPF em texto puro restante. O campo existente comporta o formato protegido; não houve alteração de schema físico ou contrato HTTP. O script não altera cópias históricas de logs ou backups. Publicar a API atualizada para que novas declarações usem a proteção.
+
+## Consentimento do aluno nos fluxos profissionais — 06/11/2026
+
+Geração, criação, edição, envio de prescrições, alocação de modelos e insights profissionais verificam o consentimento de saúde do aluno vinculado, após autorização do profissional e do vínculo. A pendência do aluno retorna `ATHLETE_HEALTH_CONSENT_REQUIRED`, orientando que ele aceite a versão atual no próprio perfil. A declaração CREF e os aceites pessoais do treinador não substituem essa autorização. Operações com dados próprios continuam com `HEALTH_CONSENT_REQUIRED`. A verificação antes de cada etapa do provedor de IA também preserva o contexto do aluno.
+
+O modal profissional mantém a mensagem de erro visível, preserva a instrução digitada e permite tentar novamente após o aceite do aluno. Não há aceite automático ou transferência de consentimento entre contas. Os contratos HTTP mantêm a estrutura de erro existente, cujo código é uma string.

@@ -1,5 +1,5 @@
 import { advancedPrescription } from "../schemas/advanced-prescription.js";
-import { assertHealthConsent } from "./LegalCompliance.js";
+import { assertAthleteHealthConsent } from "./LegalCompliance.js";
 import {
   assertCoachCanPrescribe,
   CoachPrescriptionError,
@@ -64,7 +64,7 @@ export class AllocateWorkoutPlanTemplate {
     }
 
     // 3. Cria prescrição diretamente em status SENT (já enviada ao aluno)
-    await assertHealthConsent(athleteId);
+    await assertAthleteHealthConsent(athleteId);
     const prescription = await prisma.workoutPrescription.create({
       data: {
         coachId,

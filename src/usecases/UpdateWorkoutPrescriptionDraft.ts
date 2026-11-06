@@ -1,5 +1,5 @@
 import { advancedPrescription } from "../schemas/advanced-prescription.js";
-import { assertHealthConsent } from "./LegalCompliance.js";
+import { assertAthleteHealthConsent } from "./LegalCompliance.js";
 import {
   assertCoachCanPrescribe,
   CoachPrescriptionError,
@@ -204,7 +204,7 @@ export class UpdateWorkoutPrescriptionDraft {
           );
         }
 
-        await assertHealthConsent(prescription.athleteId, tx);
+        await assertAthleteHealthConsent(prescription.athleteId, tx);
         const updated = await tx.workoutPrescription.update({
           where: { id: prescription.id },
           data: {

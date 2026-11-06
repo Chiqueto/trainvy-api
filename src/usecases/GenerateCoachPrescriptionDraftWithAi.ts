@@ -1,6 +1,6 @@
 import { sanitizePayloadForLLM } from "../domain/compliance.js";
 import { CreateWorkoutPrescriptionDraft } from "./CreateWorkoutPrescriptionDraft.js";
-import { assertHealthConsent } from "./LegalCompliance.js";
+import { assertAthleteHealthConsent } from "./LegalCompliance.js";
 import { privateModel } from "../ai/private-model.js";
 import { generateObject } from "ai";
 import z from "zod";
@@ -143,7 +143,7 @@ export class GenerateCoachPrescriptionDraftWithAi {
       );
     }
 
-    await assertHealthConsent(input.athleteId);
+    await assertAthleteHealthConsent(input.athleteId);
     const athleteName = link.athlete.name;
 
     const systemPrompt = `Você é o assistente de prescrição técnica do Trainvy para Personal Trainers.
@@ -200,7 +200,7 @@ Regras Inegociáveis de Prescrição:
       },
       () =>
         generateObject({
-          model: privateModel([athleteName], input.athleteId),
+          model: privateModel([athleteName], input.athleteId, "ATHLETE"),
           schema: AiPrescriptionOutputSchema,
           system: systemPrompt,
           messages: [

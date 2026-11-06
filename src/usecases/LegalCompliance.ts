@@ -3,6 +3,7 @@ import z from "zod";
 import { ageFromBirthDate, birthDateString } from "../domain/birth-date.js";
 import { CoachAthleteError } from "../domain/coach-athlete.js";
 import { contentHash } from "../domain/compliance.js";
+import { maskedStoredCpf, protectCpf } from "../domain/protected-cpf.js";
 import { assertProfessionalAccess } from "../domain/professional-verification.js";
 import { Prisma } from "../generated/prisma/client.js";
 import { prisma } from "../lib/db.js";
@@ -77,7 +78,11 @@ export async function recordLegalAcceptance(
     },
   });
 }
-export async function assertHealthConsent(userId: string, client: Db = prisma) {
+export async function assertHealthConsent(
+  userId: string,
+  client: Db = prisma,
+  subject: "SELF" | "ATHLETE" = "SELF",
+) {
   const document = await client.legalDocument.findUnique({
     where: { slug: "termo-saude-parq-lgpd" },
   });
@@ -85,7 +90,7 @@ export async function assertHealthConsent(userId: string, client: Db = prisma) {
     throw new CoachAthleteError(
       "HEALTH_CONSENT_REQUIRED",
       403,
-      "Leia e aceite o termo de saúde e dados no seu perfil.",
+      "O termo de saúde e IA está indisponível. Tente novamente mais tarde.",
     );
   const acceptance = await client.userLegalAcceptance.findFirst({
     where: {
@@ -97,10 +102,20 @@ export async function assertHealthConsent(userId: string, client: Db = prisma) {
   });
   if (!acceptance || acceptance.revokedAt)
     throw new CoachAthleteError(
-      "HEALTH_CONSENT_REQUIRED",
+      subject === "ATHLETE"
+        ? "ATHLETE_HEALTH_CONSENT_REQUIRED"
+        : "HEALTH_CONSENT_REQUIRED",
       403,
-      "Autorize o tratamento de dados de saúde no seu perfil.",
+      subject === "ATHLETE"
+        ? "O aluno precisa aceitar a versão atual do termo de saúde e IA. Peça a ele que acesse o próprio perfil e registre o aceite para continuar."
+        : "Autorize o tratamento de dados de saúde no seu perfil.",
     );
+}
+export async function assertAthleteHealthConsent(
+  athleteId: string,
+  client: Db = prisma,
+) {
+  return assertHealthConsent(athleteId, client, "ATHLETE");
 }
 export async function assertAutonomousAdult(
   userId: string,
@@ -302,7 +317,7 @@ export class LegalCompliance {
       );
       const registration = {
         fullName: data.fullName,
-        cpf: data.cpf,
+        cpf: await protectCpf(data.cpf),
         cref: data.cref,
         region: data.region,
         category: data.category,
@@ -366,7 +381,7 @@ export class LegalCompliance {
       items,
       professionals: professionals.map((p) => ({
         ...p,
-        cpf: p.cpf ? `***.***.***-${p.cpf.slice(-2)}` : null,
+        cpf: maskedStoredCpf(p.cpf),
         crefDeclaredAt: p.crefDeclaredAt?.toISOString() ?? null,
         verifiedAt: p.verifiedAt?.toISOString() ?? null,
       })),
