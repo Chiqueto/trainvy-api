@@ -65,6 +65,7 @@ export const ReviewBody = z.strictObject({
   publicReason: z.string().trim().min(3).max(400),
 });
 export const RegistrationResponse = RegistrationBody.extend({
+  crefVerificationStatus: z.string().optional(),
   userId: z.string(),
   status: z.string(),
   revision: z.number(),

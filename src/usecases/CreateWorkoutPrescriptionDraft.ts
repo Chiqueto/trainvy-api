@@ -1,4 +1,5 @@
 import { advancedPrescription } from "../schemas/advanced-prescription.js";
+import { assertHealthConsent } from "./LegalCompliance.js";
 import {
   assertCoachCanPrescribe,
   CoachPrescriptionError,
@@ -8,6 +9,8 @@ import { prisma } from "../lib/db.js";
 import { GetCommercialContext } from "./GetCommercialContext.js";
 
 export interface CreateWorkoutPrescriptionDraftInput {
+  aiAssisted?: boolean;
+  allowStudentSubstitution?: boolean;
   coachId: string;
   athleteId: string;
   name: string;
@@ -129,6 +132,7 @@ export class CreateWorkoutPrescriptionDraft {
       );
     }
 
+    await assertHealthConsent(dto.athleteId);
     const payload = {
       workoutDays: dto.workoutDays.map((day, index) => ({
         name: day.name.trim(),
@@ -173,6 +177,9 @@ export class CreateWorkoutPrescriptionDraft {
         name: trimmedName,
         notes: dto.notes ?? null,
         status: "DRAFT",
+        originType: dto.aiAssisted ? "PROFESSIONAL_AI_ASSISTED" : "PROFESSIONAL_MANUAL",
+        prescriptionStatus: dto.aiAssisted ? "DRAFT_AI" : "DRAFT_MANUAL",
+        allowStudentSubstitution: dto.allowStudentSubstitution ?? true,
         version: 1,
         payload,
       },
@@ -188,6 +195,10 @@ export class CreateWorkoutPrescriptionDraft {
       coachId: prescription.coachId,
       athleteId: prescription.athleteId,
       status: prescription.status,
+      originType: prescription.originType,
+      prescriptionStatus: prescription.prescriptionStatus,
+      prescribedCrefSnapshot: prescription.prescribedCrefSnapshot,
+      allowStudentSubstitution: prescription.allowStudentSubstitution,
       name: prescription.name,
       notes: prescription.notes,
       version: prescription.version,

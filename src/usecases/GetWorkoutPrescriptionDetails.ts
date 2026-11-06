@@ -37,6 +37,7 @@ export class GetWorkoutPrescriptionDetails {
 
     const isCoach = prescription.coachId === userId;
     const isAthlete = prescription.athleteId === userId;
+    let activeCoachLink = false;
     if (isCoach) {
       assertCoachCanPrescribe(
         await new GetCommercialContext().execute({ userId }),
@@ -48,8 +49,9 @@ export class GetWorkoutPrescriptionDetails {
           status: "ACTIVE",
         },
       });
-      if (!link)
+      if (!link && !prescription.approvedAt)
         throw new CoachPrescriptionError("PRESCRIPTION_NOT_FOUND", 404);
+      activeCoachLink = !!link;
     }
 
     if (!isCoach && !isAthlete) {
@@ -74,6 +76,10 @@ export class GetWorkoutPrescriptionDetails {
       coachId: prescription.coachId,
       athleteId: prescription.athleteId,
       status: prescription.status,
+      originType: prescription.originType,
+      prescriptionStatus: prescription.prescriptionStatus,
+      prescribedCrefSnapshot: prescription.prescribedCrefSnapshot,
+      allowStudentSubstitution: prescription.allowStudentSubstitution,
       name: prescription.name,
       notes: prescription.notes,
       version: prescription.version,
@@ -87,7 +93,7 @@ export class GetWorkoutPrescriptionDetails {
       createdAt: prescription.createdAt.toISOString(),
       updatedAt: prescription.updatedAt.toISOString(),
       coach: prescription.coach,
-      athlete: prescription.athlete,
+      athlete: isCoach ? { ...prescription.athlete, name: activeCoachLink ? prescription.athlete.name : "Vínculo encerrado", email: "", image: null } : prescription.athlete,
       payload: prescription.payload as unknown as PrescriptionPayload,
     };
   }

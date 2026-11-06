@@ -28,14 +28,21 @@ export class GetCommercialContext {
       },
     });
     if (!user) throw new CommercialError("USER_NOT_FOUND", 404);
+    if (user.deletedAt) throw new CommercialError("USER_NOT_FOUND", 404);
     const policy = await readProfessionalVerificationPolicy(client);
     const professionalVerification = user.professionalRegistration
       ? {
           status: user.professionalRegistration.status,
+          crefVerificationStatus: user.professionalRegistration.crefVerificationStatus,
           validUntil:
             user.professionalRegistration.validUntil?.toISOString() ?? null,
         }
       : null;
+    if (professionalVerification && ["DECLARED_ACTIVE", "VERIFIED_ADMIN"].includes(professionalVerification.crefVerificationStatus)) {
+      const document = await client.legalDocument.findUnique({ where: { slug: "declaracao-responsabilidade-cref" } });
+      const accepted = document?.isActive && await client.userLegalAcceptance.findFirst({ where: { userId, documentId: document.id, documentVersion: document.version, revokedAt: null } });
+      if (!accepted) professionalVerification.crefVerificationStatus = "UNVERIFIED_SANDBOX";
+    }
 
     if (user.systemRole !== "ADMIN" && isConfiguredAdminEmail(user.email)) {
       user.systemRole = "ADMIN";

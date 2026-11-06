@@ -69,6 +69,7 @@ export class StartWorkoutSession {
         if (!workoutPlan.isActive) {
           throw new WorkoutPlanNotActiveError("Workout plan is not active");
         }
+        if (workoutPlan.prescriptionStatus === "DRAFT_AI") throw new WorkoutPlanNotActiveError("Rascunho de IA exige aprovação profissional.");
 
         const workoutDay = await tx.workoutDay.findFirst({
           where: { id: dto.workoutDayId, workoutPlanId: dto.workoutPlanId },

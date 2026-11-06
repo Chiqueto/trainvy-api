@@ -66,6 +66,7 @@ export class EditWorkoutPlan {
             workoutDays: { include: { exercises: true } },
           },
         });
+        if (plan?.originType.startsWith("PROFESSIONAL_") && plan.prescriptionStatus === "APPROVED_PRESCRIBED") throw new BadRequestError("Duplique a prescrição para organizar uma ficha pessoal. A versão prescrita deve ser preservada.");
         if (!plan) throw new NotFoundError("Plano de treino não encontrado.");
         if (
           await tx.workoutSession.findFirst({

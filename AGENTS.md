@@ -45,3 +45,7 @@ Este arquivo é o ponto de entrada obrigatório para qualquer agente que trabalh
 - **Cadência e Cinemática Realista**: Aplicar uma descida controlada (excêntrica), pausa breve na amplitude baixa e subida suave (concêntrica), mantendo apoios estáveis, comprimentos ósseos reais e articulações anatômicas.
 - **Validação Cruzada**: Validar que exercícios distintos destacam grupos distintos, preservar a silhueta/anatomia e revisar a pose e o shading antes de publicar.
 
+
+## Segredos e exemplos de ambiente
+
+- Nunca inserir chaves reais, tokens ou segredos em `.env.example`, codigo, testes ou documentacao. Usar campos vazios ou placeholders claramente ficticios; valores reais ficam apenas no ambiente local ignorado pelo Git ou no provedor de deploy.

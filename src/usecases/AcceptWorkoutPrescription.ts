@@ -166,6 +166,12 @@ export class AcceptWorkoutPrescription {
           data: {
             id: crypto.randomUUID(),
             name: prescription.name,
+            originType: prescription.originType,
+            prescriptionStatus: "APPROVED_PRESCRIBED",
+            prescribedByProfessionalId: prescription.coachId,
+            prescribedCrefSnapshot: prescription.prescribedCrefSnapshot,
+            humanApprovedAt: prescription.humanApprovedAt,
+            allowStudentSubstitution: prescription.allowStudentSubstitution,
             userId: athleteId,
             isActive: false,
             workoutDays: {

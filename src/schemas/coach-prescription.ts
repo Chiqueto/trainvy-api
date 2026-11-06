@@ -78,6 +78,7 @@ export const WorkoutDayDraftSchema = z
   });
 
 export const CreatePrescriptionDraftBodySchema = z.object({
+  allowStudentSubstitution: z.boolean().optional(),
   athleteId: z.string(),
   name: z.string().trim().min(1, "Nome do planejamento é obrigatório").max(100),
   notes: z.string().trim().max(1000).optional().nullable(),
@@ -87,6 +88,7 @@ export const CreatePrescriptionDraftBodySchema = z.object({
 });
 
 export const UpdatePrescriptionDraftBodySchema = z.object({
+  allowStudentSubstitution: z.boolean().optional(),
   name: z.string().trim().min(1, "Nome do planejamento é obrigatório").max(100),
   notes: z.string().trim().max(1000).optional().nullable(),
   version: z.number().int().positive(),
@@ -140,6 +142,10 @@ export const PrescriptionUserSummarySchema = z.object({
 });
 
 export const PrescriptionItemResponseSchema = z.object({
+  originType: z.string().optional(),
+  prescriptionStatus: z.string().optional(),
+  prescribedCrefSnapshot: z.string().nullable().optional(),
+  allowStudentSubstitution: z.boolean().optional(),
   id: z.string(),
   coachId: z.string(),
   athleteId: z.string(),
@@ -190,6 +196,8 @@ export const GenerateCoachPrescriptionDraftBodySchema = z.object({
 });
 
 export const GenerateCoachPrescriptionDraftResponseSchema = z.object({
+  prescriptionId: z.string(),
+  version: z.number(),
   status: z.literal("DRAFT"),
   name: z.string(),
   notes: z.string().nullable().optional(),

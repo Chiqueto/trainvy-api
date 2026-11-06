@@ -688,6 +688,7 @@ function getLegacyAiTools(userId: string, context: AiToolsContext = {}) {
           const createWorkoutPlan = new CreateWorkoutPlan();
           const created = await createWorkoutPlan.execute({
             userId,
+            aiDraft: true,
             name: input.name,
             workoutDays: input.workoutDays,
             activate: false,
@@ -1023,6 +1024,11 @@ export function getAiTools(userId: string, context: AiToolsContext = {}) {
     getMuscleTrainingAnalytics: tools.getMuscleTrainingAnalytics,
   };
 }
+export function getSandboxAiTools(userId: string, context: AiToolsContext = {}) {
+  const tools = getLegacyAiTools(userId, context);
+  return { ...getAiTools(userId, context), proposeWorkoutPlan: tools.proposeWorkoutPlan, createWorkoutPlanDraft: tools.createWorkoutPlanDraft };
+}
+
 export function getSessionAiTools(
   userId: string,
   context: SessionAiToolsContext,

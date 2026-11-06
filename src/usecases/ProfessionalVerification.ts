@@ -69,6 +69,8 @@ export class ProfessionalVerification {
             cref: data.cref.toUpperCase(),
             status: retainedBlock ?? "PENDING_VERIFICATION",
             revision: { increment: 1 },
+            crefVerificationStatus: previous?.crefVerificationStatus === "SUSPENDED_FRAUD" ? "SUSPENDED_FRAUD" : "UNVERIFIED_SANDBOX",
+            crefDeclaredAt: null,
             verifiedAt: null,
             validUntil: null,
             publicReason: retainedBlock
@@ -213,6 +215,7 @@ export class ProfessionalVerification {
           where: { userId },
           data: {
             status: data.result,
+            crefVerificationStatus: ["SUSPENDED", "REJECTED"].includes(data.result) ? "SUSPENDED_FRAUD" : data.result === "VERIFIED" && r.crefDeclaredAt ? "VERIFIED_ADMIN" : "UNVERIFIED_SANDBOX",
             revision: { increment: 1 },
             verifiedAt: data.result === "VERIFIED" ? checkedAt : null,
             validUntil,

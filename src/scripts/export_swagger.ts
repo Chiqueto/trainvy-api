@@ -1,3 +1,4 @@
+import { complianceRoutes } from "../routes/compliance.js";
 import { featureTermsRoutes } from "../routes/feature-terms.js";
 import { execSync } from "node:child_process";
 import fs from "node:fs";
@@ -74,6 +75,7 @@ await app.register(commercialRoutes);
 await app.register(coachRoutes);
 await app.register(professionalVerificationRoutes);
 await app.register(featureTermsRoutes);
+await app.register(complianceRoutes);
 await app.register(coachPrescriptionRoutes);
 await app.register(coachProgressRoutes);
 await app.register(coachTemplateRoutes);

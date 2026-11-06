@@ -164,3 +164,10 @@ Antes da monetização:
 - AI usage;
 - billing events;
 - auditoria de ações do Coach.
+
+### Configuracao de push na Vercel
+
+- Projeto frontend: `NEXT_PUBLIC_VAPID_PUBLIC_KEY` recebe a mesma chave publica configurada na API. A variavel precisa estar no ambiente do deploy (Production/Preview) antes do build; depois de altera-la, refazer o build/deploy do frontend.
+- Projeto API: configurar `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` (mailto do responsavel) e `CRON_SECRET` (segredo aleatorio com pelo menos 16 caracteres).
+- Chave privada e segredo do cron nunca recebem prefixo `NEXT_PUBLIC_`. Nao existem valores secretos padrao no codigo. Sem `CRON_SECRET`, a rota do cron recusa acesso.
+- Nunca copiar valores reais para `.env.example`. Se um segredo foi versionado, substitui-lo no provedor; remover do arquivo atual nao o remove do historico. Ao substituir o par VAPID, atualizar a chave publica nos dois projetos e renovar as inscricoes push dos dispositivos.

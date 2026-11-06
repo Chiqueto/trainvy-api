@@ -11,6 +11,7 @@ import { WeekDay } from "../generated/prisma/enums.js";
 import { prisma } from "../lib/db.js";
 
 interface InputDto {
+  aiDraft?: boolean;
   importProvenance?: Prisma.InputJsonValue;
   importPreviewHash?: string;
   userId: string;
@@ -76,7 +77,7 @@ interface OutputDto {
 
 export class CreateWorkoutPlan {
   async execute(dto: InputDto): Promise<OutputDto> {
-    const shouldActivate = dto.activate ?? true;
+    const shouldActivate = dto.aiDraft ? false : dto.activate ?? true;
 
     try {
       return await prisma.$transaction(
@@ -123,6 +124,8 @@ export class CreateWorkoutPlan {
             data: {
               id: crypto.randomUUID(),
               name: dto.name,
+              originType: dto.aiDraft ? "PROFESSIONAL_AI_ASSISTED" : dto.importProvenance ? "IMPORTED_OCR_USER" : "PERSONAL_SELF_LOG",
+              prescriptionStatus: dto.aiDraft ? "DRAFT_AI" : "APPROVED_PRESCRIBED",
               importProvenance: dto.importProvenance,
               importPreviewHash: dto.importPreviewHash,
               userId: dto.userId,

@@ -1,3 +1,5 @@
+import { assertCoreLegalAcceptances, assertHealthConsent } from "./LegalCompliance.js";
+import { CoachAthleteError } from "../domain/coach-athlete.js";
 import { ageFromBirthDate, birthDateString } from "../domain/birth-date.js";
 import { prisma } from "../lib/db.js";
 import {
@@ -29,12 +31,16 @@ interface OutputDto {
 export class UpsertUserTrainData {
   async execute(dto: InputDto): Promise<OutputDto> {
     const input = UserTrainDataBodySchema.parse(dto);
+    await assertHealthConsent(dto.userId);
+    await assertCoreLegalAcceptances(dto.userId);
+    if (input.birthDate && ageFromBirthDate(input.birthDate) < 18) throw new CoachAthleteError("ADULT_ACCOUNT_REQUIRED", 403, "Contas autônomas exigem idade mínima de 18 anos.");
     const user = await prisma.$transaction(async (tx) => {
       const current = await tx.user.findUniqueOrThrow({
         where: { id: dto.userId },
         select: { birthDate: true },
       });
       const birthDate = input.birthDate ?? birthDateString(current.birthDate);
+      if (!birthDate) throw new CoachAthleteError("BIRTH_DATE_REQUIRED", 403, "Informe a data de nascimento para confirmar a maioridade.");
       const age = birthDate ? ageFromBirthDate(birthDate) : input.age!;
       const updated = await tx.user.update({
         where: { id: dto.userId },

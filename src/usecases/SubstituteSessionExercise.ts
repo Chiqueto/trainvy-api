@@ -37,6 +37,8 @@ export class SubstituteSessionExercise {
         );
       }
 
+      const currentSession = await tx.workoutSession.findUniqueOrThrow({ where: { id: session.id }, include: { workoutPlan: true } });
+      if (currentSession.workoutPlan?.originType.startsWith("PROFESSIONAL_") && !currentSession.workoutPlan.allowStudentSubstitution) throw new NotFoundError("Substituição não autorizada pelo profissional.");
       // 2. Lock SessionExercise
       const lockedExercises = await tx.$queryRaw<
         Array<{
@@ -46,9 +48,10 @@ export class SubstituteSessionExercise {
           plannedExerciseId: string | null;
           plannedExerciseNameSnapshot: string | null;
           revision: number;
+          substitutedByStudent: boolean;
         }>
       >`
-        SELECT id, "exerciseId", "exerciseNameSnapshot", "plannedExerciseId", "plannedExerciseNameSnapshot", revision
+        SELECT id, "exerciseId", "exerciseNameSnapshot", "plannedExerciseId", "plannedExerciseNameSnapshot", revision, "substitutedByStudent"
         FROM "SessionExercise"
         WHERE id = ${dto.sessionExerciseId} AND "workoutSessionId" = ${session.id}
         FOR UPDATE
@@ -112,6 +115,7 @@ export class SubstituteSessionExercise {
           plannedExerciseId: originalPlannedExerciseId,
           plannedExerciseNameSnapshot: originalPlannedExerciseNameSnapshot,
           wasSubstituted,
+          substitutedByStudent: sessionExercise.substitutedByStudent || targetExercise.id !== sessionExercise.exerciseId,
           substitutedAt,
           revision: { increment: 1 },
         },
@@ -150,6 +154,7 @@ export class SubstituteSessionExercise {
         alternative2ExerciseNameSnapshot:
           updated.alternative2ExerciseNameSnapshot,
         wasSubstituted: updated.wasSubstituted,
+        substitutedByStudent: updated.substitutedByStudent,
         substitutedAt: updated.substitutedAt
           ? updated.substitutedAt.toISOString()
           : null,

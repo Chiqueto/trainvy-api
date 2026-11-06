@@ -57,6 +57,7 @@ export interface HistoryExerciseDetailDto {
 }
 
 export interface GetWorkoutHistorySessionOutputDto {
+  prescribedCrefSnapshot?: string | null;
   id: string;
   origin: "PLANNED" | "FREE";
   startedAt: string;
@@ -89,6 +90,7 @@ export class GetWorkoutHistorySession {
           : { not: null },
       },
       include: {
+        workoutPlan: true,
         sessionExercises: {
           orderBy: { order: "asc" },
           include: {
@@ -181,6 +183,7 @@ export class GetWorkoutHistorySession {
     return {
       id: session.id,
       origin: session.origin as "PLANNED" | "FREE",
+      prescribedCrefSnapshot: session.workoutPlan?.prescribedCrefSnapshot ?? null,
       startedAt: session.startedAt.toISOString(),
       completedAt: session.completedAt.toISOString(),
       durationInSeconds,

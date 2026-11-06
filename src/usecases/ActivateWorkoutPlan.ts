@@ -32,6 +32,7 @@ export class ActivateWorkoutPlan {
         if (!plan || plan.userId !== dto.userId || plan.deletedAt !== null) {
           throw new NotFoundError("Workout plan not found");
         }
+        if (plan.prescriptionStatus === "DRAFT_AI") throw new NotFoundError("Revise e aprove este rascunho antes de ativar.");
 
         // 1. Idempotência: Se já estiver ativo
         if (plan.isActive) {

@@ -16,7 +16,10 @@
     "migrate:test": "prisma migrate deploy --config prisma.test.config.ts",
     "migrate:deploy": "prisma migrate deploy",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "seed:compliance": "tsx src/scripts/seed-compliance.ts",
+    "docs:compliance": "tsx src/scripts/seed-compliance.ts --docs-only",
+    "export:compliance": "tsx src/scripts/export-compliance.ts"
   },
   "engines": {
     "node": "24.x"

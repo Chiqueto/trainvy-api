@@ -8,6 +8,11 @@ interface InputDto {
 }
 
 interface OutputDto {
+  updatedAt: string;
+  originType: string;
+  prescriptionStatus: string;
+  prescribedCrefSnapshot: string | null;
+  allowStudentSubstitution: boolean;
   id: string;
   name: string;
   nextWorkoutDayId?: string | null;
@@ -83,6 +88,11 @@ export class GetWorkoutPlan {
     }
 
     return {
+      updatedAt: workoutPlan.updatedAt.toISOString(),
+      originType: workoutPlan.originType,
+      prescriptionStatus: workoutPlan.prescriptionStatus,
+      prescribedCrefSnapshot: workoutPlan.prescribedCrefSnapshot,
+      allowStudentSubstitution: workoutPlan.allowStudentSubstitution,
       id: workoutPlan.id,
       name: workoutPlan.name,
       nextWorkoutDayId,

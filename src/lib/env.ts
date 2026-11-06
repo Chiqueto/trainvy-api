@@ -42,24 +42,13 @@ const envSchema = z.object({
     z.string().optional()
   ),
   ADMIN_EMAILS: z.preprocess(emptyToUndefined, z.string().optional()),
-  VAPID_PUBLIC_KEY: z
-    .string()
-    .min(1)
-    .default(
-      "BNl8YuV6KEMyn_QviBVaHfPbVb9ikHmn0AxBy_E1UysucKMe_f1zCzNxwBGM2zVYxo97ru6L1T_q4omnjgYgYpY"
-    ),
-  VAPID_PRIVATE_KEY: z
-    .string()
-    .min(1)
-    .default("uKv6POFsv1OQMt1m0SXP7Aw0ThOX1RnggW0-mptBbiA"),
-  VAPID_SUBJECT: z
-    .string()
-    .startsWith("mailto:")
-    .default("mailto:contato@trainvy.app"),
-  CRON_SECRET: z
-    .string()
-    .min(16)
-    .default("38a9b2c39d8e7f12a3b4c5d6e7f8a9b0c1d2e3f4"),
+  VAPID_PUBLIC_KEY: z.preprocess(emptyToUndefined, z.string().min(1).optional()),
+  VAPID_PRIVATE_KEY: z.preprocess(emptyToUndefined, z.string().min(1).optional()),
+  VAPID_SUBJECT: z.preprocess(
+    emptyToUndefined,
+    z.string().startsWith("mailto:").optional()
+  ),
+  CRON_SECRET: z.preprocess(emptyToUndefined, z.string().min(16).optional()),
 });
 
 const envResult = envSchema.safeParse(process.env);

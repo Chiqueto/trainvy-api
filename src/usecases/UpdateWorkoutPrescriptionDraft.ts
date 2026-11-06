@@ -1,4 +1,5 @@
 import { advancedPrescription } from "../schemas/advanced-prescription.js";
+import { assertHealthConsent } from "./LegalCompliance.js";
 import {
   assertCoachCanPrescribe,
   CoachPrescriptionError,
@@ -8,6 +9,7 @@ import { prisma } from "../lib/db.js";
 import { GetCommercialContext } from "./GetCommercialContext.js";
 
 export interface UpdateWorkoutPrescriptionDraftInput {
+  allowStudentSubstitution?: boolean;
   coachId: string;
   prescriptionId: string;
   name: string;
@@ -202,9 +204,11 @@ export class UpdateWorkoutPrescriptionDraft {
           );
         }
 
+        await assertHealthConsent(prescription.athleteId, tx);
         const updated = await tx.workoutPrescription.update({
           where: { id: prescription.id },
           data: {
+            ...(dto.allowStudentSubstitution !== undefined ? { allowStudentSubstitution: dto.allowStudentSubstitution } : {}),
             name: trimmedName,
             notes: dto.notes ?? null,
             payload,
@@ -222,6 +226,10 @@ export class UpdateWorkoutPrescriptionDraft {
           coachId: updated.coachId,
           athleteId: updated.athleteId,
           status: updated.status,
+      originType: updated.originType,
+      prescriptionStatus: updated.prescriptionStatus,
+      prescribedCrefSnapshot: updated.prescribedCrefSnapshot,
+      allowStudentSubstitution: updated.allowStudentSubstitution,
           name: updated.name,
           notes: updated.notes,
           version: updated.version,

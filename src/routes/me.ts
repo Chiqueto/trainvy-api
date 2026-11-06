@@ -1,3 +1,4 @@
+import { CoachAthleteError } from "../domain/coach-athlete.js";
 import { fromNodeHeaders } from "better-auth/node";
 import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
@@ -29,6 +30,7 @@ export const meRoutes = async (app: FastifyInstance) => {
       response: {
         200: GetUserTrainDataResponseSchema,
         401: ErrorSchema,
+        403: ErrorSchema,
         404: ErrorSchema,
         500: ErrorSchema,
       },
@@ -52,6 +54,7 @@ export const meRoutes = async (app: FastifyInstance) => {
 
         return reply.status(200).send(result);
       } catch (error) {
+        if (error instanceof CoachAthleteError) return reply.code(403).send({ code: error.code, error: error.message });
         if (error instanceof NotFoundError) {
           return reply.status(404).send({
             error: error.message,
@@ -79,6 +82,7 @@ export const meRoutes = async (app: FastifyInstance) => {
       response: {
         200: UserTrainDataResponseSchema,
         401: ErrorSchema,
+        403: ErrorSchema,
         500: ErrorSchema,
       },
     },
@@ -108,6 +112,7 @@ export const meRoutes = async (app: FastifyInstance) => {
 
         return reply.status(200).send(result);
       } catch (error) {
+        if (error instanceof CoachAthleteError) return reply.code(403).send({ code: error.code, error: error.message });
         app.log.error(error);
         return reply.status(500).send({
           error: "Internal server error",
@@ -128,6 +133,7 @@ export const meRoutes = async (app: FastifyInstance) => {
       response: {
         200: UpdateGamificationThemeResponseSchema,
         401: ErrorSchema,
+        403: ErrorSchema,
         500: ErrorSchema,
       },
     },
@@ -151,6 +157,7 @@ export const meRoutes = async (app: FastifyInstance) => {
 
         return reply.status(200).send(result);
       } catch (error) {
+        if (error instanceof CoachAthleteError) return reply.code(403).send({ code: error.code, error: error.message });
         app.log.error(error);
         return reply.status(500).send({
           error: "Internal server error",
@@ -170,6 +177,7 @@ export const meRoutes = async (app: FastifyInstance) => {
       response: {
         200: GetUserMetricsHistoryResponseSchema,
         401: ErrorSchema,
+        403: ErrorSchema,
         500: ErrorSchema,
       },
     },
@@ -192,6 +200,7 @@ export const meRoutes = async (app: FastifyInstance) => {
 
         return reply.status(200).send(result);
       } catch (error) {
+        if (error instanceof CoachAthleteError) return reply.code(403).send({ code: error.code, error: error.message });
         app.log.error(error);
         return reply.status(500).send({
           error: "Internal server error",

@@ -37,6 +37,7 @@ export interface SessionExerciseOutputDto {
   alternative2ExerciseId?: string | null;
   alternative2ExerciseNameSnapshot?: string | null;
   wasSubstituted: boolean;
+  substitutedByStudent?: boolean;
   substitutedAt?: string | null;
   plannedWarmupSets?: number | null;
   plannedSets: number | null;
@@ -53,6 +54,10 @@ export interface SessionExerciseOutputDto {
 }
 
 export interface GetWorkoutSessionOutputDto {
+  originType?: string;
+  prescriptionStatus?: string;
+  prescribedCrefSnapshot?: string | null;
+  allowStudentSubstitution?: boolean;
   id: string;
   origin?: WorkoutSessionOrigin;
   workoutDayId: string | null;
@@ -69,6 +74,7 @@ export class GetWorkoutSession {
     const session = await prisma.workoutSession.findUnique({
       where: { id: dto.sessionId },
       include: {
+        workoutPlan: true,
         sessionExercises: {
           orderBy: { order: "asc" },
           include: {
@@ -97,6 +103,10 @@ export class GetWorkoutSession {
     }
 
     return {
+      originType: session.workoutPlan?.originType ?? "PERSONAL_SELF_LOG",
+      prescriptionStatus: session.workoutPlan?.prescriptionStatus ?? "APPROVED_PRESCRIBED",
+      prescribedCrefSnapshot: session.workoutPlan?.prescribedCrefSnapshot ?? null,
+      allowStudentSubstitution: session.workoutPlan?.allowStudentSubstitution ?? true,
       id: session.id,
       origin: session.origin,
       workoutDayId: session.workoutDayId,
@@ -126,6 +136,7 @@ export class GetWorkoutSession {
         alternative2ExerciseNameSnapshot:
           exercise.alternative2ExerciseNameSnapshot ?? null,
         wasSubstituted: exercise.wasSubstituted,
+        substitutedByStudent: exercise.substitutedByStudent,
         substitutedAt: exercise.substitutedAt
           ? exercise.substitutedAt.toISOString()
           : null,

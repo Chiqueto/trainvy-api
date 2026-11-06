@@ -77,6 +77,11 @@ enum ExerciseMediaType {
 }
 
 model User {
+  prescribedPlans WorkoutPlan[] @relation("PlanPrescriber")
+  approvedPrescriptions WorkoutPrescription[] @relation("PrescriptionPrescriber")
+  legalAcceptances UserLegalAcceptance[]
+  deletedAt DateTime? @db.Timestamptz()
+
   featureTermsAcceptances FeatureTermsAcceptance[]
   professionalRegistration ProfessionalRegistration?
   id                       String                    @id
@@ -138,6 +143,14 @@ model User {
 }
 
 model WorkoutPlan {
+  originType String @default("PERSONAL_SELF_LOG")
+  prescriptionStatus String @default("APPROVED_PRESCRIBED")
+  prescribedByProfessionalId String?
+  prescribedByProfessional User? @relation("PlanPrescriber", fields: [prescribedByProfessionalId], references: [id], onDelete: Restrict)
+  prescribedCrefSnapshot String?
+  humanApprovedAt DateTime? @db.Timestamptz()
+  allowStudentSubstitution Boolean @default(true)
+
   importProvenance  Json?
   importPreviewHash String?   @unique
   id                String    @id @default(uuid())
@@ -214,6 +227,12 @@ model WorkoutDay {
 }
 
 model Exercise {
+  biomechanicalReviewStatus String @default("PENDING_REVIEW")
+  reviewedByProfessionalName String?
+  reviewedByCref String?
+  reviewedAt DateTime? @db.Timestamptz()
+  safetyDisclaimerMd String?
+
   id            String   @id @default(uuid())
   ownerUserId   String?
   ownerUser     User?    @relation(fields: [ownerUserId], references: [id], onDelete: Cascade)
@@ -341,6 +360,7 @@ model WorkoutSession {
 }
 
 model SessionExercise {
+  substitutedByStudent Boolean @default(false)
   id               String         @id @default(uuid())
   workoutSessionId String
   workoutSession   WorkoutSession @relation(fields: [workoutSessionId], references: [id], onDelete: Cascade)
@@ -640,6 +660,7 @@ model SignupIntent {
 }
 
 enum AdminAuditAction {
+  COMPLIANCE_UPDATED
   PROFESSIONAL_VERIFICATION_POLICY_UPDATED
   EXERCISE_MUSCLES_UPDATED
   PLAN_CREATED
@@ -835,6 +856,14 @@ enum WorkoutPrescriptionStatus {
 }
 
 model WorkoutPrescription {
+  originType String @default("PROFESSIONAL_MANUAL")
+  prescriptionStatus String @default("DRAFT_MANUAL")
+  prescribedByProfessionalId String?
+  prescribedByProfessional User? @relation("PrescriptionPrescriber", fields: [prescribedByProfessionalId], references: [id], onDelete: Restrict)
+  prescribedCrefSnapshot String?
+  humanApprovedAt DateTime? @db.Timestamptz()
+  allowStudentSubstitution Boolean @default(true)
+
   approvedByUserId      String?
   approvedAt            DateTime?                 @db.Timestamptz()
   approvedVersion       Int?
@@ -966,6 +995,10 @@ enum ProfessionalVerificationStatus {
 }
 
 model ProfessionalRegistration {
+  cpf String?
+  crefVerificationStatus String @default("UNVERIFIED_SANDBOX")
+  crefDeclaredAt DateTime? @db.Timestamptz()
+
   userId       String                           @id
   user         User                             @relation(fields: [userId], references: [id], onDelete: Cascade)
   fullName     String
@@ -1082,3 +1115,86 @@ model NotificationPreferences {
   @@map("notification_preferences")
 }
 
+
+model LegalDocument {
+  id String @id @default(uuid())
+  slug String @unique
+  title String
+  category String
+  classification String
+  targetAudience String
+  version String
+  contentMd String @db.Text
+  requiresClickwrap Boolean @default(false)
+  isActive Boolean @default(true)
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  updatedAt DateTime @updatedAt @db.Timestamptz()
+  revisions LegalDocumentRevision[]
+  acceptances UserLegalAcceptance[]
+  @@map("legal_documents")
+}
+model LegalDocumentRevision {
+  id String @id @default(uuid())
+  documentId String
+  document LegalDocument @relation(fields: [documentId], references: [id], onDelete: Restrict)
+  version String
+  contentMd String @db.Text
+  contentHash String
+  createdByUserId String?
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  @@unique([documentId, version])
+  @@map("legal_document_revisions")
+}
+model LegalComplianceItem {
+  id String @id @default(uuid())
+  code String @unique
+  module String
+  title String
+  classification String
+  legalBasis String
+  descriptionMd String @db.Text
+  implementationStatus String @default("PENDING")
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  updatedAt DateTime @updatedAt @db.Timestamptz()
+  @@map("legal_compliance_items")
+}
+model UserLegalAcceptance {
+  id String @id @default(uuid())
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Restrict)
+  documentId String
+  document LegalDocument @relation(fields: [documentId], references: [id], onDelete: Restrict)
+  documentSlug String
+  documentVersion String
+  contentHash String
+  acceptedAt DateTime @default(now()) @db.Timestamptz()
+  revokedAt DateTime? @db.Timestamptz()
+  ipAddress String
+  userAgent String?
+  metadataJson Json @default("{}")
+  @@index([userId, documentId, documentVersion])
+  @@index([userId, acceptedAt])
+  @@map("user_legal_acceptances")
+}
+model BiomechanicalReview {
+  id String @id @default(uuid())
+  exerciseId String
+  reviewerId String
+  professionalName String
+  cref String
+  status String
+  safetyDisclaimerMd String?
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  @@index([exerciseId, createdAt])
+  @@map("biomechanical_reviews")
+}
+
+model ApplicationAccessLog {
+  id String @id @default(uuid())
+  userId String
+  ipAddress String
+  accessedAt DateTime @default(now()) @db.Timestamptz()
+  expiresAt DateTime @db.Timestamptz()
+  @@index([expiresAt])
+  @@map("application_access_logs")
+}

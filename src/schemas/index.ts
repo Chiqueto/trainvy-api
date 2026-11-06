@@ -148,6 +148,7 @@ export const SessionExerciseResponseSchema = z.object({
   alternative2ExerciseId: z.uuid().nullable().optional(),
   alternative2ExerciseNameSnapshot: z.string().nullable().optional(),
   wasSubstituted: z.boolean().default(false).optional(),
+  substitutedByStudent: z.boolean().optional(),
   substitutedAt: z.string().nullable().optional(),
   plannedSets: z.number().nullable(),
   plannedWarmupSets: z.number().nullable().optional(),
@@ -185,6 +186,12 @@ export const GetWorkoutPlanParamsSchema = z.object({
 });
 
 export const GetWorkoutPlanResponseSchema = z.object({
+  updatedAt: z.string(),
+  originType: z.string(),
+  prescriptionStatus: z.string(),
+  prescribedCrefSnapshot: z.string().nullable(),
+  allowStudentSubstitution: z.boolean(),
+
   id: z.uuid(),
   name: z.string(),
   nextWorkoutDayId: z.uuid().nullable().optional(),
@@ -210,6 +217,11 @@ export const GetWorkoutDayParamsSchema = z.object({
 });
 
 export const GetWorkoutDayResponseSchema = z.object({
+  originType: z.string(),
+  prescriptionStatus: z.string(),
+  prescribedCrefSnapshot: z.string().nullable(),
+  allowStudentSubstitution: z.boolean(),
+
   id: z.uuid(),
   name: z.string(),
   order: z.number().optional().default(0),
@@ -512,6 +524,7 @@ export const WorkoutSessionExerciseResponseSchema = z.object({
   alternative2ExerciseId: z.uuid().nullable().optional(),
   alternative2ExerciseNameSnapshot: z.string().nullable().optional(),
   wasSubstituted: z.boolean().default(false).optional(),
+  substitutedByStudent: z.boolean().optional(),
   substitutedAt: z.string().nullable().optional(),
   plannedSets: z.number().int().nullable(),
   plannedWarmupSets: z.number().int().nullable().optional(),
@@ -523,6 +536,10 @@ export const WorkoutSessionExerciseResponseSchema = z.object({
 });
 
 export const GetWorkoutSessionResponseSchema = z.object({
+  originType: z.string().optional(),
+  prescriptionStatus: z.string().optional(),
+  prescribedCrefSnapshot: z.string().nullable().optional(),
+  allowStudentSubstitution: z.boolean().optional(),
   id: z.uuid(),
   origin: WorkoutSessionOriginSchema.optional(),
   workoutDayId: z.uuid().nullable(),
@@ -594,6 +611,8 @@ export const ExerciseMediaParamsSchema = z.object({
 });
 
 export const ExerciseMediaResponseSchema = z.object({
+  biomechanicalReviewStatus: z.string().optional(),
+  safetyDisclaimerMd: z.string().nullable().optional(),
   anatomy: ExerciseAnatomySchema.nullable().optional(),
   exerciseId: z.uuid(),
   hasMedia: z.boolean(),
@@ -1058,6 +1077,7 @@ export const HistoryExerciseDetailSchema = z.object({
   alternative2ExerciseId: z.uuid().nullable().optional(),
   alternative2ExerciseNameSnapshot: z.string().nullable().optional(),
   wasSubstituted: z.boolean().default(false).optional(),
+  substitutedByStudent: z.boolean().optional(),
   substitutedAt: z.string().nullable().optional(),
   planned: z.object({
     ...advancedPrescriptionShape,
@@ -1076,6 +1096,7 @@ export const HistoryExerciseDetailSchema = z.object({
 });
 
 export const GetWorkoutHistorySessionResponseSchema = z.object({
+  prescribedCrefSnapshot: z.string().nullable().optional(),
   id: z.uuid(),
   origin: HistorySessionOriginSchema,
   startedAt: z.string(),

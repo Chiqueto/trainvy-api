@@ -13,6 +13,8 @@ export interface GetExerciseMediaInputDto {
 }
 
 export interface GetExerciseMediaOutputDto {
+  biomechanicalReviewStatus?: string;
+  safetyDisclaimerMd?: string | null;
   anatomy?: ExerciseAnatomy | null;
   exerciseId: string;
   hasMedia: boolean;
@@ -64,6 +66,8 @@ export class GetExerciseMedia {
       return {
         exerciseId: exercise.id,
         anatomy,
+      biomechanicalReviewStatus: exercise.biomechanicalReviewStatus,
+      safetyDisclaimerMd: exercise.safetyDisclaimerMd,
         hasMedia: false,
         mediaType: null,
         startImagePath: null,
@@ -78,6 +82,8 @@ export class GetExerciseMedia {
     return {
       exerciseId: exercise.id,
       anatomy,
+      biomechanicalReviewStatus: exercise.biomechanicalReviewStatus,
+      safetyDisclaimerMd: exercise.safetyDisclaimerMd,
       hasMedia: true,
       mediaType: activeMedia.mediaType,
       startImagePath: activeMedia.startImagePath,

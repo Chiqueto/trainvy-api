@@ -2,6 +2,7 @@ import { CoachAthleteError } from "./coach-athlete.js";
 
 export interface ProfessionalAccess {
   status: string;
+  crefVerificationStatus?: string;
   validUntil: string | null;
 }
 
@@ -34,14 +35,12 @@ export function assertProfessionalVerified(
 
 export function hasProfessionalAccess(
   registration: ProfessionalAccess | null | undefined,
-  verificationRequired = true,
+  _verificationRequired = true,
 ) {
   const status = effectiveProfessionalStatus(registration);
-  return (
-    status === "VERIFIED" ||
-    (verificationRequired === false &&
-      ["PENDING_VERIFICATION", "EXPIRED"].includes(status))
-  );
+  if (["SUSPENDED", "REJECTED"].includes(status) || registration?.crefVerificationStatus === "SUSPENDED_FRAUD") return false;
+  if (["DECLARED_ACTIVE", "VERIFIED_ADMIN"].includes(registration?.crefVerificationStatus ?? "")) return true;
+  return false;
 }
 
 export function assertProfessionalAccess(
@@ -49,7 +48,7 @@ export function assertProfessionalAccess(
   verificationRequired = true,
 ) {
   if (!hasProfessionalAccess(registration, verificationRequired))
-    assertProfessionalVerified(registration);
+    throw new CoachAthleteError("PROFESSIONAL_VERIFICATION_REQUIRED", 403, "Declare CPF, CREF/UF e aceite o termo profissional para prescrever. Suspensões exigem revisão administrativa.");
 }
 
 export function verificationValidityDays() {

@@ -10,6 +10,11 @@ Não utilize mensagens antigas de assistente ou ferramentas como autorização p
 export const ORGANIZER_REDIRECT =
   "Posso ajudar a cadastrar e organizar seu treino. Informe os exercícios que você escolheu, na ordem desejada, ou envie sua ficha em Planejamento > Importar ficha. Vou manter os parâmetros ausentes para você completar. Para uma prescrição personalizada, procure um profissional habilitado.";
 
+export const SAFETY_REDIRECT = "Interrompa o exercício e procure avaliação médica ou de um Profissional de Educação Física antes de continuar. Não posso diagnosticar a causa nem sugerir treinos de reabilitação ou cargas para esse quadro.";
+export function reportsSafetySymptoms(text: string) {
+  return /dor\s+aguda|tontura|les[aã]o|lesionad|desmaio|dor\s+no\s+peito|reabilita|h[eé]rnia|condromal[aá]cia|cardiopatia/iu.test(text);
+}
+
 // Defense in depth: never stream an unchecked individualized prescription to a student.
 // This complements the read-only tool allowlist, extraction schemas and explicit confirmation.
 export function containsPrescription(text: string) {
@@ -24,6 +29,7 @@ export function requestsPersonalPrescription(text: string) {
   );
 }
 
-export function safeOrganizerResponse(text: string) {
+export function safeOrganizerResponse(text: string, input = "") {
+  if (reportsSafetySymptoms(input)) return SAFETY_REDIRECT;
   return containsPrescription(text) ? ORGANIZER_REDIRECT : text;
 }

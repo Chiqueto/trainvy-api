@@ -12,6 +12,10 @@ interface InputDto {
 }
 
 interface OutputDto {
+  originType: string;
+  prescriptionStatus: string;
+  prescribedCrefSnapshot: string | null;
+  allowStudentSubstitution: boolean;
   id: string;
   name: string;
   isRest: boolean;
@@ -58,6 +62,7 @@ export class GetWorkoutDay {
         },
       },
       include: {
+        workoutPlan: true,
         exercises: {
           orderBy: { order: "asc" },
           include: {
@@ -95,6 +100,10 @@ export class GetWorkoutDay {
     }
 
     return {
+      originType: workoutDay.workoutPlan.originType,
+      prescriptionStatus: workoutDay.workoutPlan.prescriptionStatus,
+      prescribedCrefSnapshot: workoutDay.workoutPlan.prescribedCrefSnapshot,
+      allowStudentSubstitution: workoutDay.workoutPlan.allowStudentSubstitution,
       id: workoutDay.id,
       name: workoutDay.name,
       isRest: workoutDay.isRest,

@@ -4,8 +4,8 @@ import {
   PrescriptionPayload,
 } from "../domain/coach-prescription.js";
 import { prisma } from "../lib/db.js";
+import { assertHealthConsent } from "./LegalCompliance.js";
 import { GetCommercialContext } from "./GetCommercialContext.js";
-import { effectiveProfessionalStatus } from "../domain/professional-verification.js";
 import { prescriptionApprovalMode } from "../domain/prescription-approval.js";
 
 export class SendWorkoutPrescription {
@@ -119,20 +119,21 @@ export class SendWorkoutPrescription {
           );
         }
 
+        await assertHealthConsent(prescription.athleteId, tx);
+        const registration = await tx.professionalRegistration.findUniqueOrThrow({ where: { userId: coachId } });
         const updated = await tx.workoutPrescription.update({
           where: { id: prescription.id },
           data: {
             status: "SENT",
+            prescriptionStatus: "APPROVED_PRESCRIBED",
+            prescribedByProfessionalId: coachId,
+            prescribedCrefSnapshot: `${registration.fullName} — CREF ${registration.cref}/${registration.region}`,
+            humanApprovedAt: new Date(),
             approvedByUserId: coachId,
             approvedAt: new Date(),
             approvedVersion: prescription.version,
             approvedSnapshot: {
-              verificationMode:
-                effectiveProfessionalStatus(
-                  currentContext.professionalVerification,
-                ) === "VERIFIED"
-                  ? "VERIFIED"
-                  : "TEST",
+              verificationMode: "VERIFIED",
               name: prescription.name,
               notes: prescription.notes,
               payload: prescription.payload,
@@ -151,6 +152,10 @@ export class SendWorkoutPrescription {
           coachId: updated.coachId,
           athleteId: updated.athleteId,
           status: updated.status,
+      originType: updated.originType,
+      prescriptionStatus: updated.prescriptionStatus,
+      prescribedCrefSnapshot: updated.prescribedCrefSnapshot,
+      allowStudentSubstitution: updated.allowStudentSubstitution,
           name: updated.name,
           notes: updated.notes,
           version: updated.version,

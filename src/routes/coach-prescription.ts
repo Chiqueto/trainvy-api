@@ -138,6 +138,7 @@ export const coachPrescriptionRoutes: FastifyPluginAsyncZod = async (app) => {
           athleteId: request.body.athleteId,
           name: request.body.name,
           notes: request.body.notes,
+          allowStudentSubstitution: request.body.allowStudentSubstitution,
           workoutDays: request.body.workoutDays,
         });
 
@@ -181,6 +182,7 @@ export const coachPrescriptionRoutes: FastifyPluginAsyncZod = async (app) => {
           prescriptionId: request.params.id,
           name: request.body.name,
           notes: request.body.notes,
+          allowStudentSubstitution: request.body.allowStudentSubstitution,
           expectedVersion: request.body.version,
           workoutDays: request.body.workoutDays,
         });
