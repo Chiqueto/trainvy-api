@@ -1,6 +1,7 @@
 import "dotenv/config";
 
 import z from "zod";
+import { legalIdentitySchema } from "../domain/legal-identity.js";
 
 const emptyToUndefined = (val: unknown) =>
   typeof val === "string" && val.trim() === "" ? undefined : val;
@@ -8,7 +9,7 @@ const emptyToUndefined = (val: unknown) =>
 const isPostgresUrl = (val: string) =>
   val.startsWith("postgresql://") || val.startsWith("postgres://");
 
-const envSchema = z.object({
+const envSchema = legalIdentitySchema.extend({
   PORT: z.coerce.number().default(8080),
   DATABASE_URL: z.string().refine(isPostgresUrl, {
     message: "DATABASE_URL must start with postgresql:// or postgres://",
@@ -34,19 +35,25 @@ const envSchema = z.object({
         message:
           "TEST_DATABASE_URL must start with postgresql:// or postgres://",
       })
-      .optional()
+      .optional(),
   ),
   AUTH_COOKIE_DOMAIN: z.preprocess(emptyToUndefined, z.string().optional()),
   ADDITIONAL_TRUSTED_ORIGINS: z.preprocess(
     emptyToUndefined,
-    z.string().optional()
+    z.string().optional(),
   ),
   ADMIN_EMAILS: z.preprocess(emptyToUndefined, z.string().optional()),
-  VAPID_PUBLIC_KEY: z.preprocess(emptyToUndefined, z.string().min(1).optional()),
-  VAPID_PRIVATE_KEY: z.preprocess(emptyToUndefined, z.string().min(1).optional()),
+  VAPID_PUBLIC_KEY: z.preprocess(
+    emptyToUndefined,
+    z.string().min(1).optional(),
+  ),
+  VAPID_PRIVATE_KEY: z.preprocess(
+    emptyToUndefined,
+    z.string().min(1).optional(),
+  ),
   VAPID_SUBJECT: z.preprocess(
     emptyToUndefined,
-    z.string().startsWith("mailto:").optional()
+    z.string().startsWith("mailto:").optional(),
   ),
   CRON_SECRET: z.preprocess(emptyToUndefined, z.string().min(16).optional()),
 });
@@ -57,12 +64,12 @@ if (!envResult.success) {
   console.error(
     "\n❌ [FATAL] Erro nas variáveis de ambiente na inicialização:\n",
     JSON.stringify(envResult.error.format(), null, 2),
-    "\n"
+    "\n",
   );
   throw new Error(
     `Variáveis de ambiente inválidas ou ausentes: ${JSON.stringify(
-      envResult.error.issues.map((i) => ({ path: i.path, message: i.message }))
-    )}`
+      envResult.error.issues.map((i) => ({ path: i.path, message: i.message })),
+    )}`,
   );
 }
 

@@ -41,3 +41,13 @@ O cron existente de streak também remove logs de aplicação com expiração de
 ## Verificação
 
 Testes novos cobrem fronteiras de autenticação/admin, evidência de aceite, mudança concorrente de versão, revogação/reaceite, ativação declarada, suspensão, CPF, sanitização, sintomas de segurança, proteção dos direitos de privacidade e retenção de logs. O onboarding, a confirmação de consentimento e o envio de prescrição têm regressões de UI. Testes com banco simulado não substituem a validação da migration em PostgreSQL.
+
+## Correção contratual — 06/11/2026
+
+Os quatro documentos públicos foram substituídos integralmente pela redação fornecida. `LEGAL_ENTITY_NAME` e `LEGAL_CONTACT_EMAIL` são configuráveis no ambiente da API; valores ausentes ou vazios usam `Trainvy (operado por Luís Felipe Mozer Chiqueto)` e `lfchiqueto@gmail.com`. Com a identidade padrão, a redação contratual conserva o nome do controlador exatamente como fornecido; com uma entidade configurada, todas as ocorrências usam essa identificação. Alterar o ambiente não reescreve os termos publicados automaticamente.
+
+O seed normal continua insert-only. Para publicar explicitamente o conteúdo canônico após uma alteração de identidade ou texto, executar `npm run seed:compliance -- --refresh-legal-content`. Essa opção atualiza somente os quatro contratos e a matriz interna, mantém a declaração CREF existente, arquiva o conteúdo anterior e incrementa a versão do registro apenas quando houver mudança. Os corpos conservam a indicação de Versão 1.0.0 do texto fornecido; a versão de publicação aparece separadamente na interface. Aceites antigos não são transferidos para a nova versão.
+
+Atualização aplicada e conferida no banco configurado: os quatro contratos e a matriz passaram para 1.0.1; a declaração CREF permaneceu em 1.0.0. As seis revisões anteriores foram preservadas, totalizando onze revisões. Não havia aceites registrados. Conteúdo, títulos, hashes das revisões e ambas as cópias Markdown foram comparados com a fonte canônica.
+
+Onboarding e perfil permitem leitura integral em modal com rolagem. Termos e Política compartilham a declaração solicitada, com evidências individuais por documento; saúde/IA conserva checkbox separado e inicialmente desmarcado. Um envio registra apenas aceites pendentes, preserva confirmações parciais e exige nova escolha se a versão mudar. O formulário profissional usa a declaração CREF solicitada e o mesmo leitor integral.

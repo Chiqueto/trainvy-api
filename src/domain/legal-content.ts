@@ -1,3 +1,5 @@
+import { legalIdentity, renderLegalIdentity } from "./legal-identity.js";
+
 // Canonical seed content. Repository Markdown is generated from these same records.
 export const complianceItems = [
   [
@@ -22,7 +24,7 @@ export const complianceItems = [
     "Enquadramento societário de tecnologia SaaS",
     "OBRIGATORIO_LEI",
     "Lei 6.839/1980, art. 1º",
-    "O Trainvy é atualmente mantido por Luís Felipe Mozer Chiqueto, pessoa física, sem CNPJ informado, como ferramenta de software e sem consultoria física direta. O CNAE 6203-1/00 é apenas referência para eventual formalização futura, não um enquadramento já existente. Na constituição de sociedade, o registro em conselho depende da atividade básica e dos serviços efetivamente prestados; o CNAE isolado não garante dispensa. Confirmar o enquadramento aplicável com assessoria especializada.",
+    `O Trainvy é atualmente mantido por ${legalIdentity.LEGAL_ENTITY_NAME}, como ferramenta de software e sem consultoria física direta. O CNAE 6203-1/00 é apenas referência para eventual formalização futura, não um enquadramento já existente. Na constituição de sociedade, o registro em conselho depende da atividade básica e dos serviços efetivamente prestados; o CNAE isolado não garante dispensa. Confirmar o enquadramento aplicável com assessoria especializada.`,
   ],
   [
     "IA-01",
@@ -109,53 +111,105 @@ export const complianceItems = [
 export const legalDocuments = [
   {
     slug: "termos-de-uso",
-    title: "Termos de Uso",
+    title: "Termos e Condições Gerais de Uso do Trainvy",
     category: "TERMS_OF_USE",
     targetAudience: "ALL_USERS",
-    contentMd: `# Termos de Uso do Trainvy
+    contentMd:
+      renderLegalIdentity(`# Termos e Condições Gerais de Uso do Trainvy
 
-## Responsável pelo serviço
-O Trainvy é mantido por Luís Felipe Mozer Chiqueto, pessoa física. Contato para privacidade e solicitações sobre o serviço: [lfchiqueto@gmail.com](mailto:lfchiqueto@gmail.com).
+**Última atualização:** Versão 1.0.0
 
-## Serviço e responsabilidades
-O Trainvy oferece software para registrar, organizar e acompanhar treinos. O profissional responde pela avaliação, habilitação, revisão e prescrição técnica aos seus alunos. A plataforma responde por suas próprias obrigações legais de segurança, informação e prestação do software. Nenhuma cláusula exclui direitos indisponíveis do consumidor ou responsabilidade legal da plataforma.
+Bem-vindo ao **Trainvy**. Estes Termos e Condições Gerais de Uso ("Termos") regulam o acesso e a utilização da plataforma web e demais aplicações do Trainvy ("Plataforma"), disponibilizada por **{{LEGAL_CONTROLLER_NAME}}** ("Trainvy" ou "Nós"), com canal oficial de atendimento e privacidade pelo e-mail **{{LEGAL_CONTACT_EMAIL}}**.
 
-## Uso autônomo e maioridade
-Contas autônomas exigem 18 anos completos. Treinos criados pelo próprio usuário são Diário de Treino Pessoal (Auto-organizado), sem certificação profissional. Não utilize o aplicativo para diagnóstico ou reabilitação. Interrompa exercícios diante de dor aguda, tontura ou desconforto e procure avaliação.
+Ao criar uma conta ou utilizar a Plataforma, você ("Usuário", seja na qualidade de "Aluno/Praticante" ou "Profissional de Educação Física") declara ter lido, compreendido e aceitado integralmente estes Termos.
 
-## Profissionais e IA
-Informe nome, CPF e CREF/UF verdadeiros e mantenha habilitação ativa. A declaração eletrônica não é verificação oficial. Fraudes podem resultar em suspensão. O profissional deve revisar e aprovar cada versão antes de enviar ao aluno. A IA pode errar; seus resultados são propostas editáveis. Animações 3D são referências ilustrativas.
+---
 
-## Planos e cancelamento
-Antes de contratar plano mensal ou anual, confira preço total, periodicidade, limites e condições de renovação apresentados na oferta. Na contratação à distância, o consumidor pode exercer o arrependimento em sete dias corridos, com restituição integral nos termos do art. 49 do CDC. O cancelamento de renovação deve ser acessível pelo mesmo ambiente de contratação. Funcionalidades de cobrança não disponíveis não geram contratação automática.
+## 1. Natureza do Serviço (Software como Serviço — SaaS)
+1.1. O Trainvy é uma plataforma exclusivamente tecnológica (Software como Serviço — SaaS) voltada à organização, registro, visualização e gerenciamento de rotinas de treinamento físico.
+1.2. **O Trainvy não é uma academia, clínica médica ou consultoria esportiva, e não presta serviços diretos de Educação Física ou Medicina.** Toda prescrição técnica realizada dentro do fluxo profissional da Plataforma é de autoria e responsabilidade exclusiva do Profissional de Educação Física habilitado vinculado ao Aluno.
 
-## Dados e encerramento
-Consulte a Política de Privacidade. Você pode revogar vínculos com treinadores, exportar seus dados e solicitar exclusão pelo perfil. Documentos profissionais históricos podem ser conservados no mínimo necessário ao cumprimento de obrigações e exercício regular de direitos. Alterações dos termos geram nova versão e novo aceite.`,
+## 2. Elegibilidade e Maioridade
+2.1. O cadastro autônomo na Plataforma é restrito a pessoas físicas maiores de **18 (dezoito) anos** plenamente capazes.
+2.2. Menores de 18 anos somente poderão utilizar a Plataforma caso estejam vinculados a um Profissional de Educação Física responsável e mediante autorização expressa de seus pais ou responsáveis legais.
+
+## 3. Perfis de Uso e Responsabilidades
+
+### 3.1. Uso Autônomo pelo Aluno (Diário de Treino Pessoal)
+a) O Usuário pode utilizar o Trainvy de forma independente, sem vínculo com um personal trainer, para criar, importar, organizar e registrar seus próprios treinos.
+b) Todas as fichas criadas ou importadas diretamente pelo Aluno são classificadas como **"Diário de Treino Pessoal (Auto-organizado)"** e não constituem prescrição, certificação ou validação profissional por parte do Trainvy.
+c) O Aluno reconhece que a prática de exercícios físicos envolve riscos inerentes e declara ser o único responsável por avaliar sua aptidão médica, escolher cargas compatíveis com sua condição física e interromper imediatamente o treino em caso de dor aguda, tontura, mal-estar ou desconforto articular.
+
+### 3.2. Uso pelo Profissional de Educação Física
+a) Para utilizar as ferramentas de prescrição de treinos e vincular alunos reais na Plataforma, o Profissional deve informar seu Nome Completo, CPF e número de registro ativo no Conselho Regional de Educação Física (**CREF/UF**), além de firmar o Termo de Declaração e Responsabilidade Técnica.
+b) Conforme a Resolução CONFEF nº 542/2024, o nome e o número do CREF/UF do Profissional serão exibidos automaticamente nas fichas de treino prescritas aos seus alunos.
+c) O Profissional responde de forma exclusiva, civil, ética e penalmente, pela veracidade de suas credenciais, pela anamnese de seus alunos e pela adequação das cargas, volumes e exercícios prescritos. A identificação de número de CREF inválido, suspenso ou pertencente a terceiros acarretará o bloqueio imediato da conta, sem prejuízo das medidas legais cabíveis.
+
+## 4. Recursos de Inteligência Artificial e Animações 3D
+4.1. **Copiloto para Profissionais:** As sugestões de treinos, séries e adaptações geradas pela Inteligência Artificial para o Profissional possuem caráter meramente auxiliar (rascunho). Nenhuma sugestão da IA é disponibilizada ao Aluno sem a prévia **revisão e aprovação humana explícita** do Profissional habilitado.
+4.2. **Assistente para Alunos:** No fluxo autônomo, o assistente de IA atua estritamente na estruturação de dados informados pelo próprio Usuário, leitura automatizada de fichas (PDF/imagem/texto) e esclarecimento de dúvidas descritivas sobre o catálogo de exercícios. **A IA não realiza diagnósticos clínicos, não prescreve reabilitação de lesões e não substitui um Profissional de Educação Física.**
+4.3. **Conferência de Fichas Importadas:** Ao utilizar a ferramenta de importação automática de fichas (via PDF, imagem ou texto), o Usuário compromete-se a revisar e confirmar todos os exercícios, séries, repetições e cargas extraídos antes de salvar o treino.
+4.4. **Demonstrações em 3D:** As animações tridimensionais disponíveis no catálogo têm finalidade meramente ilustrativa e demonstrativa do padrão geral do movimento. A amplitude, postura e execução ideais variam conforme a biomecânica individual de cada praticante.
+
+## 5. Assinaturas, Pagamentos e Cancelamento
+5.1. O acesso aos recursos pagos do Trainvy ocorre mediante assinatura recorrente (mensal ou anual), cujos preços, limites de uso e condições são exibidos de forma clara antes da contratação.
+5.2. **Direito de Arrependimento (Art. 49 do CDC):** O Usuário poderá desistir da assinatura no prazo de até **7 (sete) dias corridos** a contar da data da contratação inicial, solicitando o cancelamento e o reembolso integral (100%) dos valores pagos diretamente pela Plataforma ou canal de suporte.
+5.3. **Cancelamento de Renovação:** Após o prazo de 7 dias, o Usuário poderá cancelar a renovação automática da sua assinatura a qualquer momento pelo painel da sua conta, mantendo o acesso aos recursos contratados até o encerramento do ciclo de faturamento vigente.
+
+## 6. Privacidade, Proteção de Dados e Disposições Finais
+6.1. O tratamento de dados pessoais e sensíveis observa rigorosamente a Lei Geral de Proteção de Dados (Lei nº 13.709/2018 — LGPD), conforme detalhado em nossa **Política de Privacidade**.
+6.2. O Trainvy poderá atualizar estes Termos periodicamente para refletir melhorias no serviço ou alterações legais, notificando o Usuário para novo aceite quando houver mudanças substanciais.
+6.3. Fica eleito o foro da comarca de domicílio do Usuário consumidor, no Brasil, para dirimir eventuais controvérsias oriundas destes Termos.`),
   },
   {
     slug: "politica-de-privacidade",
-    title: "Política de Privacidade",
+    title: "Política de Privacidade e Proteção de Dados do Trainvy",
     category: "PRIVACY_POLICY",
     targetAudience: "ALL_USERS",
-    contentMd: `# Política de Privacidade do Trainvy
+    contentMd:
+      renderLegalIdentity(`# Política de Privacidade e Proteção de Dados do Trainvy
 
-## Controlador e contato
-O controlador dos dados pessoais é Luís Felipe Mozer Chiqueto, pessoa física responsável pelo Trainvy. Solicitações de acesso, correção, revogação, exportação, exclusão e informações sobre compartilhamentos podem ser enviadas a [lfchiqueto@gmail.com](mailto:lfchiqueto@gmail.com). Não é necessário informar CPF neste contato inicial; eventual confirmação de identidade será limitada ao necessário para proteger o titular.
+**Última atualização:** Versão 1.0.0
 
-## Dados e finalidades
-Tratamos identidade e sessão para autenticação; CPF e CREF para credenciais profissionais; planos e execuções para registro e acompanhamento. Medidas corporais, restrições e desempenho podem revelar saúde e recebem proteção específica. Não utilizamos esses dados para publicidade comportamental.
+Esta Política de Privacidade explica de forma clara e transparente como o **Trainvy** coleta, utiliza, armazena e protege os seus dados pessoais e dados sensíveis de saúde, em conformidade com a **Lei Geral de Proteção de Dados Pessoais (Lei nº 13.709/2018 — LGPD)** e com o **Marco Civil da Internet (Lei nº 12.965/2014)**.
 
-## Bases e escolhas
-Execução do serviço, obrigações legais e exercício regular de direitos têm finalidades próprias. O tratamento consentido de dados de saúde e seu processamento por IA exigem escolha específica, destacada e inicialmente desmarcada. Aceitar a política não substitui esse consentimento. A revogação impede novos tratamentos dependentes dele e não invalida tratamentos anteriores lícitos.
+---
 
-## Provedores e transferência internacional
-Autenticação, hospedagem, banco de dados e IA podem envolver operadores e nuvem no exterior. Google Gemini e eventual OpenAI recebem somente o contexto necessário, com redução de identificadores. Pseudonimização não elimina todos os riscos de reidentificação. Antes da operação, o controlador deve documentar países, operadores e mecanismo válido de transferência conforme LGPD arts. 33 a 36 e Resolução CD/ANPD 19/2024; o aceite desta política não substitui as garantias exigidas.
+## 1. Identificação do Controlador e Canal de Contato
+Para os fins da LGPD, o controlador dos dados pessoais tratados na operação da Plataforma é **{{LEGAL_CONTROLLER_NAME}}**, responsável pelo **Trainvy**.
+* **E-mail para solicitações de privacidade e direitos do titular:** {{LEGAL_CONTACT_EMAIL}}
+* *Nota sobre a relação Personal ↔ Aluno:* Quando um Profissional de Educação Física utiliza o Trainvy para gerenciar e prescrever treinos aos seus próprios clientes, o Profissional atua como Controlador independente em relação à sua assessoria esportiva, e o Trainvy atua como Operador da infraestrutura tecnológica.
 
-## Acesso e conservação
-Treinadores acessam informações conforme vínculo ativo e permissões do titular. Após revogação, somente snapshots de prescrições próprias permanecem para defesa técnica, sem novos registros de desempenho. Retenção é limitada à finalidade e à base legal. Logs de acesso a aplicações sujeitos ao art. 15 do Marco Civil ficam sob sigilo por seis meses; retenção fiscal segue norma própria. Dados de saúde não têm retenção automática de seis meses por esse artigo.
+## 2. Dados Coletados e Finalidades
+Coletamos apenas os dados estritamente necessários para a prestação dos serviços da Plataforma:
+1. **Dados Cadastrais e de Identificação:** Nome completo, e-mail, data de nascimento, senha criptografada e, no caso de Profissionais de Educação Física, CPF e número do registro profissional (CREF/UF). *Finalidade:* Criação da conta, autenticação, prevenção a fraudes e identificação profissional obrigatória nas prescrições.
+2. **Dados de Treinamento e Uso:** Fichas de treino, exercícios selecionados, séries, repetições, cargas registradas e arquivos enviados para importação de fichas. *Finalidade:* Entrega das funcionalidades de organização e acompanhamento de treinos.
+3. **Dados Pessoais Sensíveis (Relacionados à Saúde e Condição Física):** Medidas corporais, peso, estatura, histórico de desempenho, limitações articulares ou restrições físicas informadas pelo usuário ou em conversas com o assistente de IA. *Finalidade:* Personalização do acompanhamento físico e alertas de segurança. **Jamais utilizamos dados de saúde para fins de publicidade ou perfilamento comercial.**
+4. **Registros de Conexão e Auditoria:** Endereço IP, data e hora de acesso e registros de aceite de termos (*clickwrap*). *Finalidade:* Segurança da informação e cumprimento de obrigação legal.
 
-## Direitos
-No perfil, exporte seus dados em JSON, revogue consentimento e vínculos ou solicite exclusão. Também pode requerer confirmação, acesso, correção e informação sobre compartilhamentos. A exclusão remove credenciais e dados desnecessários e restringe resíduos legalmente conservados. Utilize o canal de suporte disponível no aplicativo para outros pedidos, identificação do controlador e esclarecimentos sobre operadores. Segurança envolve controle de acesso, redução de dados, auditoria e revisão de incidentes.`,
+## 3. Bases Legais para o Tratamento (Arts. 7º e 11 da LGPD)
+* **Execução de Contrato (Art. 7º, V):** Para viabilizar o uso da Plataforma, gerenciamento de fichas e processamento de assinaturas.
+* **Consentimento Específico e Destacado (Art. 11, I):** Para o tratamento de seus dados físicos e de saúde na Plataforma e seu processamento técnico pelas ferramentas de Inteligência Artificial. Você pode revogar esse consentimento a qualquer momento nas configurações do seu perfil.
+* **Cumprimento de Obrigação Legal ou Regulatória (Art. 7º, II):** Para guarda de registros de acesso à aplicação por 6 (seis) meses (Art. 15 do Marco Civil da Internet) e cumprimento de obrigações fiscais.
+* **Exercício Regular de Direitos (Art. 7º, VI e Art. 11, II, 'd'):** Para preservação de logs de aceite e histórico de prescrições assinadas por profissionais para fins de defesa técnica em eventuais processos judiciais ou administrativos.
+
+## 4. Uso de Inteligência Artificial e Transferência Internacional de Dados
+4.1. Para oferecer recursos de estruturação de treinos e assistentes inteligentes, o Trainvy utiliza infraestrutura em nuvem e APIs corporativas de Inteligência Artificial (como **Google Gemini API** e **OpenAI API**), cujos servidores podem estar localizados no exterior (como nos Estados Unidos), configurando transferência internacional de dados nos termos do Art. 33 da LGPD e da Resolução CD/ANPD nº 19/2024.
+4.2. **Pseudonimização e Minimização de Dados:** Antes de enviar qualquer requisição técnica aos provedores de IA, o Trainvy aplica filtros automatizados de pseudonimização que **removem seus identificadores pessoais diretos** (como nome completo, CPF, e-mail e telefone), enviando apenas o contexto técnico estritamente necessário sobre os exercícios.
+4.3. Utilizamos camadas comerciais de API que asseguram contratualmente a confidencialidade das informações e vedam o uso dos seus dados privados para o treinamento de modelos públicos de terceiros.
+
+## 5. Compartilhamento entre Aluno e Profissional e Prazo de Retenção
+5.1. Quando você aceita o vínculo com um Profissional de Educação Física no Trainvy, ele passa a ter acesso às suas fichas e evolução de cargas.
+5.2. **Revogação de Vínculo:** Você pode desvincular um Profissional do seu perfil a qualquer momento. Após a desvinculação, o Profissional perde imediatamente o acesso à sua evolução futura e aos seus dados atuais, mantendo acesso apenas de leitura ao registro estático (*snapshot*) das fichas que ele próprio prescreveu no passado, exclusivamente para fins de comprovação e defesa técnica profissional.
+5.3. Seus dados são mantidos apenas enquanto sua conta estiver ativa. Caso solicite a exclusão da conta, seus dados pessoais e de saúde serão eliminados ou anonimizados, ressalvada a guarda isolada dos registros exigidos por lei (como os 6 meses de logs de conexão do Marco Civil da Internet e documentos fiscais pelo prazo legal).
+
+## 6. Seus Direitos como Titular de Dados (Art. 18 da LGPD)
+Diretamente pelo painel do seu perfil no Trainvy ou pelo e-mail **{{LEGAL_CONTACT_EMAIL}}**, você pode a qualquer momento:
+* Confirmar a existência de tratamento e acessar seus dados;
+* Corrigir dados incompletos, inexatos ou desatualizados;
+* **Exportar seus dados** em formato estruturado (JSON/PDF);
+* **Revogar vínculos** com treinadores e **revogar seu consentimento** para tratamento de dados de saúde/IA;
+* Solicitar a **exclusão definitiva** da sua conta e dos seus dados pessoais.`),
   },
   {
     slug: "declaracao-responsabilidade-cref",
@@ -174,32 +228,60 @@ Ao marcar o aceite e enviar, assino eletronicamente esta declaração vinculada 
   },
   {
     slug: "termo-saude-parq-lgpd",
-    title: "Prontidão para Atividade Física e Consentimento de Saúde/IA",
+    title:
+      "Termo de Prontidão para Atividade Física (PAR-Q) e Consentimento de Saúde/IA",
     category: "HEALTH_PARQ_CONSENT",
     targetAudience: "STUDENT",
-    contentMd: `# Prontidão para Atividade Física e Consentimento de Saúde/IA
+    contentMd:
+      renderLegalIdentity(`# Termo de Prontidão para Atividade Física e Consentimento de Dados de Saúde
 
-## Verificação de prontidão simplificada
-Antes de treinar, considere: já recebeu orientação médica para limitar atividade? Sente dor no peito, tontura, desmaio ou falta de ar incomum? Possui lesão, condição cardíaca, alteração articular, gestação ou outra restrição que exija avaliação? Se a resposta for sim ou houver dúvida, busque avaliação antes de iniciar ou prosseguir. Este questionário simplificado não é diagnóstico, liberação médica nem certificação de aptidão.
+**Última atualização:** Versão 1.0.0
 
-## Ciência
-Declaro que li estas perguntas e buscarei avaliação quando indicada. Interromperei o exercício em caso de dor aguda, tontura ou desconforto articular. Sem profissional vinculado, organizo meu próprio diário pessoal. IA pode errar e não substitui profissional habilitado ou médico. Conferirei toda ficha importada antes de salvar.
+Para sua segurança física e para a proteção da sua privacidade, leia atentamente os itens abaixo antes de iniciar o registro dos seus treinos no **Trainvy**.
 
-## Consentimento específico e destacado
-Autorizo o Trainvy a tratar medidas físicas, restrições declaradas e histórico de desempenho para organizar e acompanhar meus treinos. Autorizo o processamento necessário dessas informações técnicas por provedores de IA, com redução de identificadores pessoais e observância das garantias de transferência internacional descritas na política. Não autorizo publicidade com meus dados de saúde. Posso revogar esta autorização pelo perfil, impedindo novos tratamentos que dependam dela. Este aceite é separado dos Termos de Uso e da Política de Privacidade.`,
+---
+
+## 1. Verificação Preventiva de Prontidão Física (PAR-Q Simplificado)
+Antes de iniciar ou aumentar o nível de qualquer rotina de exercícios físicos, reflita sobre as seguintes questões de saúde:
+1. Algum médico já afirmou que você possui um problema cardíaco ou pressão arterial descontrolada e que só deveria realizar atividade física com supervisão clínica?
+2. Você sente dores no peito, tonturas, episódios de desmaio ou falta de ar incomum durante o repouso ou durante esforços físicos?
+3. Você possui alguma lesão osteomuscular, problema articular ou ósseo (como hérnias, lesões no joelho, ombro ou coluna) que possa ser agravado pela prática de exercícios?
+4. Você está gestante ou possui qualquer outra condição clínica que exija acompanhamento especializado?
+
+> **Importante:** Caso a resposta para qualquer uma das perguntas acima seja **SIM**, ou caso você tenha qualquer dúvida sobre seu estado de saúde atual, **procure avaliação médica e orientação presencial de um Profissional de Educação Física antes de realizar qualquer treinamento.**
+
+## 2. Ciência de Uso Seguro e Limites da Plataforma
+Ao utilizar o Trainvy, declaro estar ciente de que:
+* **Auto-organização (Sem Personal):** Caso eu utilize a plataforma sem vínculo com um Profissional de Educação Física, todas as minhas fichas constituem mero **Diário de Treino Pessoal**, organizado sob minha exclusiva responsabilidade.
+* **Sinais de Alerta:** Comprometo-me a interromper imediatamente qualquer exercício caso sinta dor aguda, tontura, mal-estar ou desconforto articular.
+* **Limites da Inteligência Artificial e Animações 3D:** O assistente de IA e as animações 3D têm caráter exclusivamente informativo, ilustrativo e organizacional, podendo apresentar imprecisões e jamais substituindo a avaliação presencial de um profissional habilitado. Comprometo-me a conferir todos os dados e cargas de fichas importadas via PDF, imagem ou texto antes de salvá-las.
+
+## 3. Consentimento Específico e Destacado (Art. 11, I da LGPD)
+Nos termos do Art. 11, inciso I, da Lei Geral de Proteção de Dados (Lei nº 13.709/2018), **autorizo de forma livre, informada, específica e destacada** que o Trainvy realize o tratamento dos meus dados físicos, medidas corporais, histórico de desempenho e eventuais restrições físicas por mim informadas, incluindo o processamento técnico pseudonimizado (sem envio do meu nome, CPF ou e-mail) pelos provedores de Inteligência Artificial da plataforma, exclusivamente para organizar, adaptar e acompanhar meus treinamentos.
+
+Estou ciente de que meus dados de saúde jamais serão usados para fins publicitários e de que posso revogar este consentimento ou excluir minha conta a qualquer momento nas configurações do meu perfil.`),
   },
   {
     slug: "diretrizes-ia-seguranca",
-    title: "Aviso de Uso de IA",
+    title: "Aviso de Uso Consciente de Inteligência Artificial",
     category: "AI_DISCLAIMER",
     targetAudience: "ALL_USERS",
-    contentMd: `# Aviso de Uso de IA
+    contentMd:
+      renderLegalIdentity(`# Aviso de Uso Consciente de Inteligência Artificial
 
-Assistente informativo baseado em IA. Pode cometer erros e não substitui a avaliação presencial de um Profissional de Educação Física ou médico.
+**Última atualização:** Versão 1.0.0
 
-O aluno pode organizar dados já fornecidos e consultar descrições do catálogo. Não utilize IA para diagnosticar lesões, reabilitar patologias ou impor cargas máximas. Em caso de dor aguda, tontura ou lesão, interrompa o exercício e procure avaliação profissional.
+O **Trainvy** utiliza recursos de Inteligência Artificial para tornar a organização e o gerenciamento de treinos mais ágeis. Para utilizar esses recursos com total segurança, observe as diretrizes abaixo:
 
-Sugestões destinadas a alunos por profissional são rascunhos sujeitos à revisão humana explícita da versão. Conferir dados extraídos de PDFs, imagens e textos antes de salvar é obrigatório. Não inclua identificadores, documentos pessoais ou dados de terceiros em mensagens e anexos.`,
+1. **Ferramenta Informativa e de Apoio:** O assistente de IA processa dados por meio de modelos probabilísticos. Suas respostas possuem caráter estritamente informativo e organizacional, podendo conter imprecisões técnicas, e **não substituem o julgamento clínico de um médico ou a prescrição de um Profissional de Educação Física**.
+2. **Regras para Alunos e Praticantes:**
+   * Utilize a IA para organizar seus registros de treino, estruturar fichas que você já possui (via texto, imagem ou PDF) e tirar dúvidas gerais sobre a execução descritiva dos exercícios do catálogo.
+   * **Conferência Obrigatória:** Sempre revise as séries, repetições e cargas extraídas automaticamente de PDFs ou fotos antes de confirmar o salvamento da ficha.
+   * **Proibição de Uso Clínico:** Não utilize a IA para diagnosticar dores, tratar lesões ou definir cargas máximas de segurança. Diante de qualquer dor aguda ou lesão, interrompa o treino e busque atendimento presencial.
+3. **Regras para Profissionais de Educação Física:**
+   * No painel profissional, a IA atua exclusivamente como um **copiloto gerador de rascunhos**.
+   * Nenhuma sugestão gerada pela IA é enviada diretamente ao aluno: cabe exclusivamente ao Profissional habilitado revisar, editar quando necessário e aprovar formalmente a prescrição final sob sua responsabilidade técnica (CREF).
+4. **Privacidade nas Interações:** Nosso sistema remove automaticamente seus dados cadastrais (nome, CPF e e-mail) antes de processar solicitações na IA. Ainda assim, evite digitar dados pessoais sensíveis de terceiros ou números de documentos nas caixas de diálogo abertas do chat.`),
   },
 ].map((d) => ({
   ...d,
@@ -232,5 +314,5 @@ ${legalDocuments.map((d) => `### ${d.slug} · ${d.version}\n\nAudiência: ${d.ta
 
 ## Operação
 
-Executar migrations antes do seed. Seed é insert-only e não sobrescreve edições administrativas. Cada edição gera revisão imutável, incrementa patch da versão e exige novo aceite. O Markdown no repositório representa a versão inicial do seed; versões administrativas ficam no banco e podem ser exportadas. Não atribuir revisão biomecânica sem análise profissional efetiva. Não confundir auditoria administrativa com consulta automática do conselho.
+Executar migrations antes do seed. Seed é insert-only por padrão e não sobrescreve edições administrativas. A atualização contratual explícita usa --refresh-legal-content, preserva revisões e aceites anteriores e incrementa a versão dos registros alterados. Cada edição gera revisão imutável, incrementa patch da versão e exige novo aceite. Os corpos contratuais mantêm a redação fornecida (Versão 1.0.0); a versão do registro no banco é incrementada quando há publicação sobre conteúdo existente. O Markdown no repositório representa o conteúdo canônico do seed; versões administrativas ficam no banco e podem ser exportadas. Não atribuir revisão biomecânica sem análise profissional efetiva. Não confundir auditoria administrativa com consulta automática do conselho.
 `;
