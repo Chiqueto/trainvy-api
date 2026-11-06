@@ -329,9 +329,9 @@ export const CANONICAL_MEDIA_CATALOG: readonly CanonicalMediaDefinition[] = [
     attributionName: ATTRIBUTION_REPDB.name,
     attributionUrl: ATTRIBUTION_REPDB.url,
     instructions: {
-      description: "Flexão plantar sentado com joelhos a 90° para isolamento do músculo sóleo.",
-      setup: "Sente-se no aparelho e ajuste a almofada sobre as coxas, próxima aos joelhos. Apoie a ponta dos pés no suporte.",
-      execution: "Destrave a alavanca. Desça os calcanhares para alongar a panturrilha e suba empurrando ao topo da flexão plantar.",
+      description: "Flexão plantar sentada na máquina, com ênfase no sóleo e participação dos gastrocnêmios, sem isolamento muscular.",
+      setup: "Ajuste as almofadas sobre as coxas, antes dos joelhos. Apoie os antepés na plataforma, com calcanhares livres, joelhos próximos de 90° e quadril no assento.",
+      execution: "Destrave o aparelho conforme suas instruções. Eleve os calcanhares suavemente, faça uma breve pausa e desça com controle até uma amplitude confortável.",
       tips: "Mantenha o movimento cadenciado sem quicar os pesos.",
     },
   },

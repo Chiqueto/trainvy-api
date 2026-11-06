@@ -333,11 +333,11 @@
     ],
     "secondary": [],
     "sourceIds": [
-      "legs",
-      "glutes",
-      "ace"
+      "standing-calf-training",
+      "seated-calf-emg",
+      "hack-anatomy"
     ],
-    "notes": "Ênfase relativa no sóleo com joelhos flexionados; grupo amplo preservado."
+    "notes": "Joelhos flexionados: ênfase ilustrativa no sóleo, gastrocnêmios coenvolvidos e fibulares sinergistas; sem isolamento muscular."
   },
   {
     "id": "00000000-0000-4000-8000-000000000119",

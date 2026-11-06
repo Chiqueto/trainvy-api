@@ -21,6 +21,7 @@ export const CATALOG_REVIEW_SOURCES: Record<
   string,
   { title: string; url: string }
 > = {
+  "seated-calf-emg": { title:"Kovács et al. — Knee position and plantarflexion (2024)", url:"https://doi.org/10.1242/bio.061810" },
   "standing-calf-training": { title: "Maeo et al. — standing versus seated calf-raise training (2023)", url: "https://doi.org/10.3389/fphys.2023.1272106" },
   "standing-calf-emg": { title: "Ugbolue et al. — EMG of lower-leg muscles during standing heel raise (2021)", url: "https://doi.org/10.3390/healthcare9040465" },
   "sumo-squat-emg": {"title":"Coratella et al. — The Activation of Gluteal, Thigh, and Lower Back Muscles in Different Squat Variations Performed by Competitive Bodybuilders (2021)","url":"https://doi.org/10.3390/ijerph18020772"},

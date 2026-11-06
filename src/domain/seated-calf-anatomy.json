@@ -1,0 +1,89 @@
+{
+  "version": "2026-11-06.1",
+  "reviewedAt": "2026-11-06T17:30:00.000Z",
+  "variant": "Flexão plantar bilateral sentada na máquina, joelhos próximos de 90°, coxas sob almofadas, quadril no assento e antepés na plataforma.",
+  "aliases": [
+    "panturrilha sentado",
+    "panturrilha sentada",
+    "seated calf raise"
+  ],
+  "participants": [
+    {
+      "id": "GASTROCNEMIUS_MEDIAL",
+      "label": "Gastrocnêmio medial",
+      "muscleGroup": "CALVES",
+      "role": "PRIMARY",
+      "aliases": ["gastrocnêmio", "panturrilha medial"],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": ["ARNOLD_2010", "KINOSHITA_2023", "KOVACS_2024"]
+    },
+    {
+      "id": "GASTROCNEMIUS_LATERAL",
+      "label": "Gastrocnêmio lateral",
+      "muscleGroup": "CALVES",
+      "role": "PRIMARY",
+      "aliases": ["gastrocnêmio", "panturrilha lateral"],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": ["ARNOLD_2010", "KINOSHITA_2023", "KOVACS_2024"]
+    },
+    {
+      "id": "SOLEUS",
+      "label": "Sóleo",
+      "muscleGroup": "CALVES",
+      "role": "PRIMARY",
+      "aliases": ["soleus", "panturrilha"],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": ["ARNOLD_2010", "KINOSHITA_2023", "KOVACS_2024"]
+    },
+    {
+      "id": "FIBULARIS_LONGUS",
+      "label": "Fibular longo",
+      "muscleGroup": "CALVES",
+      "role": "SECONDARY",
+      "aliases": ["peroneal longo", "fibularis longus"],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": ["ARNOLD_2010"]
+    },
+    {
+      "id": "FIBULARIS_BREVIS",
+      "label": "Fibular curto",
+      "muscleGroup": "CALVES",
+      "role": "SECONDARY",
+      "aliases": ["peroneal curto", "fibularis brevis"],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": ["ARNOLD_2010"]
+    }
+  ],
+  "sources": [
+    {
+      "id": "KINOSHITA_2023",
+      "title": "Kinoshita et al. — Triceps surae muscle hypertrophy is greater after standing versus seated calf-raise training (2023)",
+      "url": "https://doi.org/10.3389/fphys.2023.1272106",
+      "limitation": "14 adultos não treinados, 12 semanas, joelhos estendidos versus flexionados a 90°. Sóleo cresceu nas duas condições; gastrocnêmios mais em pé. Não demonstra isolamento do sóleo nem superioridade universal da versão sentada."
+    },
+    {
+      "id": "KOVACS_2024",
+      "title": "Kovács et al. — Knee position affects medial gastrocnemius and soleus activation during dynamic plantarflexion (2024)",
+      "url": "https://doi.org/10.1242/bio.061810",
+      "limitation": "30 adultos jovens, dinamometria com joelhos estendidos/flexionados e velocidades diferentes. Menor EMG do gastrocnêmio medial com joelho flexionado; diferenças do sóleo dependem da velocidade/fase. Não é EMG nesta máquina nem mede hipertrofia."
+    },
+    {
+      "id": "ARNOLD_2010",
+      "title": "Arnold et al. — A Model of the Lower Limb for Analysis of Human Movement (2010)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2903973/",
+      "limitation": "Modelo anatômico dos membros inferiores; não é ensaio da máquina e não fornece intensidade ou resposta individual."
+    }
+  ],
+  "notes": "Ênfase ilustrativa no sóleo com joelhos flexionados, sem isolamento: gastrocnêmios continuam agonistas principais da flexão plantar, exibidos em vermelho claro por menor ênfase relativa, não por ausência de função. Fibulares são sinergistas por anatomia, sem EMG direto desta máquina; não individualizados com confiança na malha e permanecem neutros. Não transferimos coativação do tibial anterior do exercício em pé para esta variante sem evidência. Cadência e amplitude são decisões ilustrativas, não valores ideais universais.",
+  "instructions": {
+    "description": "Flexão plantar bilateral sentada na máquina, com ênfase ilustrativa no sóleo e participação dos gastrocnêmios.",
+    "setup": "Ajuste o assento e as almofadas sobre a parte distal das coxas, antes dos joelhos. Apoie os antepés na plataforma, deixe os calcanhares livres e mantenha os joelhos próximos de 90°.",
+    "execution": "Eleve os calcanhares suavemente, faça uma breve pausa e desça com controle até uma amplitude confortável, mantendo os antepés apoiados e o quadril no assento.",
+    "tips": "Segure os apoios e evite quicar a carga ou levantar o quadril. Ajuste a amplitude à sua mobilidade. As cores ilustram participação e ênfase muscular; não medem EMG ou intensidade real de esforço."
+  }
+}
