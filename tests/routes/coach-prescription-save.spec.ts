@@ -7,14 +7,36 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { coachPrescriptionRoutes } from "../../src/routes/coach-prescription.js";
 import { UpdateWorkoutPrescriptionDraft } from "../../src/usecases/UpdateWorkoutPrescriptionDraft.js";
+import { SendWorkoutPrescription } from "../../src/usecases/SendWorkoutPrescription.js";
+import { AllocateWorkoutPlanTemplate } from "../../src/usecases/AllocateWorkoutPlanTemplate.js";
 
-const { create, update, tx } = vi.hoisted(() => {
+const { create, update, tx, consentRead, templateFind } = vi.hoisted(() => {
+  const consentRead = vi.fn(() => {
+    throw new Error("Professional authoring must not require student consent");
+  });
   const tx = {
     $queryRaw: vi.fn(),
     workoutPrescription: { findUnique: vi.fn(), update: vi.fn() },
     coachAthlete: { findFirst: vi.fn() },
+    professionalRegistration: {
+      findUniqueOrThrow: vi
+        .fn()
+        .mockResolvedValue({
+          fullName: "Personal Exemplo",
+          cref: "123456-G",
+          region: "SP",
+        }),
+    },
+    legalDocument: { findUnique: consentRead },
+    userLegalAcceptance: { findFirst: consentRead },
   };
-  return { create: vi.fn(), update: tx.workoutPrescription.update, tx };
+  return {
+    create: vi.fn(),
+    update: tx.workoutPrescription.update,
+    tx,
+    consentRead,
+    templateFind: vi.fn(),
+  };
 });
 vi.mock("../../src/lib/auth.js", () => ({
   auth: {
@@ -27,6 +49,9 @@ vi.mock("../../src/lib/db.js", () => ({
       findFirst: vi.fn().mockResolvedValue({ status: "ACTIVE" }),
     },
     workoutPrescription: { create },
+    workoutPlanTemplate: { findUnique: templateFind },
+    legalDocument: { findUnique: consentRead },
+    userLegalAcceptance: { findFirst: consentRead },
     $transaction: vi.fn(async (fn: (client: unknown) => unknown) => fn(tx)),
   },
 }));
@@ -37,6 +62,7 @@ vi.mock("../../src/usecases/GetCommercialContext.js", () => ({
         accountType: "COACH",
         professionalVerification: {
           status: "VERIFIED",
+          crefVerificationStatus: "VERIFIED_ADMIN",
           validUntil: "2099-01-01T00:00:00Z",
         },
         accountSetupCompletedAt: "2026-01-01",
@@ -92,7 +118,10 @@ const prescription = {
   },
   payload: { workoutDays: body.workoutDays },
 };
-afterEach(() => vi.clearAllMocks());
+afterEach(() => {
+  expect(consentRead).not.toHaveBeenCalled();
+  vi.clearAllMocks();
+});
 
 describe("Contrato e persistência da prescrição do personal", () => {
   it("aceita o payload do editor e preserva alternativas na criação", async () => {
@@ -181,5 +210,104 @@ describe("Contrato e persistência da prescrição do personal", () => {
         }),
       }),
     );
+  });
+  it("envia a ficha aprovada pelo profissional sem consultar aceites do aluno", async () => {
+    tx.workoutPrescription.findUnique.mockResolvedValue(prescription);
+    tx.coachAthlete.findFirst.mockResolvedValue({ status: "ACTIVE" });
+    update.mockResolvedValue({
+      ...prescription,
+      status: "SENT",
+      sentAt: new Date(),
+    });
+    const result = await new SendWorkoutPrescription().execute({
+      coachId: "coach",
+      prescriptionId: "draft",
+      expectedVersion: 1,
+      approval: true,
+    });
+    expect(result.status).toBe("SENT");
+    expect(update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          status: "SENT",
+          approvedVersion: 1,
+          approvedByUserId: "coach",
+          prescribedCrefSnapshot: "Personal Exemplo — CREF 123456-G/SP",
+        }),
+      }),
+    );
+  });
+  it("aloca um modelo do profissional como rascunho sem exigir aceite do aluno", async () => {
+    templateFind.mockResolvedValue({
+      coachId: "coach",
+      name: "Modelo do personal",
+      payload: prescription.payload,
+    });
+    create.mockResolvedValue(prescription);
+    const result = await new AllocateWorkoutPlanTemplate().execute({
+      coachId: "coach",
+      athleteId: "athlete",
+      templateId: "template",
+    });
+    expect(result.success).toBe(true);
+    expect(create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({ status: "DRAFT", sentAt: null }),
+      }),
+    );
+  });
+  it("mantém a aprovação explícita, a revisão de versão e o vínculo no envio", async () => {
+    tx.workoutPrescription.findUnique.mockResolvedValue(prescription);
+    const send = new SendWorkoutPrescription();
+    await expect(
+      send.execute({
+        coachId: "coach",
+        prescriptionId: "draft",
+        expectedVersion: 1,
+        approval: false as unknown as true,
+      }),
+    ).rejects.toMatchObject({ code: "EXPLICIT_APPROVAL_REQUIRED" });
+    await expect(
+      send.execute({
+        coachId: "coach",
+        prescriptionId: "draft",
+        expectedVersion: 2,
+        approval: true,
+      }),
+    ).rejects.toMatchObject({ code: "CONCURRENCY_CONFLICT" });
+    tx.coachAthlete.findFirst.mockResolvedValueOnce(null);
+    await expect(
+      send.execute({
+        coachId: "coach",
+        prescriptionId: "draft",
+        expectedVersion: 1,
+        approval: true,
+      }),
+    ).rejects.toMatchObject({ code: "COACH_ATHLETE_LINK_REVOKED" });
+    expect(update).not.toHaveBeenCalled();
+  });
+  it("mantém ownership no envio e na alocação de modelo", async () => {
+    tx.workoutPrescription.findUnique.mockResolvedValue({
+      ...prescription,
+      coachId: "other-coach",
+    });
+    await expect(
+      new SendWorkoutPrescription().execute({
+        coachId: "coach",
+        prescriptionId: "draft",
+        expectedVersion: 1,
+        approval: true,
+      }),
+    ).rejects.toMatchObject({ code: "PRESCRIPTION_NOT_FOUND" });
+    templateFind.mockResolvedValue({ coachId: "other-coach" });
+    await expect(
+      new AllocateWorkoutPlanTemplate().execute({
+        coachId: "coach",
+        athleteId: "athlete",
+        templateId: "template",
+      }),
+    ).rejects.toMatchObject({ code: "TEMPLATE_NOT_FOUND" });
+    expect(create).not.toHaveBeenCalled();
+    expect(update).not.toHaveBeenCalled();
   });
 });

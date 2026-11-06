@@ -62,8 +62,12 @@ Como o fluxo não recupera o CPF integral, `ProfessionalRegistration.cpf` passa 
 
 `npm run privacy:protect-cpf` migra registros legados de forma repetível, usa atualização condicional para preservar alterações concorrentes e imprime somente contagens. Aplicado no banco configurado nesta data: um registro convertido e nenhum CPF em texto puro restante. O campo existente comporta o formato protegido; não houve alteração de schema físico ou contrato HTTP. O script não altera cópias históricas de logs ou backups. Publicar a API atualizada para que novas declarações usem a proteção.
 
-## Consentimento do aluno nos fluxos profissionais — 06/11/2026
+## Autoria profissional e consentimento do aluno — 06/11/2026
 
-Geração, criação, edição, envio de prescrições, alocação de modelos e insights profissionais verificam o consentimento de saúde do aluno vinculado, após autorização do profissional e do vínculo. A pendência do aluno retorna `ATHLETE_HEALTH_CONSENT_REQUIRED`, orientando que ele aceite a versão atual no próprio perfil. A declaração CREF e os aceites pessoais do treinador não substituem essa autorização. Operações com dados próprios continuam com `HEALTH_CONSENT_REQUIRED`. A verificação antes de cada etapa do provedor de IA também preserva o contexto do aluno.
+A criação, geração por IA, edição, alocação de modelos e envio de fichas pelo personal não dependem do aceite de saúde/IA do aluno. São operações de autoria profissional: continuam exigindo conta profissional habilitada, permissões do plano e vínculo ativo; publicar exige aprovação explícita da versão revisada e preserva a identificação CREF. A propriedade dos dados e os limites de acesso entre contas permanecem os do domínio.
 
-O modal profissional mantém a mensagem de erro visível, preserva a instrução digitada e permite tentar novamente após o aceite do aluno. Não há aceite automático ou transferência de consentimento entre contas. Os contratos HTTP mantêm a estrutura de erro existente, cujo código é uma string.
+A geração profissional consulta somente a identificação necessária para sanitização e usa as instruções e anexos fornecidos pelo treinador. Não carrega automaticamente objetivos, restrições, perfil de saúde ou histórico do aluno para o provedor de IA. A interface explica a origem do contexto para o personal orientar a proposta. O resultado continua como rascunho editável, sem envio automático.
+
+O uso de IA pelo próprio aluno continua exigindo seus aceites. Recursos que consultam os dados e o histórico do aluno, como insights de evolução, mantêm as verificações de autorização e consentimento, inclusive antes das etapas do provedor. Não há aceite automático nem transferência de consentimento entre contas. Essa separação é a regra de produto implementada e não declara uma dispensa geral de obrigações sobre dados de saúde.
+
+O modal profissional mantém erros visíveis, preserva a instrução digitada e permite tentar novamente. Os contratos HTTP não mudaram. Não foi necessário migrar ou modificar aceites no banco para aplicar esta regra.

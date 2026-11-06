@@ -4,7 +4,6 @@ import {
   PrescriptionPayload,
 } from "../domain/coach-prescription.js";
 import { prisma } from "../lib/db.js";
-import { assertAthleteHealthConsent } from "./LegalCompliance.js";
 import { GetCommercialContext } from "./GetCommercialContext.js";
 import { prescriptionApprovalMode } from "../domain/prescription-approval.js";
 
@@ -119,7 +118,6 @@ export class SendWorkoutPrescription {
           );
         }
 
-        await assertAthleteHealthConsent(prescription.athleteId, tx);
         const registration = await tx.professionalRegistration.findUniqueOrThrow({ where: { userId: coachId } });
         const updated = await tx.workoutPrescription.update({
           where: { id: prescription.id },

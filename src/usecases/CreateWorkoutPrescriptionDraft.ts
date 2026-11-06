@@ -1,5 +1,4 @@
 import { advancedPrescription } from "../schemas/advanced-prescription.js";
-import { assertAthleteHealthConsent } from "./LegalCompliance.js";
 import {
   assertCoachCanPrescribe,
   CoachPrescriptionError,
@@ -132,7 +131,6 @@ export class CreateWorkoutPrescriptionDraft {
       );
     }
 
-    await assertAthleteHealthConsent(dto.athleteId);
     const payload = {
       workoutDays: dto.workoutDays.map((day, index) => ({
         name: day.name.trim(),
