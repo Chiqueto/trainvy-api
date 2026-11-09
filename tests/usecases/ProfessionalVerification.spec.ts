@@ -1,4 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import { declareTestProfessional } from "../helpers/declared-professional.js";
 import Fastify from "fastify";
 import {
   serializerCompiler,
@@ -70,6 +71,7 @@ describe("Professional verification, approval and personal imports", () => {
     });
   async function verify() {
     const r = await register();
+    await declareTestProfessional(coach);
     return service.review(admin, coach, { ...review(), revision: r.revision });
   }
   async function draft() {
@@ -196,7 +198,7 @@ describe("Professional verification, approval and personal imports", () => {
       }),
     ).toBeGreaterThan(0);
   });
-  it.each(["SUSPENDED", "EXPIRED"] as const)(
+  it.each(["SUSPENDED", "REJECTED"] as const)(
     "blocks new drafts for %s",
     async (status) => {
       await prisma.professionalRegistration.update({
@@ -301,7 +303,7 @@ describe("Professional verification, approval and personal imports", () => {
       }),
     ).rejects.toMatchObject({ code: "PRESCRIPTION_NOT_FOUND" });
   });
-  it("removes approval association when a student edits the personal copy", async () => {
+  it("preserves the prescribed version when a student tries to edit it", async () => {
     const d = await draft();
     await new SendWorkoutPrescription().execute({
       coachId: coach,
@@ -313,14 +315,14 @@ describe("Professional verification, approval and personal imports", () => {
       athleteId: athlete,
       prescriptionId: d.id,
     });
-    await new EditWorkoutPlan().execute(athlete, accepted.workoutPlanId, {
+    await expect(new EditWorkoutPlan().execute(athlete, accepted.workoutPlanId, {
       name: "Minha cópia",
       workoutDays: days,
-    });
+    })).rejects.toThrow("Duplique a prescrição");
     const original = await prisma.workoutPrescription.findUniqueOrThrow({
       where: { id: d.id },
     });
-    expect(original.acceptedWorkoutPlanId).toBeNull();
+    expect(original.acceptedWorkoutPlanId).toBe(accepted.workoutPlanId);
     expect(original.approvedSnapshot).not.toBeNull();
   });
   it("requires confirmation, binds import to owner, saves provenance and prevents replay", async () => {

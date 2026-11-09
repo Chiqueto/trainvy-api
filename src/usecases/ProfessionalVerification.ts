@@ -28,7 +28,14 @@ export function registrationDto(r: {
   updatedAt: Date;
 }) {
   return RegistrationResponse.parse({
-    ...r,
+    userId: r.userId,
+    fullName: r.fullName,
+    cref: r.cref,
+    region: r.region,
+    category: r.category,
+    revision: r.revision,
+    publicReason: r.publicReason,
+    crefVerificationStatus: "crefVerificationStatus" in r ? String(r.crefVerificationStatus) : undefined,
     status: effectiveProfessionalStatus({
       status: r.status,
       validUntil: r.validUntil?.toISOString() ?? null,

@@ -1,3 +1,4 @@
+import { declareTestProfessional } from "../helpers/declared-professional.js";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Fastify, { FastifyInstance } from "fastify";
 import { generateObject } from "ai";
@@ -83,6 +84,7 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
             { entitlement: "COACH_DASHBOARD", limitValue: null },
             { entitlement: "MANAGE_ATHLETES", limitValue: 10 },
             { entitlement: "ASSIGN_WORKOUTS", limitValue: null },
+            { entitlement: "AI_PLAN_GENERATION", limitValue: 30 },
           ],
         },
       },
@@ -128,6 +130,7 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
         accountSetupCompletedAt: new Date(),
       },
     });
+    await declareTestProfessional(coachUser.id);
 
     await prisma.subscription.create({
       data: {
@@ -161,6 +164,7 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
         accountSetupCompletedAt: new Date(),
       },
     });
+    await declareTestProfessional(coachWithoutEntitlement.id);
 
     await prisma.subscription.create({
       data: {

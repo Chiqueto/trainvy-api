@@ -1,13 +1,10 @@
-import { privateModel } from "../ai/private-model.js";
-import { assertHealthConsent } from "../usecases/LegalCompliance.js";
-import { CoachAthleteError } from "../domain/coach-athlete.js";
 import {
   convertToModelMessages,
-  stepCountIs,
-  generateText,
-  streamText,
   createUIMessageStream,
   createUIMessageStreamResponse,
+  generateText,
+  stepCountIs,
+  streamText,
   UIMessage,
 } from "ai";
 import { fromNodeHeaders } from "better-auth/node";
@@ -15,23 +12,25 @@ import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
 
+import { privateModel } from "../ai/private-model.js";
+import { getSystemPrompt } from "../ai/system-prompt.js";
+import {
+  getAiTools,
+  getProfessionalAiTools,
+  getSandboxAiTools,
+  getSessionAiTools,
+} from "../ai/tools.js";
+import { AiAccessError } from "../domain/ai-access.js";
 import {
   ORGANIZER_PROMPT,
   ORGANIZER_REDIRECT,
+  reportsSafetySymptoms,
   requestsPersonalPrescription,
   safeOrganizerResponse,
-  reportsSafetySymptoms,
   SAFETY_REDIRECT,
 } from "../domain/ai-organizer-policy.js";
 import { validateAiUpload } from "../domain/ai-upload.js";
-import {
-  getAiTools,
-  getSandboxAiTools,
-  getSessionAiTools,
-  getProfessionalAiTools,
-} from "../ai/tools.js";
-import { GetCommercialContext } from "../usecases/GetCommercialContext.js";
-import { getSystemPrompt } from "../ai/system-prompt.js";
+import { CoachAthleteError } from "../domain/coach-athlete.js";
 import {
   AiRateLimitError,
   InvalidTimezoneError,
@@ -41,6 +40,7 @@ import { auth } from "../lib/auth.js";
 import { prisma } from "../lib/db.js";
 import {
   AiConversationParamsSchema,
+  AiQuotaStatusResponseSchema,
   CreateAiConversationBodySchema,
   CreateAiConversationResponseSchema,
   ErrorSchema,
@@ -50,18 +50,19 @@ import {
   SuccessResponseSchema,
   UpdateUserAiConsentBodySchema,
   UserAiConsentResponseSchema,
-  AiQuotaStatusResponseSchema,
 } from "../schemas/index.js";
 import {
   CheckAndConsumeAiQuota,
   type CheckAndConsumeAiQuotaOutput,
 } from "../usecases/CheckAndConsumeAiQuota.js";
-import { recordAiUsage } from "../usecases/RecordAiUsage.js";
 import { CreateAiConversation } from "../usecases/CreateAiConversation.js";
 import { DeleteAiConversation } from "../usecases/DeleteAiConversation.js";
 import { GetAiConversation } from "../usecases/GetAiConversation.js";
+import { GetCommercialContext } from "../usecases/GetCommercialContext.js";
 import { GetUserAiConsent } from "../usecases/GetUserAiConsent.js";
+import { assertHealthConsent } from "../usecases/LegalCompliance.js";
 import { ListAiConversations } from "../usecases/ListAiConversations.js";
+import { recordAiUsage } from "../usecases/RecordAiUsage.js";
 import { SaveAiMessages } from "../usecases/SaveAiMessages.js";
 import { UpdateUserAiConsent } from "../usecases/UpdateUserAiConsent.js";
 
@@ -214,7 +215,8 @@ export const aiRoutes = async (app: FastifyInstance) => {
         const checkQuota = new CheckAndConsumeAiQuota();
         quotaResult = await checkQuota.execute({ userId });
       } catch (error) {
-        if (error instanceof AiRateLimitError) {
+          if (error instanceof AiAccessError) return reply.status(403).send({ error: error.message, code: error.code });
+          if (error instanceof AiRateLimitError) {
           return reply.status(429).send({
             error: error.message,
             code: error.code,

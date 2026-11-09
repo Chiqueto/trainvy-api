@@ -1,4 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+vi.mock("../../src/usecases/LegalCompliance.js", () => ({ assertHealthConsent: vi.fn() }));
+vi.mock("../../src/usecases/CreateWorkoutPrescriptionDraft.js", () => ({ CreateWorkoutPrescriptionDraft: class { async execute() { return { id: "draft", version: 1 }; } } }));
 import { generateObject } from "ai";
 import { GenerateAthleteWorkoutPlanDraftWithAi } from "../../src/usecases/GenerateAthleteWorkoutPlanDraftWithAi.js";
 import { GenerateCoachPrescriptionDraftWithAi } from "../../src/usecases/GenerateCoachPrescriptionDraftWithAi.js";
@@ -29,7 +31,7 @@ vi.mock("../../src/usecases/GetCommercialContext.js", () => ({
   },
 }));
 vi.mock("../../src/lib/db.js", () => ({
-  prisma: { coachAthlete: { findFirst: link } },
+  prisma: { coachAthlete: { findFirst: link }, exercise: { findMany: async () => [{ name: "Supino" }] } },
 }));
 const exercise = {
   name: "Supino",
@@ -142,9 +144,10 @@ describe("AI multimodal extraction and professional boundaries", () => {
     identity.mockResolvedValue({
       accountType: "COACH",
       accountSetupCompletedAt: new Date().toISOString(),
-      entitlements: [{ key: "MANAGE_ATHLETES", limitValue: null }],
+      plan: { code: "TEST_AI", name: "Test AI" },
+      entitlements: [{ key: "MANAGE_ATHLETES", limitValue: null }, { key: "AI_PLAN_GENERATION", limitValue: 30 }],
       professionalVerification: {
-        status: "VERIFIED",
+        status: "VERIFIED", crefVerificationStatus: "DECLARED_ACTIVE",
         validUntil: "2099-01-01T00:00:00Z",
       },
     });

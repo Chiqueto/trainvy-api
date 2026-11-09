@@ -1,3 +1,4 @@
+import { declareTestProfessional } from "../helpers/declared-professional.js";
 import { describe, expect, it } from "vitest";
 
 import { CoachPrescriptionError } from "../../src/domain/coach-prescription.js";
@@ -38,6 +39,7 @@ describe("TASK 6.2B.1 — Prescrições de Treino: Concorrência, Integridade e 
         accountSetupCompletedAt: new Date(),
       },
     });
+    await declareTestProfessional(user.id);
 
     const plan = await prisma.plan.create({
       data: {

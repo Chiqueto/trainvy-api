@@ -1,3 +1,4 @@
+import { acceptTestHealthConsent } from "../helpers/legal-consent.js";
 import { describe, expect, it } from "vitest";
 
 import { prisma } from "../../src/lib/db.js";
@@ -9,6 +10,8 @@ import { createTestUser } from "../helpers/test-db.js";
 describe("User Metrics & History Tracker", () => {
   it("deve criar registro em user_metric_log ao atualizar dados corporais pela primeira vez", async () => {
     const user = await createTestUser();
+    await acceptTestHealthConsent(user.id);
+    await prisma.user.update({ where: { id: user.id }, data: { birthDate: new Date(Date.UTC(new Date().getUTCFullYear() - 26, 0, 1)) } });
     const upsert = new UpsertUserTrainData();
 
     await upsert.execute({
@@ -32,6 +35,8 @@ describe("User Metrics & History Tracker", () => {
 
   it("deve calcular variação recente em GetUserTrainData quando houver mais de uma pesagem", async () => {
     const user = await createTestUser();
+    await acceptTestHealthConsent(user.id);
+    await prisma.user.update({ where: { id: user.id }, data: { birthDate: new Date(Date.UTC(new Date().getUTCFullYear() - 26, 0, 1)) } });
     const upsert = new UpsertUserTrainData();
     const getTrainData = new GetUserTrainData();
 
@@ -66,6 +71,8 @@ describe("User Metrics & History Tracker", () => {
 
   it("deve retornar histórico completo de métricas com diferenças em GetUserMetricsHistory", async () => {
     const user = await createTestUser();
+    await acceptTestHealthConsent(user.id);
+    await prisma.user.update({ where: { id: user.id }, data: { birthDate: new Date(Date.UTC(new Date().getUTCFullYear() - 26, 0, 1)) } });
     const upsert = new UpsertUserTrainData();
     const getHistory = new GetUserMetricsHistory();
 

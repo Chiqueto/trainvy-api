@@ -15,6 +15,8 @@ const { create, update, tx, consentRead, templateFind } = vi.hoisted(() => {
     throw new Error("Professional authoring must not require student consent");
   });
   const tx = {
+    notificationPreferences: { findUnique: vi.fn().mockResolvedValue(null) },
+    notification: { create: vi.fn().mockResolvedValue(null) },
     $queryRaw: vi.fn(),
     workoutPrescription: { findUnique: vi.fn(), update: vi.fn() },
     coachAthlete: { findFirst: vi.fn() },

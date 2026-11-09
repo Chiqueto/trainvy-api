@@ -24,6 +24,27 @@ jobs:
   validate-and-test:
     name: 1. Quality Gates & Test Database Validation
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: trainvy_test
+          POSTGRES_PASSWORD: ci-only-fictitious-password
+          POSTGRES_DB: trainvy_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U trainvy_test -d trainvy_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      NODE_ENV: test
+      DATABASE_URL: postgresql://trainvy_test:ci-only-fictitious-password@localhost:5432/unused_app
+      TEST_DATABASE_URL: postgresql://trainvy_test:ci-only-fictitious-password@localhost:5432/trainvy_test
+      BETTER_AUTH_SECRET: ci-only-fictitious-auth-secret-do-not-use
+      GOOGLE_CLIENT_ID: ci-only-fictitious-client
+      GOOGLE_CLIENT_SECRET: ci-only-fictitious-secret
+      GOOGLE_GENERATIVE_AI_API_KEY: ci-only-fictitious-key
+      WEB_APP_BASE_URL: http://localhost:3000
+      AI_DAILY_GLOBAL_LIMIT: "100000"
     steps:
       - name: Checkout API
         uses: actions/checkout@v4
@@ -53,15 +74,13 @@ jobs:
 
       - name: Validar e aplicar migrations em Banco de Teste Isolado
         working-directory: bootcamp-treinos-api
-        env:
-          TEST_DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
         run: |
           npm run migrate:test
+          npm run commercial:bootstrap
+          npm run seed:compliance
 
       - name: Executar Testes Automatizados (API)
         working-directory: bootcamp-treinos-api
-        env:
-          TEST_DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
         run: npm test
 
   # =========================================================================
@@ -76,8 +95,10 @@ jobs:
       url: ${{ steps.deploy-frontend.outputs.url || 'https://trainvy.app' }}
     steps:
       - name: Validar confirmação explícita
+        env:
+          RELEASE_CONFIRMATION: ${{ inputs.confirm_production }}
         run: |
-          if [ "${{ github.event.inputs.confirm_production }}" != "RELEASE-PROD" ]; then
+          if [ "$RELEASE_CONFIRMATION" != "RELEASE-PROD" ]; then
             echo "::error::Confirmação inválida! Digite exatamente RELEASE-PROD para autorizar o release."
             exit 1
           fi
@@ -104,8 +125,9 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
-          echo "Verificando status de migrations pendentes..."
-          npx prisma migrate status
+          echo "Validando compila??o antes de alterar o banco..."
+          npx prisma generate
+          npx tsc --noEmit
 
       # ---------------------------------------------------------------------
       # 2.2 Aplicação controlada de Migrations em Produção
@@ -126,11 +148,17 @@ jobs:
         working-directory: bootcamp-treinos-api
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_GENERATIVE_AI_API_KEY: ${{ secrets.GOOGLE_GENERATIVE_AI_API_KEY }}
+          WEB_APP_BASE_URL: ${{ vars.WEB_APP_BASE_URL }}
         run: |
           echo "Executando bootstrap comercial idempotente..."
           npm run commercial:bootstrap
           echo "Executando sincronização aditiva de mídias..."
           npm run seed:media
+          npm run seed:compliance
 
       # ---------------------------------------------------------------------
       # 2.4 Publicação do Backend na Vercel via Vercel CLI
@@ -155,16 +183,19 @@ jobs:
       - name: Validar Health Check do Backend
         run: |
           BACKEND_URL="${{ steps.deploy-backend.outputs.backend_url }}"
-          echo "Testando conectividade de $BACKEND_URL/swagger.json..."
+          echo "Testando conectividade de $BACKEND_URL/health/ready..."
+          HEALTHY=false
           for i in {1..10}; do
-            STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$BACKEND_URL/swagger.json" || true)
+            STATUS=$(curl --max-time 15 -s -o /dev/null -w "%{http_code}" "$BACKEND_URL/health/ready" || true)
             if [ "$STATUS" = "200" ]; then
               echo "Health check do Backend OK (HTTP 200)!"
+              HEALTHY=true
               break
             fi
             echo "Aguardando backend responder (tentativa $i, status=$STATUS)..."
             sleep 6
           done
+          test "$HEALTHY" = true
 
       # ---------------------------------------------------------------------
       # 2.6 Checkout e Publicação do Frontend
@@ -172,7 +203,7 @@ jobs:
       - name: Checkout Frontend
         uses: actions/checkout@v4
         with:
-          repository: Chiqueto/trainvy-frontend
+          repository: Chiqueto/bootcamp-treinos-frontend
           path: bootcamp-treinos-frontend
           token: ${{ secrets.GH_PAT || secrets.CROSS_REPO_TOKEN || secrets.GITHUB_TOKEN }}
 
@@ -196,15 +227,18 @@ jobs:
         run: |
           FRONTEND_URL="${{ steps.deploy-frontend.outputs.url }}"
           echo "Testando rota principal de $FRONTEND_URL..."
+          HEALTHY=false
           for i in {1..10}; do
-            STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$FRONTEND_URL/manifest.webmanifest" || true)
+            STATUS=$(curl --max-time 15 -s -o /dev/null -w "%{http_code}" "$FRONTEND_URL/manifest.webmanifest" || true)
             if [ "$STATUS" = "200" ]; then
               echo "Health check do Frontend OK (HTTP 200)!"
+              HEALTHY=true
               break
             fi
             echo "Aguardando frontend responder (tentativa $i, status=$STATUS)..."
             sleep 6
           done
+          test "$HEALTHY" = true
 
       - name: Resumo do Release
         run: |

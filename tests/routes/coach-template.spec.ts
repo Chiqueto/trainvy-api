@@ -1,3 +1,4 @@
+import { declareTestProfessional } from "../helpers/declared-professional.js";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Fastify, { FastifyInstance } from "fastify";
 import {
@@ -94,6 +95,7 @@ describe("Coach Templates and Custom Exercises Integration Tests", () => {
         accountSetupCompletedAt: new Date(),
       },
     });
+    await declareTestProfessional(coachUser.id);
 
     await prisma.subscription.create({
       data: {
@@ -130,6 +132,7 @@ describe("Coach Templates and Custom Exercises Integration Tests", () => {
     const userIds = [coachUser?.id, athleteUser?.id].filter(
       Boolean,
     ) as string[];
+    await prisma.userLegalAcceptance.deleteMany({ where: { userId: { in: userIds } } });
     if (coachUser?.id) {
       await prisma.workoutPrescription.deleteMany({
         where: { coachId: coachUser.id },

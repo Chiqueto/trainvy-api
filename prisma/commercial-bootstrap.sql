@@ -10,8 +10,6 @@ WITH inserted AS (
 ),
 all_plans AS (
   SELECT "id", "code" FROM inserted
-  UNION
-  SELECT "id", "code" FROM "Plan" WHERE "code" IN ('ATHLETE_FREE', 'COACH', 'COACH_AI', 'INTERNAL')
 )
 INSERT INTO "PlanEntitlement" ("id", "planId", "entitlement", "limitValue")
 SELECT p."id" || '-' || e.key, p."id", e.key::"EntitlementKey",

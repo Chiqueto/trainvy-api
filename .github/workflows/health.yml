@@ -1,0 +1,23 @@
+name: API availability
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/10 * * * *"
+permissions:
+  contents: read
+concurrency:
+  group: api-health
+  cancel-in-progress: true
+jobs:
+  health:
+    if: ${{ vars.TRAINVY_API_URL != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: node scripts/check-health.mjs
+        env:
+          HEALTH_API_URL: ${{ vars.TRAINVY_API_URL }}

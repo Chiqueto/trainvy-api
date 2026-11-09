@@ -6,8 +6,9 @@ import {
   CronStreakRemindersResponseSchema,
   ErrorSchema,
 } from "../schemas/index.js";
-import { SendStreakReminders } from "../usecases/SendStreakReminders.js";
 import { ApplicationAccessLogs } from "../usecases/ApplicationAccessLogs.js";
+import { CheckAndConsumeAiQuota } from "../usecases/CheckAndConsumeAiQuota.js";
+import { SendStreakReminders } from "../usecases/SendStreakReminders.js";
 
 export const cronRoutes = async (app: FastifyInstance) => {
   app.withTypeProvider<ZodTypeProvider>().route({
@@ -34,6 +35,7 @@ export const cronRoutes = async (app: FastifyInstance) => {
 
       try {
         await new ApplicationAccessLogs().purgeExpired();
+        await new CheckAndConsumeAiQuota().purgeExpiredRequests();
         const useCase = new SendStreakReminders();
         const sent = await useCase.execute();
         return reply.status(200).send({ sent });

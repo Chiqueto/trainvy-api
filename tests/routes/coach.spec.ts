@@ -1,3 +1,4 @@
+import { declareTestProfessional } from "../helpers/declared-professional.js";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Fastify, { FastifyInstance } from "fastify";
 import {
@@ -61,6 +62,7 @@ describe("Coach & Athlete HTTP Routes", () => {
         accountSetupCompletedAt: new Date(),
       },
     });
+    await declareTestProfessional(coachUser.id);
 
     await prisma.subscription.create({
       data: {

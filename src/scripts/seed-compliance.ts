@@ -1,6 +1,6 @@
 import "dotenv/config";
 
-import { writeFileSync } from "node:fs";
+import { existsSync, writeFileSync } from "node:fs";
 
 import { contentHash } from "../domain/compliance.js";
 import {
@@ -24,7 +24,11 @@ for (const relative of [
   "../../docs/COMPLIANCE_JURIDICO_TRAINVY.md",
   "../../../trainvy-frontend/docs/COMPLIANCE_JURIDICO_TRAINVY.md",
 ]) {
-  writeFileSync(new URL(relative, import.meta.url), complianceMarkdown, "utf8");
+  const target = new URL(relative, import.meta.url);
+  // The frontend checkout is optional in API-only CI and releases.
+  if (existsSync(new URL(".", target))) {
+    writeFileSync(target, complianceMarkdown, "utf8");
+  }
 }
 if (!process.argv.includes("--docs-only")) {
   await prisma.$transaction(

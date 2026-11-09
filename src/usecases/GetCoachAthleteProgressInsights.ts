@@ -1,11 +1,14 @@
-import { privateModel } from "../ai/private-model.js";
-import { assertAthleteHealthConsent } from "./LegalCompliance.js";
 import { generateObject } from "ai";
 import z from "zod";
-import { trackAiGeneration } from "./RecordAiUsage.js";
 
+import { privateModel } from "../ai/private-model.js";
+import { AiAccessError, resolveAiAccess } from "../domain/ai-access.js";
 import { AuthorizeCoachAthleteProgressAccess } from "./AuthorizeCoachAthleteProgressAccess.js";
+import { CheckAndConsumeAiQuota } from "./CheckAndConsumeAiQuota.js";
 import { GetCoachAthleteProgressOverview } from "./GetCoachAthleteProgressOverview.js";
+import { GetCommercialContext } from "./GetCommercialContext.js";
+import { assertAthleteHealthConsent } from "./LegalCompliance.js";
+import { trackAiGeneration } from "./RecordAiUsage.js";
 
 export interface GetCoachAthleteProgressInsightsInput {
   coachId: string;
@@ -58,6 +61,8 @@ export class GetCoachAthleteProgressInsights {
       coachId: input.coachId,
       athleteId: input.athleteId,
     });
+    const commercial = await new GetCommercialContext().execute({ userId: input.coachId });
+    if (!resolveAiAccess(commercial, "AI_PLAN_GENERATION").enabled) throw new AiAccessError();
 
     const getOverview = new GetCoachAthleteProgressOverview();
     await assertAthleteHealthConsent(input.athleteId);
@@ -129,8 +134,10 @@ Distribuição de Séries por Grupamento Muscular:
 ${muscleDistributionText}
 `;
 
+    await new CheckAndConsumeAiQuota().execute({ userId: input.coachId, entitlement: "AI_PLAN_GENERATION" });
     try {
       const { object } = await trackAiGeneration({ userId: input.coachId, feature: "COACH_INSIGHTS" }, () => generateObject({
+        maxOutputTokens: 3500,
         model: privateModel([athleteName], input.athleteId, "ATHLETE"),
         schema: AiInsightsObjectSchema,
         system: `Você é um consultor sênior de inteligência artificial em fisiologia do exercício, biomecânica e periodização de musculação do Trainvy.
@@ -139,7 +146,7 @@ Sua missão é analisar dados reais de histórico de treinos de um aluno para fo
 Diretrizes obrigatórias:
 1. Respostas profissionais, técnicas, construtivas e fundamentadas nas ciências do treinamento resistido (hipertrofia e força).
 2. Identifique desequilíbrios na relação agonista/antagonista (ex: peito vs costas, quadríceps vs posteriores de coxa).
-3. Avalie a consistência semanal e se o volume por grupamento muscular está dentro das faixas ótimas (10 a 20 séries semanais por músculo alvo para hipertrofia).
+3. Descreva frequência e volume observados. Compare somente com metas explicitamente conhecidas. Não imponha faixas universais de séries, frequência ou descanso e não diagnostique sobrecarga, lesão ou recuperação a partir destas métricas.
 4. Forneça recomendações práticas e acionáveis que o Personal Trainer possa aplicar diretamente na próxima prescrição de treino.
 5. Seja direto, conciso e evite clichês vazios.`,
         prompt: `Analise as métricas reais do aluno abaixo e gere o diagnóstico completo de evolução para o treinador:\n${promptContext}`,
@@ -166,30 +173,26 @@ Diretrizes obrigatórias:
         athleteName,
         periodWeeks: weeks,
         summary: `${athleteName} completou ${overview.summary.totalWorkouts} treinos com média de ${overview.summary.weeklyFrequency} treinos/semana e volume acumulado de ${overview.summary.totalLoadVolumeKg} kg.`,
-        consistencyAssessment:
-          overview.summary.weeklyFrequency >= 3
-            ? "Boa regularidade e consistência semanal mantida."
-            : "Frequência abaixo de 3 treinos por semana; oportunidade de ganho de consistência.",
+        consistencyAssessment: `${overview.summary.weeklyFrequency} treinos por semana foram registrados. Compare com a frequência planejada pelo profissional.`,
         highlights: [
           `Total de ${overview.summary.totalWorkingSets} séries de trabalho executadas no período.`,
           `Volume total de carga movimentada de ${overview.summary.totalLoadVolumeKg} kg.`,
         ],
         warnings: [
-          "Verificar distribuição de volume entre empurrar e puxar na próxima prescrição.",
+          "A análise com IA está indisponível. Este resumo contém somente os dados registrados.",
         ],
         muscleBalanceInsights: (overview.muscles?.muscles || [])
           .slice(0, 4)
           .map((g) => ({
             muscleGroup: g.muscleGroup,
-            status: g.directWorkingSets >= 10 ? "BALANCED" : "ATTENTION",
+            status: "ATTENTION" as const,
             observation: `${g.directWorkingSets} séries diretas no período.`,
           })),
         recommendations: [
-          "Manter a progressão gradual de volume de treino.",
-          "Adequar intervalos de descanso entre 90s e 180s para exercícios multiarticulares.",
+          "Compare os registros com o planejamento prescrito antes de ajustar o treino.",
         ],
         suggestedFocusForNextPrescription:
-          "Periodização com foco em progressão de carga e equilíbrio muscular.",
+          "Revisar os registros com o planejamento e as orientações do profissional.",
         generatedAt: new Date().toISOString(),
       };
     }

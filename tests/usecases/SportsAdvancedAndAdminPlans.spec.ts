@@ -1,5 +1,7 @@
 import { SendWorkoutPrescription } from "../../src/usecases/SendWorkoutPrescription.js";
 import Fastify from "fastify";
+import { declareTestProfessional } from "../helpers/declared-professional.js";
+import { acceptTestHealthConsent } from "../helpers/legal-consent.js";
 import {
   serializerCompiler,
   validatorCompiler,
@@ -46,6 +48,7 @@ const users: string[] = [],
   plans: string[] = [];
 async function user(admin = false) {
   const u = await createTestUser();
+  await acceptTestHealthConsent(u.id);
   users.push(u.id);
   if (admin)
     await prisma.user.update({
@@ -145,7 +148,8 @@ describe("Optional sports profile and body fat", () => {
       other = await user();
     login(owner);
     const metrics = { weightInGrams: 80000, heightInCentimeters: 180, age: 25 };
-    await new UpsertUserTrainData().execute({ userId: owner.id, ...metrics });
+    await prisma.user.update({ where: { id: owner.id }, data: metrics });
+    await prisma.userMetricLog.create({ data: { userId: owner.id, ...metrics } });
     expect(
       await new GetUserTrainData().execute({ userId: owner.id }),
     ).toMatchObject({ age: 25, birthDate: null });
@@ -264,7 +268,7 @@ describe("Optional sports profile and body fat", () => {
   it("allows body fat to be omitted or cleared, preserves an omitted existing value, and completes onboarding", async () => {
     const owner = await user();
     login(owner);
-    const metrics = { weightInGrams: 70000, heightInCentimeters: 170, age: 30 };
+    const metrics = { weightInGrams: 70000, heightInCentimeters: 170, age: 30, birthDate: "1996-01-01" };
     let saved = await app.inject({
       method: "PUT",
       url: "/me",
@@ -502,6 +506,7 @@ describe("Advanced prescriptions stay separate from performed sets", () => {
         accountSetupCompletedAt: new Date(),
       },
     });
+    await declareTestProfessional(coach.id);
     const plan = await prisma.plan.create({
       data: {
         code: `TEST_${crypto.randomUUID()}`,
@@ -591,6 +596,7 @@ describe("Administrative plan creation and dynamic permissions", () => {
         accountSetupCompletedAt: new Date(),
       },
     });
+    await declareTestProfessional(coach.id);
     const input = payload();
     const result = await app.inject({
       method: "POST",

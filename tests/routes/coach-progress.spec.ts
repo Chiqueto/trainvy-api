@@ -1,3 +1,5 @@
+import { declareTestProfessional } from "../helpers/declared-professional.js";
+import { acceptTestHealthConsent } from "../helpers/legal-consent.js";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Fastify, { FastifyInstance } from "fastify";
 import {
@@ -49,6 +51,7 @@ describe("Coach Athlete Progress & Training History (Task 6.3)", () => {
           create: [
             { entitlement: "COACH_DASHBOARD", limitValue: null },
             { entitlement: "MANAGE_ATHLETES", limitValue: 10 },
+            { entitlement: "AI_PLAN_GENERATION", limitValue: 30 },
           ],
         },
       },
@@ -75,6 +78,7 @@ describe("Coach Athlete Progress & Training History (Task 6.3)", () => {
         accountSetupCompletedAt: new Date(),
       },
     });
+    await declareTestProfessional(coachA.id);
 
     await prisma.subscription.create({
       data: {
@@ -109,6 +113,7 @@ describe("Coach Athlete Progress & Training History (Task 6.3)", () => {
         accountSetupCompletedAt: new Date(),
       },
     });
+    await declareTestProfessional(coachB.id);
 
     await prisma.subscription.create({
       data: {
@@ -143,6 +148,7 @@ describe("Coach Athlete Progress & Training History (Task 6.3)", () => {
         accountSetupCompletedAt: new Date(),
       },
     });
+    await declareTestProfessional(coachNoPlan.id);
 
     // 5. Atletas
     athleteUser = await prisma.user.create({
@@ -853,6 +859,7 @@ describe("Coach Athlete Progress & Training History (Task 6.3)", () => {
     });
 
     it("25. Treinador autorizado obtém diagnóstico e insights estruturados com header no-store", async () => {
+      await acceptTestHealthConsent(athleteUser.id);
       await prisma.coachAthlete.update({
         where: { id: activeLinkA.id },
         data: {

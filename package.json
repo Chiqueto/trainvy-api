@@ -15,6 +15,7 @@
     "import:repdb": "tsx src/scripts/import-repdb-assets.ts",
     "migrate:test": "prisma migrate deploy --config prisma.test.config.ts",
     "migrate:deploy": "prisma migrate deploy",
+    "release:prepare": "tsx src/scripts/release-prepare.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "seed:compliance": "tsx src/scripts/seed-compliance.ts",
@@ -49,23 +50,23 @@
     "vitest": "^4.1.11"
   },
   "dependencies": {
-    "@ai-sdk/google": "^3.0.43",
-    "@ai-sdk/openai": "3.0.33",
-    "@better-auth/prisma-adapter": "^1.5.4",
+    "@ai-sdk/google": "^3.0.143",
+    "@ai-sdk/openai": "^3.0.139",
+    "@better-auth/prisma-adapter": "^1.7.18",
     "@fastify/cors": "^11.2.0",
     "@fastify/swagger": "^9.7.0",
     "@prisma/adapter-pg": "^7.4.0",
     "@prisma/client": "^7.4.0",
     "@scalar/fastify-api-reference": "^1.70.0",
     "@types/web-push": "^3.6.4",
-    "ai": "6.0.100",
-    "better-auth": "^1.4.18",
+    "ai": "^6.0.326",
+    "better-auth": "^1.7.18",
     "dayjs": "^1.11.19",
     "dotenv": "^17.3.1",
     "fastify": "^5.7.4",
     "fastify-type-provider-zod": "^6.1.0",
     "pino-pretty": "13.1.3",
     "web-push": "^3.6.7",
-    "zod": "^4.3.6"
+    "zod": "^4.6.7"
   }
 }

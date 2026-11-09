@@ -1,0 +1,48 @@
+name: API checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: api-checks-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: trainvy_test
+          POSTGRES_PASSWORD: ci-only-fictitious-password
+          POSTGRES_DB: trainvy_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U trainvy_test -d trainvy_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      NODE_ENV: test
+      DATABASE_URL: postgresql://trainvy_test:ci-only-fictitious-password@localhost:5432/unused_app
+      TEST_DATABASE_URL: postgresql://trainvy_test:ci-only-fictitious-password@localhost:5432/trainvy_test
+      BETTER_AUTH_SECRET: ci-only-fictitious-auth-secret-do-not-use
+      GOOGLE_CLIENT_ID: ci-only-fictitious-client
+      GOOGLE_CLIENT_SECRET: ci-only-fictitious-secret
+      GOOGLE_GENERATIVE_AI_API_KEY: ci-only-fictitious-key
+      WEB_APP_BASE_URL: http://localhost:3000
+      AI_DAILY_GLOBAL_LIMIT: "100000"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx prisma generate
+      - run: npm run migrate:test
+      - run: npm run commercial:bootstrap
+      - run: npm run seed:compliance
+      - run: npx tsc --noEmit
+      - run: npm test

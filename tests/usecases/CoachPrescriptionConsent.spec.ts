@@ -15,6 +15,8 @@ const state = vi.hoisted(() => ({
   consentReads: [] as string[],
   linked: true,
   allowed: true,
+  aiAllowed: true,
+  quota: vi.fn(),
   revokeBeforeProvider: false,
   transform: undefined as
     | undefined
@@ -24,6 +26,7 @@ const state = vi.hoisted(() => ({
 
 vi.mock("../../src/lib/db.js", () => ({
   prisma: {
+    exercise: { findMany: async () => [{ name: "Exercício do catálogo" }] },
     coachAthlete: {
       findFirst: vi.fn(async () =>
         state.linked
@@ -80,7 +83,8 @@ vi.mock("../../src/usecases/GetCommercialContext.js", () => ({
               validUntil: null,
             }
           : null,
-        entitlements: [{ key: "MANAGE_ATHLETES", limitValue: 10 }],
+        plan: { code: "TEST_COACH_AI", name: "Teste IA" },
+        entitlements: [{ key: "MANAGE_ATHLETES", limitValue: 10 }, ...(state.aiAllowed ? [{ key: "AI_PLAN_GENERATION", limitValue: 30 }] : [])],
       };
     }
   },
@@ -91,7 +95,7 @@ vi.mock("../../src/usecases/RecordAiUsage.js", () => ({
 }));
 vi.mock("../../src/usecases/CheckAndConsumeAiQuota.js", () => ({
   CheckAndConsumeAiQuota: class {
-    execute = vi.fn();
+    execute = state.quota;
   },
 }));
 vi.mock("../../src/usecases/CreateWorkoutPrescriptionDraft.js", () => ({
@@ -127,6 +131,7 @@ const current = (userId: string) => ({
   revokedAt: null,
 });
 beforeEach(() => {
+  state.aiAllowed = true;
   vi.clearAllMocks();
   state.acceptances = [];
   state.consentReads = [];
@@ -138,6 +143,18 @@ beforeEach(() => {
 });
 
 describe("Professional authorship and personal-data consent are independent", () => {
+  it("blocks a plan without AI before provider invocation or quota consumption", async () => {
+    state.aiAllowed = false;
+    await expect(new GenerateCoachPrescriptionDraftWithAi().execute(input)).rejects.toMatchObject({ code: "AI_ENTITLEMENT_REQUIRED", statusCode: 403 });
+    expect(generateObject).not.toHaveBeenCalled();
+    expect(state.quota).not.toHaveBeenCalled();
+  });
+  it("does not call the provider when quota reservation fails", async () => {
+    state.quota.mockRejectedValueOnce(new Error("Cota esgotada"));
+    await expect(new GenerateCoachPrescriptionDraftWithAi().execute(input)).rejects.toThrow("Cota esgotada");
+    expect(generateObject).not.toHaveBeenCalled();
+    expect(state.save).not.toHaveBeenCalled();
+  });
   it.each(["missing", "old version", "revoked", "current"])(
     "generates and saves the professional draft with the student's %s consent",
     async (condition) => {

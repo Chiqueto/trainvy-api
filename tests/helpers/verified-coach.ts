@@ -1,12 +1,13 @@
 import { createTestUser } from "./test-db.js";
 import { prisma } from "../../src/lib/db.js";
+import { declareTestProfessional } from "./declared-professional.js";
 
 // Synthetic verified identity for regression tests of professional-only draft tools.
 export async function createVerifiedTestCoach(
   override?: Parameters<typeof createTestUser>[0],
 ) {
   const user = await createTestUser(override);
-  return prisma.user.update({
+  const coach = await prisma.user.update({
     where: { id: user.id },
     data: {
       accountType: "COACH",
@@ -24,4 +25,6 @@ export async function createVerifiedTestCoach(
       },
     },
   });
+  await declareTestProfessional(coach.id);
+  return coach;
 }

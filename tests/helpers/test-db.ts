@@ -312,6 +312,8 @@ export async function createTestWorkoutSet(
 
 export async function cleanupTestUsers(userIds: string[]) {
   if (userIds.length === 0) return;
+  if (process.env.NODE_ENV !== "test") throw new Error("Test cleanup only");
+  await prisma.userLegalAcceptance.deleteMany({ where: { userId: { in: userIds } } });
 
   // 1. Find all plans of these users
   const plans = await prisma.workoutPlan.findMany({

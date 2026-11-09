@@ -1,24 +1,26 @@
-import z from "zod";
 import { createHash } from "node:crypto";
-import { verifyImportPreview } from "../domain/workout-import.js";
-import { ConfirmWorkoutImportBody } from "../schemas/planning-ai.js";
-import { CreateWorkoutPlan } from "../usecases/CreateWorkoutPlan.js";
-import { CoachAthleteError } from "../domain/coach-athlete.js";
-import { AiRateLimitError } from "../errors/index.js";
+
 import { fromNodeHeaders } from "better-auth/node";
 import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
+import z from "zod";
 
+import { AiAccessError } from "../domain/ai-access.js";
+import { CoachAthleteError } from "../domain/coach-athlete.js";
+import { verifyImportPreview } from "../domain/workout-import.js";
+import { AiRateLimitError } from "../errors/index.js";
 import { ConflictError, NotFoundError } from "../errors/index.js";
 import { auth } from "../lib/auth.js";
 import {
   ErrorSchema,
   PlanningOverviewResponseSchema,
 } from "../schemas/index.js";
+import { ConfirmWorkoutImportBody } from "../schemas/planning-ai.js";
 import {
   GenerateWorkoutPlanDraftWithAiBodySchema,
   GenerateWorkoutPlanDraftWithAiResponseSchema,
 } from "../schemas/planning-ai.js";
+import { CreateWorkoutPlan } from "../usecases/CreateWorkoutPlan.js";
 import { GenerateAthleteWorkoutPlanDraftWithAi } from "../usecases/GenerateAthleteWorkoutPlanDraftWithAi.js";
 import { GetPlanningOverview } from "../usecases/GetPlanningOverview.js";
 
@@ -197,10 +199,12 @@ export const planningRoutes = async (app: FastifyInstance) => {
 
         return reply.status(200).send(result);
       } catch (error) {
+        if (error instanceof AiAccessError) return reply.status(403).send({ error: error.message, code: error.code });
         if (error instanceof CoachAthleteError)
           return reply
             .status(error.status)
             .send({ error: error.message, code: error.code });
+        if (error instanceof AiAccessError) return reply.status(403).send({ error: error.message, code: error.code });
         if (error instanceof AiRateLimitError)
           return reply
             .status(429)

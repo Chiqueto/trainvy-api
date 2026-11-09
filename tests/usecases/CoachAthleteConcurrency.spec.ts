@@ -1,3 +1,4 @@
+import { declareTestProfessional } from "../helpers/declared-professional.js";
 import { describe, expect, it } from "vitest";
 
 import { CoachAthleteError } from "../../src/domain/coach-athlete.js";
@@ -38,6 +39,7 @@ describe("TASK 6.1.1 — Concorrência, Limites Comerciais e Transições Atômi
         accountSetupCompletedAt: new Date(),
       },
     });
+    await declareTestProfessional(user.id);
 
     const planCode = `PLAN_${prefix}_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
     const plan = await prisma.plan.create({

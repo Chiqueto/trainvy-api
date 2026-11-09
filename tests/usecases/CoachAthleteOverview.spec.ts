@@ -1,3 +1,4 @@
+import { declareTestProfessional } from "../helpers/declared-professional.js";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, expect, it } from "vitest";
 
@@ -41,6 +42,7 @@ describe("TASK 6.2A — Coach Athlete Overview & IDOR Protection", () => {
         accountSetupCompletedAt: accountSetupCompleted ? new Date() : null,
       },
     });
+    await declareTestProfessional(user.id);
 
     if (hasActiveSubscription) {
       const entitlements = [

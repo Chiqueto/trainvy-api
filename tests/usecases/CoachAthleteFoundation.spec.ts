@@ -1,3 +1,4 @@
+import { declareTestProfessional } from "../helpers/declared-professional.js";
 import { describe, expect, it } from "vitest";
 
 import { hashInvitationToken } from "../../src/domain/coach-athlete.js";
@@ -48,6 +49,7 @@ describe("TASK 6.1 — Coach ↔ Athlete Foundation", () => {
         accountSetupCompletedAt: accountSetupCompleted ? new Date() : null,
       },
     });
+    await declareTestProfessional(user.id);
 
     if (hasActiveSubscription) {
       // Cria plano customizado para testar limite específico ou reutiliza plano COACH

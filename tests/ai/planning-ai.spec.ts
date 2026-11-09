@@ -816,10 +816,10 @@ describe("Task 2.6 — IA de Planejamento V1 (Backend)", () => {
               type: "tool-createWorkoutPlanDraft",
               toolCallId: "call-plan-approved-1",
               state: "approval-responded",
-              input: {
+              input: aiWorkoutPlanInputSchema.parse({
                 name: "Plano Aprovado Pelo Usuário",
                 workoutDays: VALID_7_DAYS,
-              },
+              }),
               approval: {
                 id: "appr-approved-1",
                 approved: true,
@@ -846,7 +846,7 @@ describe("Task 2.6 — IA de Planejamento V1 (Backend)", () => {
         streamTextOutput += decoder.decode(value);
       }
 
-      expect(streamTextOutput).toContain("tool-output-available");
+      expect(streamTextOutput, streamTextOutput).toContain("tool-output-available");
 
       const userPlans = await prisma.workoutPlan.findMany({
         where: { userId: user.id },

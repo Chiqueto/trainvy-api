@@ -2,11 +2,10 @@ import {
   CommercialError,
   subscriptionGrantsAccess,
 } from "../domain/commercial.js";
+import { hasProfessionalAccess } from "../domain/professional-verification.js";
 import { Prisma } from "../generated/prisma/client.js";
 import { isConfiguredAdminEmail } from "../lib/admin-config.js";
 import { prisma } from "../lib/db.js";
-import { hasProfessionalAccess } from "../domain/professional-verification.js";
-import { readProfessionalVerificationPolicy } from "./ProfessionalVerificationPolicy.js";
 
 export class GetCommercialContext {
   async execute({
@@ -29,7 +28,6 @@ export class GetCommercialContext {
     });
     if (!user) throw new CommercialError("USER_NOT_FOUND", 404);
     if (user.deletedAt) throw new CommercialError("USER_NOT_FOUND", 404);
-    const policy = await readProfessionalVerificationPolicy(client);
     const professionalVerification = user.professionalRegistration
       ? {
           status: user.professionalRegistration.status,
@@ -61,11 +59,11 @@ export class GetCommercialContext {
       subscriptionGrantsAccess(subscription, now);
     return {
       accountType: user.accountType,
-      crefVerificationRequired: policy.required,
+      crefVerificationRequired: false,
       professionalAccessGranted:
         user.accountType === "COACH" &&
         !!user.accountSetupCompletedAt &&
-        hasProfessionalAccess(professionalVerification, policy.required),
+        hasProfessionalAccess(professionalVerification),
       professionalVerification,
       systemRole: user.systemRole,
       accountSetupCompletedAt:

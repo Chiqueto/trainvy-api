@@ -9,6 +9,22 @@ import { CheckAndConsumeAiQuota } from "../../src/usecases/CheckAndConsumeAiQuot
 dayjs.extend(utc);
 
 describe("AI Beta Rate Limiting & Safe Quotas (Task 5.1)", () => {
+  it("reserves the global limit atomically across concurrent users", async () => {
+    const users = await Promise.all(Array.from({ length: 5 }, () => prisma.user.create({ data: { id: crypto.randomUUID(), name: "Global quota fixture", email: `${crypto.randomUUID()}@quota.test` } })));
+    const date = dayjs.utc().format("YYYY-MM-DD");
+    const before = await prisma.aiUsageDaily.aggregate({ where: { date }, _sum: { count: true } });
+    const dailyGlobalLimit = (before._sum.count ?? 0) + 2;
+    const results = await Promise.allSettled(users.map((user) => new CheckAndConsumeAiQuota().execute({ userId: user.id, config: { dailyUserLimit: 10, minuteUserLimit: 10, dailyGlobalLimit } })));
+    expect(results.filter((result) => result.status === "fulfilled")).toHaveLength(2);
+    expect(results.filter((result) => result.status === "rejected")).toHaveLength(3);
+  });
+  it("serializes burst reservations and does not count rejected requests", async () => {
+    const user = await prisma.user.create({ data: { id: crypto.randomUUID(), name: "Burst quota fixture", email: `${crypto.randomUUID()}@quota.test` } });
+    const results = await Promise.allSettled(Array.from({ length: 5 }, () => new CheckAndConsumeAiQuota().execute({ userId: user.id, config: { dailyUserLimit: 10, minuteUserLimit: 2, dailyGlobalLimit: 100000 } })));
+    expect(results.filter((result) => result.status === "fulfilled")).toHaveLength(2);
+    expect(await prisma.aiRequestLog.count({ where: { userId: user.id } })).toBe(2);
+    expect(await prisma.aiUsageDaily.findUnique({ where: { userId_date: { userId: user.id, date: dayjs.utc().format("YYYY-MM-DD") } } })).toMatchObject({ count: 2 });
+  });
   const createTestUser = async (email: string) => {
     return prisma.user.create({
       data: {
@@ -141,6 +157,8 @@ describe("AI Beta Rate Limiting & Safe Quotas (Task 5.1)", () => {
 
   it("resolve limite diário de 5 mensagens para atleta e retorna status correto", async () => {
     const user = await createTestUser(`athlete-default-${Date.now()}@test.com`);
+    const plan = await prisma.plan.create({ data: { code: `FREE_QUOTA_${crypto.randomUUID()}`, name: "Free quota fixture", audience: "ATHLETE", monthlyPriceInCents: 0, entitlements: { create: { entitlement: "AI_CHAT", limitValue: 5 } } } });
+    await prisma.user.update({ where: { id: user.id }, data: { accountSetupCompletedAt: new Date(), subscription: { create: { planId: plan.id, status: "ACTIVE", priceInCentsSnapshot: 0, currencySnapshot: "BRL" } } } });
     const limiter = new CheckAndConsumeAiQuota();
 
     const statusBefore = await limiter.getStatus(user.id);

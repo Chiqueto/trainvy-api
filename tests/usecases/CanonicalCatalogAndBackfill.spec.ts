@@ -32,6 +32,7 @@ describe("Task 3.1D — Catálogo Canônico Global & Backfill de Legado", () => 
 
   describe("1. Catálogo Canônico Global (Item 22)", () => {
     it("sync cria globals e associa os músculos corretamente", async () => {
+      const before = await prisma.exercise.findMany({ where: { id: { in: CANONICAL_GLOBAL_CATALOG.map((def) => def.id) } }, include: { muscles: true } });
       const syncResult = await syncCanonicalGlobalCatalog();
       expect(syncResult).toBeDefined();
 
@@ -58,8 +59,15 @@ describe("Task 3.1D — Catálogo Canônico Global & Backfill de Legado", () => 
           .filter((m) => m.role === MuscleRole.SECONDARY)
           .map((m) => m.muscleGroup);
 
-        expect(primaryMuscles).toEqual(expect.arrayContaining(def.primary));
-        expect(secondaryMuscles).toEqual(expect.arrayContaining(def.secondary));
+        const prior = before.find((exercise) => exercise.id === def.id);
+        if (prior?.muscles.length) {
+          // Bootstrap preserves anatomical classifications already reviewed in the catalog.
+          expect(found?.muscles).toEqual(expect.arrayContaining(prior.muscles));
+          expect(found?.muscles).toHaveLength(prior.muscles.length);
+        } else {
+          expect(primaryMuscles).toEqual(expect.arrayContaining(def.primary));
+          expect(secondaryMuscles).toEqual(expect.arrayContaining(def.secondary));
+        }
       }
     });
 

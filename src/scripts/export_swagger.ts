@@ -1,5 +1,3 @@
-import { complianceRoutes } from "../routes/compliance.js";
-import { featureTermsRoutes } from "../routes/feature-terms.js";
 import { execSync } from "node:child_process";
 import fs from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -13,7 +11,6 @@ import {
   validatorCompiler,
 } from "fastify-type-provider-zod";
 
-import { professionalVerificationRoutes } from "../routes/professional-verification.js";
 import { adminRoutes } from "../routes/admin.js";
 import { aiRoutes } from "../routes/ai.js";
 import { coachRoutes } from "../routes/coach.js";
@@ -21,24 +18,28 @@ import { coachPrescriptionRoutes } from "../routes/coach-prescription.js";
 import { coachProgressRoutes } from "../routes/coach-progress.js";
 import { coachTemplateRoutes } from "../routes/coach-template.js";
 import { commercialRoutes } from "../routes/commercial.js";
+import { complianceRoutes } from "../routes/compliance.js";
+import { cronRoutes } from "../routes/cron.js";
 import { exerciseRoutes } from "../routes/exercise.js";
+import { featureTermsRoutes } from "../routes/feature-terms.js";
 import { feedbackRoutes } from "../routes/feedback.js";
 import { historyRoutes } from "../routes/history.js";
 import { homeRoutes } from "../routes/home.js";
 import { meRoutes } from "../routes/me.js";
+import { notificationPreferencesRoutes } from "../routes/notification-preferences.js";
+import { notificationRoutes } from "../routes/notifications.js";
+import { operationsRoutes } from "../routes/operations.js";
 import { periodizationRoutes } from "../routes/periodization.js";
 import { planningRoutes } from "../routes/planning.js";
+import { professionalVerificationRoutes } from "../routes/professional-verification.js";
+import { pushSubscriptionRoutes } from "../routes/push-subscriptions.js";
+import { sessionFeedbackRoutes } from "../routes/session-feedback.js";
+import { sportsProfileRoutes } from "../routes/sports-profile.js";
 import { statsRoutes } from "../routes/stats.js";
+import { workoutEditRoutes } from "../routes/workout-edit.js";
 import { WorkoutPlanRoutes } from "../routes/workout-plan.js";
 import { workoutSessionRoutes } from "../routes/workout-session.js";
 import { workoutSessionRecoveryRoutes } from "../routes/workout-session-recovery.js";
-import { workoutEditRoutes } from "../routes/workout-edit.js";
-import { sessionFeedbackRoutes } from "../routes/session-feedback.js";
-import { sportsProfileRoutes } from "../routes/sports-profile.js";
-import { pushSubscriptionRoutes } from "../routes/push-subscriptions.js";
-import { notificationRoutes } from "../routes/notifications.js";
-import { notificationPreferencesRoutes } from "../routes/notification-preferences.js";
-import { cronRoutes } from "../routes/cron.js";
 
 const app = Fastify({
   bodyLimit: 25 * 1024 * 1024,
@@ -76,6 +77,7 @@ await app.register(coachRoutes);
 await app.register(professionalVerificationRoutes);
 await app.register(featureTermsRoutes);
 await app.register(complianceRoutes);
+await app.register(operationsRoutes);
 await app.register(coachPrescriptionRoutes);
 await app.register(coachProgressRoutes);
 await app.register(coachTemplateRoutes);

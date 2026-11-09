@@ -2,7 +2,9 @@ import { fromNodeHeaders } from "better-auth/node";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 
+import { AiAccessError } from "../domain/ai-access.js";
 import { CoachAthleteError } from "../domain/coach-athlete.js";
+import { AiRateLimitError } from "../errors/index.js";
 import {
   InvalidCursorError,
   InvalidDateRangeError,
@@ -42,6 +44,7 @@ import { GetCoachAthleteProgressSessions } from "../usecases/GetCoachAthleteProg
 import { UpdateAthleteCoachProgressSharing } from "../usecases/UpdateAthleteCoachProgressSharing.js";
 
 function fail(error: unknown, request: FastifyRequest, reply: FastifyReply) {
+  if (error instanceof AiAccessError || error instanceof AiRateLimitError) return reply.status(error.statusCode).send({ error: error.message, code: error.code });
   if (error instanceof CoachAthleteError) {
     return reply.status(error.status).send({
       error: error.message,
@@ -79,6 +82,7 @@ const standardErrors = {
   401: ErrorSchema,
   403: ErrorSchema,
   404: ErrorSchema,
+  429: ErrorSchema,
   500: ErrorSchema,
 };
 
