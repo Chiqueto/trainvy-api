@@ -6,6 +6,10 @@ import {
 import { prisma } from "../lib/db.js";
 import { GetCommercialContext } from "./GetCommercialContext.js";
 import { prescriptionApprovalMode } from "../domain/prescription-approval.js";
+import {
+  createUserNotification,
+  deliverUserNotification,
+} from "../services/SendPushToUser.js";
 
 export class SendWorkoutPrescription {
   async execute({
@@ -24,7 +28,7 @@ export class SendWorkoutPrescription {
     });
     assertCoachCanPrescribe(commercialContext);
 
-    return await prisma.$transaction(
+    const result = await prisma.$transaction(
       async (tx) => {
         await tx.$queryRaw`SELECT id FROM "user" WHERE id = ${coachId} FOR UPDATE`;
         const currentContext = await new GetCommercialContext().execute({
@@ -118,7 +122,10 @@ export class SendWorkoutPrescription {
           );
         }
 
-        const registration = await tx.professionalRegistration.findUniqueOrThrow({ where: { userId: coachId } });
+        const registration =
+          await tx.professionalRegistration.findUniqueOrThrow({
+            where: { userId: coachId },
+          });
         const updated = await tx.workoutPrescription.update({
           where: { id: prescription.id },
           data: {
@@ -145,15 +152,28 @@ export class SendWorkoutPrescription {
           },
         });
 
+        const notification = await createUserNotification(
+          {
+            userId: updated.athleteId,
+            type: "WORKOUT_ASSIGNED",
+            title: "Novo treino recebido",
+            body: `Seu treinador enviou o treino ${updated.name}. Confira no planejamento.`,
+            url: "/planning",
+            data: { prescriptionId: updated.id },
+          },
+          tx,
+        );
+
         return {
+          notification,
           id: updated.id,
           coachId: updated.coachId,
           athleteId: updated.athleteId,
           status: updated.status,
-      originType: updated.originType,
-      prescriptionStatus: updated.prescriptionStatus,
-      prescribedCrefSnapshot: updated.prescribedCrefSnapshot,
-      allowStudentSubstitution: updated.allowStudentSubstitution,
+          originType: updated.originType,
+          prescriptionStatus: updated.prescriptionStatus,
+          prescribedCrefSnapshot: updated.prescribedCrefSnapshot,
+          allowStudentSubstitution: updated.allowStudentSubstitution,
           name: updated.name,
           notes: updated.notes,
           version: updated.version,
@@ -175,5 +195,10 @@ export class SendWorkoutPrescription {
         timeout: 10000,
       },
     );
+    const { notification, ...response } = result;
+    await deliverUserNotification(notification).catch((error) =>
+      console.error("Falha na entrega push de treino", error),
+    );
+    return response;
   }
 }

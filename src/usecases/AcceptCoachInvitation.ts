@@ -8,6 +8,10 @@ import {
 import { Prisma } from "../generated/prisma/client.js";
 import { prisma } from "../lib/db.js";
 import { GetCommercialContext } from "./GetCommercialContext.js";
+import {
+  createUserNotification,
+  deliverUserNotification,
+} from "../services/SendPushToUser.js";
 
 interface ConcurrencyErrorShape {
   name?: string;
@@ -32,9 +36,18 @@ interface ConcurrencyErrorShape {
 function isRetryableConcurrencyError(err: unknown): boolean {
   if (typeof err !== "object" || err === null) return false;
   const e = err as ConcurrencyErrorShape;
-  if (e.code === "P2034" || e.code === "40001" || e.code === "40P01") return true;
-  if (e.name === "DriverAdapterError" || err.constructor?.name === "DriverAdapterError") return true;
-  if (e.cause?.originalCode === "40001" || e.cause?.kind === "TransactionWriteConflict") return true;
+  if (e.code === "P2034" || e.code === "40001" || e.code === "40P01")
+    return true;
+  if (
+    e.name === "DriverAdapterError" ||
+    err.constructor?.name === "DriverAdapterError"
+  )
+    return true;
+  if (
+    e.cause?.originalCode === "40001" ||
+    e.cause?.kind === "TransactionWriteConflict"
+  )
+    return true;
   const msg = typeof e.message === "string" ? e.message : "";
   if (
     msg.includes("TransactionWriteConflict") ||
@@ -58,19 +71,17 @@ function isRetryableConcurrencyError(err: unknown): boolean {
 }
 
 export class AcceptCoachInvitation {
-  async execute({
-    athleteId,
-    token,
-  }: {
-    athleteId: string;
-    token: string;
-  }) {
+  async execute({ athleteId, token }: { athleteId: string; token: string }) {
     const athlete = await prisma.user.findUnique({
       where: { id: athleteId },
     });
 
     if (!athlete) {
-      throw new CoachAthleteError("USER_NOT_FOUND", 404, "Usuário não encontrado.");
+      throw new CoachAthleteError(
+        "USER_NOT_FOUND",
+        404,
+        "Usuário não encontrado.",
+      );
     }
 
     const tokenHash = hashInvitationToken(token);
@@ -106,7 +117,7 @@ export class AcceptCoachInvitation {
     while (attempt < maxAttempts) {
       attempt++;
       try {
-        return await prisma.$transaction(
+        const result = await prisma.$transaction(
           async (tx) => {
             const invite = await tx.coachInvitation.findUnique({
               where: { tokenHash },
@@ -234,7 +245,19 @@ export class AcceptCoachInvitation {
               },
             });
 
+            const notification = await createUserNotification(
+              {
+                userId: athleteId,
+                type: "COACH_LINKED",
+                title: "Treinador vinculado",
+                body: `Você agora está vinculado a ${invite.coach.name}.`,
+                url: "/profile",
+              },
+              tx,
+            );
+
             return {
+              notification,
               success: true,
               link: {
                 id: link.id,
@@ -256,6 +279,11 @@ export class AcceptCoachInvitation {
             timeout: 10000,
           },
         );
+        const { notification, ...response } = result;
+        await deliverUserNotification(notification).catch((error) =>
+          console.error("Falha na entrega push de vínculo", error),
+        );
+        return response;
       } catch (err: unknown) {
         // Se for erro de domínio conhecido, não deve ser retentado
         if (err instanceof CoachAthleteError) {

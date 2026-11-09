@@ -11,7 +11,7 @@ export class SendStreakReminders {
   async execute(): Promise<number> {
     const candidates = await prisma.user.findMany({
       where: {
-        pushSubscriptions: { some: {} },
+        workoutPlans: { some: { isActive: true } },
       },
       select: {
         id: true,
@@ -70,8 +70,10 @@ export class SendStreakReminders {
       const completedToday = allCompletedSessions.some((s) => {
         if (!s.completedAt) return false;
         return (
-          dayjs.utc(s.completedAt).utcOffset(timezoneOffset).format("YYYY-MM-DD") ===
-          todayStr
+          dayjs
+            .utc(s.completedAt)
+            .utcOffset(timezoneOffset)
+            .format("YYYY-MM-DD") === todayStr
         );
       });
 
@@ -103,4 +105,3 @@ export class SendStreakReminders {
     return sentCount;
   }
 }
-

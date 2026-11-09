@@ -1,5 +1,6 @@
 import { prisma } from "../lib/db.js";
 import { webpush } from "../lib/web-push.js";
+import type { Notification, Prisma } from "../generated/prisma/client.js";
 
 export interface SendPushParams {
   userId: string;
@@ -10,16 +11,15 @@ export interface SendPushParams {
   data?: Record<string, unknown>;
 }
 
-export async function sendPushToUser({
-  userId,
-  title,
-  body,
-  type,
-  url = "/",
-  data,
-}: SendPushParams) {
+export async function createUserNotification(
+  { userId, title, body, type, url = "/", data }: SendPushParams,
+  client: Pick<
+    Prisma.TransactionClient,
+    "notification" | "notificationPreferences"
+  > = prisma,
+) {
   // 1. Checar preferências do usuário
-  const prefs = await prisma.notificationPreferences.findUnique({
+  const prefs = await client.notificationPreferences.findUnique({
     where: { userId },
   });
 
@@ -30,12 +30,16 @@ export async function sendPushToUser({
   };
 
   const prefKey = prefMap[type];
-  if (prefs && prefKey && (prefs as Record<string, unknown>)[prefKey] === false) {
+  if (
+    prefs &&
+    prefKey &&
+    (prefs as Record<string, unknown>)[prefKey] === false
+  ) {
     return null;
   }
 
   // 2. Persistir notificação no banco
-  const notification = await prisma.notification.create({
+  return client.notification.create({
     data: {
       userId,
       type,
@@ -44,7 +48,16 @@ export async function sendPushToUser({
       data: { url, ...data },
     },
   });
+}
 
+// Called only after the domain transaction commits. Push failure never rolls back the inbox.
+export async function deliverUserNotification(
+  notification: Notification | null,
+) {
+  if (!notification) return null;
+  const { userId, title, body, type } = notification;
+  const data = notification.data as { url?: string } | null;
+  const url = data?.url ?? "/";
   // 3. Buscar subscriptions ativas
   const subscriptions = await prisma.pushSubscription.findMany({
     where: { userId },
@@ -68,9 +81,9 @@ export async function sendPushToUser({
           endpoint: sub.endpoint,
           keys: { p256dh: sub.p256dh, auth: sub.auth },
         },
-        payload
-      )
-    )
+        payload,
+      ),
+    ),
   );
 
   // 5. Cleanup subscriptions expiradas (410 Gone / 404 Not Found)
@@ -85,7 +98,7 @@ export async function sendPushToUser({
             .delete({
               where: { id: subscriptions[i].id },
             })
-            .catch(() => {})
+            .catch(() => {}),
         );
       }
     }
@@ -97,3 +110,8 @@ export async function sendPushToUser({
   return notification;
 }
 
+export async function sendPushToUser(params: SendPushParams) {
+  const notification = await createUserNotification(params);
+  await deliverUserNotification(notification);
+  return notification;
+}

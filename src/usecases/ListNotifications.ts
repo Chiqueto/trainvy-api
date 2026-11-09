@@ -13,7 +13,7 @@ export class ListNotifications {
     const [items, unreadCount] = await Promise.all([
       prisma.notification.findMany({
         where: { userId: dto.userId },
-        orderBy: { sentAt: "desc" },
+        orderBy: [{ sentAt: "desc" }, { id: "desc" }],
         take: limit + 1,
         ...(dto.cursor
           ? {
@@ -30,8 +30,8 @@ export class ListNotifications {
     let nextCursor: string | null = null;
     const notifications = [...items];
     if (notifications.length > limit) {
-      const nextItem = notifications.pop();
-      nextCursor = nextItem?.id ?? null;
+      notifications.pop();
+      nextCursor = notifications[notifications.length - 1]?.id ?? null;
     }
 
     return {
@@ -49,4 +49,3 @@ export class ListNotifications {
     };
   }
 }
-

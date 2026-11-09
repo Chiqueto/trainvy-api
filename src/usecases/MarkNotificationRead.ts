@@ -19,12 +19,11 @@ export class MarkNotificationRead {
       throw new NotFoundError("Notificação não encontrada.");
     }
 
-    await prisma.notification.update({
-      where: { id: dto.id },
+    await prisma.notification.updateMany({
+      where: { id: dto.id, userId: dto.userId, readAt: null },
       data: { readAt: new Date() },
     });
 
     return { success: true };
   }
 }
-
