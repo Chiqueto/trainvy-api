@@ -2,6 +2,7 @@ import { fromNodeHeaders } from "better-auth/node";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import z from "zod";
+import { AiDisabledError } from "../usecases/AiAvailability.js";
 
 import { CommercialError } from "../domain/commercial.js";
 import { auth } from "../lib/auth.js";
@@ -21,6 +22,8 @@ import { GetCommercialContext } from "../usecases/GetCommercialContext.js";
 import { ListPublicPlans } from "../usecases/ListPublicPlans.js";
 
 function fail(error: unknown, request: FastifyRequest, reply: FastifyReply) {
+  if (error instanceof AiDisabledError)
+    return reply.status(503).send({ error: error.message, code: error.code });
   if (error instanceof CommercialError)
     return reply
       .status(error.status)
@@ -32,6 +35,7 @@ function fail(error: unknown, request: FastifyRequest, reply: FastifyReply) {
     .send({ error: "Internal server error", code: "INTERNAL_SERVER_ERROR" });
 }
 const errors = {
+  503: ErrorSchema,
   400: ErrorSchema,
   401: ErrorSchema,
   404: ErrorSchema,

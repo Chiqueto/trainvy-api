@@ -1,3 +1,4 @@
+import { assertAiEnabledForUser } from "./AiAvailability.js";
 import { generateObject } from "ai";
 import z from "zod";
 
@@ -107,13 +108,15 @@ export class GenerateCoachPrescriptionDraftWithAi {
   async execute(
     input: GenerateCoachPrescriptionDraftWithAiInput,
   ): Promise<GenerateCoachPrescriptionDraftWithAiOutput> {
+    await assertAiEnabledForUser(input.coachId);
     const upload = validateAiUpload(input);
     // 1. Validação de perfil e entitlement
     const commercialContext = await new GetCommercialContext().execute({
       userId: input.coachId,
     });
     assertCoachCanManageAthletes(commercialContext);
-    if (!resolveAiAccess(commercialContext, "AI_PLAN_GENERATION").enabled) throw new AiAccessError();
+    if (!resolveAiAccess(commercialContext, "AI_PLAN_GENERATION").enabled)
+      throw new AiAccessError();
 
     // 2. Validação de vínculo ativo com o atleta
     const link = await prisma.coachAthlete.findFirst({
@@ -142,7 +145,9 @@ export class GenerateCoachPrescriptionDraftWithAi {
     const athleteName = link.athlete.name;
     const catalog = await prisma.exercise.findMany({
       where: { OR: [{ ownerUserId: null }, { ownerUserId: input.coachId }] },
-      select: { name: true }, orderBy: { name: "asc" }, take: 300,
+      select: { name: true },
+      orderBy: { name: "asc" },
+      take: 300,
     });
 
     const systemPrompt = `Você é o assistente de prescrição técnica do Trainvy para Personal Trainers.
@@ -180,7 +185,10 @@ ${catalog.map((exercise) => exercise.name).join("; ")}
       });
     }
 
-    await new CheckAndConsumeAiQuota().execute({ userId: input.coachId, entitlement: "AI_PLAN_GENERATION" });
+    await new CheckAndConsumeAiQuota().execute({
+      userId: input.coachId,
+      entitlement: "AI_PLAN_GENERATION",
+    });
     const { object } = await trackAiGeneration(
       {
         userId: input.coachId,
@@ -190,7 +198,7 @@ ${catalog.map((exercise) => exercise.name).join("; ")}
       () =>
         generateObject({
           maxOutputTokens: 12000,
-          model: privateModel([athleteName]),
+          model: privateModel([athleteName], undefined, "SELF", input.coachId),
           schema: AiPrescriptionOutputSchema,
           system: systemPrompt,
           messages: [
@@ -245,9 +253,22 @@ ${catalog.map((exercise) => exercise.name).join("; ")}
       })),
     };
     const saved = await new CreateWorkoutPrescriptionDraft().execute({
-      coachId: input.coachId, athleteId: input.athleteId, aiAssisted: true,
-      name: result.name, notes: result.notes,
-      workoutDays: result.workoutDays.map((d, order) => ({ ...d, order, estimatedDurationInSeconds: d.estimatedDurationInMinutes * 60, exercises: d.exercises.map((e, index) => ({ ...e, order: index, alternative1ExerciseName: e.alternative1Name, alternative2ExerciseName: e.alternative2Name })) })),
+      coachId: input.coachId,
+      athleteId: input.athleteId,
+      aiAssisted: true,
+      name: result.name,
+      notes: result.notes,
+      workoutDays: result.workoutDays.map((d, order) => ({
+        ...d,
+        order,
+        estimatedDurationInSeconds: d.estimatedDurationInMinutes * 60,
+        exercises: d.exercises.map((e, index) => ({
+          ...e,
+          order: index,
+          alternative1ExerciseName: e.alternative1Name,
+          alternative2ExerciseName: e.alternative2Name,
+        })),
+      })),
     });
     return { ...result, prescriptionId: saved.id, version: saved.version };
   }

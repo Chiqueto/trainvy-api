@@ -1,3 +1,4 @@
+import { AiDisabledError } from "../usecases/AiAvailability.js";
 import { fromNodeHeaders } from "better-auth/node";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import {
@@ -36,7 +37,14 @@ import { SendWorkoutPrescription } from "../usecases/SendWorkoutPrescription.js"
 import { UpdateWorkoutPrescriptionDraft } from "../usecases/UpdateWorkoutPrescriptionDraft.js";
 
 function fail(error: unknown, request: FastifyRequest, reply: FastifyReply) {
-  if (error instanceof AiAccessError || error instanceof AiRateLimitError) return reply.status(error.statusCode).send({ error: error.message, code: error.code });
+  if (
+    error instanceof AiAccessError ||
+    error instanceof AiRateLimitError ||
+    error instanceof AiDisabledError
+  )
+    return reply
+      .status(error.statusCode)
+      .send({ error: error.message, code: error.code });
   if (
     error instanceof CoachPrescriptionError ||
     error instanceof CoachAthleteError
@@ -85,6 +93,7 @@ const standardErrors = {
   409: ErrorSchema,
   429: ErrorSchema,
   500: ErrorSchema,
+  503: ErrorSchema,
 };
 
 export const coachPrescriptionRoutes: FastifyPluginAsyncZod = async (app) => {

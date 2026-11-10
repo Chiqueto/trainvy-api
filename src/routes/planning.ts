@@ -1,3 +1,4 @@
+import { AiDisabledError } from "../usecases/AiAvailability.js";
 import { createHash } from "node:crypto";
 
 import { fromNodeHeaders } from "better-auth/node";
@@ -40,6 +41,7 @@ export const planningRoutes = async (app: FastifyInstance) => {
           404: ErrorSchema,
           409: ErrorSchema,
           500: ErrorSchema,
+          503: ErrorSchema,
         },
       },
     },
@@ -84,19 +86,15 @@ export const planningRoutes = async (app: FastifyInstance) => {
             .status(e.status)
             .send({ error: e.message, code: e.code });
         if (e instanceof ConflictError)
-          return reply
-            .status(409)
-            .send({
-              error: "Esta importação já foi confirmada.",
-              code: "IMPORT_ALREADY_CONFIRMED",
-            });
-        request.log.error(e);
-        return reply
-          .status(500)
-          .send({
-            error: "Não foi possível salvar.",
-            code: "INTERNAL_SERVER_ERROR",
+          return reply.status(409).send({
+            error: "Esta importação já foi confirmada.",
+            code: "IMPORT_ALREADY_CONFIRMED",
           });
+        request.log.error(e);
+        return reply.status(500).send({
+          error: "Não foi possível salvar.",
+          code: "INTERNAL_SERVER_ERROR",
+        });
       }
     },
   );
@@ -113,6 +111,7 @@ export const planningRoutes = async (app: FastifyInstance) => {
         404: ErrorSchema,
         409: ErrorSchema,
         500: ErrorSchema,
+        503: ErrorSchema,
       },
     },
     handler: async (request, reply) => {
@@ -174,6 +173,7 @@ export const planningRoutes = async (app: FastifyInstance) => {
         409: ErrorSchema,
         401: ErrorSchema,
         500: ErrorSchema,
+        503: ErrorSchema,
       },
     },
     handler: async (request, reply) => {
@@ -199,12 +199,26 @@ export const planningRoutes = async (app: FastifyInstance) => {
 
         return reply.status(200).send(result);
       } catch (error) {
-        if (error instanceof AiAccessError) return reply.status(403).send({ error: error.message, code: error.code });
+        if (error instanceof AiDisabledError)
+          return reply
+            .status(503)
+            .send({ error: error.message, code: error.code });
+        if (error instanceof AiAccessError)
+          return reply
+            .status(403)
+            .send({ error: error.message, code: error.code });
         if (error instanceof CoachAthleteError)
           return reply
             .status(error.status)
             .send({ error: error.message, code: error.code });
-        if (error instanceof AiAccessError) return reply.status(403).send({ error: error.message, code: error.code });
+        if (error instanceof AiDisabledError)
+          return reply
+            .status(503)
+            .send({ error: error.message, code: error.code });
+        if (error instanceof AiAccessError)
+          return reply
+            .status(403)
+            .send({ error: error.message, code: error.code });
         if (error instanceof AiRateLimitError)
           return reply
             .status(429)

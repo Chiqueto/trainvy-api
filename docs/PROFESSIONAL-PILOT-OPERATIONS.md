@@ -10,6 +10,8 @@ A oferta inicial usa ativação manual e trials com prazo pelo administrador. N�
 
 ## Cota de IA
 
+Antes das permissões e cotas, valem os [dois controles de disponibilidade de IA](AI-AVAILABILITY.md), separados para profissionais e alunos e desabilitados por padrão no banco.
+
 Chat, fichas e análises reservam uma solicitação na mesma cota diária, antes de chamar o provedor. Cada operação exige seu entitlement: AI_CHAT ou AI_PLAN_GENERATION. MANAGE_ATHLETES sozinho não concede IA.
 
 Quando houver limites numéricos nas permissões de IA, vale o menor deles para a cota compartilhada; zero bloqueia. Sem limite numérico, os padrões são 5/dia para atleta, 30/dia para coach e 200/dia para plano INTERNAL, sempre exigindo permissão. A renovação ocorre à meia-noite UTC. Sem permissão retorna 403; cota ou capacidade esgotada retorna 429.

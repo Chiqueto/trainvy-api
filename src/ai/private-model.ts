@@ -5,6 +5,7 @@ import {
   AI_SAFETY_PROMPT,
   sanitizePayloadForLLM,
 } from "../domain/compliance.js";
+import { assertAiEnabledForUser } from "../usecases/AiAvailability.js";
 import {
   assertAthleteHealthConsent,
   assertHealthConsent,
@@ -15,12 +16,14 @@ export function privateModel(
   identities: string[] = [],
   consentUserId?: string,
   consentSubject: "SELF" | "ATHLETE" = "SELF",
+  actorUserId?: string,
 ) {
   return wrapLanguageModel({
     model: google("gemini-2.5-flash"),
     middleware: {
       specificationVersion: "v3",
       transformParams: async ({ params }) => {
+        await assertAiEnabledForUser(actorUserId);
         if (consentUserId) {
           if (consentSubject === "ATHLETE")
             await assertAthleteHealthConsent(consentUserId);

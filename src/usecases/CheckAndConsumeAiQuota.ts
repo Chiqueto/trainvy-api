@@ -1,3 +1,4 @@
+import { assertAiEnabledForUser } from "./AiAvailability.js";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc.js";
 
@@ -81,6 +82,7 @@ export class CheckAndConsumeAiQuota {
     input: CheckAndConsumeAiQuotaInput,
   ): Promise<CheckAndConsumeAiQuotaOutput> {
     const { userId } = input;
+    await assertAiEnabledForUser(userId);
     const minuteUserLimit = limit(
       input.config?.minuteUserLimit,
       process.env.AI_MINUTE_USER_LIMIT,

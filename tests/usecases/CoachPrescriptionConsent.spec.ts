@@ -1,3 +1,7 @@
+vi.mock("../../src/usecases/AiAvailability.js", async (original) => ({
+  ...(await original()),
+  assertAiEnabledForUser: vi.fn(async () => {}),
+}));
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { generateObject } from "ai";
 import { GenerateCoachPrescriptionDraftWithAi } from "../../src/usecases/GenerateCoachPrescriptionDraftWithAi.js";
@@ -84,7 +88,12 @@ vi.mock("../../src/usecases/GetCommercialContext.js", () => ({
             }
           : null,
         plan: { code: "TEST_COACH_AI", name: "Teste IA" },
-        entitlements: [{ key: "MANAGE_ATHLETES", limitValue: 10 }, ...(state.aiAllowed ? [{ key: "AI_PLAN_GENERATION", limitValue: 30 }] : [])],
+        entitlements: [
+          { key: "MANAGE_ATHLETES", limitValue: 10 },
+          ...(state.aiAllowed
+            ? [{ key: "AI_PLAN_GENERATION", limitValue: 30 }]
+            : []),
+        ],
       };
     }
   },
@@ -145,13 +154,20 @@ beforeEach(() => {
 describe("Professional authorship and personal-data consent are independent", () => {
   it("blocks a plan without AI before provider invocation or quota consumption", async () => {
     state.aiAllowed = false;
-    await expect(new GenerateCoachPrescriptionDraftWithAi().execute(input)).rejects.toMatchObject({ code: "AI_ENTITLEMENT_REQUIRED", statusCode: 403 });
+    await expect(
+      new GenerateCoachPrescriptionDraftWithAi().execute(input),
+    ).rejects.toMatchObject({
+      code: "AI_ENTITLEMENT_REQUIRED",
+      statusCode: 403,
+    });
     expect(generateObject).not.toHaveBeenCalled();
     expect(state.quota).not.toHaveBeenCalled();
   });
   it("does not call the provider when quota reservation fails", async () => {
     state.quota.mockRejectedValueOnce(new Error("Cota esgotada"));
-    await expect(new GenerateCoachPrescriptionDraftWithAi().execute(input)).rejects.toThrow("Cota esgotada");
+    await expect(
+      new GenerateCoachPrescriptionDraftWithAi().execute(input),
+    ).rejects.toThrow("Cota esgotada");
     expect(generateObject).not.toHaveBeenCalled();
     expect(state.save).not.toHaveBeenCalled();
   });

@@ -22,9 +22,28 @@ try {
     await prisma.workoutPrescription.deleteMany({
       where: { coachId: { in: ids } },
     });
+    await prisma.adminAuditLog.deleteMany({
+      where: { adminUserId: { in: ids } },
+    });
     await cleanupTestUsers(ids);
     await prisma.plan.deleteMany({ where: { id: { in: planIds } } });
+    const before = JSON.parse(process.env.E2E_AI_POLICY_BEFORE ?? "null");
+    if (before)
+      await prisma.aiAvailability.upsert({
+        where: { id: "global" },
+        create: before,
+        update: before,
+      });
+    else await prisma.aiAvailability.deleteMany({ where: { id: "global" } });
   } else {
+    const aiPolicyBefore = await prisma.aiAvailability.findUnique({
+      where: { id: "global" },
+    });
+    await prisma.aiAvailability.upsert({
+      where: { id: "global" },
+      create: { id: "global", professionalAiEnabled: true },
+      update: { professionalAiEnabled: true, athleteAiEnabled: false },
+    });
     const plans = await Promise.all(
       [true, false].map((ai) =>
         prisma.plan.create({
@@ -52,6 +71,17 @@ try {
           },
         }),
       ),
+    );
+    plans.push(
+      await prisma.plan.create({
+        data: {
+          code: `E2E_ATHLETE_${randomUUID()}`,
+          name: "Atleta E2E",
+          audience: "ATHLETE",
+          monthlyPriceInCents: 0,
+          entitlements: { create: [{ entitlement: "AI_CHAT", limitValue: 5 }] },
+        },
+      }),
     );
     const users: Record<string, { id: string; cookie: string }> = {};
     for (const role of roles) {
@@ -99,6 +129,17 @@ try {
         },
       });
       if (coach) await declareTestProfessional(user.id);
+      if (role === "athlete")
+        await prisma.subscription.create({
+          data: {
+            userId: user.id,
+            planId: plans[2].id,
+            status: "ACTIVE",
+            billingProvider: "NONE",
+            priceInCentsSnapshot: 0,
+            currencySnapshot: "BRL",
+          },
+        });
       for (const slug of [
         "termos-de-uso",
         "politica-de-privacidade",
@@ -175,7 +216,11 @@ try {
       },
     });
     console.log(
-      JSON.stringify({ users, planIds: plans.map((plan) => plan.id) }),
+      JSON.stringify({
+        users,
+        planIds: plans.map((plan) => plan.id),
+        aiPolicyBefore,
+      }),
     );
   }
 } finally {

@@ -1,3 +1,4 @@
+import { assertAiEnabledForUser } from "./AiAvailability.js";
 import { generateObject } from "ai";
 import z from "zod";
 
@@ -47,7 +48,7 @@ const AiInsightsObjectSchema = z.object({
       muscleGroup: z.string(),
       status: z.enum(["BALANCED", "OVERTRAINED", "UNDERTRAINED", "ATTENTION"]),
       observation: z.string(),
-    })
+    }),
   ),
   recommendations: z.array(z.string()),
   suggestedFocusForNextPrescription: z.string(),
@@ -55,14 +56,20 @@ const AiInsightsObjectSchema = z.object({
 
 export class GetCoachAthleteProgressInsights {
   async execute(
-    input: GetCoachAthleteProgressInsightsInput
+    input: GetCoachAthleteProgressInsightsInput,
   ): Promise<GetCoachAthleteProgressInsightsOutput> {
-    const authContext = await new AuthorizeCoachAthleteProgressAccess().execute({
-      coachId: input.coachId,
-      athleteId: input.athleteId,
+    await assertAiEnabledForUser(input.coachId);
+    const authContext = await new AuthorizeCoachAthleteProgressAccess().execute(
+      {
+        coachId: input.coachId,
+        athleteId: input.athleteId,
+      },
+    );
+    const commercial = await new GetCommercialContext().execute({
+      userId: input.coachId,
     });
-    const commercial = await new GetCommercialContext().execute({ userId: input.coachId });
-    if (!resolveAiAccess(commercial, "AI_PLAN_GENERATION").enabled) throw new AiAccessError();
+    if (!resolveAiAccess(commercial, "AI_PLAN_GENERATION").enabled)
+      throw new AiAccessError();
 
     const getOverview = new GetCoachAthleteProgressOverview();
     await assertAthleteHealthConsent(input.athleteId);
@@ -106,14 +113,14 @@ export class GetCoachAthleteProgressInsights {
     const muscleDistributionText = (overview.muscles?.muscles || [])
       .map(
         (g) =>
-          `- ${g.muscleGroup}: ${g.directWorkingSets} séries diretas, ${g.indirectWorkingSets} séries indiretas`
+          `- ${g.muscleGroup}: ${g.directWorkingSets} séries diretas, ${g.indirectWorkingSets} séries indiretas`,
       )
       .join("\n");
 
     const weeklyTrendText = (overview.weekly?.weeks || [])
       .map(
         (w, idx) =>
-          `Semana ${idx + 1} (${w.weekStartDate} a ${w.weekEndDate}): ${w.workoutsCompleted} treinos, ${w.workingSets} séries válidas, ${w.loadVolumeKg} kg de volume de carga.`
+          `Semana ${idx + 1} (${w.weekStartDate} a ${w.weekEndDate}): ${w.workoutsCompleted} treinos, ${w.workingSets} séries válidas, ${w.loadVolumeKg} kg de volume de carga.`,
       )
       .join("\n");
 
@@ -134,13 +141,24 @@ Distribuição de Séries por Grupamento Muscular:
 ${muscleDistributionText}
 `;
 
-    await new CheckAndConsumeAiQuota().execute({ userId: input.coachId, entitlement: "AI_PLAN_GENERATION" });
+    await new CheckAndConsumeAiQuota().execute({
+      userId: input.coachId,
+      entitlement: "AI_PLAN_GENERATION",
+    });
     try {
-      const { object } = await trackAiGeneration({ userId: input.coachId, feature: "COACH_INSIGHTS" }, () => generateObject({
-        maxOutputTokens: 3500,
-        model: privateModel([athleteName], input.athleteId, "ATHLETE"),
-        schema: AiInsightsObjectSchema,
-        system: `Você é um consultor sênior de inteligência artificial em fisiologia do exercício, biomecânica e periodização de musculação do Trainvy.
+      const { object } = await trackAiGeneration(
+        { userId: input.coachId, feature: "COACH_INSIGHTS" },
+        () =>
+          generateObject({
+            maxOutputTokens: 3500,
+            model: privateModel(
+              [athleteName],
+              input.athleteId,
+              "ATHLETE",
+              input.coachId,
+            ),
+            schema: AiInsightsObjectSchema,
+            system: `Você é um consultor sênior de inteligência artificial em fisiologia do exercício, biomecânica e periodização de musculação do Trainvy.
 Sua missão é analisar dados reais de histórico de treinos de um aluno para fornecer um diagnóstico analítico de alto nível para o seu Personal Trainer.
 
 Diretrizes obrigatórias:
@@ -149,8 +167,9 @@ Diretrizes obrigatórias:
 3. Descreva frequência e volume observados. Compare somente com metas explicitamente conhecidas. Não imponha faixas universais de séries, frequência ou descanso e não diagnostique sobrecarga, lesão ou recuperação a partir destas métricas.
 4. Forneça recomendações práticas e acionáveis que o Personal Trainer possa aplicar diretamente na próxima prescrição de treino.
 5. Seja direto, conciso e evite clichês vazios.`,
-        prompt: `Analise as métricas reais do aluno abaixo e gere o diagnóstico completo de evolução para o treinador:\n${promptContext}`,
-      }));
+            prompt: `Analise as métricas reais do aluno abaixo e gere o diagnóstico completo de evolução para o treinador:\n${promptContext}`,
+          }),
+      );
 
       return {
         athleteId: input.athleteId,

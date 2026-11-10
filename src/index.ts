@@ -1,3 +1,4 @@
+import { aiAvailabilityRoutes } from "./routes/ai-availability.js";
 import "dotenv/config";
 
 import fastifyCors from "@fastify/cors";
@@ -48,7 +49,11 @@ import { WorkoutPlanRoutes } from "./routes/workout-plan.js";
 import { workoutSessionRoutes } from "./routes/workout-session.js";
 import { workoutSessionRecoveryRoutes } from "./routes/workout-session-recovery.js";
 import { ApplicationAccessLogs } from "./usecases/ApplicationAccessLogs.js";
-import { assertAutonomousAdult, assertCoreLegalAcceptances, assertHealthConsent } from "./usecases/LegalCompliance.js";
+import {
+  assertAutonomousAdult,
+  assertCoreLegalAcceptances,
+  assertHealthConsent,
+} from "./usecases/LegalCompliance.js";
 
 const isVercel = Boolean(process.env.VERCEL);
 
@@ -70,10 +75,20 @@ const envToLogger = {
 
 const selectedLogger = envToLogger[env.NODE_ENV];
 const app = Fastify({
-  logger: env.NODE_ENV === "test" ? false : {
-    ...(typeof selectedLogger === "object" ? selectedLogger : {}),
-    redact: { paths: ["req.headers.authorization", "req.headers.cookie", 'res.headers["set-cookie"]'], censor: "[REDACTED]" },
-  },
+  logger:
+    env.NODE_ENV === "test"
+      ? false
+      : {
+          ...(typeof selectedLogger === "object" ? selectedLogger : {}),
+          redact: {
+            paths: [
+              "req.headers.authorization",
+              "req.headers.cookie",
+              'res.headers["set-cookie"]',
+            ],
+            censor: "[REDACTED]",
+          },
+        },
   bodyLimit: 25 * 1024 * 1024, // 25MB para permitir áudios e documentos multimodais
 });
 
@@ -82,14 +97,18 @@ app.setSerializerCompiler(serializerCompiler);
 
 app.addHook("preHandler", async (request, reply) => {
   if (!requiresHealthConsent(request.method, request.url)) return;
-  const session = await auth.api.getSession({ headers: fromNodeHeaders(request.headers) });
+  const session = await auth.api.getSession({
+    headers: fromNodeHeaders(request.headers),
+  });
   if (!session) return;
   try {
     await assertCoreLegalAcceptances(session.user.id);
     await assertHealthConsent(session.user.id);
-    if (!/^\/me\/?(?:\?|$)/.test(request.url)) await assertAutonomousAdult(session.user.id);
+    if (!/^\/me\/?(?:\?|$)/.test(request.url))
+      await assertAutonomousAdult(session.user.id);
   } catch (error) {
-    if (error instanceof CoachAthleteError) return reply.code(403).send({ code: error.code, error: error.message });
+    if (error instanceof CoachAthleteError)
+      return reply.code(403).send({ code: error.code, error: error.message });
     throw error;
   }
 });
@@ -98,16 +117,22 @@ const accessIdentities = new WeakMap<object, string>();
 app.addHook("onRequest", async (request) => {
   if (!request.headers.cookie) return;
   try {
-    const session = await auth.api.getSession({ headers: fromNodeHeaders(request.headers) });
+    const session = await auth.api.getSession({
+      headers: fromNodeHeaders(request.headers),
+    });
     if (session) accessIdentities.set(request, session.user.id);
-  } catch (error) { request.log.error(error, "Application access identity lookup failed"); }
+  } catch (error) {
+    request.log.error(error, "Application access identity lookup failed");
+  }
 });
 app.addHook("onResponse", async (request) => {
   const userId = accessIdentities.get(request);
   if (!userId) return;
   try {
     await new ApplicationAccessLogs().record(userId, request.ip);
-  } catch (error) { request.log.error(error, "Application access log failed"); }
+  } catch (error) {
+    request.log.error(error, "Application access log failed");
+  }
 });
 
 await app.register(fastifySwagger, {
@@ -175,6 +200,7 @@ await app.register(professionalVerificationRoutes);
 await app.register(featureTermsRoutes);
 await app.register(complianceRoutes);
 await app.register(operationsRoutes);
+await app.register(aiAvailabilityRoutes);
 await app.register(coachPrescriptionRoutes);
 await app.register(coachProgressRoutes);
 await app.register(coachTemplateRoutes);
@@ -182,7 +208,9 @@ await app.register(feedbackRoutes, { prefix: "/feedback" });
 await app.register(adminRoutes, { prefix: "/admin" });
 await app.register(pushSubscriptionRoutes, { prefix: "/push-subscriptions" });
 await app.register(notificationRoutes, { prefix: "/notifications" });
-await app.register(notificationPreferencesRoutes, { prefix: "/notification-preferences" });
+await app.register(notificationPreferencesRoutes, {
+  prefix: "/notification-preferences",
+});
 await app.register(cronRoutes, { prefix: "/cron" });
 
 app.withTypeProvider<ZodTypeProvider>().route({

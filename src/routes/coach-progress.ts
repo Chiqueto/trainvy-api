@@ -1,3 +1,4 @@
+import { AiDisabledError } from "../usecases/AiAvailability.js";
 import { fromNodeHeaders } from "better-auth/node";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
@@ -44,7 +45,14 @@ import { GetCoachAthleteProgressSessions } from "../usecases/GetCoachAthleteProg
 import { UpdateAthleteCoachProgressSharing } from "../usecases/UpdateAthleteCoachProgressSharing.js";
 
 function fail(error: unknown, request: FastifyRequest, reply: FastifyReply) {
-  if (error instanceof AiAccessError || error instanceof AiRateLimitError) return reply.status(error.statusCode).send({ error: error.message, code: error.code });
+  if (
+    error instanceof AiAccessError ||
+    error instanceof AiRateLimitError ||
+    error instanceof AiDisabledError
+  )
+    return reply
+      .status(error.statusCode)
+      .send({ error: error.message, code: error.code });
   if (error instanceof CoachAthleteError) {
     return reply.status(error.status).send({
       error: error.message,
@@ -84,6 +92,7 @@ const standardErrors = {
   404: ErrorSchema,
   429: ErrorSchema,
   500: ErrorSchema,
+  503: ErrorSchema,
 };
 
 export const coachProgressRoutes: FastifyPluginAsyncZod = async (app) => {
@@ -94,7 +103,8 @@ export const coachProgressRoutes: FastifyPluginAsyncZod = async (app) => {
       schema: {
         operationId: "getAthleteCoachProgressSharing",
         tags: ["Me"],
-        summary: "Consultar consentimento e escopo de compartilhamento de evolução",
+        summary:
+          "Consultar consentimento e escopo de compartilhamento de evolução",
         response: {
           200: GetAthleteProgressSharingResponseSchema,
           ...standardErrors,
@@ -107,7 +117,9 @@ export const coachProgressRoutes: FastifyPluginAsyncZod = async (app) => {
           headers: fromNodeHeaders(request.headers),
         });
         if (!session?.user) {
-          return reply.status(401).send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+          return reply
+            .status(401)
+            .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
         }
 
         const useCase = new GetAthleteCoachProgressSharing();
@@ -127,7 +139,8 @@ export const coachProgressRoutes: FastifyPluginAsyncZod = async (app) => {
       schema: {
         operationId: "updateAthleteCoachProgressSharing",
         tags: ["Me"],
-        summary: "Atualizar consentimento e escopo de compartilhamento de evolução",
+        summary:
+          "Atualizar consentimento e escopo de compartilhamento de evolução",
         body: UpdateAthleteProgressSharingBodySchema,
         response: {
           200: GetAthleteProgressSharingResponseSchema,
@@ -141,7 +154,9 @@ export const coachProgressRoutes: FastifyPluginAsyncZod = async (app) => {
           headers: fromNodeHeaders(request.headers),
         });
         if (!session?.user) {
-          return reply.status(401).send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+          return reply
+            .status(401)
+            .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
         }
 
         const useCase = new UpdateAthleteCoachProgressSharing();
@@ -166,7 +181,8 @@ export const coachProgressRoutes: FastifyPluginAsyncZod = async (app) => {
       schema: {
         operationId: "getCoachAthleteProgressOverview",
         tags: ["Coach"],
-        summary: "Consultar visão geral, volume e distribuição de evolução do aluno",
+        summary:
+          "Consultar visão geral, volume e distribuição de evolução do aluno",
         params: CoachAthleteProgressOverviewParamsSchema,
         querystring: CoachAthleteProgressOverviewQuerySchema,
         response: {
@@ -181,7 +197,9 @@ export const coachProgressRoutes: FastifyPluginAsyncZod = async (app) => {
           headers: fromNodeHeaders(request.headers),
         });
         if (!session?.user) {
-          return reply.status(401).send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+          return reply
+            .status(401)
+            .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
         }
 
         const useCase = new GetCoachAthleteProgressOverview();
@@ -222,7 +240,9 @@ export const coachProgressRoutes: FastifyPluginAsyncZod = async (app) => {
           headers: fromNodeHeaders(request.headers),
         });
         if (!session?.user) {
-          return reply.status(401).send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+          return reply
+            .status(401)
+            .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
         }
 
         const useCase = new GetCoachAthleteProgressSessions();
@@ -249,7 +269,8 @@ export const coachProgressRoutes: FastifyPluginAsyncZod = async (app) => {
       schema: {
         operationId: "getCoachAthleteProgressSessionDetail",
         tags: ["Coach"],
-        summary: "Consultar detalhe e snapshot histórico de treino concluído do aluno",
+        summary:
+          "Consultar detalhe e snapshot histórico de treino concluído do aluno",
         params: CoachAthleteProgressSessionParamsSchema,
         response: {
           200: CoachAthleteProgressSessionResponseSchema,
@@ -263,7 +284,9 @@ export const coachProgressRoutes: FastifyPluginAsyncZod = async (app) => {
           headers: fromNodeHeaders(request.headers),
         });
         if (!session?.user) {
-          return reply.status(401).send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+          return reply
+            .status(401)
+            .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
         }
 
         const useCase = new GetCoachAthleteProgressSessionDetail();
@@ -303,7 +326,9 @@ export const coachProgressRoutes: FastifyPluginAsyncZod = async (app) => {
           headers: fromNodeHeaders(request.headers),
         });
         if (!session?.user) {
-          return reply.status(401).send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+          return reply
+            .status(401)
+            .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
         }
 
         const useCase = new GetCoachAthleteProgressExercises();
@@ -311,7 +336,8 @@ export const coachProgressRoutes: FastifyPluginAsyncZod = async (app) => {
           coachId: session.user.id,
           athleteId: request.params.athleteId,
           query: request.query.q,
-          onlyWithHistory: request.query.onlyWithHistory === "false" ? false : true,
+          onlyWithHistory:
+            request.query.onlyWithHistory === "false" ? false : true,
         });
 
         reply.header("Cache-Control", "no-store, private");
@@ -329,7 +355,8 @@ export const coachProgressRoutes: FastifyPluginAsyncZod = async (app) => {
       schema: {
         operationId: "getCoachAthleteProgressExerciseEvolution",
         tags: ["Coach"],
-        summary: "Consultar evolução longitudinal e PR de exercício autorizado do aluno",
+        summary:
+          "Consultar evolução longitudinal e PR de exercício autorizado do aluno",
         params: CoachAthleteProgressExerciseEvolutionParamsSchema,
         querystring: CoachAthleteProgressExerciseEvolutionQuerySchema,
         response: {
@@ -344,7 +371,9 @@ export const coachProgressRoutes: FastifyPluginAsyncZod = async (app) => {
           headers: fromNodeHeaders(request.headers),
         });
         if (!session?.user) {
-          return reply.status(401).send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+          return reply
+            .status(401)
+            .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
         }
 
         const useCase = new GetCoachAthleteProgressExerciseEvolution();
@@ -371,7 +400,8 @@ export const coachProgressRoutes: FastifyPluginAsyncZod = async (app) => {
       schema: {
         operationId: "getCoachAthleteProgressInsights",
         tags: ["Coach"],
-        summary: "Consultar diagnóstico analítico e insights de evolução com IA para o aluno",
+        summary:
+          "Consultar diagnóstico analítico e insights de evolução com IA para o aluno",
         params: CoachAthleteProgressInsightsParamsSchema,
         querystring: CoachAthleteProgressInsightsQuerySchema,
         response: {
@@ -386,7 +416,9 @@ export const coachProgressRoutes: FastifyPluginAsyncZod = async (app) => {
           headers: fromNodeHeaders(request.headers),
         });
         if (!session?.user) {
-          return reply.status(401).send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+          return reply
+            .status(401)
+            .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
         }
 
         const useCase = new GetCoachAthleteProgressInsights();
@@ -405,4 +437,3 @@ export const coachProgressRoutes: FastifyPluginAsyncZod = async (app) => {
     },
   );
 };
-

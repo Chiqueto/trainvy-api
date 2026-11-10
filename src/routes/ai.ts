@@ -1,3 +1,4 @@
+import { AiDisabledError } from "../usecases/AiAvailability.js";
 import {
   convertToModelMessages,
   createUIMessageStream,
@@ -153,11 +154,15 @@ export function sanitizeMessagesForRevokedHistory(
 export const aiRoutes = async (app: FastifyInstance) => {
   app.addHook("preHandler", async (request, reply) => {
     if (request.method !== "POST") return;
-    const session = await auth.api.getSession({ headers: fromNodeHeaders(request.headers) });
+    const session = await auth.api.getSession({
+      headers: fromNodeHeaders(request.headers),
+    });
     if (!session) return;
-    try { await assertHealthConsent(session.user.id); }
-    catch (error) {
-      if (error instanceof CoachAthleteError) return reply.code(403).send({ code: error.code, error: error.message });
+    try {
+      await assertHealthConsent(session.user.id);
+    } catch (error) {
+      if (error instanceof CoachAthleteError)
+        return reply.code(403).send({ code: error.code, error: error.message });
       throw error;
     }
   });
@@ -207,7 +212,12 @@ export const aiRoutes = async (app: FastifyInstance) => {
       const userName = session.user.name;
       const identity = await new GetCommercialContext().execute({ userId });
       const professionalMode = identity.professionalAccessGranted;
-      const sandboxMode = identity.accountType === "COACH" && !professionalMode && !["SUSPENDED", "REJECTED"].includes(identity.professionalVerification?.status ?? "");
+      const sandboxMode =
+        identity.accountType === "COACH" &&
+        !professionalMode &&
+        !["SUSPENDED", "REJECTED"].includes(
+          identity.professionalVerification?.status ?? "",
+        );
 
       // Proteção de cotas e rate limit persistente para o Beta
       let quotaResult: CheckAndConsumeAiQuotaOutput | null = null;
@@ -215,8 +225,15 @@ export const aiRoutes = async (app: FastifyInstance) => {
         const checkQuota = new CheckAndConsumeAiQuota();
         quotaResult = await checkQuota.execute({ userId });
       } catch (error) {
-          if (error instanceof AiAccessError) return reply.status(403).send({ error: error.message, code: error.code });
-          if (error instanceof AiRateLimitError) {
+        if (error instanceof AiDisabledError)
+          return reply
+            .status(503)
+            .send({ error: error.message, code: error.code });
+        if (error instanceof AiAccessError)
+          return reply
+            .status(403)
+            .send({ error: error.message, code: error.code });
+        if (error instanceof AiRateLimitError) {
           return reply.status(429).send({
             error: error.message,
             code: error.code,
@@ -426,7 +443,7 @@ export const aiRoutes = async (app: FastifyInstance) => {
 
       if ((professionalMode || sandboxMode) && !workoutSessionId) {
         const result = streamText({
-          model: privateModel([userName], userId),
+          model: privateModel([userName], userId, "SELF", userId),
           system: systemPrompt,
           messages: await convertToModelMessages(messages),
           tools,
@@ -460,29 +477,30 @@ export const aiRoutes = async (app: FastifyInstance) => {
       const result = reportsSafetySymptoms(lastUserText)
         ? { text: SAFETY_REDIRECT }
         : requestsPersonalPrescription(lastUserText)
-        ? { text: ORGANIZER_REDIRECT }
-        : await generateText({
-            model: privateModel([userName], userId),
-            system: systemPrompt,
-            messages: await convertToModelMessages(messages),
-            stopWhen: stepCountIs(10),
-            tools,
-            onStepFinish: async ({ usage }) => {
-              await recordAiUsage(
-                {
-                  userId,
-                  feature: workoutSessionId ? "SESSION_CHAT" : "CHAT",
-                  hasAudio: messages.some((m) =>
-                    m.parts?.some(
-                      (p) =>
-                        p.type === "file" && p.mediaType?.startsWith("audio/"),
+          ? { text: ORGANIZER_REDIRECT }
+          : await generateText({
+              model: privateModel([userName], userId, "SELF", userId),
+              system: systemPrompt,
+              messages: await convertToModelMessages(messages),
+              stopWhen: stepCountIs(10),
+              tools,
+              onStepFinish: async ({ usage }) => {
+                await recordAiUsage(
+                  {
+                    userId,
+                    feature: workoutSessionId ? "SESSION_CHAT" : "CHAT",
+                    hasAudio: messages.some((m) =>
+                      m.parts?.some(
+                        (p) =>
+                          p.type === "file" &&
+                          p.mediaType?.startsWith("audio/"),
+                      ),
                     ),
-                  ),
-                },
-                usage,
-              );
-            },
-          });
+                  },
+                  usage,
+                );
+              },
+            });
 
       const answer =
         professionalMode && !workoutSessionId
@@ -538,6 +556,7 @@ export const aiRoutes = async (app: FastifyInstance) => {
         401: ErrorSchema,
         404: ErrorSchema,
         500: ErrorSchema,
+        503: ErrorSchema,
       },
     },
     handler: async (request, reply) => {
@@ -592,6 +611,7 @@ export const aiRoutes = async (app: FastifyInstance) => {
         201: CreateAiConversationResponseSchema,
         401: ErrorSchema,
         500: ErrorSchema,
+        503: ErrorSchema,
       },
     },
     handler: async (request, reply) => {
@@ -628,6 +648,7 @@ export const aiRoutes = async (app: FastifyInstance) => {
         401: ErrorSchema,
         404: ErrorSchema,
         500: ErrorSchema,
+        503: ErrorSchema,
       },
     },
     handler: async (request, reply) => {
@@ -675,6 +696,7 @@ export const aiRoutes = async (app: FastifyInstance) => {
         401: ErrorSchema,
         404: ErrorSchema,
         500: ErrorSchema,
+        503: ErrorSchema,
       },
     },
     handler: async (request, reply) => {
@@ -720,6 +742,7 @@ export const aiRoutes = async (app: FastifyInstance) => {
         401: ErrorSchema,
         404: ErrorSchema,
         500: ErrorSchema,
+        503: ErrorSchema,
       },
     },
     handler: async (request, reply) => {
@@ -765,6 +788,7 @@ export const aiRoutes = async (app: FastifyInstance) => {
         401: ErrorSchema,
         404: ErrorSchema,
         500: ErrorSchema,
+        503: ErrorSchema,
       },
     },
     handler: async (request, reply) => {
@@ -809,6 +833,7 @@ export const aiRoutes = async (app: FastifyInstance) => {
         200: AiQuotaStatusResponseSchema,
         401: ErrorSchema,
         500: ErrorSchema,
+        503: ErrorSchema,
       },
     },
     handler: async (request, reply) => {

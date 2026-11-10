@@ -1,3 +1,4 @@
+import { aiAvailabilityRoutes } from "../routes/ai-availability.js";
 import { execSync } from "node:child_process";
 import fs from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -78,6 +79,7 @@ await app.register(professionalVerificationRoutes);
 await app.register(featureTermsRoutes);
 await app.register(complianceRoutes);
 await app.register(operationsRoutes);
+await app.register(aiAvailabilityRoutes);
 await app.register(coachPrescriptionRoutes);
 await app.register(coachProgressRoutes);
 await app.register(coachTemplateRoutes);
@@ -92,7 +94,9 @@ await app.register(feedbackRoutes, { prefix: "/feedback" });
 await app.register(historyRoutes, { prefix: "/history" });
 await app.register(pushSubscriptionRoutes, { prefix: "/push-subscriptions" });
 await app.register(notificationRoutes, { prefix: "/notifications" });
-await app.register(notificationPreferencesRoutes, { prefix: "/notification-preferences" });
+await app.register(notificationPreferencesRoutes, {
+  prefix: "/notification-preferences",
+});
 await app.register(cronRoutes, { prefix: "/cron" });
 
 await app.ready();

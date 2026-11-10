@@ -3,6 +3,7 @@ import { createHash, randomBytes } from "node:crypto";
 import { assertSignupPlan } from "../domain/commercial.js";
 import type { AccountType } from "../generated/prisma/client.js";
 import { prisma } from "../lib/db.js";
+import { assertAiPlanSignupAvailable } from "./AiAvailability.js";
 
 export function hashSignupToken(token: string) {
   return createHash("sha256").update(token).digest("hex");
@@ -18,6 +19,7 @@ export class CreateSignupIntent {
   }) {
     const plan = await prisma.plan.findUnique({ where: { code: planCode } });
     assertSignupPlan(plan, accountType);
+    await assertAiPlanSignupAvailable(plan.id, accountType);
     const token = randomBytes(32).toString("base64url");
     const expiresAt = new Date(Date.now() + 20 * 60_000);
     await prisma.signupIntent.create({

@@ -1,5 +1,6 @@
 import { assertSignupPlan, CommercialError } from "../domain/commercial.js";
 import { prisma } from "../lib/db.js";
+import { assertAiPlanSignupAvailable } from "./AiAvailability.js";
 import { hashSignupToken } from "./CreateSignupIntent.js";
 
 export class CompleteSignup {
@@ -24,6 +25,7 @@ export class CompleteSignup {
       await tx.$queryRaw`SELECT id FROM "Plan" WHERE id = ${intent.planId} FOR SHARE`;
       const plan = await tx.plan.findUnique({ where: { id: intent.planId } });
       assertSignupPlan(plan, intent.accountType);
+      await assertAiPlanSignupAvailable(plan.id, intent.accountType, tx);
       await tx.subscription.create({
         data: {
           userId,

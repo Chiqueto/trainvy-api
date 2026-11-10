@@ -660,6 +660,7 @@ model SignupIntent {
 }
 
 enum AdminAuditAction {
+  AI_AVAILABILITY_UPDATED
   COMPLIANCE_UPDATED
   PROFESSIONAL_VERIFICATION_POLICY_UPDATED
   EXERCISE_MUSCLES_UPDATED
@@ -1043,6 +1044,15 @@ model ProfessionalVerificationPolicy {
   revision        Int      @default(1)
   updatedByUserId String?
   updatedAt       DateTime @default(now()) @updatedAt @db.Timestamptz()
+}
+
+model AiAvailability {
+  id                    String   @id @default("global")
+  professionalAiEnabled Boolean  @default(false)
+  athleteAiEnabled      Boolean  @default(false)
+  revision              Int      @default(0)
+  updatedByUserId        String?
+  updatedAt             DateTime @default(now()) @updatedAt @db.Timestamptz()
 }
 
 // Evidence is append-only through the API; new terms require a new acceptance.
