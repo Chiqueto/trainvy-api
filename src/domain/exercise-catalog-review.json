@@ -1312,13 +1312,16 @@
       "BACK",
       "SHOULDERS",
       "FOREARMS",
-      "CORE"
+      "CORE",
+      "ADDUCTORS",
+      "BICEPS"
     ],
     "sourceIds": [
-      "catalyst",
-      "crossfit",
-      "deadlift"
-    ]
+      "hang-clean-emg",
+      "hang-clean-technique",
+      "hack-anatomy"
+    ],
+    "notes": "Barra suspensa acima dos joelhos, extensão explosiva e recepção parcial; bíceps/adutor magno secundários adicionados sem alterar motores principais. Detalhes na revisão por UUID."
   },
   {
     "id": "1b833278-06be-4ad0-831a-e87c85564521",
