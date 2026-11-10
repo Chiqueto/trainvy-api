@@ -1,6 +1,6 @@
 # Operação do piloto profissional
 
-Atualizado em 09/11/2026. Implementação local; publicação e configuração dos provedores não foram executadas nesta sessão.
+Atualizado em 10/11/2026. Implementação local; publicação e configuração dos provedores não foram executadas nesta sessão.
 
 ## Acesso e oferta
 
@@ -42,4 +42,6 @@ Esta entrega não certifica conformidade jurídica nem revisa cientificamente o 
 
 ## Evidências desta entrega
 
-Os 699 testes do frontend passaram. Os três cenários de navegador passaram após a atualização das dependências. Os builds e tipos de ambos os projetos passaram. A suíte completa da API está sendo reconferida após ajustar a fixture de aprovação para o conteúdo normalizado do SDK. O lint global da API encontrou pendências anteriores em arquivos fora deste escopo; o lint dos arquivos novos passou. A auditoria de dependências de execução não apontou alertas altos ou críticos; permanece um alerta baixo em dependência transitiva.
+Em 10/11/2026, a suíte também passou em um banco temporário criado do zero: 60 migrations, seeds do workflow e 842 testes em 98 arquivos. O banco temporário foi removido após a validação. Os testes de mídia agora consideram os IDs unificados pelas migrations sem dispensar a presença dos exercícios atuais; a fixture de alternativa da prescrição é criada pelo próprio teste. Isso elimina dependências de registros legados que existiam apenas no banco local anterior.
+
+Os 699 testes do frontend e os 842 testes da API passaram. Os três cenários de navegador passaram após a atualização das dependências. Os builds e tipos de ambos os projetos passaram. A fixture de aprovação foi alinhada ao conteúdo normalizado que o SDK apresenta ao usuário, preservando a exigência de aprovação. O lint global da API encontrou pendências anteriores em arquivos fora deste escopo; o lint dos arquivos novos passou. A auditoria de dependências de execução não apontou alertas altos ou críticos; permanece um alerta baixo em dependência transitiva.

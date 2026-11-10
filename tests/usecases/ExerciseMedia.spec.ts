@@ -1,5 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
+import { CANONICAL_GLOBAL_CATALOG } from "../../src/domain/canonical-catalog.js";
 import {
   CANONICAL_MEDIA_CATALOG,
   getCanonicalMediaByExerciseId,
@@ -80,16 +81,41 @@ describe("Task 4.X — Exercise Media Foundation (Backend)", () => {
     });
 
     it("sincronização de mídia é idempotente (múltiplas execuções preservam dados)", async () => {
+      const existingExercises = await prisma.exercise.findMany({
+        where: {
+          id: { in: CANONICAL_MEDIA_CATALOG.map((media) => media.exerciseId) },
+        },
+        select: { id: true },
+      });
+      const existingIds = new Set(existingExercises.map((exercise) => exercise.id));
+      const currentCatalogIds = new Set(
+        CANONICAL_GLOBAL_CATALOG.map((exercise) => exercise.id),
+      );
+      for (const media of CANONICAL_MEDIA_CATALOG) {
+        if (currentCatalogIds.has(media.exerciseId)) {
+          expect(existingIds.has(media.exerciseId), media.exerciseId).toBe(true);
+        }
+      }
+      // Legacy media definitions can outlive IDs merged by catalog migrations.
+      const missingIds = CANONICAL_MEDIA_CATALOG.filter(
+        (media) => !existingIds.has(media.exerciseId),
+      ).map((media) => media.exerciseId);
       const firstRun = await syncCanonicalMedia();
-      expect(firstRun.synced).toBe(CANONICAL_MEDIA_CATALOG.length);
-      expect(firstRun.skipped).toBe(0);
+      expect(firstRun.synced).toBe(existingExercises.length);
+      expect(firstRun.skipped).toBe(missingIds.length);
+      expect(firstRun.unmatchedExercises).toEqual(missingIds);
 
       const secondRun = await syncCanonicalMedia();
-      expect(secondRun.synced).toBe(CANONICAL_MEDIA_CATALOG.length);
-      expect(secondRun.skipped).toBe(0);
+      expect(secondRun.synced).toBe(firstRun.synced);
+      expect(secondRun.skipped).toBe(firstRun.skipped);
+      expect(secondRun.created).toBe(0);
+      expect(secondRun.preserved).toBe(firstRun.synced);
+      expect(secondRun.unmatchedExercises).toEqual(missingIds);
 
-      const count = await prisma.exerciseMedia.count();
-      expect(count).toBeGreaterThanOrEqual(CANONICAL_MEDIA_CATALOG.length);
+      const count = await prisma.exerciseMedia.count({
+        where: { exerciseId: { in: [...existingIds] } },
+      });
+      expect(count).toBeGreaterThanOrEqual(firstRun.synced);
     });
   });
 
@@ -290,7 +316,7 @@ describe("Task 4.X — Exercise Media Foundation (Backend)", () => {
     });
 
     it("syncCanonicalMedia preserva edições manuais e mídia desativada (insert-only por padrão)", async () => {
-      const globalId = "00000000-0000-4000-8000-000000000102"; // Supino Reto
+      const globalId = "00000000-0000-4000-8000-000000000103"; // Retained canonical exercise
 
       // Desativa e altera manualmente a instrução
       await prisma.exerciseMedia.updateMany({

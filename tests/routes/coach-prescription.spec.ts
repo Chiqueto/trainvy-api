@@ -25,6 +25,7 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
   let secondAthlete: { id: string; email: string; name: string };
   let coachWithoutEntitlement: { id: string; email: string; name: string };
   let activeLinkId: string;
+  const testExerciseIds: string[] = [];
 
   const validWorkoutDays = [
     {
@@ -212,6 +213,9 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
 
   afterAll(async () => {
     await app.close();
+    await prisma.exercise.deleteMany({
+      where: { id: { in: testExerciseIds }, ownerUserId: athleteUser.id },
+    });
   });
 
   it("POST /coach/prescriptions — 401 para requisição sem autenticação", async () => {
@@ -720,6 +724,13 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
   });
 
   it("POST /me/prescriptions/:id/accept — aceita com sucesso prescrição com alternativas duplicadas (resiliência)", async () => {
+    const alternative = await prisma.exercise.create({
+      data: {
+        name: "Alternativa da prescrição - teste",
+        ownerUserId: athleteUser.id,
+      },
+    });
+    testExerciseIds.push(alternative.id);
     const daysWithDuplicateAlternatives = [
       {
         name: "Treino Abdômen & Pernas",
@@ -735,7 +746,7 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
             warmupSets: 0,
             reps: 15,
             restTimeInSeconds: 60,
-            alternative1ExerciseName: "Elevação de Pernas Suspenso",
+            alternative1ExerciseName: alternative.name,
             alternative2ExerciseName: "Abdominal no Cabo", // Duplicata proposital igual ao principal
           },
         ],
@@ -789,7 +800,7 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
     const createdEx = plan!.workoutDays[0].exercises[0];
     // A alternativa 2 igual ao principal foi removida com segurança
     expect(createdEx.alternative2ExerciseId).toBeNull();
-    expect(createdEx.alternative1ExerciseId).not.toBeNull();
+    expect(createdEx.alternative1ExerciseId).toBe(alternative.id);
   });
 
   describe("Geração de Rascunho de Prescrição com Coach AI", () => {

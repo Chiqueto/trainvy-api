@@ -1,6 +1,6 @@
 # Release e recuperação
 
-Atualizado em 09/11/2026.
+Atualizado em 10/11/2026.
 
 ## Compilação e banco
 
