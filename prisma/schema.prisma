@@ -299,6 +299,7 @@ model ExerciseMuscle {
 model WorkoutExercise {
   supersetGroupId String?
   runes String[] @default([])
+  runeConfig Json @default("{}")
   setPrescription Json @default("[]")
   id                String     @id @default(uuid())
   name              String

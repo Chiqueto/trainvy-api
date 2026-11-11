@@ -54,7 +54,10 @@ export const AdvancedPrescriptionSchema = z
 export type AdvancedPrescription = z.input<typeof AdvancedPrescriptionSchema>;
 
 export function advancedPrescription(
-  value: Omit<AdvancedPrescription, "runes" | "setPrescription"> &
+  value: Omit<
+    AdvancedPrescription,
+    "runes" | "setPrescription" | "runeConfig"
+  > &
     TacticalPrescription,
 ) {
   const parsed = AdvancedPrescriptionSchema.parse(value);
@@ -91,7 +94,10 @@ export function plannedAdvancedPrescription(value: {
 }
 
 export function snapshotAdvancedPrescription(
-  value: Omit<AdvancedPrescription, "runes" | "setPrescription"> &
+  value: Omit<
+    AdvancedPrescription,
+    "runes" | "setPrescription" | "runeConfig"
+  > &
     TacticalPrescription,
 ) {
   const p = advancedPrescription(value);

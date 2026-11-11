@@ -67,6 +67,16 @@ describe("Tactical prescription persistence", () => {
       restTimeInSeconds: 75,
     };
     expect(WorkoutExerciseSchema.safeParse(base).success).toBe(true);
+    for (const runeConfig of [
+      { DROP_SET: 4 },
+      { REST_PAUSE: 7 },
+      { ISOMETRIC_HOLD: "unknown" },
+      { UNKNOWN: 1 },
+    ]) {
+      expect(
+        WorkoutExerciseSchema.safeParse({ ...base, runeConfig }).success,
+      ).toBe(false);
+    }
     expect(
       WorkoutExerciseSchema.safeParse({ ...base, runes: ["UNKNOWN"] }).success,
     ).toBe(false);
@@ -109,6 +119,7 @@ describe("Tactical prescription persistence", () => {
             restTimeInSeconds: 75,
             supersetGroupId: group,
             runes: ["DROP_SET"],
+            runeConfig: { DROP_SET: 3 },
             setPrescription,
           })),
         },
@@ -118,6 +129,7 @@ describe("Tactical prescription persistence", () => {
     expect(plan.workoutDays[0].exercises[0]).toMatchObject({
       supersetGroupId: group,
       runes: ["DROP_SET"],
+      runeConfig: { DROP_SET: 3 },
       setPrescription,
     });
     await new EditWorkoutPlan().execute(userId, created.id, {
@@ -127,6 +139,7 @@ describe("Tactical prescription persistence", () => {
         exercises: d.exercises.map((e) => ({
           ...e,
           runes: ["REST_PAUSE"] as const as ["REST_PAUSE"],
+          runeConfig: { REST_PAUSE: 20 as const },
         })),
       })),
     });
@@ -137,6 +150,7 @@ describe("Tactical prescription persistence", () => {
     expect(reopened.workoutDays[0].exercises[0]).toMatchObject({
       supersetGroupId: group,
       runes: ["REST_PAUSE"],
+      runeConfig: { REST_PAUSE: 20 },
       setPrescription,
     });
     const copy = await new DuplicateWorkoutPlan().execute({
@@ -150,6 +164,7 @@ describe("Tactical prescription persistence", () => {
     expect(duplicated.workoutDays[0].exercises[0]).toMatchObject({
       supersetGroupId: group,
       runes: ["REST_PAUSE"],
+      runeConfig: { REST_PAUSE: 20 },
       setPrescription,
     });
     await expect(

@@ -39,6 +39,7 @@ export interface GeneratedPrescriptionExercise {
   tempo?: string | null;
       supersetGroupId?: string | null;
       runes?: TacticalFields["runes"];
+      runeConfig?: TacticalFields["runeConfig"];
       setPrescription?: TacticalFields["setPrescription"];
   restTimeInSeconds: number;
   alternative1Name?: string | null;

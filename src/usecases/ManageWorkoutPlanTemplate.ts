@@ -79,6 +79,7 @@ export interface UpdateWorkoutPlanTemplateInput {
       tempo?: string | null;
       supersetGroupId?: string | null;
       runes?: TacticalFields["runes"];
+      runeConfig?: TacticalFields["runeConfig"];
       setPrescription?: TacticalFields["setPrescription"];
       restTimeInSeconds: number;
     }>;
