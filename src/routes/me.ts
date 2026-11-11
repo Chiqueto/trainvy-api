@@ -1,8 +1,9 @@
-import { CoachAthleteError } from "../domain/coach-athlete.js";
 import { fromNodeHeaders } from "better-auth/node";
 import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
+import z from "zod";
 
+import { CoachAthleteError } from "../domain/coach-athlete.js";
 import { NotFoundError } from "../errors/index.js";
 import { auth } from "../lib/auth.js";
 import {
@@ -14,12 +15,38 @@ import {
   UserTrainDataBodySchema,
   UserTrainDataResponseSchema,
 } from "../schemas/index.js";
+import { BuilderModeSchema } from "../schemas/tactical-builder.js";
+import { BuilderPreferences } from "../usecases/BuilderPreferences.js";
 import { GetUserMetricsHistory } from "../usecases/GetUserMetricsHistory.js";
 import { GetUserTrainData } from "../usecases/GetUserTrainData.js";
 import { UpdateGamificationTheme } from "../usecases/UpdateGamificationTheme.js";
 import { UpsertUserTrainData } from "../usecases/UpsertUserTrainData.js";
 
 export const meRoutes = async (app: FastifyInstance) => {
+  const preferenceSchema = z.object({ preferredBuilderMode: BuilderModeSchema }).strict();
+  for (const method of ["GET", "PATCH"] as const) {
+    app.withTypeProvider<ZodTypeProvider>().route({
+      method, url: "/builder-preferences",
+      schema: {
+        operationId: method === "GET" ? "getBuilderPreferences" : "updateBuilderPreferences",
+        tags: ["Me"], summary: "Read or update the authenticated user's builder preference",
+        ...(method === "PATCH" ? { body: preferenceSchema } : {}),
+        response: { 200: preferenceSchema, 401: ErrorSchema, 500: ErrorSchema },
+      },
+      handler: async (request, reply) => {
+        const session = await auth.api.getSession({ headers: fromNodeHeaders(request.headers) });
+        if (!session) return reply.code(401).send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+        try {
+          const service = new BuilderPreferences();
+          return method === "GET" ? await service.get(session.user.id) : await service.update(session.user.id, preferenceSchema.parse(request.body).preferredBuilderMode);
+        } catch (error) {
+          app.log.error(error);
+          return reply.code(500).send({ error: "Internal server error", code: "INTERNAL_SERVER_ERROR" });
+        }
+      },
+    });
+  }
+
   app.withTypeProvider<ZodTypeProvider>().route({
     method: "GET",
     url: "/",

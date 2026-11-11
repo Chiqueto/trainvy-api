@@ -1,6 +1,13 @@
 import z from "zod";
 
+import {
+  type TacticalPrescription,
+  tacticalPrescription,
+  tacticalPrescriptionShape,
+} from "./tactical-builder.js";
+
 export const advancedPrescriptionShape = {
+  ...tacticalPrescriptionShape,
   repsMin: z.number().int().min(1).max(10000).nullable().optional(),
   repsMax: z.number().int().min(1).max(10000).nullable().optional(),
   targetRir: z.number().int().min(0).max(10).nullable().optional(),
@@ -8,9 +15,25 @@ export const advancedPrescriptionShape = {
   tempo: z.string().trim().min(1).max(80).nullable().optional(),
 };
 export function validateRepetitionRange(
-  value: { repsMin?: number | null; repsMax?: number | null },
+  value: {
+    repsMin?: number | null;
+    repsMax?: number | null;
+    sets?: number;
+    setPrescription?: unknown[];
+  },
   ctx: z.RefinementCtx,
 ) {
+  if (
+    value.setPrescription?.length &&
+    value.sets !== undefined &&
+    value.setPrescription.length !== value.sets
+  ) {
+    ctx.addIssue({
+      code: "custom",
+      path: ["setPrescription"],
+      message: "A prescrição individual deve conter uma entrada por série.",
+    });
+  }
   const min = value.repsMin ?? null,
     max = value.repsMax ?? null;
   if (
@@ -30,9 +53,13 @@ export const AdvancedPrescriptionSchema = z
   .superRefine(validateRepetitionRange);
 export type AdvancedPrescription = z.input<typeof AdvancedPrescriptionSchema>;
 
-export function advancedPrescription(value: AdvancedPrescription) {
+export function advancedPrescription(
+  value: Omit<AdvancedPrescription, "runes" | "setPrescription"> &
+    TacticalPrescription,
+) {
   const parsed = AdvancedPrescriptionSchema.parse(value);
   return {
+    ...tacticalPrescription(value),
     repsMin: parsed.repsMin ?? null,
     repsMax: parsed.repsMax ?? null,
     targetRir: parsed.targetRir ?? null,
@@ -63,7 +90,10 @@ export function plannedAdvancedPrescription(value: {
   };
 }
 
-export function snapshotAdvancedPrescription(value: AdvancedPrescription) {
+export function snapshotAdvancedPrescription(
+  value: Omit<AdvancedPrescription, "runes" | "setPrescription"> &
+    TacticalPrescription,
+) {
   const p = advancedPrescription(value);
   return {
     plannedRepsMin: p.repsMin,

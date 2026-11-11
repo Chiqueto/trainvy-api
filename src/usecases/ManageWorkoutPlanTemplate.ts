@@ -1,10 +1,11 @@
-import { advancedPrescription } from "../schemas/advanced-prescription.js";
 import {
   assertCoachCanPrescribe,
   CoachPrescriptionError,
   PrescriptionPayload,
 } from "../domain/coach-prescription.js";
 import { prisma } from "../lib/db.js";
+import { advancedPrescription } from "../schemas/advanced-prescription.js";
+import type { TacticalFields } from "../schemas/tactical-builder.js";
 import { GetCommercialContext } from "./GetCommercialContext.js";
 
 export class GetWorkoutPlanTemplateDetails {
@@ -76,6 +77,9 @@ export interface UpdateWorkoutPlanTemplateInput {
       targetRir?: number | null;
       targetLoadInGrams?: number | null;
       tempo?: string | null;
+      supersetGroupId?: string | null;
+      runes?: TacticalFields["runes"];
+      setPrescription?: TacticalFields["setPrescription"];
       restTimeInSeconds: number;
     }>;
   }>;

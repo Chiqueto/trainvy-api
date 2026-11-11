@@ -1,4 +1,3 @@
-import { advancedPrescription } from "../schemas/advanced-prescription.js";
 import z from "zod";
 
 import { resolveCanonicalExerciseMap } from "../domain/canonical-exercise.js";
@@ -9,6 +8,7 @@ import {
   NotFoundError,
 } from "../errors/index.js";
 import { prisma } from "../lib/db.js";
+import { advancedPrescription } from "../schemas/advanced-prescription.js";
 import { UpdateWorkoutPlanBody } from "../schemas/workout-edit.js";
 
 const include = {
@@ -41,6 +41,7 @@ export class GetEditableWorkoutPlan {
         ...day,
         exercises: day.exercises.map((e) => ({
           ...e,
+          ...advancedPrescription(e),
           alternative1Name: e.alternative1Exercise?.name ?? null,
           alternative2Name: e.alternative2Exercise?.name ?? null,
         })),

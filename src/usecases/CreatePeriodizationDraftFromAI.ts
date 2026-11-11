@@ -1,9 +1,10 @@
-import { advancedPrescription } from "../schemas/advanced-prescription.js";
 import { resolveCanonicalExerciseMap } from "../domain/canonical-exercise.js";
 import { sanitizeAndNormalizeAlternatives } from "../domain/exercise-alternatives.js";
 import { ValidationError } from "../errors/index.js";
 import { WeekDay } from "../generated/prisma/enums.js";
 import { prisma } from "../lib/db.js";
+import { advancedPrescription } from "../schemas/advanced-prescription.js";
+import type { TacticalFields } from "../schemas/tactical-builder.js";
 
 export interface CreatePeriodizationDraftFromAIInput {
   userId: string;
@@ -30,6 +31,9 @@ export interface CreatePeriodizationDraftFromAIInput {
           targetRir?: number | null;
           targetLoadInGrams?: number | null;
           tempo?: string | null;
+      supersetGroupId?: string | null;
+      runes?: TacticalFields["runes"];
+      setPrescription?: TacticalFields["setPrescription"];
           restTimeInSeconds: number;
           exerciseId?: string | null;
           alternative1ExerciseId?: string | null;

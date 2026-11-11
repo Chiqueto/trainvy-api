@@ -1,4 +1,3 @@
-import { advancedPrescription } from "../schemas/advanced-prescription.js";
 import { resolveCanonicalExerciseMap } from "../domain/canonical-exercise.js";
 import { normalizeAndValidateAlternatives } from "../domain/exercise-alternatives.js";
 import {
@@ -9,6 +8,8 @@ import {
 import { Prisma } from "../generated/prisma/client.js";
 import { WeekDay } from "../generated/prisma/enums.js";
 import { prisma } from "../lib/db.js";
+import { advancedPrescription } from "../schemas/advanced-prescription.js";
+import type { TacticalFields } from "../schemas/tactical-builder.js";
 
 interface InputDto {
   aiDraft?: boolean;
@@ -35,6 +36,9 @@ interface InputDto {
       targetRir?: number | null;
       targetLoadInGrams?: number | null;
       tempo?: string | null;
+      supersetGroupId?: string | null;
+      runes?: TacticalFields["runes"];
+      setPrescription?: TacticalFields["setPrescription"];
       restTimeInSeconds: number;
       exerciseId?: string | null;
       alternative1ExerciseId?: string | null;
@@ -67,6 +71,9 @@ interface OutputDto {
       targetRir?: number | null;
       targetLoadInGrams?: number | null;
       tempo?: string | null;
+      supersetGroupId?: string | null;
+      runes?: TacticalFields["runes"];
+      setPrescription?: TacticalFields["setPrescription"];
       restTimeInSeconds: number;
       exerciseId?: string | null;
       alternative1ExerciseId?: string | null;

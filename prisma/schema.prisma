@@ -110,6 +110,7 @@ model User {
   experienceLevel          String?
   availableEquipment       String[]                  @default([])
   trainingRestrictions     String?
+  preferredBuilderMode     String @default("tactical")
   gamificationTheme        String                    @default("ALL")
   createdExercises         Exercise[]
 
@@ -296,6 +297,9 @@ model ExerciseMuscle {
 }
 
 model WorkoutExercise {
+  supersetGroupId String?
+  runes String[] @default([])
+  setPrescription Json @default("[]")
   id                String     @id @default(uuid())
   name              String
   order             Int

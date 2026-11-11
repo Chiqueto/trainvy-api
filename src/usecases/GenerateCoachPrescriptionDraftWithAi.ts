@@ -1,4 +1,3 @@
-import { assertAiEnabledForUser } from "./AiAvailability.js";
 import { generateObject } from "ai";
 import z from "zod";
 
@@ -12,6 +11,8 @@ import {
 import { prisma } from "../lib/db.js";
 import { advancedPrescription } from "../schemas/advanced-prescription.js";
 import { advancedPrescriptionShape } from "../schemas/advanced-prescription.js";
+import type { TacticalFields } from "../schemas/tactical-builder.js";
+import { assertAiEnabledForUser } from "./AiAvailability.js";
 import { CheckAndConsumeAiQuota } from "./CheckAndConsumeAiQuota.js";
 import { CreateWorkoutPrescriptionDraft } from "./CreateWorkoutPrescriptionDraft.js";
 import { GetCommercialContext } from "./GetCommercialContext.js";
@@ -36,6 +37,9 @@ export interface GeneratedPrescriptionExercise {
   targetRir?: number | null;
   targetLoadInGrams?: number | null;
   tempo?: string | null;
+      supersetGroupId?: string | null;
+      runes?: TacticalFields["runes"];
+      setPrescription?: TacticalFields["setPrescription"];
   restTimeInSeconds: number;
   alternative1Name?: string | null;
   alternative2Name?: string | null;

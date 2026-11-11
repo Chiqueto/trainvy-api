@@ -1,8 +1,9 @@
+import type { TacticalFields } from "../schemas/tactical-builder.js";
+import { hasEntitlement } from "./commercial.js";
 import {
   assertProfessionalAccess,
   type ProfessionalAccess,
 } from "./professional-verification.js";
-import { hasEntitlement } from "./commercial.js";
 
 export class CoachPrescriptionError extends Error {
   constructor(
@@ -34,6 +35,9 @@ export interface PrescriptionExercisePayload {
   targetRir?: number | null;
   targetLoadInGrams?: number | null;
   tempo?: string | null;
+      supersetGroupId?: string | null;
+      runes?: TacticalFields["runes"];
+      setPrescription?: TacticalFields["setPrescription"];
   restTimeInSeconds: number;
   exerciseId?: string | null;
   alternative1ExerciseId?: string | null;

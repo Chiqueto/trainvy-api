@@ -1,6 +1,7 @@
-import { advancedPrescription } from "../schemas/advanced-prescription.js";
 import { WeekDay } from "../generated/prisma/enums.js";
 import { prisma } from "../lib/db.js";
+import { advancedPrescription } from "../schemas/advanced-prescription.js";
+import type { TacticalFields } from "../schemas/tactical-builder.js";
 
 interface InputDto {
   userId: string;
@@ -32,6 +33,9 @@ interface OutputDto {
         targetRir?: number | null;
         targetLoadInGrams?: number | null;
         tempo?: string | null;
+      supersetGroupId?: string | null;
+      runes?: TacticalFields["runes"];
+      setPrescription?: TacticalFields["setPrescription"];
         restTimeInSeconds: number;
       }>;
     }>;
