@@ -1,10 +1,11 @@
-import { advancedPrescription } from "../schemas/advanced-prescription.js";
 import {
   assertCoachCanPrescribe,
   CoachPrescriptionError,
   PrescriptionPayload,
 } from "../domain/coach-prescription.js";
+import { resolvePrescriptionCatalogReferences } from "../domain/prescription-catalog.js";
 import { prisma } from "../lib/db.js";
+import { advancedPrescription } from "../schemas/advanced-prescription.js";
 import { GetCommercialContext } from "./GetCommercialContext.js";
 
 export interface UpdateWorkoutPrescriptionDraftInput {
@@ -31,6 +32,9 @@ export interface UpdateWorkoutPrescriptionDraftInput {
     exercises: Array<{
       order: number;
       name: string;
+      exerciseId?: string | null;
+      alternative1ExerciseId?: string | null;
+      alternative2ExerciseId?: string | null;
       alternative1ExerciseName?: string | null;
       alternative2ExerciseName?: string | null;
       sets: number;
@@ -99,43 +103,6 @@ export class UpdateWorkoutPrescriptionDraft {
       }
     }
 
-    const payload = {
-      workoutDays: dto.workoutDays.map((day, index) => ({
-        name: day.name.trim(),
-        order: day.order ?? index,
-        weekDay: day.weekDay ?? "MONDAY",
-        isRest: day.isRest,
-        estimatedDurationInSeconds: day.estimatedDurationInSeconds,
-        coverImageUrl: day.coverImageUrl ?? null,
-        exercises: day.exercises.map((ex, exIndex) => {
-          const name = ex.name.trim();
-          let alt1 = ex.alternative1ExerciseName?.trim() || null;
-          let alt2 = ex.alternative2ExerciseName?.trim() || null;
-
-          if (alt1 && alt1.toLowerCase() === name.toLowerCase()) alt1 = null;
-          if (alt2 && alt2.toLowerCase() === name.toLowerCase()) alt2 = null;
-          if (alt1 && alt2 && alt1.toLowerCase() === alt2.toLowerCase())
-            alt2 = null;
-          if (!alt1 && alt2) {
-            alt1 = alt2;
-            alt2 = null;
-          }
-
-          return {
-            order: ex.order ?? exIndex,
-            name,
-            alternative1ExerciseName: alt1,
-            alternative2ExerciseName: alt2,
-            sets: ex.sets,
-            warmupSets: ex.warmupSets ?? 0,
-            reps: ex.reps,
-            ...advancedPrescription(ex),
-            restTimeInSeconds: ex.restTimeInSeconds,
-          };
-        }),
-      })),
-    };
-
     return await prisma.$transaction(
       async (tx) => {
         await tx.$queryRaw`SELECT id FROM "user" WHERE id = ${dto.coachId} FOR UPDATE`;
@@ -203,10 +170,41 @@ export class UpdateWorkoutPrescriptionDraft {
           );
         }
 
+        const catalogReference = await resolvePrescriptionCatalogReferences({
+          coachId: dto.coachId,
+          exercises: dto.workoutDays
+            .filter((day) => !day.isRest)
+            .flatMap((day) => day.exercises),
+          client: tx,
+        });
+        const payload = {
+          workoutDays: dto.workoutDays.map((day, index) => ({
+            name: day.name.trim(),
+            order: day.order ?? index,
+            weekDay: day.weekDay ?? "MONDAY",
+            isRest: day.isRest,
+            estimatedDurationInSeconds: day.estimatedDurationInSeconds,
+            coverImageUrl: day.coverImageUrl ?? null,
+            exercises: (day.isRest ? [] : day.exercises).map((ex, exIndex) => {
+              return {
+                order: ex.order ?? exIndex,
+                ...catalogReference(ex),
+                sets: ex.sets,
+                warmupSets: ex.warmupSets ?? 0,
+                reps: ex.reps,
+                ...advancedPrescription(ex),
+                restTimeInSeconds: ex.restTimeInSeconds,
+              };
+            }),
+          })),
+        };
+
         const updated = await tx.workoutPrescription.update({
           where: { id: prescription.id },
           data: {
-            ...(dto.allowStudentSubstitution !== undefined ? { allowStudentSubstitution: dto.allowStudentSubstitution } : {}),
+            ...(dto.allowStudentSubstitution !== undefined
+              ? { allowStudentSubstitution: dto.allowStudentSubstitution }
+              : {}),
             name: trimmedName,
             notes: dto.notes ?? null,
             payload,
@@ -224,10 +222,10 @@ export class UpdateWorkoutPrescriptionDraft {
           coachId: updated.coachId,
           athleteId: updated.athleteId,
           status: updated.status,
-      originType: updated.originType,
-      prescriptionStatus: updated.prescriptionStatus,
-      prescribedCrefSnapshot: updated.prescribedCrefSnapshot,
-      allowStudentSubstitution: updated.allowStudentSubstitution,
+          originType: updated.originType,
+          prescriptionStatus: updated.prescriptionStatus,
+          prescribedCrefSnapshot: updated.prescribedCrefSnapshot,
+          allowStudentSubstitution: updated.allowStudentSubstitution,
           name: updated.name,
           notes: updated.notes,
           version: updated.version,

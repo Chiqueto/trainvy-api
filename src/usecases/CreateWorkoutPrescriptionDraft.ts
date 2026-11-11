@@ -1,10 +1,11 @@
-import { advancedPrescription } from "../schemas/advanced-prescription.js";
 import {
   assertCoachCanPrescribe,
   CoachPrescriptionError,
   PrescriptionPayload,
 } from "../domain/coach-prescription.js";
+import { resolvePrescriptionCatalogReferences } from "../domain/prescription-catalog.js";
 import { prisma } from "../lib/db.js";
+import { advancedPrescription } from "../schemas/advanced-prescription.js";
 import { GetCommercialContext } from "./GetCommercialContext.js";
 
 export interface CreateWorkoutPrescriptionDraftInput {
@@ -31,6 +32,9 @@ export interface CreateWorkoutPrescriptionDraftInput {
     exercises: Array<{
       order: number;
       name: string;
+      exerciseId?: string | null;
+      alternative1ExerciseId?: string | null;
+      alternative2ExerciseId?: string | null;
       alternative1ExerciseName?: string | null;
       alternative2ExerciseName?: string | null;
       sets: number;
@@ -131,6 +135,13 @@ export class CreateWorkoutPrescriptionDraft {
       );
     }
 
+    const catalogReference = await resolvePrescriptionCatalogReferences({
+      coachId: dto.coachId,
+      exercises: dto.workoutDays
+        .filter((day) => !day.isRest)
+        .flatMap((day) => day.exercises),
+    });
+
     const payload = {
       workoutDays: dto.workoutDays.map((day, index) => ({
         name: day.name.trim(),
@@ -139,25 +150,10 @@ export class CreateWorkoutPrescriptionDraft {
         isRest: day.isRest,
         estimatedDurationInSeconds: day.estimatedDurationInSeconds,
         coverImageUrl: day.coverImageUrl ?? null,
-        exercises: day.exercises.map((ex, exIndex) => {
-          const name = ex.name.trim();
-          let alt1 = ex.alternative1ExerciseName?.trim() || null;
-          let alt2 = ex.alternative2ExerciseName?.trim() || null;
-
-          if (alt1 && alt1.toLowerCase() === name.toLowerCase()) alt1 = null;
-          if (alt2 && alt2.toLowerCase() === name.toLowerCase()) alt2 = null;
-          if (alt1 && alt2 && alt1.toLowerCase() === alt2.toLowerCase())
-            alt2 = null;
-          if (!alt1 && alt2) {
-            alt1 = alt2;
-            alt2 = null;
-          }
-
+        exercises: (day.isRest ? [] : day.exercises).map((ex, exIndex) => {
           return {
             order: ex.order ?? exIndex,
-            name,
-            alternative1ExerciseName: alt1,
-            alternative2ExerciseName: alt2,
+            ...catalogReference(ex),
             sets: ex.sets,
             warmupSets: ex.warmupSets ?? 0,
             reps: ex.reps,
@@ -175,7 +171,9 @@ export class CreateWorkoutPrescriptionDraft {
         name: trimmedName,
         notes: dto.notes ?? null,
         status: "DRAFT",
-        originType: dto.aiAssisted ? "PROFESSIONAL_AI_ASSISTED" : "PROFESSIONAL_MANUAL",
+        originType: dto.aiAssisted
+          ? "PROFESSIONAL_AI_ASSISTED"
+          : "PROFESSIONAL_MANUAL",
         prescriptionStatus: dto.aiAssisted ? "DRAFT_AI" : "DRAFT_MANUAL",
         allowStudentSubstitution: dto.allowStudentSubstitution ?? true,
         version: 1,

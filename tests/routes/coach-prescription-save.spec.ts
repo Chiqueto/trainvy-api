@@ -6,40 +6,45 @@ import {
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { coachPrescriptionRoutes } from "../../src/routes/coach-prescription.js";
-import { UpdateWorkoutPrescriptionDraft } from "../../src/usecases/UpdateWorkoutPrescriptionDraft.js";
-import { SendWorkoutPrescription } from "../../src/usecases/SendWorkoutPrescription.js";
 import { AllocateWorkoutPlanTemplate } from "../../src/usecases/AllocateWorkoutPlanTemplate.js";
+import { CreateWorkoutPrescriptionDraft } from "../../src/usecases/CreateWorkoutPrescriptionDraft.js";
+import { SendWorkoutPrescription } from "../../src/usecases/SendWorkoutPrescription.js";
+import { UpdateWorkoutPrescriptionDraft } from "../../src/usecases/UpdateWorkoutPrescriptionDraft.js";
 
-const { create, update, tx, consentRead, templateFind } = vi.hoisted(() => {
-  const consentRead = vi.fn(() => {
-    throw new Error("Professional authoring must not require student consent");
-  });
-  const tx = {
-    notificationPreferences: { findUnique: vi.fn().mockResolvedValue(null) },
-    notification: { create: vi.fn().mockResolvedValue(null) },
-    $queryRaw: vi.fn(),
-    workoutPrescription: { findUnique: vi.fn(), update: vi.fn() },
-    coachAthlete: { findFirst: vi.fn() },
-    professionalRegistration: {
-      findUniqueOrThrow: vi
-        .fn()
-        .mockResolvedValue({
+const { create, update, tx, consentRead, templateFind, exerciseFind } =
+  vi.hoisted(() => {
+    const exerciseFind = vi.fn();
+    const consentRead = vi.fn(() => {
+      throw new Error(
+        "Professional authoring must not require student consent",
+      );
+    });
+    const tx = {
+      exercise: { findMany: exerciseFind },
+      notificationPreferences: { findUnique: vi.fn().mockResolvedValue(null) },
+      notification: { create: vi.fn().mockResolvedValue(null) },
+      $queryRaw: vi.fn(),
+      workoutPrescription: { findUnique: vi.fn(), update: vi.fn() },
+      coachAthlete: { findFirst: vi.fn() },
+      professionalRegistration: {
+        findUniqueOrThrow: vi.fn().mockResolvedValue({
           fullName: "Personal Exemplo",
           cref: "123456-G",
           region: "SP",
         }),
-    },
-    legalDocument: { findUnique: consentRead },
-    userLegalAcceptance: { findFirst: consentRead },
-  };
-  return {
-    create: vi.fn(),
-    update: tx.workoutPrescription.update,
-    tx,
-    consentRead,
-    templateFind: vi.fn(),
-  };
-});
+      },
+      legalDocument: { findUnique: consentRead },
+      userLegalAcceptance: { findFirst: consentRead },
+    };
+    return {
+      create: vi.fn(),
+      update: tx.workoutPrescription.update,
+      tx,
+      consentRead,
+      templateFind: vi.fn(),
+      exerciseFind,
+    };
+  });
 vi.mock("../../src/lib/auth.js", () => ({
   auth: {
     api: { getSession: vi.fn().mockResolvedValue({ user: { id: "coach" } }) },
@@ -47,6 +52,7 @@ vi.mock("../../src/lib/auth.js", () => ({
 }));
 vi.mock("../../src/lib/db.js", () => ({
   prisma: {
+    exercise: { findMany: exerciseFind },
     coachAthlete: {
       findFirst: vi.fn().mockResolvedValue({ status: "ACTIVE" }),
     },
@@ -126,6 +132,216 @@ afterEach(() => {
 });
 
 describe("Contrato e persistência da prescrição do personal", () => {
+  const mainId = "11111111-1111-4111-8111-111111111111";
+  const altId = "22222222-2222-4222-8222-222222222222";
+  const linkedBody = {
+    ...body,
+    workoutDays: [
+      {
+        ...body.workoutDays[0],
+        exercises: [
+          {
+            ...body.workoutDays[0].exercises[0],
+            exerciseId: mainId,
+            alternative1ExerciseId: null,
+            alternative1ExerciseName: null,
+            alternative2ExerciseId: altId,
+            alternative2ExerciseName: "Nome antigo",
+          },
+        ],
+      },
+    ],
+  };
+
+  it("preserva IDs do contrato HTTP e os nomes do catálogo ao criar", async () => {
+    exerciseFind.mockResolvedValue([
+      { id: mainId, name: "Supino do catálogo" },
+      { id: altId, name: "Flexão do personal" },
+    ]);
+    create.mockResolvedValue(prescription);
+    const app = Fastify();
+    app.setValidatorCompiler(validatorCompiler);
+    app.setSerializerCompiler(serializerCompiler);
+    await app.register(coachPrescriptionRoutes);
+    try {
+      const response = await app.inject({
+        method: "POST",
+        url: "/coach/prescriptions",
+        payload: linkedBody,
+      });
+      expect(response.statusCode).toBe(201);
+      expect(create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            payload: {
+              workoutDays: [
+                expect.objectContaining({
+                  exercises: [
+                    expect.objectContaining({
+                      exerciseId: mainId,
+                      name: "Supino do catálogo",
+                      alternative1ExerciseId: altId,
+                      alternative1ExerciseName: "Flexão do personal",
+                      alternative2ExerciseId: null,
+                      alternative2ExerciseName: null,
+                    }),
+                  ],
+                }),
+              ],
+            },
+          }),
+        }),
+      );
+      expect(exerciseFind).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: {
+            id: { in: [mainId, altId] },
+            OR: [{ ownerUserId: null }, { ownerUserId: "coach" }],
+          },
+        }),
+      );
+    } finally {
+      await app.close();
+    }
+  });
+
+  it("preserva IDs ao atualizar, consultando o catálogo dentro da transação", async () => {
+    exerciseFind.mockResolvedValue([
+      { id: mainId, name: "Supino" },
+      { id: altId, name: "Flexão" },
+    ]);
+    tx.workoutPrescription.findUnique.mockResolvedValue(prescription);
+    tx.coachAthlete.findFirst.mockResolvedValue({ status: "ACTIVE" });
+    update.mockResolvedValue(prescription);
+    await new UpdateWorkoutPrescriptionDraft().execute({
+      ...linkedBody,
+      coachId: "coach",
+      prescriptionId: "draft",
+      expectedVersion: 1,
+    });
+    expect(update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          payload: {
+            workoutDays: [
+              expect.objectContaining({
+                exercises: [
+                  expect.objectContaining({
+                    exerciseId: mainId,
+                    alternative1ExerciseId: altId,
+                    alternative2ExerciseId: null,
+                  }),
+                ],
+              }),
+            ],
+          },
+        }),
+      }),
+    );
+  });
+
+  it.each(["principal", "alternativa"])(
+    "recusa ID indisponível no %s sem persistir a criação ou edição",
+    async (slot) => {
+      exerciseFind.mockResolvedValue(
+        slot === "principal"
+          ? [{ id: altId, name: "Flexão" }]
+          : [{ id: mainId, name: "Supino" }],
+      );
+      tx.workoutPrescription.findUnique.mockResolvedValue(prescription);
+      tx.coachAthlete.findFirst.mockResolvedValue({ status: "ACTIVE" });
+      await expect(
+        new CreateWorkoutPrescriptionDraft().execute({
+          ...linkedBody,
+          coachId: "coach",
+        }),
+      ).rejects.toMatchObject({ code: "INVALID_PRESCRIPTION_PAYLOAD" });
+      await expect(
+        new UpdateWorkoutPrescriptionDraft().execute({
+          ...linkedBody,
+          coachId: "coach",
+          prescriptionId: "draft",
+        }),
+      ).rejects.toMatchObject({ code: "INVALID_PRESCRIPTION_PAYLOAD" });
+      expect(create).not.toHaveBeenCalled();
+      expect(update).not.toHaveBeenCalled();
+    },
+  );
+
+  it("remove alternativas que repetem o principal e mantém ID e nome juntos", async () => {
+    exerciseFind.mockResolvedValue([
+      { id: mainId, name: "Supino" },
+      { id: altId, name: "Flexão" },
+    ]);
+    create.mockResolvedValue(prescription);
+    await new CreateWorkoutPrescriptionDraft().execute({
+      ...linkedBody,
+      coachId: "coach",
+      workoutDays: [
+        {
+          ...linkedBody.workoutDays[0],
+          exercises: [
+            {
+              ...linkedBody.workoutDays[0].exercises[0],
+              alternative1ExerciseId: mainId,
+            },
+          ],
+        },
+      ],
+    });
+    expect(create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          payload: {
+            workoutDays: [
+              expect.objectContaining({
+                exercises: [
+                  expect.objectContaining({
+                    exerciseId: mainId,
+                    alternative1ExerciseId: altId,
+                    alternative1ExerciseName: "Flexão",
+                    alternative2ExerciseId: null,
+                  }),
+                ],
+              }),
+            ],
+          },
+        }),
+      }),
+    );
+  });
+
+  it("mantém exercícios distintos por ID mesmo com nomes iguais", async () => {
+    exerciseFind.mockResolvedValue([
+      { id: mainId, name: "Supino" },
+      { id: altId, name: "Supino" },
+    ]);
+    create.mockResolvedValue(prescription);
+    await new CreateWorkoutPrescriptionDraft().execute({
+      ...linkedBody,
+      coachId: "coach",
+    });
+    expect(create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          payload: {
+            workoutDays: [
+              expect.objectContaining({
+                exercises: [
+                  expect.objectContaining({
+                    exerciseId: mainId,
+                    alternative1ExerciseId: altId,
+                    alternative1ExerciseName: "Supino",
+                  }),
+                ],
+              }),
+            ],
+          },
+        }),
+      }),
+    );
+  });
+
   it("aceita o payload do editor e preserva alternativas na criação", async () => {
     create.mockResolvedValue(prescription);
     const app = Fastify();
