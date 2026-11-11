@@ -33,6 +33,8 @@ export const GamificationTheme = {
   VEHICLES: "VEHICLES",
   ANIMALS: "ANIMALS",
   MOVIES_SERIES: "MOVIES_SERIES",
+  GAMES: "GAMES",
+  MAROMBA_BR: "MAROMBA_BR",
 } as const;
 
 export type GamificationTheme =

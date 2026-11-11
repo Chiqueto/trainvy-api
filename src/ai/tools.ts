@@ -310,7 +310,7 @@ function getLegacyAiTools(userId: string, context: AiToolsContext = {}) {
           .enum(GamificationTheme)
           .optional()
           .describe(
-            "Tema de gamificação preferido (ALL, ANIMES, VEHICLES, ANIMALS, MOVIES_SERIES)",
+            "Tema de gamificação preferido (ALL, ANIMES, VEHICLES, ANIMALS, MOVIES_SERIES, GAMES, MAROMBA_BR)",
           ),
       }),
       execute: async (params) => {
