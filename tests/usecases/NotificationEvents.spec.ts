@@ -62,6 +62,7 @@ describe("domain notification events", () => {
     });
     mock.coachAthlete.findFirst.mockResolvedValue(null);
     const tx = {
+      $queryRaw: vi.fn().mockResolvedValue([]),
       coachInvitation: {
         findUnique: async () => ({
           id: "invite",
@@ -93,6 +94,10 @@ describe("domain notification events", () => {
       athleteId: "athlete",
       token: "fake-token",
     });
+    expect(tx.$queryRaw).toHaveBeenCalledWith(expect.any(Array), "coach");
+    expect(tx.$queryRaw.mock.invocationCallOrder[0]).toBeLessThan(
+      mock.create.mock.invocationCallOrder[0],
+    );
     expect(mock.create).toHaveBeenCalledWith(
       expect.objectContaining({
         userId: "athlete",
