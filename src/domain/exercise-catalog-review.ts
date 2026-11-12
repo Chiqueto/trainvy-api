@@ -4,6 +4,7 @@ import z from "zod";
 
 import { MuscleGroup } from "../generated/prisma/enums.js";
 import definitions from "./exercise-catalog-review.json" with { type: "json" };
+import variants from "./exercise-catalog-variants.json" with { type: "json" };
 
 export const ExerciseTrainingGroup = z.enum([
   "RESISTANCE",
@@ -16,11 +17,19 @@ export const ExerciseTrainingGroup = z.enum([
   "CARRIES",
 ]);
 
-export const CATALOG_REVIEW_VERSION = "2026-10-28.1";
+export const CATALOG_REVIEW_VERSION = "2026-11-12.1";
 export const CATALOG_REVIEW_SOURCES: Record<
   string,
   { title: string; url: string }
 > = {
+  "triceps-overhead": {
+    title: "Maeo et al. — Cable elbow extension in overhead versus neutral arm positions (2023)",
+    url: "https://pubmed.ncbi.nlm.nih.gov/35819335/",
+  },
+  "curl-positions": {
+    title: "Attarieh et al. — Preacher versus Bayesian cable curls (2025)",
+    url: "https://pubmed.ncbi.nlm.nih.gov/40082069/",
+  },
   "hang-clean-emg": {title:"Geisler et al. — Hang Power Clean EMG (2023)",url:"https://doi.org/10.52082/jssm.2023.778"},
   "hang-clean-technique": {title:"NSCA — Power Clean From Hang",url:"https://www.nsca.com/education/articles/kinetic-select/power-clean-from-hang/"},
   "seated-calf-emg": { title:"Kovács et al. — Knee position and plantarflexion (2024)", url:"https://doi.org/10.1242/bio.061810" },
@@ -167,7 +176,7 @@ export const CatalogReviewEntry = z
 export type ReviewedExercise = z.infer<typeof CatalogReviewEntry>;
 export const REVIEWED_EXERCISES = z
   .array(CatalogReviewEntry)
-  .parse(definitions);
+  .parse([...definitions, ...variants.map(({ isUnilateral: _, ...entry }) => entry)]);
 if (
   new Set(REVIEWED_EXERCISES.map((e) => e.id)).size !==
   REVIEWED_EXERCISES.length

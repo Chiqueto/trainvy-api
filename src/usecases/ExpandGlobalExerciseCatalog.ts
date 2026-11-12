@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { prisma } from "../lib/db.js";
+import { REVIEWED_EXERCISES_BY_ID, reviewedMuscles } from "../domain/exercise-catalog-review.js";
 
 const schema = z.array(z.object({
   id: z.uuid(),
@@ -26,8 +27,14 @@ export class ExpandGlobalExerciseCatalog {
       const ids = new Set(before.map(e => e.id));
       const additions = definitions.filter(d => !names.has(normalize(d.name)));
       if (additions.some(d => ids.has(d.id))) throw new Error("Catalog ID collision");
+      const classifications = additions.map(d => {
+        const review = REVIEWED_EXERCISES_BY_ID.get(d.id);
+        if (!review || review.name !== d.name) throw new Error("Missing catalog classification");
+        return {id: d.id, muscles: reviewedMuscles(review)};
+      });
       if (apply && additions.length) {
         await tx.exercise.createMany({ data: additions.map(({id, name, isUnilateral}) => ({id, name, isUnilateral, ownerUserId: null})) });
+        await tx.exerciseMuscle.createMany({data: classifications.flatMap(e => e.muscles.map(m => ({exerciseId: e.id, ...m})))});
       }
       const preserved = await tx.exercise.findMany({ where: {id: {in: before.map(e => e.id)}}, orderBy: {id: "asc"} });
       if (JSON.stringify(before) !== JSON.stringify(preserved)) throw new Error("Existing exercises changed");

@@ -1,0 +1,2821 @@
+[
+  {
+    "id": "8108ae55-6046-46c0-8c58-5c07f176c220",
+    "name": "Tríceps Testa com Barra Reta",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "TRICEPS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "triceps-overhead",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Extensão de cotovelo. Testa: deitado no banco; francês/acima da cabeça: braços elevados. A posição do ombro diferencia as famílias; o acessório não isola cabeças do tríceps. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "cbad2819-72ac-403c-8c2f-6b13c8d287f1",
+    "name": "Tríceps Testa com Barra W",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "TRICEPS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "triceps-overhead",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Extensão de cotovelo. Testa: deitado no banco; francês/acima da cabeça: braços elevados. A posição do ombro diferencia as famílias; o acessório não isola cabeças do tríceps. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "c98a4420-38e7-42ae-8537-3a69d1fc9562",
+    "name": "Tríceps Testa com Halteres",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "TRICEPS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "triceps-overhead",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Extensão de cotovelo. Testa: deitado no banco; francês/acima da cabeça: braços elevados. A posição do ombro diferencia as famílias; o acessório não isola cabeças do tríceps. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "e64255a2-1671-4717-844c-db974350a5e5",
+    "name": "Tríceps Testa Unilateral com Halter",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "TRICEPS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "triceps-overhead",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Extensão de cotovelo. Testa: deitado no banco; francês/acima da cabeça: braços elevados. A posição do ombro diferencia as famílias; o acessório não isola cabeças do tríceps. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "0ba9b44b-90e4-453e-83a9-f99f545f66bd",
+    "name": "Tríceps Testa na Polia com Barra Reta",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "TRICEPS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "triceps-overhead",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Extensão de cotovelo. Testa: deitado no banco; francês/acima da cabeça: braços elevados. A posição do ombro diferencia as famílias; o acessório não isola cabeças do tríceps. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "17cd655b-1829-4b3e-86a9-47f2c4f46493",
+    "name": "Tríceps Testa na Polia com Barra W",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "TRICEPS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "triceps-overhead",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Extensão de cotovelo. Testa: deitado no banco; francês/acima da cabeça: braços elevados. A posição do ombro diferencia as famílias; o acessório não isola cabeças do tríceps. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "d7d1862b-4c92-49f7-879a-8e8425e3ad5d",
+    "name": "Tríceps Testa na Polia com Corda",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "TRICEPS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "triceps-overhead",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Extensão de cotovelo. Testa: deitado no banco; francês/acima da cabeça: braços elevados. A posição do ombro diferencia as famílias; o acessório não isola cabeças do tríceps. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "8f8b5524-6ccf-4c6b-832c-ac1e81e40b3c",
+    "name": "Tríceps Testa Unilateral na Polia",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "TRICEPS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "triceps-overhead",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Extensão de cotovelo. Testa: deitado no banco; francês/acima da cabeça: braços elevados. A posição do ombro diferencia as famílias; o acessório não isola cabeças do tríceps. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "b79fe345-974b-4e9f-85ac-ac732d241236",
+    "name": "Tríceps Francês com Halter Bilateral",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "TRICEPS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "triceps-overhead",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Extensão de cotovelo. Testa: deitado no banco; francês/acima da cabeça: braços elevados. A posição do ombro diferencia as famílias; o acessório não isola cabeças do tríceps. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "911558ab-c46f-4322-8295-8e102953330b",
+    "name": "Tríceps Francês com Barra W",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "TRICEPS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "triceps-overhead",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Extensão de cotovelo. Testa: deitado no banco; francês/acima da cabeça: braços elevados. A posição do ombro diferencia as famílias; o acessório não isola cabeças do tríceps. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "a714c255-5556-4704-84d4-90f44c87765a",
+    "name": "Tríceps Acima da Cabeça na Polia com Corda",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "TRICEPS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "triceps-overhead",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Extensão de cotovelo. Testa: deitado no banco; francês/acima da cabeça: braços elevados. A posição do ombro diferencia as famílias; o acessório não isola cabeças do tríceps. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "33effeb0-d0e4-43f6-80d2-65899ac12c0a",
+    "name": "Tríceps Acima da Cabeça na Polia com Barra Reta",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "TRICEPS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "triceps-overhead",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Extensão de cotovelo. Testa: deitado no banco; francês/acima da cabeça: braços elevados. A posição do ombro diferencia as famílias; o acessório não isola cabeças do tríceps. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "c9e53c15-ca89-4f91-845f-52e62076b1f8",
+    "name": "Tríceps Acima da Cabeça na Polia com Barra W",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "TRICEPS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "triceps-overhead",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Extensão de cotovelo. Testa: deitado no banco; francês/acima da cabeça: braços elevados. A posição do ombro diferencia as famílias; o acessório não isola cabeças do tríceps. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "96b9fc45-2a68-4021-8169-5f25ae82b78e",
+    "name": "Tríceps Acima da Cabeça Unilateral na Polia",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "TRICEPS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "triceps-overhead",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Extensão de cotovelo. Testa: deitado no banco; francês/acima da cabeça: braços elevados. A posição do ombro diferencia as famílias; o acessório não isola cabeças do tríceps. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "7050c35c-b90f-4168-8263-07c46cd54499",
+    "name": "Tríceps no Cabo com Barra V",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "TRICEPS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "triceps-overhead",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Extensão de cotovelo. Testa: deitado no banco; francês/acima da cabeça: braços elevados. A posição do ombro diferencia as famílias; o acessório não isola cabeças do tríceps. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "7df5de14-a676-42b7-86cd-485301adc0ef",
+    "name": "Tríceps no Cabo com Barra W",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "TRICEPS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "triceps-overhead",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Extensão de cotovelo. Testa: deitado no banco; francês/acima da cabeça: braços elevados. A posição do ombro diferencia as famílias; o acessório não isola cabeças do tríceps. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "1794f8a7-9ec0-4b77-8948-46669c7b2136",
+    "name": "Tríceps no Cabo com Barra Reta e Pegada Supinada",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "TRICEPS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "triceps-overhead",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Extensão de cotovelo. Testa: deitado no banco; francês/acima da cabeça: braços elevados. A posição do ombro diferencia as famílias; o acessório não isola cabeças do tríceps. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "0156a30b-bcf8-4a40-8458-8113ee2e61ce",
+    "name": "Tríceps Coice Unilateral no Cabo",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "TRICEPS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "triceps-overhead",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Extensão de cotovelo. Testa: deitado no banco; francês/acima da cabeça: braços elevados. A posição do ombro diferencia as famílias; o acessório não isola cabeças do tríceps. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "759baeb6-2a0a-47cc-8917-b2763c4a0410",
+    "name": "Tríceps na Máquina",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "TRICEPS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "triceps-overhead",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Extensão de cotovelo. Testa: deitado no banco; francês/acima da cabeça: braços elevados. A posição do ombro diferencia as famílias; o acessório não isola cabeças do tríceps. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "4b68c797-398e-4234-8206-c57464e145ec",
+    "name": "Rosca Direta com Barra W",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS"
+    ],
+    "secondary": [
+      "FOREARMS"
+    ],
+    "sourceIds": [
+      "curl-positions",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Flexão de cotovelo com pegada supinada. Scott/spider têm ombro flexionado; inclinada/Bayesian têm ombro estendido. Mudar resistência/apoio não garante superioridade de hipertrofia. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "736f15d4-41cc-426f-8802-41e10e4c07dc",
+    "name": "Rosca Direta com Halteres",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS"
+    ],
+    "secondary": [
+      "FOREARMS"
+    ],
+    "sourceIds": [
+      "curl-positions",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Flexão de cotovelo com pegada supinada. Scott/spider têm ombro flexionado; inclinada/Bayesian têm ombro estendido. Mudar resistência/apoio não garante superioridade de hipertrofia. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "2fe01c1c-1576-44a9-86bc-771718b10c80",
+    "name": "Rosca Direta na Polia com Barra W",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS"
+    ],
+    "secondary": [
+      "FOREARMS"
+    ],
+    "sourceIds": [
+      "curl-positions",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Flexão de cotovelo com pegada supinada. Scott/spider têm ombro flexionado; inclinada/Bayesian têm ombro estendido. Mudar resistência/apoio não garante superioridade de hipertrofia. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "90cd5625-ac7f-4e6f-8544-2400379246c5",
+    "name": "Rosca Unilateral na Polia Baixa",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS"
+    ],
+    "secondary": [
+      "FOREARMS"
+    ],
+    "sourceIds": [
+      "curl-positions",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Flexão de cotovelo com pegada supinada. Scott/spider têm ombro flexionado; inclinada/Bayesian têm ombro estendido. Mudar resistência/apoio não garante superioridade de hipertrofia. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "4e98a7b4-f613-4ab0-8098-1213052f6659",
+    "name": "Rosca Scott com Barra Reta",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS"
+    ],
+    "secondary": [
+      "FOREARMS"
+    ],
+    "sourceIds": [
+      "curl-positions",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Flexão de cotovelo com pegada supinada. Scott/spider têm ombro flexionado; inclinada/Bayesian têm ombro estendido. Mudar resistência/apoio não garante superioridade de hipertrofia. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "accdb149-9c0c-42a5-8587-bdbe069306c1",
+    "name": "Rosca Scott com Barra W",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS"
+    ],
+    "secondary": [
+      "FOREARMS"
+    ],
+    "sourceIds": [
+      "curl-positions",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Flexão de cotovelo com pegada supinada. Scott/spider têm ombro flexionado; inclinada/Bayesian têm ombro estendido. Mudar resistência/apoio não garante superioridade de hipertrofia. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "a8554100-a9d1-41f2-8b1b-9a9d6525178d",
+    "name": "Rosca Scott Unilateral com Halter",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS"
+    ],
+    "secondary": [
+      "FOREARMS"
+    ],
+    "sourceIds": [
+      "curl-positions",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Flexão de cotovelo com pegada supinada. Scott/spider têm ombro flexionado; inclinada/Bayesian têm ombro estendido. Mudar resistência/apoio não garante superioridade de hipertrofia. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "6ad0d120-6c10-474e-8916-c27dc2502e26",
+    "name": "Rosca Scott na Polia com Barra Reta",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS"
+    ],
+    "secondary": [
+      "FOREARMS"
+    ],
+    "sourceIds": [
+      "curl-positions",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Flexão de cotovelo com pegada supinada. Scott/spider têm ombro flexionado; inclinada/Bayesian têm ombro estendido. Mudar resistência/apoio não garante superioridade de hipertrofia. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "477d5b72-1f45-4962-875f-ee47333c9490",
+    "name": "Rosca Scott na Polia com Barra W",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS"
+    ],
+    "secondary": [
+      "FOREARMS"
+    ],
+    "sourceIds": [
+      "curl-positions",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Flexão de cotovelo com pegada supinada. Scott/spider têm ombro flexionado; inclinada/Bayesian têm ombro estendido. Mudar resistência/apoio não garante superioridade de hipertrofia. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "989feba5-706b-4a3d-8738-7ac9a35d00ae",
+    "name": "Rosca Scott Unilateral na Polia",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS"
+    ],
+    "secondary": [
+      "FOREARMS"
+    ],
+    "sourceIds": [
+      "curl-positions",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Flexão de cotovelo com pegada supinada. Scott/spider têm ombro flexionado; inclinada/Bayesian têm ombro estendido. Mudar resistência/apoio não garante superioridade de hipertrofia. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "2d643e1d-a376-4c42-8771-fe60addce003",
+    "name": "Rosca Spider com Barra Reta",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS"
+    ],
+    "secondary": [
+      "FOREARMS"
+    ],
+    "sourceIds": [
+      "curl-positions",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Flexão de cotovelo com pegada supinada. Scott/spider têm ombro flexionado; inclinada/Bayesian têm ombro estendido. Mudar resistência/apoio não garante superioridade de hipertrofia. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "4c545004-497f-4cb4-85b3-2f9ac4f3f67d",
+    "name": "Rosca Spider com Barra W",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS"
+    ],
+    "secondary": [
+      "FOREARMS"
+    ],
+    "sourceIds": [
+      "curl-positions",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Flexão de cotovelo com pegada supinada. Scott/spider têm ombro flexionado; inclinada/Bayesian têm ombro estendido. Mudar resistência/apoio não garante superioridade de hipertrofia. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "3ee30823-922e-45f4-86b9-ae99149c6f9f",
+    "name": "Rosca Spider com Halteres",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS"
+    ],
+    "secondary": [
+      "FOREARMS"
+    ],
+    "sourceIds": [
+      "curl-positions",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Flexão de cotovelo com pegada supinada. Scott/spider têm ombro flexionado; inclinada/Bayesian têm ombro estendido. Mudar resistência/apoio não garante superioridade de hipertrofia. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "f32c1a74-af9b-4879-835f-d59fe71b31dc",
+    "name": "Rosca Spider na Polia",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS"
+    ],
+    "secondary": [
+      "FOREARMS"
+    ],
+    "sourceIds": [
+      "curl-positions",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Flexão de cotovelo com pegada supinada. Scott/spider têm ombro flexionado; inclinada/Bayesian têm ombro estendido. Mudar resistência/apoio não garante superioridade de hipertrofia. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "f74cdc36-a067-4991-8852-f3bb6c873947",
+    "name": "Rosca Concentrada na Polia",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS"
+    ],
+    "secondary": [
+      "FOREARMS"
+    ],
+    "sourceIds": [
+      "curl-positions",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Flexão de cotovelo com pegada supinada. Scott/spider têm ombro flexionado; inclinada/Bayesian têm ombro estendido. Mudar resistência/apoio não garante superioridade de hipertrofia. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "aa0f083c-78a4-4e5d-85ba-335d680e70c5",
+    "name": "Rosca Bayesian Unilateral na Polia",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS"
+    ],
+    "secondary": [
+      "FOREARMS"
+    ],
+    "sourceIds": [
+      "curl-positions",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Flexão de cotovelo com pegada supinada. Scott/spider têm ombro flexionado; inclinada/Bayesian têm ombro estendido. Mudar resistência/apoio não garante superioridade de hipertrofia. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "c622c057-4915-44ff-87f5-68ac6d32bb7c",
+    "name": "Rosca Dupla na Polia Alta",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS"
+    ],
+    "secondary": [
+      "FOREARMS"
+    ],
+    "sourceIds": [
+      "curl-positions",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Flexão de cotovelo com pegada supinada. Scott/spider têm ombro flexionado; inclinada/Bayesian têm ombro estendido. Mudar resistência/apoio não garante superioridade de hipertrofia. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "df54ce13-b047-487d-8de6-54eaa4d60ace",
+    "name": "Rosca Inclinada na Polia",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS"
+    ],
+    "secondary": [
+      "FOREARMS"
+    ],
+    "sourceIds": [
+      "curl-positions",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Flexão de cotovelo com pegada supinada. Scott/spider têm ombro flexionado; inclinada/Bayesian têm ombro estendido. Mudar resistência/apoio não garante superioridade de hipertrofia. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "335c3df1-cc11-4535-8e14-faea33c123fd",
+    "name": "Rosca de Bíceps na Máquina",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS"
+    ],
+    "secondary": [
+      "FOREARMS"
+    ],
+    "sourceIds": [
+      "curl-positions",
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Flexão de cotovelo com pegada supinada. Scott/spider têm ombro flexionado; inclinada/Bayesian têm ombro estendido. Mudar resistência/apoio não garante superioridade de hipertrofia. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "1833c2cd-8928-4f4f-8106-dbc80628ee6f",
+    "name": "Rosca Martelo na Polia com Corda",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS",
+      "FOREARMS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "curl-positions",
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Flexores do cotovelo atuam conjuntamente; pegada neutra/pronada inclui braquial e braquiorradial. Zottman: subida supinada e retorno pronado. BICEPS é o agrupamento disponível, não exclui o braquial. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "c88966f4-080a-4ce1-887b-4f5a412c6a8a",
+    "name": "Rosca Martelo Unilateral na Polia",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS",
+      "FOREARMS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "curl-positions",
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Flexores do cotovelo atuam conjuntamente; pegada neutra/pronada inclui braquial e braquiorradial. Zottman: subida supinada e retorno pronado. BICEPS é o agrupamento disponível, não exclui o braquial. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "19e651e6-d2a9-47d0-8730-4b474f280042",
+    "name": "Rosca Martelo no Banco Inclinado",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS",
+      "FOREARMS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "curl-positions",
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Flexores do cotovelo atuam conjuntamente; pegada neutra/pronada inclui braquial e braquiorradial. Zottman: subida supinada e retorno pronado. BICEPS é o agrupamento disponível, não exclui o braquial. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "dcccfeb3-86ba-438a-83cd-92146e3d6089",
+    "name": "Rosca Martelo Cruzada com Halter",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS",
+      "FOREARMS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "curl-positions",
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Flexores do cotovelo atuam conjuntamente; pegada neutra/pronada inclui braquial e braquiorradial. Zottman: subida supinada e retorno pronado. BICEPS é o agrupamento disponível, não exclui o braquial. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "241128f6-138a-45d6-8516-546951a3756d",
+    "name": "Rosca Scott Martelo Unilateral com Halter",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS",
+      "FOREARMS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "curl-positions",
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Flexores do cotovelo atuam conjuntamente; pegada neutra/pronada inclui braquial e braquiorradial. Zottman: subida supinada e retorno pronado. BICEPS é o agrupamento disponível, não exclui o braquial. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "cd8de8b7-1ddc-4424-8dfb-9813e4e92f0f",
+    "name": "Rosca Inversa com Barra W",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS",
+      "FOREARMS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "curl-positions",
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Flexores do cotovelo atuam conjuntamente; pegada neutra/pronada inclui braquial e braquiorradial. Zottman: subida supinada e retorno pronado. BICEPS é o agrupamento disponível, não exclui o braquial. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "ee9c49a5-1e24-4328-845a-710cf88f5250",
+    "name": "Rosca Inversa na Polia com Barra Reta",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS",
+      "FOREARMS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "curl-positions",
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Flexores do cotovelo atuam conjuntamente; pegada neutra/pronada inclui braquial e braquiorradial. Zottman: subida supinada e retorno pronado. BICEPS é o agrupamento disponível, não exclui o braquial. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "240cbd3b-e36f-4492-8043-76fe8a05093c",
+    "name": "Rosca Inversa com Halteres",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS",
+      "FOREARMS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "curl-positions",
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Flexores do cotovelo atuam conjuntamente; pegada neutra/pronada inclui braquial e braquiorradial. Zottman: subida supinada e retorno pronado. BICEPS é o agrupamento disponível, não exclui o braquial. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "41795600-cfd1-4f4a-8ad9-dfb0dd2fe81b",
+    "name": "Rosca Zottman com Halteres",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BICEPS",
+      "FOREARMS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "curl-positions",
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Flexores do cotovelo atuam conjuntamente; pegada neutra/pronada inclui braquial e braquiorradial. Zottman: subida supinada e retorno pronado. BICEPS é o agrupamento disponível, não exclui o braquial. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "6e1d783e-b1df-4dd8-8b52-3f753b014507",
+    "name": "Rosca de Punho Unilateral com Halter",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "FOREARMS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Flexão ou extensão do punho com antebraço apoiado. Não confundir com flexão de cotovelo. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "bb95eb80-0d1d-4624-8496-02c5d8c82c4e",
+    "name": "Extensão de Punho Unilateral com Halter",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "FOREARMS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Flexão ou extensão do punho com antebraço apoiado. Não confundir com flexão de cotovelo. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "9677a02a-4b47-4f89-8db9-3668429be65f",
+    "name": "Rosca de Punho na Polia",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "FOREARMS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Flexão ou extensão do punho com antebraço apoiado. Não confundir com flexão de cotovelo. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "c98d61cc-42d9-4b47-87cb-ad67c43fa9f7",
+    "name": "Extensão de Punho na Polia",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "FOREARMS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Flexão ou extensão do punho com antebraço apoiado. Não confundir com flexão de cotovelo. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "d45fe04a-7f04-4182-8e13-4f3de70788a4",
+    "name": "Supino Inclinado com Barra",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "CHEST"
+    ],
+    "secondary": [
+      "TRICEPS",
+      "SHOULDERS"
+    ],
+    "sourceIds": [
+      "press",
+      "ace"
+    ],
+    "notes": "Press de peito na posição descrita. Peitoral principal, tríceps e deltoide anterior sinergistas; ângulo e apoio mudam a demanda sem isolar feixes. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "60e5760a-c34d-4749-8abd-707146b3c173",
+    "name": "Supino Reto com Halteres e Pegada Neutra",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "CHEST"
+    ],
+    "secondary": [
+      "TRICEPS",
+      "SHOULDERS"
+    ],
+    "sourceIds": [
+      "press",
+      "ace"
+    ],
+    "notes": "Press de peito na posição descrita. Peitoral principal, tríceps e deltoide anterior sinergistas; ângulo e apoio mudam a demanda sem isolar feixes. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "05262dcc-461a-4f0d-8fa0-3c23f890aeeb",
+    "name": "Supino Inclinado com Halteres e Pegada Neutra",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "CHEST"
+    ],
+    "secondary": [
+      "TRICEPS",
+      "SHOULDERS"
+    ],
+    "sourceIds": [
+      "press",
+      "ace"
+    ],
+    "notes": "Press de peito na posição descrita. Peitoral principal, tríceps e deltoide anterior sinergistas; ângulo e apoio mudam a demanda sem isolar feixes. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "57e56e35-826d-48de-898a-7a3bbaeef927",
+    "name": "Supino Reto Unilateral com Halter",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — peito",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "CHEST"
+    ],
+    "secondary": [
+      "TRICEPS",
+      "SHOULDERS"
+    ],
+    "sourceIds": [
+      "press",
+      "ace"
+    ],
+    "notes": "Press de peito na posição descrita. Peitoral principal, tríceps e deltoide anterior sinergistas; ângulo e apoio mudam a demanda sem isolar feixes. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "b87c1940-131a-4682-8c08-89a2194240de",
+    "name": "Supino Sentado no Cabo",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "CHEST"
+    ],
+    "secondary": [
+      "TRICEPS",
+      "SHOULDERS"
+    ],
+    "sourceIds": [
+      "press",
+      "ace"
+    ],
+    "notes": "Press de peito na posição descrita. Peitoral principal, tríceps e deltoide anterior sinergistas; ângulo e apoio mudam a demanda sem isolar feixes. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "153b5672-d1fb-435a-885f-96de706bd5d9",
+    "name": "Supino Unilateral na Máquina",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — peito",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "CHEST"
+    ],
+    "secondary": [
+      "TRICEPS",
+      "SHOULDERS"
+    ],
+    "sourceIds": [
+      "press",
+      "ace"
+    ],
+    "notes": "Press de peito na posição descrita. Peitoral principal, tríceps e deltoide anterior sinergistas; ângulo e apoio mudam a demanda sem isolar feixes. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "8856e4c0-24ca-4522-807d-77b6b693da7d",
+    "name": "Crucifixo Inclinado com Halteres",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "CHEST"
+    ],
+    "secondary": [
+      "SHOULDERS"
+    ],
+    "sourceIds": [
+      "press",
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Adução horizontal do ombro com cotovelos levemente flexionados e estáveis. Crucifixo no cabo é executado deitado no banco; crossover é executado em pé. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "ac895f49-b850-4f5a-88e8-724b3c4d5dbf",
+    "name": "Crucifixo Declinado com Halteres",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "CHEST"
+    ],
+    "secondary": [
+      "SHOULDERS"
+    ],
+    "sourceIds": [
+      "press",
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Adução horizontal do ombro com cotovelos levemente flexionados e estáveis. Crucifixo no cabo é executado deitado no banco; crossover é executado em pé. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "dbe23d8a-2961-4579-85c4-75edaca7e304",
+    "name": "Crucifixo Reto no Cabo",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "CHEST"
+    ],
+    "secondary": [
+      "SHOULDERS"
+    ],
+    "sourceIds": [
+      "press",
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Adução horizontal do ombro com cotovelos levemente flexionados e estáveis. Crucifixo no cabo é executado deitado no banco; crossover é executado em pé. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "e5153e25-3c74-4471-8a04-54b1d738945b",
+    "name": "Crucifixo Inclinado no Cabo",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — peito",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "CHEST"
+    ],
+    "secondary": [
+      "SHOULDERS"
+    ],
+    "sourceIds": [
+      "press",
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Adução horizontal do ombro com cotovelos levemente flexionados e estáveis. Crucifixo no cabo é executado deitado no banco; crossover é executado em pé. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "e186b5b1-8968-4302-87a1-6e782cbda592",
+    "name": "Crossover Unilateral na Polia Média",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — peito",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "CHEST"
+    ],
+    "secondary": [
+      "SHOULDERS"
+    ],
+    "sourceIds": [
+      "press",
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Adução horizontal do ombro com cotovelos levemente flexionados e estáveis. Crucifixo no cabo é executado deitado no banco; crossover é executado em pé. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "1444333f-9fb0-4d74-843a-42b9480e5cfc",
+    "name": "Remada Curvada com Barra e Pegada Supinada",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BACK"
+    ],
+    "secondary": [
+      "BICEPS",
+      "FOREARMS",
+      "SHOULDERS"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Tração por extensão/adução do ombro e movimento escapular, com flexores do cotovelo e pegada. Tronco deve ser estabilizado; apoio do peito diferencia a execução. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "d4ebcd94-81f7-48ea-85f5-2c50fd3017fd",
+    "name": "Remada Curvada com Halteres",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BACK"
+    ],
+    "secondary": [
+      "BICEPS",
+      "FOREARMS",
+      "SHOULDERS"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Tração por extensão/adução do ombro e movimento escapular, com flexores do cotovelo e pegada. Tronco deve ser estabilizado; apoio do peito diferencia a execução. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "8e264eaa-4648-414a-8819-a5e82a08b98e",
+    "name": "Remada Curvada no Smith",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BACK"
+    ],
+    "secondary": [
+      "BICEPS",
+      "FOREARMS",
+      "SHOULDERS"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Tração por extensão/adução do ombro e movimento escapular, com flexores do cotovelo e pegada. Tronco deve ser estabilizado; apoio do peito diferencia a execução. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "aae24196-1a55-4b56-8ece-7d8641c527c7",
+    "name": "Remada com Barra e Peito Apoiado",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BACK"
+    ],
+    "secondary": [
+      "BICEPS",
+      "FOREARMS",
+      "SHOULDERS"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Tração por extensão/adução do ombro e movimento escapular, com flexores do cotovelo e pegada. Tronco deve ser estabilizado; apoio do peito diferencia a execução. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "7f95c7f6-bf42-4212-83f5-118c3be3489c",
+    "name": "Remada Baixa no Cabo com Barra e Pegada Supinada",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BACK"
+    ],
+    "secondary": [
+      "BICEPS",
+      "FOREARMS",
+      "SHOULDERS"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Tração por extensão/adução do ombro e movimento escapular, com flexores do cotovelo e pegada. Tronco deve ser estabilizado; apoio do peito diferencia a execução. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "6524d22a-c735-43fd-866b-9bd7ca9c36b6",
+    "name": "Remada Baixa no Cabo com Corda",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BACK"
+    ],
+    "secondary": [
+      "BICEPS",
+      "FOREARMS",
+      "SHOULDERS"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Tração por extensão/adução do ombro e movimento escapular, com flexores do cotovelo e pegada. Tronco deve ser estabilizado; apoio do peito diferencia a execução. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "de2be786-306b-489f-893d-32927c4c8104",
+    "name": "Remada Baixa Unilateral no Cabo",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — costas",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BACK"
+    ],
+    "secondary": [
+      "BICEPS",
+      "FOREARMS",
+      "SHOULDERS"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Tração por extensão/adução do ombro e movimento escapular, com flexores do cotovelo e pegada. Tronco deve ser estabilizado; apoio do peito diferencia a execução. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "28ba5821-9425-46dc-828f-1121b71bdc54",
+    "name": "Remada Cavalinho com Peito Apoiado",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BACK"
+    ],
+    "secondary": [
+      "BICEPS",
+      "FOREARMS",
+      "SHOULDERS"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Tração por extensão/adução do ombro e movimento escapular, com flexores do cotovelo e pegada. Tronco deve ser estabilizado; apoio do peito diferencia a execução. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "3158cfe5-a5cc-454a-8e65-408e224821dc",
+    "name": "Puxada Frontal no Cabo com Triângulo",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BACK"
+    ],
+    "secondary": [
+      "BICEPS",
+      "FOREARMS",
+      "SHOULDERS"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Tração por extensão/adução do ombro e movimento escapular, com flexores do cotovelo e pegada. Tronco deve ser estabilizado; apoio do peito diferencia a execução. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "c2fea3de-2db8-4c51-86d0-fa69e3dd33ed",
+    "name": "Puxada Frontal no Cabo com Pegada Pronada Aberta",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BACK"
+    ],
+    "secondary": [
+      "BICEPS",
+      "FOREARMS",
+      "SHOULDERS"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Tração por extensão/adução do ombro e movimento escapular, com flexores do cotovelo e pegada. Tronco deve ser estabilizado; apoio do peito diferencia a execução. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "cf7b6604-3bc2-452f-84dc-3e4aff1f1554",
+    "name": "Puxada Frontal no Cabo com Pegada Pronada Fechada",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BACK"
+    ],
+    "secondary": [
+      "BICEPS",
+      "FOREARMS",
+      "SHOULDERS"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Tração por extensão/adução do ombro e movimento escapular, com flexores do cotovelo e pegada. Tronco deve ser estabilizado; apoio do peito diferencia a execução. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "67ca3f6b-5999-48eb-8f50-8eeba3a99718",
+    "name": "Pulldown com Braços Estendidos no Cabo com Corda",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BACK"
+    ],
+    "secondary": [
+      "TRICEPS",
+      "CORE"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Extensão do ombro com cotovelos quase fixos; dorsal principal. Cabeça longa do tríceps auxilia a extensão do ombro; participação varia com a execução. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "5ef1faac-fd97-4c5d-8908-1a7ea9038844",
+    "name": "Pulldown Unilateral com Braço Estendido no Cabo",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — costas",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BACK"
+    ],
+    "secondary": [
+      "TRICEPS",
+      "CORE"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Extensão do ombro com cotovelos quase fixos; dorsal principal. Cabeça longa do tríceps auxilia a extensão do ombro; participação varia com a execução. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "a2d9ce82-b1ba-4226-88a3-685882cecf04",
+    "name": "Pullover na Máquina",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BACK"
+    ],
+    "secondary": [
+      "TRICEPS",
+      "CORE"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Extensão do ombro com cotovelos quase fixos; dorsal principal. Cabeça longa do tríceps auxilia a extensão do ombro; participação varia com a execução. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "f5463af1-5e09-4225-80a4-75e1f8142626",
+    "name": "Desenvolvimento Sentado com Barra",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "SHOULDERS"
+    ],
+    "secondary": [
+      "TRICEPS"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Press acima da cabeça; deltoides principais, tríceps auxilia a extensão do cotovelo. Na opção unilateral estabilizar tronco sem compensar por inclinação lateral. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "d3b68768-5ba7-49c6-893a-cc525f412a36",
+    "name": "Desenvolvimento Sentado com Halteres e Pegada Neutra",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "SHOULDERS"
+    ],
+    "secondary": [
+      "TRICEPS"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Press acima da cabeça; deltoides principais, tríceps auxilia a extensão do cotovelo. Na opção unilateral estabilizar tronco sem compensar por inclinação lateral. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "bd816af9-6962-4090-8ed2-b823dac3b22c",
+    "name": "Desenvolvimento Unilateral com Halter",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "SHOULDERS"
+    ],
+    "secondary": [
+      "TRICEPS"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Press acima da cabeça; deltoides principais, tríceps auxilia a extensão do cotovelo. Na opção unilateral estabilizar tronco sem compensar por inclinação lateral. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "7f02567e-ffa6-476d-828b-b665fea59fd8",
+    "name": "Desenvolvimento Unilateral no Cabo",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "SHOULDERS"
+    ],
+    "secondary": [
+      "TRICEPS"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Press acima da cabeça; deltoides principais, tríceps auxilia a extensão do cotovelo. Na opção unilateral estabilizar tronco sem compensar por inclinação lateral. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "25f7281a-ca21-499a-8ed0-494d71d724b1",
+    "name": "Elevação Lateral com Halteres",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "SHOULDERS"
+    ],
+    "secondary": [
+      "BACK"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Elevações: deltoide e estabilização escapular; crucifixo inverso: abdução horizontal. Face pull com corda inclui retração escapular e rotação externa, sem equivalência automática de trajetórias. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "4783cc8e-6eb6-4da7-8766-be5b41036a02",
+    "name": "Elevação Lateral Sentado com Halteres",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "SHOULDERS"
+    ],
+    "secondary": [
+      "BACK"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Elevações: deltoide e estabilização escapular; crucifixo inverso: abdução horizontal. Face pull com corda inclui retração escapular e rotação externa, sem equivalência automática de trajetórias. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "d28958b3-e4b5-4541-8f76-2b9fa139f998",
+    "name": "Elevação Lateral Unilateral no Cabo com Munhequeira",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "SHOULDERS"
+    ],
+    "secondary": [
+      "BACK"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Elevações: deltoide e estabilização escapular; crucifixo inverso: abdução horizontal. Face pull com corda inclui retração escapular e rotação externa, sem equivalência automática de trajetórias. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "54fc45df-ac17-48ae-8ea2-18f666a8e992",
+    "name": "Elevação Frontal com Barra",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "SHOULDERS"
+    ],
+    "secondary": [
+      "BACK"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Elevações: deltoide e estabilização escapular; crucifixo inverso: abdução horizontal. Face pull com corda inclui retração escapular e rotação externa, sem equivalência automática de trajetórias. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "b4734cc8-a7a4-4b34-89f6-095b98709a4e",
+    "name": "Elevação Frontal na Polia com Barra Reta",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "SHOULDERS"
+    ],
+    "secondary": [
+      "BACK"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Elevações: deltoide e estabilização escapular; crucifixo inverso: abdução horizontal. Face pull com corda inclui retração escapular e rotação externa, sem equivalência automática de trajetórias. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "76aac295-3bd9-4545-87bc-74510f8521dd",
+    "name": "Elevação Frontal na Polia com Corda",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "SHOULDERS"
+    ],
+    "secondary": [
+      "BACK"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Elevações: deltoide e estabilização escapular; crucifixo inverso: abdução horizontal. Face pull com corda inclui retração escapular e rotação externa, sem equivalência automática de trajetórias. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "a9a964fa-1896-4fc5-87e6-6295687cccbe",
+    "name": "Elevação Frontal Unilateral no Cabo",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "SHOULDERS"
+    ],
+    "secondary": [
+      "BACK"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Elevações: deltoide e estabilização escapular; crucifixo inverso: abdução horizontal. Face pull com corda inclui retração escapular e rotação externa, sem equivalência automática de trajetórias. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "a0c3fc44-584d-46cd-8ca3-e05b6322f169",
+    "name": "Crucifixo Inverso Unilateral no Cabo",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "SHOULDERS"
+    ],
+    "secondary": [
+      "BACK"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Elevações: deltoide e estabilização escapular; crucifixo inverso: abdução horizontal. Face pull com corda inclui retração escapular e rotação externa, sem equivalência automática de trajetórias. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "95a939a7-4772-4b65-8f22-ffb69f155818",
+    "name": "Encolhimento no Smith",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BACK"
+    ],
+    "secondary": [
+      "FOREARMS"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Elevação escapular, com trapézio principal e pegada como estabilização. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "e42add13-60e7-4472-8a7e-35bbeb05439f",
+    "name": "Encolhimento no Cabo",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — ombros, braços e antebraços",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "BACK"
+    ],
+    "secondary": [
+      "FOREARMS"
+    ],
+    "sourceIds": [
+      "upper-anatomy",
+      "ace"
+    ],
+    "notes": "Elevação escapular, com trapézio principal e pegada como estabilização. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "407cf54c-4d86-442b-828a-a08a8f4c1bc2",
+    "name": "Agachamento com Halteres",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "QUADRICEPS",
+      "GLUTES"
+    ],
+    "secondary": [
+      "HAMSTRINGS",
+      "CORE"
+    ],
+    "sourceIds": [
+      "legs",
+      "glutes",
+      "ace"
+    ],
+    "notes": "Extensão coordenada de joelho/quadril; unilateral indica execução por lado, inclusive com suporte do membro oposto. Apoio, amplitude e inclinação do tronco modificam contribuições. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "562a9607-368f-4cb6-82ff-98626ad91f5b",
+    "name": "Agachamento Sumô com Barra",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "QUADRICEPS",
+      "GLUTES"
+    ],
+    "secondary": [
+      "HAMSTRINGS",
+      "CORE"
+    ],
+    "sourceIds": [
+      "legs",
+      "glutes",
+      "ace"
+    ],
+    "notes": "Extensão coordenada de joelho/quadril; unilateral indica execução por lado, inclusive com suporte do membro oposto. Apoio, amplitude e inclinação do tronco modificam contribuições. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "c0099fa5-dc47-4277-8af9-e9e909782af2",
+    "name": "Agachamento Sumô no Smith",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "QUADRICEPS",
+      "GLUTES"
+    ],
+    "secondary": [
+      "HAMSTRINGS",
+      "CORE"
+    ],
+    "sourceIds": [
+      "legs",
+      "glutes",
+      "ace"
+    ],
+    "notes": "Extensão coordenada de joelho/quadril; unilateral indica execução por lado, inclusive com suporte do membro oposto. Apoio, amplitude e inclinação do tronco modificam contribuições. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "acff5fdd-2936-4ee5-8455-8dda63f8d964",
+    "name": "Agachamento Búlgaro com Halteres",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "QUADRICEPS",
+      "GLUTES"
+    ],
+    "secondary": [
+      "HAMSTRINGS",
+      "CORE"
+    ],
+    "sourceIds": [
+      "legs",
+      "glutes",
+      "ace"
+    ],
+    "notes": "Extensão coordenada de joelho/quadril; unilateral indica execução por lado, inclusive com suporte do membro oposto. Apoio, amplitude e inclinação do tronco modificam contribuições. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "c486f802-00b9-4aa4-8365-135fc77a4efb",
+    "name": "Agachamento Búlgaro com Barra",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "QUADRICEPS",
+      "GLUTES"
+    ],
+    "secondary": [
+      "HAMSTRINGS",
+      "CORE"
+    ],
+    "sourceIds": [
+      "legs",
+      "glutes",
+      "ace"
+    ],
+    "notes": "Extensão coordenada de joelho/quadril; unilateral indica execução por lado, inclusive com suporte do membro oposto. Apoio, amplitude e inclinação do tronco modificam contribuições. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "8a509e18-1e7a-43f0-8f62-ffd5390284ac",
+    "name": "Agachamento Búlgaro no Smith",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "QUADRICEPS",
+      "GLUTES"
+    ],
+    "secondary": [
+      "HAMSTRINGS",
+      "CORE"
+    ],
+    "sourceIds": [
+      "legs",
+      "glutes",
+      "ace"
+    ],
+    "notes": "Extensão coordenada de joelho/quadril; unilateral indica execução por lado, inclusive com suporte do membro oposto. Apoio, amplitude e inclinação do tronco modificam contribuições. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "6f56ae52-778c-4e80-84ed-8aeeb9de0fb6",
+    "name": "Afundo Estático com Barra",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "QUADRICEPS",
+      "GLUTES"
+    ],
+    "secondary": [
+      "HAMSTRINGS",
+      "CORE"
+    ],
+    "sourceIds": [
+      "legs",
+      "glutes",
+      "ace"
+    ],
+    "notes": "Extensão coordenada de joelho/quadril; unilateral indica execução por lado, inclusive com suporte do membro oposto. Apoio, amplitude e inclinação do tronco modificam contribuições. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "9cfeba3b-0282-4560-87b9-566dce17db03",
+    "name": "Afundo Estático no Smith",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "QUADRICEPS",
+      "GLUTES"
+    ],
+    "secondary": [
+      "HAMSTRINGS",
+      "CORE"
+    ],
+    "sourceIds": [
+      "legs",
+      "glutes",
+      "ace"
+    ],
+    "notes": "Extensão coordenada de joelho/quadril; unilateral indica execução por lado, inclusive com suporte do membro oposto. Apoio, amplitude e inclinação do tronco modificam contribuições. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "f54cf33d-cc08-429e-83a3-2be4590a1c5e",
+    "name": "Afundo Reverso com Barra",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "QUADRICEPS",
+      "GLUTES"
+    ],
+    "secondary": [
+      "HAMSTRINGS",
+      "CORE"
+    ],
+    "sourceIds": [
+      "legs",
+      "glutes",
+      "ace"
+    ],
+    "notes": "Extensão coordenada de joelho/quadril; unilateral indica execução por lado, inclusive com suporte do membro oposto. Apoio, amplitude e inclinação do tronco modificam contribuições. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "a3fe2744-9f3d-4e46-819c-6da71dfa3f0e",
+    "name": "Afundo Reverso no Smith",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "QUADRICEPS",
+      "GLUTES"
+    ],
+    "secondary": [
+      "HAMSTRINGS",
+      "CORE"
+    ],
+    "sourceIds": [
+      "legs",
+      "glutes",
+      "ace"
+    ],
+    "notes": "Extensão coordenada de joelho/quadril; unilateral indica execução por lado, inclusive com suporte do membro oposto. Apoio, amplitude e inclinação do tronco modificam contribuições. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "6f8b6049-c105-4504-8d7a-d5df61488b4e",
+    "name": "Avanço com Barra",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "QUADRICEPS",
+      "GLUTES"
+    ],
+    "secondary": [
+      "HAMSTRINGS",
+      "CORE"
+    ],
+    "sourceIds": [
+      "legs",
+      "glutes",
+      "ace"
+    ],
+    "notes": "Extensão coordenada de joelho/quadril; unilateral indica execução por lado, inclusive com suporte do membro oposto. Apoio, amplitude e inclinação do tronco modificam contribuições. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "77874c34-9848-4448-8439-6c1f8b1adb73",
+    "name": "Step-up com Barra",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "QUADRICEPS",
+      "GLUTES"
+    ],
+    "secondary": [
+      "HAMSTRINGS",
+      "CORE"
+    ],
+    "sourceIds": [
+      "legs",
+      "glutes",
+      "ace"
+    ],
+    "notes": "Extensão coordenada de joelho/quadril; unilateral indica execução por lado, inclusive com suporte do membro oposto. Apoio, amplitude e inclinação do tronco modificam contribuições. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "2ce3f212-8f40-493e-80b8-10900d3a45f5",
+    "name": "Step-up no Smith",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "QUADRICEPS",
+      "GLUTES"
+    ],
+    "secondary": [
+      "HAMSTRINGS",
+      "CORE"
+    ],
+    "sourceIds": [
+      "legs",
+      "glutes",
+      "ace"
+    ],
+    "notes": "Extensão coordenada de joelho/quadril; unilateral indica execução por lado, inclusive com suporte do membro oposto. Apoio, amplitude e inclinação do tronco modificam contribuições. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "56cfa02e-dfa7-40b6-8b0a-8d3e23ba0202",
+    "name": "Stiff com Halteres",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "HAMSTRINGS",
+      "GLUTES"
+    ],
+    "secondary": [
+      "BACK",
+      "CORE",
+      "FOREARMS",
+      "ADDUCTORS"
+    ],
+    "sourceIds": [
+      "deadlift",
+      "stiff-variants",
+      "ace"
+    ],
+    "notes": "Dobradiça de quadril com estabilização do tronco. Stiff e romeno mantêm diferenças editoriais de flexão do joelho; não são registros de flexão de joelho na máquina. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "76518f5e-2aaa-440f-8f06-73e75d7668b7",
+    "name": "Stiff no Smith",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "HAMSTRINGS",
+      "GLUTES"
+    ],
+    "secondary": [
+      "BACK",
+      "CORE",
+      "ADDUCTORS"
+    ],
+    "sourceIds": [
+      "deadlift",
+      "stiff-variants",
+      "ace"
+    ],
+    "notes": "Dobradiça de quadril com estabilização do tronco. Stiff e romeno mantêm diferenças editoriais de flexão do joelho; não são registros de flexão de joelho na máquina. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "2b5e1ea4-ae6b-4198-8909-f35bb2923339",
+    "name": "Levantamento Terra Romeno com Halteres",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "HAMSTRINGS",
+      "GLUTES"
+    ],
+    "secondary": [
+      "BACK",
+      "CORE",
+      "FOREARMS",
+      "ADDUCTORS"
+    ],
+    "sourceIds": [
+      "deadlift",
+      "stiff-variants",
+      "ace"
+    ],
+    "notes": "Dobradiça de quadril com estabilização do tronco. Stiff e romeno mantêm diferenças editoriais de flexão do joelho; não são registros de flexão de joelho na máquina. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "6b8024e2-0472-4245-82b4-d66e4148db53",
+    "name": "Levantamento Terra Romeno no Smith",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "HAMSTRINGS",
+      "GLUTES"
+    ],
+    "secondary": [
+      "BACK",
+      "CORE",
+      "ADDUCTORS"
+    ],
+    "sourceIds": [
+      "deadlift",
+      "stiff-variants",
+      "ace"
+    ],
+    "notes": "Dobradiça de quadril com estabilização do tronco. Stiff e romeno mantêm diferenças editoriais de flexão do joelho; não são registros de flexão de joelho na máquina. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "de27f294-a664-423b-81da-dbd85a318c52",
+    "name": "Levantamento Terra Romeno Unilateral com Barra",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "HAMSTRINGS",
+      "GLUTES"
+    ],
+    "secondary": [
+      "BACK",
+      "CORE",
+      "FOREARMS",
+      "ADDUCTORS"
+    ],
+    "sourceIds": [
+      "deadlift",
+      "stiff-variants",
+      "ace"
+    ],
+    "notes": "Dobradiça de quadril com estabilização do tronco. Stiff e romeno mantêm diferenças editoriais de flexão do joelho; não são registros de flexão de joelho na máquina. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "5c438236-2b03-4039-882a-16ab6dbb7c08",
+    "name": "Levantamento Terra Romeno Unilateral no Cabo",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "HAMSTRINGS",
+      "GLUTES"
+    ],
+    "secondary": [
+      "BACK",
+      "CORE",
+      "FOREARMS",
+      "ADDUCTORS"
+    ],
+    "sourceIds": [
+      "deadlift",
+      "stiff-variants",
+      "ace"
+    ],
+    "notes": "Dobradiça de quadril com estabilização do tronco. Stiff e romeno mantêm diferenças editoriais de flexão do joelho; não são registros de flexão de joelho na máquina. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "0e876f56-b264-4c49-8253-c0e528ee11d5",
+    "name": "Good Morning no Smith",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "HAMSTRINGS",
+      "GLUTES"
+    ],
+    "secondary": [
+      "BACK",
+      "CORE",
+      "ADDUCTORS"
+    ],
+    "sourceIds": [
+      "deadlift",
+      "stiff-variants",
+      "ace"
+    ],
+    "notes": "Dobradiça de quadril com estabilização do tronco. Stiff e romeno mantêm diferenças editoriais de flexão do joelho; não são registros de flexão de joelho na máquina. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "266c42ff-bed0-4aa5-8ed5-c6bcc06eb643",
+    "name": "Cadeira Extensora Unilateral",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "QUADRICEPS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "leg-extension-quads",
+      "ace"
+    ],
+    "notes": "Extensão do joelho; quadríceps principal. A versão no cabo usa tornozeleira e execução sentada, não extensão de quadril. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "f71fe1b7-7471-4119-8648-2410dbde9748",
+    "name": "Extensão de Joelhos Unilateral no Cabo",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "QUADRICEPS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "leg-extension-quads",
+      "ace"
+    ],
+    "notes": "Extensão do joelho; quadríceps principal. A versão no cabo usa tornozeleira e execução sentada, não extensão de quadril. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "4c7bb65f-ab3d-4c79-8e1a-9351f3f38af0",
+    "name": "Cadeira Flexora Unilateral",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "HAMSTRINGS"
+    ],
+    "secondary": [
+      "CALVES"
+    ],
+    "sourceIds": [
+      "seated-curl-hamstrings",
+      "prone-curl-hamstrings",
+      "ace"
+    ],
+    "notes": "Flexão do joelho; gastrocnêmio pode auxiliar. Cabo: tornozeleira, execução em pé com coxa estável. Sentado e deitado não são intercambiáveis na identidade do cadastro. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "c8001351-5289-4571-8d89-a33de9d2d617",
+    "name": "Mesa Flexora Unilateral",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "HAMSTRINGS"
+    ],
+    "secondary": [
+      "CALVES"
+    ],
+    "sourceIds": [
+      "seated-curl-hamstrings",
+      "prone-curl-hamstrings",
+      "ace"
+    ],
+    "notes": "Flexão do joelho; gastrocnêmio pode auxiliar. Cabo: tornozeleira, execução em pé com coxa estável. Sentado e deitado não são intercambiáveis na identidade do cadastro. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "11928797-9c2e-4cf4-8ae6-e22bb2dcedca",
+    "name": "Flexão de Joelhos Unilateral no Cabo",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "HAMSTRINGS"
+    ],
+    "secondary": [
+      "CALVES"
+    ],
+    "sourceIds": [
+      "seated-curl-hamstrings",
+      "prone-curl-hamstrings",
+      "ace"
+    ],
+    "notes": "Flexão do joelho; gastrocnêmio pode auxiliar. Cabo: tornozeleira, execução em pé com coxa estável. Sentado e deitado não são intercambiáveis na identidade do cadastro. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "f54fd450-4b6c-4340-899a-269b8b264105",
+    "name": "Elevação Pélvica com Barra",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "GLUTES"
+    ],
+    "secondary": [
+      "HAMSTRINGS",
+      "CORE"
+    ],
+    "sourceIds": [
+      "hip-thrust-biomechanics",
+      "glutes",
+      "ace"
+    ],
+    "notes": "Extensão de quadril. Elevação pélvica usa costas apoiadas no banco; ponte usa tronco no solo. Extensão na máquina/caneleira por lado; pull-through é uma dobradiça em pé. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "37145346-6a91-4833-83d4-f8bfa680594a",
+    "name": "Elevação Pélvica no Smith",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "GLUTES"
+    ],
+    "secondary": [
+      "HAMSTRINGS",
+      "CORE"
+    ],
+    "sourceIds": [
+      "hip-thrust-biomechanics",
+      "glutes",
+      "ace"
+    ],
+    "notes": "Extensão de quadril. Elevação pélvica usa costas apoiadas no banco; ponte usa tronco no solo. Extensão na máquina/caneleira por lado; pull-through é uma dobradiça em pé. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "596a6263-cdbd-4b00-8b51-380208d934f5",
+    "name": "Elevação Pélvica na Máquina",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "GLUTES"
+    ],
+    "secondary": [
+      "HAMSTRINGS",
+      "CORE"
+    ],
+    "sourceIds": [
+      "hip-thrust-biomechanics",
+      "glutes",
+      "ace"
+    ],
+    "notes": "Extensão de quadril. Elevação pélvica usa costas apoiadas no banco; ponte usa tronco no solo. Extensão na máquina/caneleira por lado; pull-through é uma dobradiça em pé. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "b632c129-4622-4927-8a7f-1c520c3cbe1d",
+    "name": "Elevação Pélvica com Halter",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "GLUTES"
+    ],
+    "secondary": [
+      "HAMSTRINGS",
+      "CORE"
+    ],
+    "sourceIds": [
+      "hip-thrust-biomechanics",
+      "glutes",
+      "ace"
+    ],
+    "notes": "Extensão de quadril. Elevação pélvica usa costas apoiadas no banco; ponte usa tronco no solo. Extensão na máquina/caneleira por lado; pull-through é uma dobradiça em pé. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "07a6953c-9448-4041-8d70-796e30eb1820",
+    "name": "Ponte de Glúteos com Barra no Solo",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "GLUTES"
+    ],
+    "secondary": [
+      "HAMSTRINGS",
+      "CORE"
+    ],
+    "sourceIds": [
+      "hip-thrust-biomechanics",
+      "glutes",
+      "ace"
+    ],
+    "notes": "Extensão de quadril. Elevação pélvica usa costas apoiadas no banco; ponte usa tronco no solo. Extensão na máquina/caneleira por lado; pull-through é uma dobradiça em pé. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "11756766-11ff-4116-8939-7ee10fb22c01",
+    "name": "Extensão de Quadril Unilateral na Máquina",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "GLUTES"
+    ],
+    "secondary": [
+      "HAMSTRINGS",
+      "CORE"
+    ],
+    "sourceIds": [
+      "hip-thrust-biomechanics",
+      "glutes",
+      "ace"
+    ],
+    "notes": "Extensão de quadril. Elevação pélvica usa costas apoiadas no banco; ponte usa tronco no solo. Extensão na máquina/caneleira por lado; pull-through é uma dobradiça em pé. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "7ba73610-3331-45f5-8446-728875a4db94",
+    "name": "Extensão de Quadril Unilateral com Caneleira",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "GLUTES"
+    ],
+    "secondary": [
+      "HAMSTRINGS",
+      "CORE"
+    ],
+    "sourceIds": [
+      "hip-thrust-biomechanics",
+      "glutes",
+      "ace"
+    ],
+    "notes": "Extensão de quadril. Elevação pélvica usa costas apoiadas no banco; ponte usa tronco no solo. Extensão na máquina/caneleira por lado; pull-through é uma dobradiça em pé. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "ca75ce5b-5071-4c1c-8cb9-f8cd018edd76",
+    "name": "Pull-through na Polia com Corda",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "GLUTES"
+    ],
+    "secondary": [
+      "HAMSTRINGS",
+      "CORE"
+    ],
+    "sourceIds": [
+      "hip-thrust-biomechanics",
+      "glutes",
+      "ace"
+    ],
+    "notes": "Extensão de quadril. Elevação pélvica usa costas apoiadas no banco; ponte usa tronco no solo. Extensão na máquina/caneleira por lado; pull-through é uma dobradiça em pé. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "8ee46aac-dc93-42f5-8559-181000dc3357",
+    "name": "Abdução de Quadril Deitado com Caneleira",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "HIP_ABDUCTORS"
+    ],
+    "secondary": [
+      "GLUTES"
+    ],
+    "sourceIds": [
+      "hip-abduction-machine",
+      "hip-kinesiology",
+      "ace"
+    ],
+    "notes": "Abdução do quadril com pelve estável. Glúteos médio/mínimo e tensor da fáscia lata participam; não rotular como exercício exclusivo de glúteo máximo. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "75fcd52b-a156-439b-8b02-1ee065831e4e",
+    "name": "Abdução de Quadril em Pé com Miniband",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "HIP_ABDUCTORS"
+    ],
+    "secondary": [
+      "GLUTES"
+    ],
+    "sourceIds": [
+      "hip-abduction-machine",
+      "hip-kinesiology",
+      "ace"
+    ],
+    "notes": "Abdução do quadril com pelve estável. Glúteos médio/mínimo e tensor da fáscia lata participam; não rotular como exercício exclusivo de glúteo máximo. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "7c54719b-6029-40d1-8107-48e533c9298c",
+    "name": "Adução de Quadril Deitado com Caneleira",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "ADDUCTORS"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "hip-kinesiology",
+      "ace"
+    ],
+    "notes": "Adução do quadril pela perna inferior em decúbito lateral, sem confundir com abdução. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "518d8901-b7bd-439f-8e17-713403bf89c8",
+    "name": "Panturrilha em Pé no Smith",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "CALVES"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "standing-calf-training",
+      "seated-calf-emg",
+      "ace"
+    ],
+    "notes": "Flexão plantar; gastrocnêmio e sóleo participam. Joelho flexionado reduz a contribuição relativa do gastrocnêmio sem desligá-lo. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "34b634c3-ee55-4e83-8f5f-56a33a8cc77d",
+    "name": "Panturrilha em Pé com Halteres",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "CALVES"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "standing-calf-training",
+      "seated-calf-emg",
+      "ace"
+    ],
+    "notes": "Flexão plantar; gastrocnêmio e sóleo participam. Joelho flexionado reduz a contribuição relativa do gastrocnêmio sem desligá-lo. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "996b4399-febe-44ac-8734-8f1b924943b5",
+    "name": "Panturrilha Sentado com Halteres",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "CALVES"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "standing-calf-training",
+      "seated-calf-emg",
+      "ace"
+    ],
+    "notes": "Flexão plantar; gastrocnêmio e sóleo participam. Joelho flexionado reduz a contribuição relativa do gastrocnêmio sem desligá-lo. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "0e0c119f-12d2-4026-8e56-0b3dc7f49e54",
+    "name": "Panturrilha Unilateral no Leg Press",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "CALVES"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "standing-calf-training",
+      "seated-calf-emg",
+      "ace"
+    ],
+    "notes": "Flexão plantar; gastrocnêmio e sóleo participam. Joelho flexionado reduz a contribuição relativa do gastrocnêmio sem desligá-lo. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "026f8dcf-4868-4ac3-8548-60e80789c928",
+    "name": "Panturrilha Unilateral Sentado",
+    "isUnilateral": true,
+    "family": "Musculação tradicional — pernas e quadril",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "CALVES"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "standing-calf-training",
+      "seated-calf-emg",
+      "ace"
+    ],
+    "notes": "Flexão plantar; gastrocnêmio e sóleo participam. Joelho flexionado reduz a contribuição relativa do gastrocnêmio sem desligá-lo. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "ba767a64-d2b5-4a15-8ab1-bb85e0cd3fe3",
+    "name": "Abdominal Crunch com Peso no Peito",
+    "isUnilateral": false,
+    "family": "Core e estabilidade",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "CORE"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Flexão/controlar extensão ou rotação do tronco conforme o movimento. Pallof é anti-rotação com execução por lado; woodchop envolve movimento diagonal controlado. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "99246a58-d732-4f34-89f1-59bcd3fb4eb4",
+    "name": "Abdominal Crunch na Bola Suíça",
+    "isUnilateral": false,
+    "family": "Core e estabilidade",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "CORE"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Flexão/controlar extensão ou rotação do tronco conforme o movimento. Pallof é anti-rotação com execução por lado; woodchop envolve movimento diagonal controlado. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "3502ac49-c62d-4756-8a5f-7f0474357e36",
+    "name": "Pallof Press Unilateral com Elástico",
+    "isUnilateral": true,
+    "family": "Core e estabilidade",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "CORE"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Flexão/controlar extensão ou rotação do tronco conforme o movimento. Pallof é anti-rotação com execução por lado; woodchop envolve movimento diagonal controlado. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "1823cd69-49ae-4684-8802-0e80dd6c5dc9",
+    "name": "Woodchop no Cabo Baixo",
+    "isUnilateral": false,
+    "family": "Core e estabilidade",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "CORE"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Flexão/controlar extensão ou rotação do tronco conforme o movimento. Pallof é anti-rotação com execução por lado; woodchop envolve movimento diagonal controlado. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "034f7921-ff02-4df5-8652-625247c0d241",
+    "name": "Prancha Ventral com Antebraços na Bola Suíça",
+    "isUnilateral": false,
+    "family": "Core e estabilidade",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "primary": [
+      "CORE"
+    ],
+    "secondary": [],
+    "sourceIds": [
+      "ace",
+      "upper-anatomy"
+    ],
+    "notes": "Flexão/controlar extensão ou rotação do tronco conforme o movimento. Pallof é anti-rotação com execução por lado; woodchop envolve movimento diagonal controlado. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  }
+]

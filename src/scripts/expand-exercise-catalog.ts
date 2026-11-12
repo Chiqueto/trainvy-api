@@ -5,11 +5,12 @@ import { ExpandGlobalExerciseCatalog } from "../usecases/ExpandGlobalExerciseCat
 
 async function main() {
   const apply = process.argv.includes("--apply");
+  const variantsOnly = process.argv.includes("--variants");
   const target = new URL(getDatabaseUrl());
   if (target.hostname !== "ep-royal-bread-actuzgii-pooler.sa-east-1.aws.neon.tech" || target.pathname !== "/neondb") {
     throw new Error("Unexpected database target");
   }
-  const definitions = JSON.parse(await readFile(new URL("../domain/exercise-catalog-expansion.json", import.meta.url), "utf8"));
+  const definitions = JSON.parse(await readFile(new URL(variantsOnly ? "../domain/exercise-catalog-variants.json" : "../domain/exercise-catalog-expansion.json", import.meta.url), "utf8"));
   await mkdir(".tmp/catalog-expansion", {recursive: true});
   const stamp = new Date().toISOString().replace(/:/g, "-");
   const snapshot = await prisma.exercise.findMany({orderBy: {id: "asc"}});
