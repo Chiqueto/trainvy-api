@@ -22,6 +22,7 @@ export const CATALOG_REVIEW_SOURCES: Record<
   string,
   { title: string; url: string }
 > = {
+  "pulldown-emg-2025": {title:"Buonsenso et al. — Lat pulldown grip and trunk EMG (2025)",url:"https://doi.org/10.3390/jfmk10030345"},
   "triceps-overhead": {
     title: "Maeo et al. — Cable elbow extension in overhead versus neutral arm positions (2023)",
     url: "https://pubmed.ncbi.nlm.nih.gov/35819335/",
@@ -176,7 +177,10 @@ export const CatalogReviewEntry = z
 export type ReviewedExercise = z.infer<typeof CatalogReviewEntry>;
 export const REVIEWED_EXERCISES = z
   .array(CatalogReviewEntry)
-  .parse([...definitions, ...variants.map(({ isUnilateral: _, ...entry }) => entry)]);
+  .parse([...definitions, ...variants.map(({ isUnilateral, ...entry }) => {
+    void isUnilateral;
+    return entry;
+  })]);
 if (
   new Set(REVIEWED_EXERCISES.map((e) => e.id)).size !==
   REVIEWED_EXERCISES.length

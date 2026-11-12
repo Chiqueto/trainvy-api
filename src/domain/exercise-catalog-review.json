@@ -351,12 +351,15 @@
     ],
     "secondary": [
       "BICEPS",
-      "FOREARMS"
+      "FOREARMS",
+      "SHOULDERS",
+      "CORE"
     ],
     "sourceIds": [
-      "ace",
+      "pulldown-emg-2025",
       "upper-anatomy"
-    ]
+    ],
+    "notes": "Puxada frontal pronada na polia alta: dorsal e redondo maior principais; bíceps, antebraços, estabilizadores escapulares/ombro e tronco coenvolvidos. Sem ênfase regional ou isolamento."
   },
   {
     "id": "00000000-0000-4000-8000-000000000120",
