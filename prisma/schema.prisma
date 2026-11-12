@@ -77,6 +77,11 @@ enum ExerciseMediaType {
 }
 
 model User {
+  coachOnboardingCompleted Boolean @default(false)
+  workoutBuilderOnboardingCompleted Boolean @default(false)
+  // Private, credential-free record created by a coach before the athlete signs up.
+  isManagedProfile Boolean @default(false)
+  managedInvitations CoachInvitation[] @relation("ManagedInvitationAthlete")
   prescribedPlans WorkoutPlan[] @relation("PlanPrescriber")
   approvedPrescriptions WorkoutPrescription[] @relation("PrescriptionPrescriber")
   legalAcceptances UserLegalAcceptance[]
@@ -808,6 +813,8 @@ enum CoachInvitationStatus {
 }
 
 model CoachInvitation {
+  managedAthleteId String?
+  managedAthlete User? @relation("ManagedInvitationAthlete", fields: [managedAthleteId], references: [id], onDelete: Restrict)
   id                  String                @id @default(uuid())
   coachId             String
   coach               User                  @relation("CoachInvitations", fields: [coachId], references: [id], onDelete: Cascade)

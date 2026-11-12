@@ -13,6 +13,7 @@ import { UpdateWorkoutPrescriptionDraft } from "../../src/usecases/UpdateWorkout
 
 const { create, update, tx, consentRead, templateFind, exerciseFind } =
   vi.hoisted(() => {
+    const create = vi.fn();
     const exerciseFind = vi.fn();
     const consentRead = vi.fn(() => {
       throw new Error(
@@ -24,8 +25,10 @@ const { create, update, tx, consentRead, templateFind, exerciseFind } =
       notificationPreferences: { findUnique: vi.fn().mockResolvedValue(null) },
       notification: { create: vi.fn().mockResolvedValue(null) },
       $queryRaw: vi.fn(),
-      workoutPrescription: { findUnique: vi.fn(), update: vi.fn() },
-      coachAthlete: { findFirst: vi.fn() },
+      workoutPrescription: { create, findUnique: vi.fn(), update: vi.fn() },
+      coachAthlete: {
+        findFirst: vi.fn().mockResolvedValue({ status: "ACTIVE" }),
+      },
       professionalRegistration: {
         findUniqueOrThrow: vi.fn().mockResolvedValue({
           fullName: "Personal Exemplo",
@@ -37,7 +40,7 @@ const { create, update, tx, consentRead, templateFind, exerciseFind } =
       userLegalAcceptance: { findFirst: consentRead },
     };
     return {
-      create: vi.fn(),
+      create,
       update: tx.workoutPrescription.update,
       tx,
       consentRead,
@@ -132,6 +135,16 @@ afterEach(() => {
 });
 
 describe("Contrato e persistência da prescrição do personal", () => {
+  it("não cria ficha em um cadastro vinculado enquanto o editor estava aberto", async () => {
+    tx.coachAthlete.findFirst.mockResolvedValueOnce(null);
+    await expect(
+      new CreateWorkoutPrescriptionDraft().execute({
+        ...body,
+        coachId: "coach",
+      }),
+    ).rejects.toMatchObject({ code: "COACH_ATHLETE_LINK_NOT_FOUND" });
+    expect(create).not.toHaveBeenCalled();
+  });
   const mainId = "11111111-1111-4111-8111-111111111111";
   const altId = "22222222-2222-4222-8222-222222222222";
   const linkedBody = {

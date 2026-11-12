@@ -174,6 +174,7 @@ export class AcceptCoachInvitation {
             }
 
             // Valida elegibilidade do atleta: apenas contas ATHLETE podem ser alunas de um treinador
+            await tx.$queryRaw`SELECT id FROM "user" WHERE id = ${invite.coachId} FOR UPDATE`;
             assertAthleteCanAcceptInvitation(athlete);
 
             // 1. Verifica sob transação se o atleta já possui vínculo ativo
@@ -202,11 +203,31 @@ export class AcceptCoachInvitation {
             assertCoachCanManageAthletes(coachContext);
 
             const limit = getCoachAthleteLimit(coachContext);
+            const managedLink = invite.managedAthleteId
+              ? await tx.coachAthlete.findFirst({
+                  where: {
+                    coachId: invite.coachId,
+                    athleteId: invite.managedAthleteId,
+                    status: "ACTIVE",
+                    athlete: { isManagedProfile: true, deletedAt: null },
+                  },
+                })
+              : null;
+            if (invite.managedAthleteId && !managedLink)
+              throw new CoachAthleteError(
+                "ATHLETE_NOT_FOUND",
+                409,
+                "Este cadastro não está mais disponível para vínculo.",
+              );
             const activeCount = await tx.coachAthlete.count({
               where: { coachId: invite.coachId, status: "ACTIVE" },
             });
 
-            if (limit !== null && limit !== undefined && activeCount >= limit) {
+            if (
+              limit !== null &&
+              limit !== undefined &&
+              (managedLink ? activeCount > limit : activeCount >= limit)
+            ) {
               throw new CoachAthleteError(
                 "ATHLETE_LIMIT_REACHED",
                 409,
@@ -236,14 +257,51 @@ export class AcceptCoachInvitation {
             }
 
             // 4. Cria o vínculo ativo
-            const link = await tx.coachAthlete.create({
-              data: {
-                coachId: invite.coachId,
-                athleteId,
-                status: "ACTIVE",
-                invitationId: invite.id,
-              },
-            });
+            const link = managedLink
+              ? await tx.coachAthlete.update({
+                  where: { id: managedLink.id },
+                  data: {
+                    athleteId,
+                    invitationId: invite.id,
+                    createdAt: now,
+                    evolutionShared: false,
+                    includePreviousHistory: false,
+                  },
+                })
+              : await tx.coachAthlete.create({
+                  data: {
+                    coachId: invite.coachId,
+                    athleteId,
+                    status: "ACTIVE",
+                    invitationId: invite.id,
+                  },
+                });
+
+            if (managedLink && invite.managedAthleteId) {
+              await tx.workoutPrescription.updateMany({
+                where: {
+                  coachId: invite.coachId,
+                  athleteId: invite.managedAthleteId,
+                },
+                data: { athleteId },
+              });
+              await tx.notification.updateMany({
+                where: { userId: invite.managedAthleteId },
+                data: { userId: athleteId },
+              });
+              await tx.coachInvitation.updateMany({
+                where: {
+                  managedAthleteId: invite.managedAthleteId,
+                  status: "PENDING",
+                },
+                data: { status: "CANCELLED", cancelledAt: now },
+              });
+              // Keep the credential-free record as a tombstone for invitation audit history.
+              await tx.user.update({
+                where: { id: invite.managedAthleteId },
+                data: { deletedAt: now },
+              });
+            }
 
             const notification = await createUserNotification(
               {

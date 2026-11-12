@@ -24,6 +24,7 @@ export class ListCoachAthletes {
         athlete: {
           select: {
             id: true,
+            isManagedProfile: true,
             name: true,
             email: true,
             image: true,
@@ -200,7 +201,8 @@ export class ListCoachAthletes {
         linkId: link.id,
         athleteId,
         name: link.athlete.name,
-        email: link.athlete.email,
+        email: link.athlete.isManagedProfile ? "" : link.athlete.email,
+        isManagedProfile: link.athlete.isManagedProfile,
         image: link.athlete.image,
         acceptedAt: link.createdAt.toISOString(),
         evolutionShared: link.evolutionShared,

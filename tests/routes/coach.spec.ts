@@ -10,6 +10,7 @@ import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { auth } from "../../src/lib/auth.js";
 import { prisma } from "../../src/lib/db.js";
 import { coachRoutes } from "../../src/routes/coach.js";
+import { coachPrescriptionRoutes } from "../../src/routes/coach-prescription.js";
 
 describe("Coach & Athlete HTTP Routes", () => {
   let app: FastifyInstance;
@@ -21,6 +22,7 @@ describe("Coach & Athlete HTTP Routes", () => {
     app.setValidatorCompiler(validatorCompiler);
     app.setSerializerCompiler(serializerCompiler);
     await app.register(coachRoutes);
+    await app.register(coachPrescriptionRoutes);
     await app.ready();
 
     // Cria plano com entitlement
@@ -37,6 +39,7 @@ describe("Coach & Athlete HTTP Routes", () => {
           create: [
             { entitlement: "COACH_DASHBOARD", limitValue: null },
             { entitlement: "MANAGE_ATHLETES", limitValue: 5 },
+            { entitlement: "ASSIGN_WORKOUTS", limitValue: null },
           ],
         },
       },
@@ -278,6 +281,225 @@ describe("Coach & Athlete HTTP Routes", () => {
       where: { id: link!.id },
     });
     expect(linkAfter?.status).toBe("REVOKED");
+  });
+
+  it("persiste os guias por conta e mantém painel e editor independentes", async () => {
+    const signIn = () =>
+      vi
+        .spyOn(auth.api, "getSession")
+        .mockResolvedValueOnce({ user: coachUser } as any);
+    signIn();
+    const initial = await app.inject({
+      method: "GET",
+      url: "/coach/onboarding",
+    });
+    expect(initial.json()).toEqual({
+      coachOnboardingCompleted: false,
+      workoutBuilderOnboardingCompleted: false,
+    });
+    signIn();
+    const updated = await app.inject({
+      method: "PATCH",
+      url: "/coach/onboarding",
+      payload: { tour: "workspace" },
+    });
+    expect(updated.json()).toEqual({
+      coachOnboardingCompleted: true,
+      workoutBuilderOnboardingCompleted: false,
+    });
+    signIn();
+    const again = await app.inject({ method: "GET", url: "/coach/onboarding" });
+    expect(again.json().coachOnboardingCompleted).toBe(true);
+    expect(
+      (await prisma.user.findUniqueOrThrow({ where: { id: athleteUser.id } }))
+        .coachOnboardingCompleted,
+    ).toBe(false);
+    vi.spyOn(auth.api, "getSession").mockResolvedValueOnce({
+      user: athleteUser,
+    } as any);
+    expect(
+      (
+        await app.inject({
+          method: "PATCH",
+          url: "/coach/onboarding",
+          payload: { tour: "builder" },
+        })
+      ).statusCode,
+    ).toBe(403);
+  });
+
+  it.each([
+    ["GET", "/coach/onboarding", undefined],
+    ["PATCH", "/coach/onboarding", { tour: "builder" }],
+    ["POST", "/coach/managed-athletes", { name: "Aluno" }],
+  ] as const)("%s %s exige autenticação", async (method, url, payload) => {
+    vi.spyOn(auth.api, "getSession").mockResolvedValueOnce(null as any);
+    expect((await app.inject({ method, url, payload })).statusCode).toBe(401);
+  });
+
+  it("cadastra sem login, preserva fichas no aceite e não consome outra vaga", async () => {
+    const signIn = () =>
+      vi
+        .spyOn(auth.api, "getSession")
+        .mockResolvedValueOnce({ user: coachUser } as any);
+    signIn();
+    const created = await app.inject({
+      method: "POST",
+      url: "/coach/managed-athletes",
+      payload: { name: "Aluno sem conta" },
+    });
+    expect(created.statusCode).toBe(201);
+    const { athleteId } = created.json();
+    const managed = await prisma.user.findUniqueOrThrow({
+      where: { id: athleteId },
+      include: { accounts: true, sessions: true },
+    });
+    expect(managed.isManagedProfile).toBe(true);
+    expect(managed.accounts).toHaveLength(0);
+    expect(managed.sessions).toHaveLength(0);
+    signIn();
+    const details = await app.inject({
+      method: "GET",
+      url: `/coach/athletes/${athleteId}`,
+    });
+    expect(details.json()).toMatchObject({ email: "", isManagedProfile: true });
+    signIn();
+    const draftResponse = await app.inject({
+      method: "POST",
+      url: "/coach/prescriptions",
+      payload: {
+        athleteId,
+        name: "Ficha preparada",
+        workoutDays: [
+          {
+            name: "Treino A",
+            isRest: false,
+            estimatedDurationInSeconds: 1800,
+            exercises: [
+              {
+                name: "Supino",
+                order: 0,
+                sets: 3,
+                reps: 10,
+                restTimeInSeconds: 60,
+              },
+            ],
+          },
+        ],
+      },
+    });
+    expect(draftResponse.statusCode).toBe(201);
+    const draft = draftResponse.json();
+    const subscription = await prisma.subscription.findUniqueOrThrow({
+      where: { userId: coachUser.id },
+    });
+    const entitlement = await prisma.planEntitlement.findFirstOrThrow({
+      where: { planId: subscription.planId, entitlement: "MANAGE_ATHLETES" },
+    });
+    const count = await prisma.coachAthlete.count({
+      where: { coachId: coachUser.id, status: "ACTIVE" },
+    });
+    await prisma.planEntitlement.update({
+      where: { id: entitlement.id },
+      data: { limitValue: count },
+    });
+    try {
+      signIn();
+      const atCapacity = await app.inject({
+        method: "POST",
+        url: "/coach/managed-athletes",
+        payload: { name: "Sem vaga" },
+      });
+      expect(atCapacity.statusCode).toBe(409);
+      signIn();
+      const invite = await app.inject({
+        method: "POST",
+        url: "/coach/invitations",
+        payload: { managedAthleteId: athleteId },
+      });
+      expect(invite.statusCode).toBe(201);
+      signIn();
+      const secondInvite = await app.inject({
+        method: "POST",
+        url: "/coach/invitations",
+        payload: { managedAthleteId: athleteId },
+      });
+      const { token } = invite.json();
+      const preview = await app.inject({
+        method: "GET",
+        url: `/coach/invitations/preview/${token}`,
+      });
+      expect(preview.json().isValid).toBe(true);
+      vi.spyOn(auth.api, "getSession").mockResolvedValueOnce({
+        user: athleteUser,
+      } as any);
+      const accepted = await app.inject({
+        method: "POST",
+        url: "/coach/invitations/accept",
+        payload: { token },
+      });
+      expect(accepted.statusCode).toBe(200);
+      const prescription = await prisma.workoutPrescription.findUniqueOrThrow({
+        where: { id: draft.id },
+      });
+      expect(prescription.athleteId).toBe(athleteUser.id);
+      expect(prescription.status).toBe("DRAFT");
+      expect(prescription.name).toBe("Ficha preparada");
+      expect(prescription.payload).toEqual(draft.payload);
+      const link = await prisma.coachAthlete.findUniqueOrThrow({
+        where: { id: accepted.json().link.id },
+      });
+      expect(link.evolutionShared).toBe(false);
+      expect(
+        await prisma.coachAthlete.count({
+          where: { coachId: coachUser.id, status: "ACTIVE" },
+        }),
+      ).toBe(count);
+      const oldInvite = await app.inject({
+        method: "GET",
+        url: `/coach/invitations/preview/${secondInvite.json().token}`,
+      });
+      expect(oldInvite.json().isValid).toBe(false);
+      expect(
+        (await prisma.user.findUniqueOrThrow({ where: { id: athleteId } }))
+          .deletedAt,
+      ).not.toBeNull();
+      await prisma.coachAthlete.update({
+        where: { id: link.id },
+        data: {
+          status: "REVOKED",
+          revokedAt: new Date(),
+          revokedByUserId: athleteUser.id,
+        },
+      });
+    } finally {
+      await prisma.planEntitlement.update({
+        where: { id: entitlement.id },
+        data: { limitValue: entitlement.limitValue },
+      });
+    }
+  });
+
+  it("não permite convidar cadastro de outro personal nem usar conta real como cadastro provisório", async () => {
+    const other = await prisma.user.create({
+      data: {
+        id: crypto.randomUUID(),
+        name: "Cadastro alheio",
+        email: `${crypto.randomUUID()}@managed.invalid`,
+        isManagedProfile: true,
+      },
+    });
+    for (const managedAthleteId of [other.id, athleteUser.id]) {
+      vi.spyOn(auth.api, "getSession").mockResolvedValueOnce({
+        user: coachUser,
+      } as any);
+      const result = await app.inject({
+        method: "POST",
+        url: "/coach/invitations",
+        payload: { managedAthleteId },
+      });
+      expect(result.statusCode).toBe(404);
+    }
   });
 
   it("GET /coach/athletes/:athleteId — retorna 404 imediatamente após encerramento do vínculo", async () => {

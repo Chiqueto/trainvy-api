@@ -11,9 +11,11 @@ export class CreateCoachInvitation {
   async execute({
     coachId,
     expiresInDays = 7,
+    managedAthleteId,
   }: {
     coachId: string;
     expiresInDays?: number;
+    managedAthleteId?: string;
   }) {
     const commercialContext = await new GetCommercialContext().execute({
       userId: coachId,
@@ -26,7 +28,28 @@ export class CreateCoachInvitation {
       where: { coachId, status: "ACTIVE" },
     });
 
-    if (limit !== null && limit !== undefined && activeCount >= limit) {
+    if (managedAthleteId) {
+      const link = await prisma.coachAthlete.findFirst({
+        where: {
+          coachId,
+          athleteId: managedAthleteId,
+          status: "ACTIVE",
+          athlete: { isManagedProfile: true, deletedAt: null },
+        },
+      });
+      if (!link)
+        throw new CoachAthleteError(
+          "ATHLETE_NOT_FOUND",
+          404,
+          "Cadastro de aluno não encontrado.",
+        );
+    }
+    if (
+      !managedAthleteId &&
+      limit !== null &&
+      limit !== undefined &&
+      activeCount >= limit
+    ) {
       throw new CoachAthleteError(
         "ATHLETE_LIMIT_REACHED",
         409,
@@ -42,6 +65,7 @@ export class CreateCoachInvitation {
     const invitation = await prisma.coachInvitation.create({
       data: {
         coachId,
+        managedAthleteId,
         tokenHash,
         status: "PENDING",
         expiresAt,

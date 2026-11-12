@@ -1,4 +1,7 @@
 import { fromNodeHeaders } from "better-auth/node";
+import z from "zod";
+import { CoachOnboarding } from "../usecases/CoachOnboarding.js";
+import { CreateManagedAthlete } from "../usecases/CreateManagedAthlete.js";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 
@@ -73,6 +76,101 @@ const standardErrors = {
 };
 
 export const coachRoutes: FastifyPluginAsyncZod = async (app) => {
+  const onboardingSchema = z.object({
+    coachOnboardingCompleted: z.boolean(),
+    workoutBuilderOnboardingCompleted: z.boolean(),
+  });
+  app.get(
+    "/coach/onboarding",
+    {
+      schema: {
+        operationId: "getCoachOnboarding",
+        tags: ["Coach"],
+        response: { 200: onboardingSchema, ...standardErrors },
+      },
+    },
+    async (request, reply) => {
+      try {
+        const session = await auth.api.getSession({
+          headers: fromNodeHeaders(request.headers),
+        });
+        if (!session?.user)
+          return reply
+            .status(401)
+            .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+        return reply.send(
+          await new CoachOnboarding().execute({ userId: session.user.id }),
+        );
+      } catch (error) {
+        return fail(error, request, reply);
+      }
+    },
+  );
+  app.patch(
+    "/coach/onboarding",
+    {
+      schema: {
+        operationId: "completeCoachOnboarding",
+        tags: ["Coach"],
+        body: z.object({ tour: z.enum(["workspace", "builder"]) }),
+        response: { 200: onboardingSchema, ...standardErrors },
+      },
+    },
+    async (request, reply) => {
+      try {
+        const session = await auth.api.getSession({
+          headers: fromNodeHeaders(request.headers),
+        });
+        if (!session?.user)
+          return reply
+            .status(401)
+            .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+        return reply.send(
+          await new CoachOnboarding().execute({
+            userId: session.user.id,
+            tour: request.body.tour,
+          }),
+        );
+      } catch (error) {
+        return fail(error, request, reply);
+      }
+    },
+  );
+  app.post(
+    "/coach/managed-athletes",
+    {
+      schema: {
+        operationId: "createManagedAthlete",
+        tags: ["Coach"],
+        body: z.object({ name: z.string().trim().min(2).max(100) }),
+        response: {
+          201: z.object({ athleteId: z.string() }),
+          ...standardErrors,
+        },
+      },
+    },
+    async (request, reply) => {
+      try {
+        const session = await auth.api.getSession({
+          headers: fromNodeHeaders(request.headers),
+        });
+        if (!session?.user)
+          return reply
+            .status(401)
+            .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+        return reply
+          .status(201)
+          .send(
+            await new CreateManagedAthlete().execute({
+              coachId: session.user.id,
+              name: request.body.name,
+            }),
+          );
+      } catch (error) {
+        return fail(error, request, reply);
+      }
+    },
+  );
   // 1. Criar convite para novo aluno (Coach)
   app.post(
     "/coach/invitations",
@@ -94,13 +192,16 @@ export const coachRoutes: FastifyPluginAsyncZod = async (app) => {
           headers: fromNodeHeaders(request.headers),
         });
         if (!session?.user) {
-          return reply.status(401).send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+          return reply
+            .status(401)
+            .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
         }
 
         const useCase = new CreateCoachInvitation();
         const result = await useCase.execute({
           coachId: session.user.id,
           expiresInDays: request.body?.expiresInDays,
+          managedAthleteId: request.body?.managedAthleteId,
         });
 
         return reply.status(201).send(result);
@@ -130,7 +231,9 @@ export const coachRoutes: FastifyPluginAsyncZod = async (app) => {
           headers: fromNodeHeaders(request.headers),
         });
         if (!session?.user) {
-          return reply.status(401).send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+          return reply
+            .status(401)
+            .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
         }
 
         const useCase = new ListCoachInvitations();
@@ -163,7 +266,9 @@ export const coachRoutes: FastifyPluginAsyncZod = async (app) => {
           headers: fromNodeHeaders(request.headers),
         });
         if (!session?.user) {
-          return reply.status(401).send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+          return reply
+            .status(401)
+            .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
         }
 
         const useCase = new CancelCoachInvitation();
@@ -199,7 +304,9 @@ export const coachRoutes: FastifyPluginAsyncZod = async (app) => {
           headers: fromNodeHeaders(request.headers),
         });
         if (!session?.user) {
-          return reply.status(401).send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+          return reply
+            .status(401)
+            .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
         }
 
         const useCase = new ListCoachAthletes();
@@ -232,7 +339,9 @@ export const coachRoutes: FastifyPluginAsyncZod = async (app) => {
           headers: fromNodeHeaders(request.headers),
         });
         if (!session?.user) {
-          return reply.status(401).send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+          return reply
+            .status(401)
+            .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
         }
 
         const useCase = new GetCoachAthleteDetails();
@@ -269,7 +378,9 @@ export const coachRoutes: FastifyPluginAsyncZod = async (app) => {
           headers: fromNodeHeaders(request.headers),
         });
         if (!session?.user) {
-          return reply.status(401).send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+          return reply
+            .status(401)
+            .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
         }
 
         const useCase = new RevokeCoachAthleteLink();
@@ -332,7 +443,9 @@ export const coachRoutes: FastifyPluginAsyncZod = async (app) => {
           headers: fromNodeHeaders(request.headers),
         });
         if (!session?.user) {
-          return reply.status(401).send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+          return reply
+            .status(401)
+            .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
         }
 
         const useCase = new AcceptCoachInvitation();
@@ -368,7 +481,9 @@ export const coachRoutes: FastifyPluginAsyncZod = async (app) => {
           headers: fromNodeHeaders(request.headers),
         });
         if (!session?.user) {
-          return reply.status(401).send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+          return reply
+            .status(401)
+            .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
         }
 
         const useCase = new GetAthleteCoachRelationship();
@@ -401,7 +516,9 @@ export const coachRoutes: FastifyPluginAsyncZod = async (app) => {
           headers: fromNodeHeaders(request.headers),
         });
         if (!session?.user) {
-          return reply.status(401).send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+          return reply
+            .status(401)
+            .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
         }
 
         const useCase = new RevokeCoachAthleteLink();

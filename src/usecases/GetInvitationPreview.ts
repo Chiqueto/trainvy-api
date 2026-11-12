@@ -90,15 +90,38 @@ export class GetInvitationPreview {
       }
 
       const limit = getCoachAthleteLimit(coachContext);
+      const managedLink = invite.managedAthleteId
+        ? await prisma.coachAthlete.findFirst({
+            where: {
+              coachId: invite.coachId,
+              athleteId: invite.managedAthleteId,
+              status: "ACTIVE",
+              athlete: { isManagedProfile: true, deletedAt: null },
+            },
+          })
+        : null;
+      if (invite.managedAthleteId && !managedLink)
+        return {
+          isValid: false,
+          reason: "MANAGED_ATHLETE_UNAVAILABLE",
+          message: "Este cadastro não está mais disponível para vínculo.",
+          coach: coachInfo,
+          expiresAt: invite.expiresAt.toISOString(),
+        };
       const activeCount = await prisma.coachAthlete.count({
         where: { coachId: invite.coachId, status: "ACTIVE" },
       });
 
-      if (limit !== null && limit !== undefined && activeCount >= limit) {
+      if (
+        limit !== null &&
+        limit !== undefined &&
+        (managedLink ? activeCount > limit : activeCount >= limit)
+      ) {
         return {
           isValid: false,
           reason: "COACH_CAPACITY_FULL",
-          message: "O treinador atingiu a capacidade máxima de alunos no plano.",
+          message:
+            "O treinador atingiu a capacidade máxima de alunos no plano.",
           coach: coachInfo,
           expiresAt: invite.expiresAt.toISOString(),
         };

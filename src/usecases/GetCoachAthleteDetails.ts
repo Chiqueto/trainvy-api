@@ -29,6 +29,7 @@ export class GetCoachAthleteDetails {
         athlete: {
           select: {
             id: true,
+            isManagedProfile: true,
             name: true,
             email: true,
             image: true,
@@ -49,7 +50,8 @@ export class GetCoachAthleteDetails {
       linkId: link.id,
       athleteId: link.athlete.id,
       name: link.athlete.name,
-      email: link.athlete.email,
+      email: link.athlete.isManagedProfile ? "" : link.athlete.email,
+      isManagedProfile: link.athlete.isManagedProfile,
       image: link.athlete.image,
       acceptedAt: link.createdAt.toISOString(),
       status: link.status,

@@ -169,26 +169,42 @@ export class CreateWorkoutPrescriptionDraft {
       })),
     };
 
-    const prescription = await prisma.workoutPrescription.create({
-      data: {
-        coachId: dto.coachId,
-        athleteId: dto.athleteId,
-        name: trimmedName,
-        notes: dto.notes ?? null,
-        status: "DRAFT",
-        originType: dto.aiAssisted
-          ? "PROFESSIONAL_AI_ASSISTED"
-          : "PROFESSIONAL_MANUAL",
-        prescriptionStatus: dto.aiAssisted ? "DRAFT_AI" : "DRAFT_MANUAL",
-        allowStudentSubstitution: dto.allowStudentSubstitution ?? true,
-        version: 1,
-        payload,
-      },
-      include: {
-        athlete: {
-          select: { id: true, name: true, email: true, image: true },
+    const prescription = await prisma.$transaction(async (tx) => {
+      await tx.$queryRaw`SELECT id FROM "user" WHERE id = ${dto.coachId} FOR UPDATE`;
+      const currentLink = await tx.coachAthlete.findFirst({
+        where: {
+          coachId: dto.coachId,
+          athleteId: dto.athleteId,
+          status: "ACTIVE",
         },
-      },
+      });
+      if (!currentLink)
+        throw new CoachPrescriptionError(
+          "COACH_ATHLETE_LINK_NOT_FOUND",
+          404,
+          "O cadastro do aluno mudou. Reabra a página do aluno.",
+        );
+      return tx.workoutPrescription.create({
+        data: {
+          coachId: dto.coachId,
+          athleteId: dto.athleteId,
+          name: trimmedName,
+          notes: dto.notes ?? null,
+          status: "DRAFT",
+          originType: dto.aiAssisted
+            ? "PROFESSIONAL_AI_ASSISTED"
+            : "PROFESSIONAL_MANUAL",
+          prescriptionStatus: dto.aiAssisted ? "DRAFT_AI" : "DRAFT_MANUAL",
+          allowStudentSubstitution: dto.allowStudentSubstitution ?? true,
+          version: 1,
+          payload,
+        },
+        include: {
+          athlete: {
+            select: { id: true, name: true, email: true, image: true },
+          },
+        },
+      });
     });
 
     return {

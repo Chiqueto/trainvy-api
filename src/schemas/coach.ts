@@ -1,6 +1,7 @@
 import z from "zod";
 
 export const CreateCoachInvitationBodySchema = z.object({
+  managedAthleteId: z.string().optional(),
   expiresInDays: z.number().int().min(1).max(30).optional().default(7),
 });
 
@@ -20,13 +21,16 @@ export const CoachInvitationItemSchema = z.object({
   cancelledAt: z.string().nullable(),
 });
 
-export const ListCoachInvitationsResponseSchema = z.array(CoachInvitationItemSchema);
+export const ListCoachInvitationsResponseSchema = z.array(
+  CoachInvitationItemSchema,
+);
 
 export const CancelCoachInvitationParamsSchema = z.object({
   id: z.string(),
 });
 
 export const CoachAthleteItemSchema = z.object({
+  isManagedProfile: z.boolean().default(false),
   linkId: z.string(),
   athleteId: z.string(),
   name: z.string(),
@@ -70,6 +74,7 @@ export const GetCoachAthleteParamsSchema = z.object({
 });
 
 export const GetCoachAthleteDetailsResponseSchema = z.object({
+  isManagedProfile: z.boolean().default(false),
   linkId: z.string(),
   athleteId: z.string(),
   name: z.string(),
