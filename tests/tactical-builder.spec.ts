@@ -68,8 +68,8 @@ describe("Tactical prescription persistence", () => {
     };
     expect(WorkoutExerciseSchema.safeParse(base).success).toBe(true);
     for (const runeConfig of [
-      { DROP_SET: 4 },
-      { REST_PAUSE: 7 },
+      { DROP_SET: 11 },
+      { REST_PAUSE: 601 },
       { ISOMETRIC_HOLD: "unknown" },
       { UNKNOWN: 1 },
     ]) {
@@ -94,6 +94,41 @@ describe("Tactical prescription persistence", () => {
         ],
       }).success,
     ).toBe(false);
+  });
+  it("accepts explicit technique values and rejects malformed or out-of-range inputs", () => {
+    const base = {
+      order: 0,
+      name: "Supino",
+      sets: 1,
+      reps: 10,
+      restTimeInSeconds: 75,
+    };
+    for (const runeConfig of [
+      { REST_PAUSE: 17 },
+      { ISOMETRIC_HOLD: "base12" },
+      { ISOMETRIC_HOLD: "peak600" },
+      { CLUSTER_SET: 6 },
+      { DROP_SET: 4 },
+      { TEMPO_CONTROL: "5-2-1-3" },
+      { TEMPO_CONTROL: "60-0-60-0" },
+    ])
+      expect(
+        WorkoutExerciseSchema.safeParse({ ...base, runeConfig }).success,
+      ).toBe(true);
+    for (const runeConfig of [
+      { REST_PAUSE: 0 },
+      { REST_PAUSE: 1.5 },
+      { REST_PAUSE: Infinity },
+      { ISOMETRIC_HOLD: "base0" },
+      { ISOMETRIC_HOLD: "peak601" },
+      { ISOMETRIC_HOLD: "base-2" },
+      { CLUSTER_SET: 21 },
+      { TEMPO_CONTROL: "5-2-1" },
+      { TEMPO_CONTROL: "61-0-1-0" },
+    ])
+      expect(
+        WorkoutExerciseSchema.safeParse({ ...base, runeConfig }).success,
+      ).toBe(false);
   });
   it("persists create, edit, reload and duplication with group and distinct per-set doses", async () => {
     const userId = await user();
@@ -138,8 +173,16 @@ describe("Tactical prescription persistence", () => {
         ...d,
         exercises: d.exercises.map((e) => ({
           ...e,
-          runes: ["REST_PAUSE"] as const as ["REST_PAUSE"],
-          runeConfig: { REST_PAUSE: 20 as const },
+          runes: ["REST_PAUSE", "ISOMETRIC_HOLD", "TEMPO_CONTROL"] as (
+            | "REST_PAUSE"
+            | "ISOMETRIC_HOLD"
+            | "TEMPO_CONTROL"
+          )[],
+          runeConfig: {
+            REST_PAUSE: 17,
+            ISOMETRIC_HOLD: "base12",
+            TEMPO_CONTROL: "5-2-1-3",
+          },
         })),
       })),
     });
@@ -149,8 +192,12 @@ describe("Tactical prescription persistence", () => {
     );
     expect(reopened.workoutDays[0].exercises[0]).toMatchObject({
       supersetGroupId: group,
-      runes: ["REST_PAUSE"],
-      runeConfig: { REST_PAUSE: 20 },
+      runes: ["REST_PAUSE", "ISOMETRIC_HOLD", "TEMPO_CONTROL"],
+      runeConfig: {
+        REST_PAUSE: 17,
+        ISOMETRIC_HOLD: "base12",
+        TEMPO_CONTROL: "5-2-1-3",
+      },
       setPrescription,
     });
     const copy = await new DuplicateWorkoutPlan().execute({
@@ -163,8 +210,12 @@ describe("Tactical prescription persistence", () => {
     );
     expect(duplicated.workoutDays[0].exercises[0]).toMatchObject({
       supersetGroupId: group,
-      runes: ["REST_PAUSE"],
-      runeConfig: { REST_PAUSE: 20 },
+      runes: ["REST_PAUSE", "ISOMETRIC_HOLD", "TEMPO_CONTROL"],
+      runeConfig: {
+        REST_PAUSE: 17,
+        ISOMETRIC_HOLD: "base12",
+        TEMPO_CONTROL: "5-2-1-3",
+      },
       setPrescription,
     });
     await expect(

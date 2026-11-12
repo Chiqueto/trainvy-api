@@ -19,15 +19,20 @@ export const TacticalSetSchema = z
 export const tacticalPrescriptionShape = {
   runeConfig: z
     .object({
-      DROP_SET: z.number().int().min(1).max(3).optional(),
-      REST_PAUSE: z
-        .union([z.literal(10), z.literal(15), z.literal(20)])
+      DROP_SET: z.number().int().min(1).max(10).optional(),
+      REST_PAUSE: z.number().int().min(1).max(600).optional(),
+      // Keep the persisted peak2/base2 notation compatible with existing plans.
+      ISOMETRIC_HOLD: z
+        .string()
+        .regex(/^(peak|base)([1-9]|[1-9]\d|[1-5]\d\d|600)$/)
         .optional(),
-      ISOMETRIC_HOLD: z.enum(["peak2", "peak3", "base2"]).optional(),
-      CLUSTER_SET: z
-        .union([z.literal(2), z.literal(3), z.literal(4)])
+      CLUSTER_SET: z.number().int().min(2).max(20).optional(),
+      TEMPO_CONTROL: z
+        .string()
+        .regex(
+          /^(?:[0-9]|[1-5][0-9]|60)-(?:[0-9]|[1-5][0-9]|60)-(?:[0-9]|[1-5][0-9]|60)-(?:[0-9]|[1-5][0-9]|60)$/,
+        )
         .optional(),
-      TEMPO_CONTROL: z.enum(["3-0-1-0", "4-0-1-0", "3-1-1-0"]).optional(),
     })
     .strict()
     .optional(),

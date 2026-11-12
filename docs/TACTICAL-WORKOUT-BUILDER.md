@@ -1,5 +1,11 @@
 # Tactical Workout Builder
 
+## Configuração explícita de técnicas — 12/11/2026
+
+O schema de `runeConfig` aceita valores inteiros configuráveis: `DROP_SET` 1–10, `REST_PAUSE` 1–600 segundos e `CLUSTER_SET` 2–20 blocos. `ISOMETRIC_HOLD` preserva a notação existente `peakN`/`baseN`, agora com N de 1–600 segundos. `TEMPO_CONTROL` contém quatro fases de 0–60 segundos separadas por hífen. Objetos continuam estritos, rejeitando chaves desconhecidas, decimais e valores fora desses limites.
+
+Os valores são persistidos pelo fluxo existente Route → Use Case → Prisma e permanecem no JSON do exercício. Nenhuma migration adicional é necessária; planos antigos continuam válidos. OpenAPI e Orval foram regenerados no frontend. Publicar esta validação da API antes do frontend com os novos formulários. A suíte `tests/tactical-builder.spec.ts` cobre limites e o round-trip de criar, editar, reabrir e duplicar com valores personalizados.
+
 Implementado nos editores de planos pessoais (incluindo etapas de periodização e edição), prescrições do treinador e modelos. O modo inicial é `tactical`; o clássico continua disponível no seletor. Ambos editam o mesmo array `days` do componente pai. A aba tática permanece selecionada ao trocar de modo.
 
 ## Contrato e persistência
