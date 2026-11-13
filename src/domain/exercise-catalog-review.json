@@ -373,12 +373,15 @@
     ],
     "secondary": [
       "BICEPS",
-      "FOREARMS"
+      "FOREARMS",
+      "SHOULDERS",
+      "CORE"
     ],
     "sourceIds": [
-      "ace",
+      "pulldown-emg-2025",
       "upper-anatomy"
-    ]
+    ],
+    "notes": "Puxada frontal tradicional no pulley alto com pegada pronada; execução equivalente ao cadastro ...119, com identidade preservada e revisão anatômica própria."
   },
   {
     "id": "00000000-0000-4000-8000-000000000121",
