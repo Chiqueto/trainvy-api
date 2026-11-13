@@ -1,10 +1,9 @@
 import z from "zod";
 
-import { ageFromBirthDate, birthDateString } from "../domain/birth-date.js";
 import { CoachAthleteError } from "../domain/coach-athlete.js";
-import { contentHash } from "../domain/compliance.js";
-import { maskedStoredCpf, protectCpf } from "../domain/protected-cpf.js";
+import { contentHash, requiresHealthConsent } from "../domain/compliance.js";
 import { assertProfessionalAccess } from "../domain/professional-verification.js";
+import { maskedStoredCpf, protectCpf } from "../domain/protected-cpf.js";
 import { Prisma } from "../generated/prisma/client.js";
 import { prisma } from "../lib/db.js";
 import { assertAdminUser } from "../lib/require-admin.js";
@@ -117,25 +116,12 @@ export async function assertAthleteHealthConsent(
 ) {
   return assertHealthConsent(athleteId, client, "ATHLETE");
 }
-export async function assertAutonomousAdult(
-  userId: string,
-  client: Db = prisma,
-) {
+async function assertAccountAvailable(userId: string, client: Db = prisma) {
   const user = await client.user.findUniqueOrThrow({
     where: { id: userId },
-    select: { accountType: true, birthDate: true, deletedAt: true },
+    select: { deletedAt: true },
   });
   if (user.deletedAt) throw new CoachAthleteError("UNAUTHORIZED", 401);
-  const birthDate = birthDateString(user.birthDate);
-  if (
-    user.accountType === "ATHLETE" &&
-    (!birthDate || ageFromBirthDate(birthDate) < 18)
-  )
-    throw new CoachAthleteError(
-      "ADULT_ACCOUNT_REQUIRED",
-      403,
-      "Confirme no perfil uma data de nascimento correspondente a pelo menos 18 anos para usar uma conta autônoma.",
-    );
 }
 export async function assertCoreLegalAcceptances(
   userId: string,
@@ -167,6 +153,18 @@ export async function assertCoreLegalAcceptances(
       );
   }
 }
+export async function assertHealthWriteAccess(
+  userId: string,
+  method: string,
+  url: string,
+  client: Db = prisma,
+) {
+  if (!requiresHealthConsent(method, url)) return;
+  await assertCoreLegalAcceptances(userId, client);
+  await assertHealthConsent(userId, client);
+  await assertAccountAvailable(userId, client);
+}
+
 export class LegalCompliance {
   async archivedPrescriptions(coachId: string) {
     const rows = await prisma.workoutPrescription.findMany({

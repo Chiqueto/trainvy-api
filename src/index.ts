@@ -1,4 +1,3 @@
-import { aiAvailabilityRoutes } from "./routes/ai-availability.js";
 import "dotenv/config";
 
 import fastifyCors from "@fastify/cors";
@@ -21,6 +20,7 @@ import { auth, authBaseUrl, trustedOrigins } from "./lib/auth.js";
 import { env } from "./lib/env.js";
 import { adminRoutes } from "./routes/admin.js";
 import { aiRoutes } from "./routes/ai.js";
+import { aiAvailabilityRoutes } from "./routes/ai-availability.js";
 import { coachRoutes } from "./routes/coach.js";
 import { coachPrescriptionRoutes } from "./routes/coach-prescription.js";
 import { coachProgressRoutes } from "./routes/coach-progress.js";
@@ -49,11 +49,7 @@ import { WorkoutPlanRoutes } from "./routes/workout-plan.js";
 import { workoutSessionRoutes } from "./routes/workout-session.js";
 import { workoutSessionRecoveryRoutes } from "./routes/workout-session-recovery.js";
 import { ApplicationAccessLogs } from "./usecases/ApplicationAccessLogs.js";
-import {
-  assertAutonomousAdult,
-  assertCoreLegalAcceptances,
-  assertHealthConsent,
-} from "./usecases/LegalCompliance.js";
+import { assertHealthWriteAccess } from "./usecases/LegalCompliance.js";
 
 const isVercel = Boolean(process.env.VERCEL);
 
@@ -102,10 +98,7 @@ app.addHook("preHandler", async (request, reply) => {
   });
   if (!session) return;
   try {
-    await assertCoreLegalAcceptances(session.user.id);
-    await assertHealthConsent(session.user.id);
-    if (!/^\/me\/?(?:\?|$)/.test(request.url))
-      await assertAutonomousAdult(session.user.id);
+    await assertHealthWriteAccess(session.user.id, request.method, request.url);
   } catch (error) {
     if (error instanceof CoachAthleteError)
       return reply.code(403).send({ code: error.code, error: error.message });

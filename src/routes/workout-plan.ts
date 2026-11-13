@@ -486,6 +486,7 @@ export const WorkoutPlanRoutes = async (app: FastifyInstance) => {
       response: {
         201: StartWorkoutSessionResponseSchema,
         401: ErrorSchema,
+        403: ErrorSchema,
         404: ErrorSchema,
         409: ErrorSchema,
         422: ErrorSchema,

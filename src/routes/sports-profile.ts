@@ -1,6 +1,7 @@
 import { fromNodeHeaders } from "better-auth/node";
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 
+import { CoachAthleteError } from "../domain/coach-athlete.js";
 import { NotFoundError } from "../errors/index.js";
 import { auth } from "../lib/auth.js";
 import { ErrorSchema } from "../schemas/index.js";
@@ -18,6 +19,7 @@ export const sportsProfileRoutes: FastifyPluginAsyncZod = async (app) => {
     200: SportsProfileResponse,
     400: ErrorSchema,
     401: ErrorSchema,
+    403: ErrorSchema,
     404: ErrorSchema,
     500: ErrorSchema,
   };
@@ -47,12 +49,10 @@ export const sportsProfileRoutes: FastifyPluginAsyncZod = async (app) => {
             .status(404)
             .send({ error: error.message, code: error.code });
         request.log.error(error);
-        return reply
-          .status(500)
-          .send({
-            error: "Falha ao carregar perfil esportivo.",
-            code: "INTERNAL_ERROR",
-          });
+        return reply.status(500).send({
+          error: "Falha ao carregar perfil esportivo.",
+          code: "INTERNAL_ERROR",
+        });
       }
     },
   );
@@ -82,13 +82,15 @@ export const sportsProfileRoutes: FastifyPluginAsyncZod = async (app) => {
           request.body,
         );
       } catch (error) {
+        if (error instanceof CoachAthleteError && error.status === 403)
+          return reply
+            .status(403)
+            .send({ error: error.message, code: error.code });
         request.log.error(error);
-        return reply
-          .status(500)
-          .send({
-            error: "Falha ao salvar perfil esportivo.",
-            code: "INTERNAL_ERROR",
-          });
+        return reply.status(500).send({
+          error: "Falha ao salvar perfil esportivo.",
+          code: "INTERNAL_ERROR",
+        });
       }
     },
   );

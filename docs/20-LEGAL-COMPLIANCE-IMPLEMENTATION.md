@@ -2,6 +2,14 @@
 
 ## Estado
 
+### Idade informativa, sem bloqueio por maioridade — 13/11/2026
+
+Por decisão de produto, a maioridade não condiciona cadastro, atualização de perfil, treino ou outras escritas. O guard preserva os aceites legais e de saúde e a rejeição de conta excluída, sem avaliar idade ou exigir nascimento. Os dados de idade e nascimento continuam registrados: a API calcula a idade quando conhece o nascimento e aceita a idade legada quando ele está ausente. O onboarding mantém a coleta de nascimento e a validação de datas, sem exigir 18 anos.
+
+O contrato de início de sessão inclui `403` para os demais controles de acesso. O frontend apresenta erros em toasts personalizados. A chamada à API ocorre na Server Action: a resposta do navegador pode ser `200` contendo esse erro de domínio, enquanto a API respondeu `403` entre os servidores. O prefetch completo das abas inferiores foi desativado para evitar carregar páginas privadas inteiras em segundo plano.
+
+Regressão no banco isolado: nascimento ausente permite iniciar treino; aluno menor de 18 consegue salvar o perfil e iniciar treino avulso; cadastro preserva nascimento, idade calculada e histórico de idade legada. Ausência de consentimento continua bloqueada. Não há alteração automática em datas de usuários, nem publicação ou revisão automática dos documentos e aceites já persistidos. Textos contratuais históricos sobre maioridade não representam um gate executável no produto atual.
+
 Código integrado nos dois repositórios, com migration aditiva, seed insert-only e contratos Orval. Migration e seed aplicados em 06/11/2026 no banco atual de `DATABASE_URL`, após autorização explícita. O Prisma confirmou o schema atualizado. Publicar frontend e API compatíveis com esse schema.
 
 ## Componentes
