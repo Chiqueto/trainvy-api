@@ -2296,12 +2296,16 @@
     "secondary": [
       "BICEPS",
       "SHOULDERS",
-      "FOREARMS"
+      "FOREARMS",
+      "CORE"
     ],
     "sourceIds": [
-      "ace",
+      "seated-row-hd-emg",
+      "seated-row-angles",
+      "seated-row-machine-technique",
       "upper-anatomy"
-    ]
+    ],
+    "notes": "Representação bilateral com apoio peitoral, alavancas e pegada neutra. Retratores escapulares e extensores do ombro principais; suporte não elimina participação de braços e estabilizadores. Evidência de cabo aplicada qualitativamente, sem equivaler intensidade."
   },
   {
     "id": "440bc1d0-d61c-40e8-875f-7c394b2c5709",
