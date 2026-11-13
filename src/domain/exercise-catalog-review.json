@@ -1173,12 +1173,15 @@
     "secondary": [
       "BICEPS",
       "SHOULDERS",
-      "FOREARMS"
+      "FOREARMS",
+      "CORE"
     ],
     "sourceIds": [
-      "ace",
+      "seated-row-hd-emg",
+      "seated-row-angles",
       "upper-anatomy"
-    ]
+    ],
+    "notes": "Triângulo com pegada neutra, cotovelos próximos e tronco estável; extensão do ombro e retração escapular, sem isolamento do dorsal."
   },
   {
     "id": "16d9c6f7-ebb7-41d1-8743-ff22fdd72748",

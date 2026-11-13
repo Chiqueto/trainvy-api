@@ -22,6 +22,8 @@ export const CATALOG_REVIEW_SOURCES: Record<
   string,
   { title: string; url: string }
 > = {
+  "seated-row-hd-emg": {title:"Padovan et al. — Narrow vs wide grip seated row (2025)",url:"https://doi.org/10.5114/jhk/209550"},
+  "seated-row-angles": {title:"Vasconcelos et al. — Seated row grip and shoulder abduction (2023)",url:"https://doi.org/10.47206/ijsc.v3i1.190"},
   "pulldown-emg-2025": {title:"Buonsenso et al. — Lat pulldown grip and trunk EMG (2025)",url:"https://doi.org/10.3390/jfmk10030345"},
   "triceps-overhead": {
     title: "Maeo et al. — Cable elbow extension in overhead versus neutral arm positions (2023)",
