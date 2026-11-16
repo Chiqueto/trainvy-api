@@ -241,7 +241,7 @@
   },
   {
     "exerciseId": "00000000-0000-4000-8000-000000000121",
-    "exerciseName": "Remada Curvada com Barra",
+    "exerciseName": "Remada Curvada (Baixa) — Pronada",
     "tier": 1,
     "order": 31,
     "batch": "Puxar e empurrar essenciais",
@@ -545,7 +545,7 @@
   },
   {
     "exerciseId": "1eef7876-e093-42af-8374-00d3b105c47a",
-    "exerciseName": "Remada Pendlay",
+    "exerciseName": "Remada Pendlay (Pronada)",
     "tier": 2,
     "order": 69,
     "batch": "Varia??es de remada e puxada",
@@ -2617,7 +2617,7 @@
   },
   {
     "exerciseId": "1444333f-9fb0-4d74-843a-42b9480e5cfc",
-    "exerciseName": "Remada Curvada com Barra e Pegada Supinada",
+    "exerciseName": "Remada Curvada (Baixa) — Supinada",
     "tier": 5,
     "order": 328,
     "batch": "Variações de equipamento — cadastro",
@@ -3209,10 +3209,34 @@
   },
   {
     "exerciseId": "7f249b6a-85ad-45ca-9147-6cfa712547c7",
-    "exerciseName": "Remada Curvada com Barra ao Peito",
+    "exerciseName": "Remada Curvada (Alta) — Pronada",
     "tier": 2,
     "order": 402,
     "batch": "Revis?o de remadas e esc?pulas",
     "reason": "Varia??o expl?cita ao peito com cotovelos abertos, distinta da remada ao abd?men."
+  },
+  {
+    "exerciseId": "92a8b19e-86b5-47ea-91d1-529fab4ab05c",
+    "exerciseName": "Remada Curvada (Alta) — Supinada",
+    "tier": 2,
+    "order": 403,
+    "batch": "Revisão de remadas — trajetórias anatômicas",
+    "reason": "Variação com identidade, trajetória, postura e pegada próprias."
+  },
+  {
+    "exerciseId": "bb4607b8-c89b-4d22-bf59-1edf55c2ee77",
+    "exerciseName": "Remada Yates — Pronada",
+    "tier": 2,
+    "order": 404,
+    "batch": "Revisão de remadas — trajetórias anatômicas",
+    "reason": "Variação com identidade, trajetória, postura e pegada próprias."
+  },
+  {
+    "exerciseId": "824b6099-a3d9-41f9-bf52-d29587393c85",
+    "exerciseName": "Remada Yates — Supinada",
+    "tier": 2,
+    "order": 405,
+    "batch": "Revisão de remadas — trajetórias anatômicas",
+    "reason": "Variação com identidade, trajetória, postura e pegada próprias."
   }
 ]

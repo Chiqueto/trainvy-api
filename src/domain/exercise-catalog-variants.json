@@ -1244,7 +1244,7 @@
   },
   {
     "id": "1444333f-9fb0-4d74-843a-42b9480e5cfc",
-    "name": "Remada Curvada com Barra e Pegada Supinada",
+    "name": "Remada Curvada (Baixa) — Supinada",
     "isUnilateral": false,
     "family": "Musculação tradicional — costas",
     "groups": [
@@ -1267,7 +1267,7 @@
       "upper-anatomy",
       "ace"
     ],
-    "notes": "Extensão do úmero e retração escapular: dorsal, redondo maior, romboides e trapézio médio principais. Braços, manguito, pegada e eretores/abdômen coenvolvidos. Glúteos, isquiotibiais e quadríceps sustentam quadril e joelhos, sem serem o alvo principal. Tronco fixo em cerca de 52° de flexão a partir da vertical no rig: escolha ilustrativa, não ângulo ótimo extraído de EMG. Sem impulso, isolamento ou intensidade medida. Mesmas cores básicas de outras remadas são fundamentadas por ações comuns, com mapa postural próprio. Ênfase média do trapézio funcional, não medição regional. Revisão escapular: Na volta, permita que as escápulas se afastem sobre o tórax; ao puxar, aproxime-as de modo coordenado com os braços, mantendo a coluna estável. Serrátil anterior participa do controle, em destaque secundário ilustrativo. Escápulas têm controles independentes e pesos anatômicos; a trajetória não é produzida apenas pelo cotovelo. Ângulos não são medidas individuais. Pegada supinada altera orientação do antebraço e palma; não justifica afirmar isolamento do dorsal ou superioridade sobre a pronada. Papéis anatômicos equivalentes foram revistos individualmente; estabilização das pernas é inferência para postura sem apoio."
+    "notes": "Destino calibrado no referencial do tronco do atlas: umbigo em y=1,065 m, com raiz em y=1,142 m. Coordenada é da pose de repouso, não altura da barra no cenário. Tronco inclinado, aproximadamente 27° acima da horizontal: escolha editorial, sem ângulo ideal universal. Dorsal/redondo maior principais; retratores escapulares, braços, manguito, tronco e pernas secundários na representação desta trajetória. Evidência EMG de abdução vem da remada sentada e não mede estas variantes com barra livre; diferenças de pegada, Yates e Pendlay não justificam isolamento, ranking universal ou previsão de hipertrofia. Na volta, deixe as escápulas se afastarem sobre o tórax; na puxada, aproxime-as junto com o movimento dos braços, sem arredondar a coluna. As tradicionais alta/baixa compartilham a mesma inclinação e diferem no caminho dos cotovelos e destino da carga. "
   },
   {
     "id": "d4ebcd94-81f7-48ea-85f5-2c50fd3017fd",
@@ -2825,7 +2825,7 @@
   },
   {
     "id": "7f249b6a-85ad-45ca-9147-6cfa712547c7",
-    "name": "Remada Curvada com Barra ao Peito",
+    "name": "Remada Curvada (Alta) — Pronada",
     "isUnilateral": false,
     "family": "Musculação tradicional — costas",
     "groups": [
@@ -2848,6 +2848,87 @@
       "HAMSTRINGS",
       "HIP_ABDUCTORS"
     ],
-    "notes": "Trajetória à parte inferior do peito, com maior abdução do úmero: ênfase ilustrativa em trapézio médio, romboides e deltoide posterior. Dorsal e redondo maior continuam envolvidos. Evidência de abdução provém de remada sentada no cabo: aplicação à barra livre é inferência anatômica/editorial, sem ranking de EMG ou hipertrofia. Mesma postura de quadril recuado, pernas e tronco estabilizando. Na volta, permita que as escápulas se afastem sobre o tórax; ao puxar, aproxime-as de modo coordenado com os braços, mantendo a coluna estável."
+    "notes": "Destino calibrado no referencial do tronco do atlas: base do peitoral em y=1,205 m, com raiz em y=1,142 m. Coordenada é da pose de repouso, não altura da barra no cenário. Tronco inclinado, aproximadamente 27° acima da horizontal: escolha editorial, sem ângulo ideal universal. Retratores escapulares e deltoide posterior principais; dorsal/redondo maior secundários. Evidência EMG de abdução vem da remada sentada e não mede estas variantes com barra livre; diferenças de pegada, Yates e Pendlay não justificam isolamento, ranking universal ou previsão de hipertrofia. Na volta, deixe as escápulas se afastarem sobre o tórax; na puxada, aproxime-as junto com o movimento dos braços, sem arredondar a coluna. As tradicionais alta/baixa compartilham a mesma inclinação e diferem no caminho dos cotovelos e destino da carga. "
+  },
+  {
+    "id": "92a8b19e-86b5-47ea-91d1-529fab4ab05c",
+    "name": "Remada Curvada (Alta) — Supinada",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "sourceIds": [
+      "bent-row-biomechanics",
+      "bent-row-angle"
+    ],
+    "primary": [
+      "BACK",
+      "SHOULDERS"
+    ],
+    "secondary": [
+      "BICEPS",
+      "FOREARMS",
+      "CORE",
+      "QUADRICEPS",
+      "GLUTES",
+      "HAMSTRINGS",
+      "HIP_ABDUCTORS"
+    ],
+    "notes": "Destino calibrado no referencial do tronco do atlas: base do peitoral em y=1,205 m, com raiz em y=1,142 m. Coordenada é da pose de repouso, não altura da barra no cenário. Tronco inclinado, aproximadamente 27° acima da horizontal: escolha editorial, sem ângulo ideal universal. Retratores escapulares e deltoide posterior principais; dorsal/redondo maior secundários. Evidência EMG de abdução vem da remada sentada e não mede estas variantes com barra livre; diferenças de pegada, Yates e Pendlay não justificam isolamento, ranking universal ou previsão de hipertrofia. Na volta, deixe as escápulas se afastarem sobre o tórax; na puxada, aproxime-as junto com o movimento dos braços, sem arredondar a coluna. As tradicionais alta/baixa compartilham a mesma inclinação e diferem no caminho dos cotovelos e destino da carga. "
+  },
+  {
+    "id": "bb4607b8-c89b-4d22-bf59-1edf55c2ee77",
+    "name": "Remada Yates — Pronada",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "sourceIds": [
+      "bent-row-biomechanics",
+      "bent-row-angle"
+    ],
+    "primary": [
+      "BACK"
+    ],
+    "secondary": [
+      "SHOULDERS",
+      "BICEPS",
+      "FOREARMS",
+      "CORE",
+      "QUADRICEPS",
+      "GLUTES",
+      "HAMSTRINGS",
+      "HIP_ABDUCTORS"
+    ],
+    "notes": "Destino calibrado no referencial do tronco do atlas: baixo abdômen em y=1,040 m, com raiz em y=1,142 m. Coordenada é da pose de repouso, não altura da barra no cenário. Tronco mais ereto, aproximadamente 50° acima da horizontal: escolha editorial, sem ângulo ideal universal. Dorsal/redondo maior principais; retratores escapulares, braços, manguito, tronco e pernas secundários na representação desta trajetória. Evidência EMG de abdução vem da remada sentada e não mede estas variantes com barra livre; diferenças de pegada, Yates e Pendlay não justificam isolamento, ranking universal ou previsão de hipertrofia. Na volta, deixe as escápulas se afastarem sobre o tórax; na puxada, aproxime-as junto com o movimento dos braços, sem arredondar a coluna. Barra suspensa; postura mais ereta distingue Yates das tradicionais. "
+  },
+  {
+    "id": "824b6099-a3d9-41f9-bf52-d29587393c85",
+    "name": "Remada Yates — Supinada",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "sourceIds": [
+      "bent-row-biomechanics",
+      "bent-row-angle"
+    ],
+    "primary": [
+      "BACK"
+    ],
+    "secondary": [
+      "SHOULDERS",
+      "BICEPS",
+      "FOREARMS",
+      "CORE",
+      "QUADRICEPS",
+      "GLUTES",
+      "HAMSTRINGS",
+      "HIP_ABDUCTORS"
+    ],
+    "notes": "Destino calibrado no referencial do tronco do atlas: baixo abdômen em y=1,040 m, com raiz em y=1,142 m. Coordenada é da pose de repouso, não altura da barra no cenário. Tronco mais ereto, aproximadamente 50° acima da horizontal: escolha editorial, sem ângulo ideal universal. Dorsal/redondo maior principais; retratores escapulares, braços, manguito, tronco e pernas secundários na representação desta trajetória. Evidência EMG de abdução vem da remada sentada e não mede estas variantes com barra livre; diferenças de pegada, Yates e Pendlay não justificam isolamento, ranking universal ou previsão de hipertrofia. Na volta, deixe as escápulas se afastarem sobre o tórax; na puxada, aproxime-as junto com o movimento dos braços, sem arredondar a coluna. Barra suspensa; postura mais ereta distingue Yates das tradicionais. "
   }
 ]

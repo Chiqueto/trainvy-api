@@ -24,12 +24,13 @@ describe('row variants and scapular review delivery',()=>{
     const sql=readFileSync(new URL(dir+'/migration.sql',migrations),'utf8').replace(/^BEGIN;\s*$/m,'').replace(/^COMMIT;\s*$/m,'');
     const payload=/SET "anatomyReview"='(.+?)'::jsonb/.exec(sql)![1].replaceAll("''", "'");
     expect(JSON.parse(payload)).toEqual(review);
+    const historicalName = /AND name='([^']+)'/.exec(sql)?.[1] ?? /VALUES \('[^']+','([^']+)'/.exec(sql)?.[1] ?? entry.name;
     const c=new Client({connectionString:getDatabaseUrl()});await c.connect();
     try{
       await c.query('BEGIN');
-      await c.query('INSERT INTO "Exercise" (id,name,"isUnilateral","createdAt","updatedAt") VALUES ($1,$2,false,NOW(),NOW()) ON CONFLICT (id) DO NOTHING',[id,entry.name]);
+      await c.query('INSERT INTO "Exercise" (id,name,"isUnilateral","createdAt","updatedAt") VALUES ($1,$2,false,NOW(),NOW()) ON CONFLICT (id) DO NOTHING',[id,historicalName]);
       const old=i<7?read(slug+'-anatomy.json'):null;
-      await c.query('UPDATE "Exercise" SET name=$2,"ownerUserId"=NULL,"anatomyReview"=$3::jsonb,"updatedAt"=\'2000-01-01\' WHERE id=$1',[id,entry.name,old?JSON.stringify(old):null]);
+      await c.query('UPDATE "Exercise" SET name=$2,"ownerUserId"=NULL,"anatomyReview"=$3::jsonb,"updatedAt"=\'2000-01-01\' WHERE id=$1',[id,historicalName,old?JSON.stringify(old):null]);
       await c.query('DELETE FROM "ExerciseMuscle" WHERE "exerciseId"=$1',[id]);
       if(i<7)for(const m of muscles)await c.query('INSERT INTO "ExerciseMuscle" (id,"exerciseId","muscleGroup",role,"createdAt") VALUES (gen_random_uuid()::text,$1,$2::"MuscleGroup",$3::"MuscleRole",NOW())',[id,m.muscleGroup,m.role]);
       const others=(await c.query('SELECT id,"updatedAt","anatomyReview" FROM "Exercise" WHERE id<>$1 ORDER BY id',[id])).rows;

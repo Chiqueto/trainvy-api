@@ -1,0 +1,51 @@
+[
+  {
+    "id": "00000000-0000-4000-8000-000000000121",
+    "animation": "bent-row",
+    "name": "Remada Curvada (Baixa) — Pronada",
+    "anatomyFile": "bent-row-landmark-anatomy.json"
+  },
+  {
+    "id": "1444333f-9fb0-4d74-843a-42b9480e5cfc",
+    "animation": "supinated-bent-row",
+    "name": "Remada Curvada (Baixa) — Supinada",
+    "anatomyFile": "supinated-bent-row-landmark-anatomy.json"
+  },
+  {
+    "id": "7f249b6a-85ad-45ca-9147-6cfa712547c7",
+    "animation": "high-bent-row",
+    "name": "Remada Curvada (Alta) — Pronada",
+    "anatomyFile": "high-bent-row-landmark-anatomy.json"
+  },
+  {
+    "id": "92a8b19e-86b5-47ea-91d1-529fab4ab05c",
+    "animation": "high-supinated-bent-row",
+    "name": "Remada Curvada (Alta) — Supinada",
+    "anatomyFile": "high-supinated-bent-row-landmark-anatomy.json"
+  },
+  {
+    "id": "bb4607b8-c89b-4d22-bf59-1edf55c2ee77",
+    "animation": "yates-row",
+    "name": "Remada Yates — Pronada",
+    "anatomyFile": "yates-row-landmark-anatomy.json"
+  },
+  {
+    "id": "824b6099-a3d9-41f9-bf52-d29587393c85",
+    "animation": "supinated-yates-row",
+    "name": "Remada Yates — Supinada",
+    "anatomyFile": "supinated-yates-row-landmark-anatomy.json"
+  },
+  {
+    "id": "1eef7876-e093-42af-8374-00d3b105c47a",
+    "animation": "pendlay-row",
+    "name": "Remada Pendlay (Pronada)",
+    "anatomyFile": "pendlay-row-landmark-anatomy.json"
+  },
+  {
+    "id": "00000000-0000-4000-8000-000000000122",
+    "animation": "generic-bent-row",
+    "name": "Remada Curvada",
+    "anatomyFile": "generic-bent-row-landmark-anatomy.json",
+    "retired": true
+  }
+]

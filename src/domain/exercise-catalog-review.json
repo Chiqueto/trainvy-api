@@ -385,7 +385,7 @@
   },
   {
     "id": "00000000-0000-4000-8000-000000000121",
-    "name": "Remada Curvada com Barra",
+    "name": "Remada Curvada (Baixa) — Pronada",
     "family": "Musculação tradicional — costas",
     "groups": [
       "RESISTANCE"
@@ -394,13 +394,13 @@
       "BACK"
     ],
     "secondary": [
-      "BICEPS",
       "SHOULDERS",
+      "BICEPS",
       "FOREARMS",
       "CORE",
+      "QUADRICEPS",
       "GLUTES",
       "HAMSTRINGS",
-      "QUADRICEPS",
       "HIP_ABDUCTORS"
     ],
     "sourceIds": [
@@ -408,7 +408,7 @@
       "bent-row-angle",
       "upper-anatomy"
     ],
-    "notes": "Remada curvada pronada com barra; tronco estável e sustentação isométrica de pernas/quadril, sem ângulo universal."
+    "notes": "Destino calibrado no referencial do tronco do atlas: umbigo em y=1,065 m, com raiz em y=1,142 m. Coordenada é da pose de repouso, não altura da barra no cenário. Tronco inclinado, aproximadamente 27° acima da horizontal: escolha editorial, sem ângulo ideal universal. Dorsal/redondo maior principais; retratores escapulares, braços, manguito, tronco e pernas secundários na representação desta trajetória. Evidência EMG de abdução vem da remada sentada e não mede estas variantes com barra livre; diferenças de pegada, Yates e Pendlay não justificam isolamento, ranking universal ou previsão de hipertrofia. Na volta, deixe as escápulas se afastarem sobre o tórax; na puxada, aproxime-as junto com o movimento dos braços, sem arredondar a coluna. As tradicionais alta/baixa compartilham a mesma inclinação e diferem no caminho dos cotovelos e destino da carga. "
   },
   {
     "id": "00000000-0000-4000-8000-000000000122",
@@ -421,13 +421,13 @@
       "BACK"
     ],
     "secondary": [
-      "BICEPS",
       "SHOULDERS",
+      "BICEPS",
       "FOREARMS",
       "CORE",
+      "QUADRICEPS",
       "GLUTES",
       "HAMSTRINGS",
-      "QUADRICEPS",
       "HIP_ABDUCTORS"
     ],
     "sourceIds": [
@@ -435,7 +435,7 @@
       "bent-row-angle",
       "upper-anatomy"
     ],
-    "notes": "Execução pronada com barra confirmada na mídia canônica; identidade e histórico próprios preservados."
+    "notes": "Destino calibrado no referencial do tronco do atlas: umbigo em y=1,065 m, com raiz em y=1,142 m. Coordenada é da pose de repouso, não altura da barra no cenário. Tronco inclinado, aproximadamente 27° acima da horizontal: escolha editorial, sem ângulo ideal universal. Dorsal/redondo maior principais; retratores escapulares, braços, manguito, tronco e pernas secundários na representação desta trajetória. Evidência EMG de abdução vem da remada sentada e não mede estas variantes com barra livre; diferenças de pegada, Yates e Pendlay não justificam isolamento, ranking universal ou previsão de hipertrofia. Na volta, deixe as escápulas se afastarem sobre o tórax; na puxada, aproxime-as junto com o movimento dos braços, sem arredondar a coluna. As tradicionais alta/baixa compartilham a mesma inclinação e diferem no caminho dos cotovelos e destino da carga. Cadastro legado mantido somente para planos/histórico, sem voltar às novas seleções."
   },
   {
     "id": "00000000-0000-4000-8000-000000000123",
@@ -1471,7 +1471,7 @@
   },
   {
     "id": "1eef7876-e093-42af-8374-00d3b105c47a",
-    "name": "Remada Pendlay",
+    "name": "Remada Pendlay (Pronada)",
     "family": "Musculação tradicional — costas",
     "groups": [
       "RESISTANCE"
@@ -1480,17 +1480,20 @@
       "BACK"
     ],
     "secondary": [
-      "BICEPS",
       "SHOULDERS",
+      "BICEPS",
       "FOREARMS",
       "CORE",
+      "QUADRICEPS",
       "GLUTES",
-      "HAMSTRINGS"
+      "HAMSTRINGS",
+      "HIP_ABDUCTORS"
     ],
     "sourceIds": [
       "ace",
       "upper-anatomy"
-    ]
+    ],
+    "notes": "Destino calibrado no referencial do tronco do atlas: abdômen superior em y=1,180 m, com raiz em y=1,142 m. Coordenada é da pose de repouso, não altura da barra no cenário. Tronco quase paralelo ao chão, aproximadamente 5° acima da horizontal: escolha editorial, sem ângulo ideal universal. Dorsal/redondo maior e retratores escapulares principais; deltoide posterior, braços, tronco e pernas secundários. Evidência EMG de abdução vem da remada sentada e não mede estas variantes com barra livre; diferenças de pegada, Yates e Pendlay não justificam isolamento, ranking universal ou previsão de hipertrofia. Na volta, deixe as escápulas se afastarem sobre o tórax; na puxada, aproxime-as junto com o movimento dos braços, sem arredondar a coluna. Puxada mais rápida que a descida, repouso completo no chão e novo brace a cada repetição. "
   },
   {
     "id": "1fd318ce-de48-455a-8e0a-e2ab9c45681e",

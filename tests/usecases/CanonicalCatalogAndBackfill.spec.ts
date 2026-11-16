@@ -50,7 +50,7 @@ describe("Task 3.1D — Catálogo Canônico Global & Backfill de Legado", () => 
 
         expect(found).not.toBeNull();
         expect(found?.ownerUserId).toBeNull();
-        expect(found?.name).toBe(def.name);
+        expect(found?.name).toBe(before.find((exercise) => exercise.id === def.id)?.name ?? def.name);
 
         const primaryMuscles = found?.muscles
           .filter((m) => m.role === MuscleRole.PRIMARY)

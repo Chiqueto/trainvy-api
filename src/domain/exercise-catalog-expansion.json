@@ -193,7 +193,7 @@
   },
   {
     "id": "1eef7876-e093-42af-8374-00d3b105c47a",
-    "name": "Remada Pendlay",
+    "name": "Remada Pendlay (Pronada)",
     "isUnilateral": false,
     "family": "Musculação tradicional — costas"
   },
@@ -1657,7 +1657,7 @@
   },
   {
     "id": "1444333f-9fb0-4d74-843a-42b9480e5cfc",
-    "name": "Remada Curvada com Barra e Pegada Supinada",
+    "name": "Remada Curvada (Baixa) — Supinada",
     "isUnilateral": false,
     "family": "Musculação tradicional — costas"
   },
@@ -2101,7 +2101,25 @@
   },
   {
     "id": "7f249b6a-85ad-45ca-9147-6cfa712547c7",
-    "name": "Remada Curvada com Barra ao Peito",
+    "name": "Remada Curvada (Alta) — Pronada",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas"
+  },
+  {
+    "id": "92a8b19e-86b5-47ea-91d1-529fab4ab05c",
+    "name": "Remada Curvada (Alta) — Supinada",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas"
+  },
+  {
+    "id": "bb4607b8-c89b-4d22-bf59-1edf55c2ee77",
+    "name": "Remada Yates — Pronada",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas"
+  },
+  {
+    "id": "824b6099-a3d9-41f9-bf52-d29587393c85",
+    "name": "Remada Yates — Supinada",
     "isUnilateral": false,
     "family": "Musculação tradicional — costas"
   }
