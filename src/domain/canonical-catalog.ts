@@ -1,12 +1,13 @@
 import type { MuscleGroup } from "../generated/prisma/enums.js";
-import { REVIEWED_EXERCISES } from "./exercise-catalog-review.js";
 import { GLOBAL_EXERCISE_ALIASES } from "./exercise-catalog-aliases.js";
+import { REVIEWED_EXERCISES } from "./exercise-catalog-review.js";
 
 export interface CanonicalGlobalExerciseDefinition {
   id: string;
   name: string;
   primary: MuscleGroup[];
   secondary: MuscleGroup[];
+  isUnilateral?: boolean;
 }
 
 // Preserve retained bootstrap IDs; duplicate IDs are merged by the targeted migration.
@@ -20,6 +21,7 @@ export const CANONICAL_GLOBAL_CATALOG: readonly CanonicalGlobalExerciseDefinitio
     name,
     primary,
     secondary,
+    ...(id === "00000000-0000-4000-8000-000000000138" ? { isUnilateral: true } : {}),
   }));
 export const CANONICAL_GLOBAL_BY_NAME = new Map(
   CANONICAL_GLOBAL_CATALOG.map((e) => [e.name.trim().toLowerCase(), e]),

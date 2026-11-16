@@ -73,6 +73,7 @@ export async function syncCanonicalGlobalCatalog(
           id: def.id,
           name: def.name,
           ownerUserId: null,
+          ...(def.isUnilateral !== undefined ? { isUnilateral: def.isUnilateral } : {}),
         },
       });
       exerciseId = createdExercise.id;

@@ -725,12 +725,20 @@
       "BICEPS",
       "SHOULDERS",
       "FOREARMS",
-      "CORE"
+      "CORE",
+      "GLUTES",
+      "HAMSTRINGS",
+      "QUADRICEPS",
+      "HIP_ABDUCTORS",
+      "CHEST",
+      "TRICEPS"
     ],
     "sourceIds": [
-      "ace",
-      "upper-anatomy"
-    ]
+      "one-arm-row-technique",
+      "upper-anatomy",
+      "hack-anatomy"
+    ],
+    "notes": "Remada com halter e apoios de mão/joelho opostos no banco; mapa distingue puxada e sustentação, sem promessa de corrigir assimetria."
   },
   {
     "id": "00000000-0000-4000-8000-000000000139",
