@@ -1184,2034 +1184,10 @@
     "reason": "Criar posi??es no solo e padr?es de estabilidade antes de movimentos suspensos ou din?micos complexos."
   },
   {
-    "exerciseId": "c9bbf500-c289-441e-8162-afef74d25237",
-    "exerciseName": "Desenvolvimento Unilateral no Landmine — alias: single-arm landmine press",
-    "tier": 3,
-    "order": 149,
-    "batch": "Landmine: fundamentos",
-    "reason": "Introduzir piv? da barra e trajet?rias do landmine antes de rota??es explosivas e movimentos combinados."
-  },
-  {
-    "exerciseId": "ef1e3395-5f08-4c95-82ac-1a2bc5e099d1",
-    "exerciseName": "Desenvolvimento Bilateral no Landmine",
-    "tier": 3,
-    "order": 150,
-    "batch": "Landmine: fundamentos",
-    "reason": "Introduzir piv? da barra e trajet?rias do landmine antes de rota??es explosivas e movimentos combinados."
-  },
-  {
-    "exerciseId": "26e45901-2ccc-46df-8188-cd3503830860",
-    "exerciseName": "Desenvolvimento Unilateral Meio-Ajoelhado no Landmine",
-    "tier": 3,
-    "order": 151,
-    "batch": "Landmine: fundamentos",
-    "reason": "Introduzir piv? da barra e trajet?rias do landmine antes de rota??es explosivas e movimentos combinados."
-  },
-  {
-    "exerciseId": "566f3759-b346-4a4e-80b2-29618cda6dd1",
-    "exerciseName": "Agachamento no Landmine",
-    "tier": 3,
-    "order": 152,
-    "batch": "Landmine: fundamentos",
-    "reason": "Introduzir piv? da barra e trajet?rias do landmine antes de rota??es explosivas e movimentos combinados."
-  },
-  {
-    "exerciseId": "3e962d98-1b67-4280-899f-d965e3c1e257",
-    "exerciseName": "Remada Unilateral no Landmine",
-    "tier": 3,
-    "order": 153,
-    "batch": "Landmine: fundamentos",
-    "reason": "Introduzir piv? da barra e trajet?rias do landmine antes de rota??es explosivas e movimentos combinados."
-  },
-  {
-    "exerciseId": "6f49e547-9500-4888-8b46-09736d07a169",
-    "exerciseName": "Remada Meadows",
-    "tier": 3,
-    "order": 154,
-    "batch": "Landmine: fundamentos",
-    "reason": "Introduzir piv? da barra e trajet?rias do landmine antes de rota??es explosivas e movimentos combinados."
-  },
-  {
-    "exerciseId": "efa5ed74-0b27-4f99-89db-0546048b6b62",
-    "exerciseName": "Levantamento Terra no Landmine",
-    "tier": 3,
-    "order": 155,
-    "batch": "Landmine: fundamentos",
-    "reason": "Introduzir piv? da barra e trajet?rias do landmine antes de rota??es explosivas e movimentos combinados."
-  },
-  {
-    "exerciseId": "52b75b53-d5d9-4c4c-8929-aa6dece24b0d",
-    "exerciseName": "Anti-Rotação no Landmine",
-    "tier": 3,
-    "order": 156,
-    "batch": "Landmine: fundamentos",
-    "reason": "Introduzir piv? da barra e trajet?rias do landmine antes de rota??es explosivas e movimentos combinados."
-  },
-  {
-    "exerciseId": "e3f4caca-9f77-4e1b-8388-a84e51e96474",
-    "exerciseName": "Farmer Carry com Halteres",
-    "tier": 3,
-    "order": 157,
-    "batch": "Transportes e condicionamento",
-    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
-  },
-  {
-    "exerciseId": "85c4058a-918d-4934-8c31-5383ac68b765",
-    "exerciseName": "Suitcase Carry com Halter",
-    "tier": 3,
-    "order": 158,
-    "batch": "Transportes e condicionamento",
-    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
-  },
-  {
-    "exerciseId": "b36d7169-2020-46fb-8394-b1b8db2a5b86",
-    "exerciseName": "Front Rack Carry com Kettlebells",
-    "tier": 3,
-    "order": 159,
-    "batch": "Transportes e condicionamento",
-    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
-  },
-  {
-    "exerciseId": "fe2d1f67-ec85-46bc-8d0b-0c3611adefca",
-    "exerciseName": "Overhead Carry Unilateral",
-    "tier": 3,
-    "order": 160,
-    "batch": "Transportes e condicionamento",
-    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
-  },
-  {
-    "exerciseId": "cbc95d73-bdd6-4573-8d90-65c9dd256f62",
-    "exerciseName": "Empurrar Trenó",
-    "tier": 3,
-    "order": 161,
-    "batch": "Transportes e condicionamento",
-    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
-  },
-  {
-    "exerciseId": "28086afd-b431-453b-80f3-cca10db500a9",
-    "exerciseName": "Puxar Trenó Caminhando para Trás",
-    "tier": 3,
-    "order": 162,
-    "batch": "Transportes e condicionamento",
-    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
-  },
-  {
-    "exerciseId": "22de6ad2-4b31-4de1-8bc1-e3591b4af04c",
-    "exerciseName": "Remo no Ergômetro",
-    "tier": 3,
-    "order": 163,
-    "batch": "Transportes e condicionamento",
-    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
-  },
-  {
-    "exerciseId": "5a6c9f8a-7c11-40cf-80de-c6cd688bce32",
-    "exerciseName": "Bicicleta de Ar — alias: air bike",
-    "tier": 3,
-    "order": 164,
-    "batch": "Transportes e condicionamento",
-    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
-  },
-  {
-    "exerciseId": "ad10fe8f-b3c9-4b0a-83e5-d8aa6d82073f",
-    "exerciseName": "SkiErg",
-    "tier": 3,
-    "order": 165,
-    "batch": "Transportes e condicionamento",
-    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
-  },
-  {
-    "exerciseId": "86df7d73-c743-476e-8d46-719b916e17a9",
-    "exerciseName": "Corrida",
-    "tier": 3,
-    "order": 166,
-    "batch": "Transportes e condicionamento",
-    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
-  },
-  {
-    "exerciseId": "347a52f4-0233-4073-8d79-d01cfd6616d0",
-    "exerciseName": "Sprint",
-    "tier": 3,
-    "order": 167,
-    "batch": "Transportes e condicionamento",
-    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
-  },
-  {
-    "exerciseId": "ea1f87ba-f5c3-4c14-8ca3-670d4fb32c9b",
-    "exerciseName": "Corrida de Ida e Volta — alias: shuttle run",
-    "tier": 3,
-    "order": 168,
-    "batch": "Transportes e condicionamento",
-    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
-  },
-  {
-    "exerciseId": "d5231b45-3579-4418-85dd-dc44d8b9d2a9",
-    "exerciseName": "Pular Corda com Giro Simples — alias: single-under",
-    "tier": 3,
-    "order": 169,
-    "batch": "Transportes e condicionamento",
-    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
-  },
-  {
-    "exerciseId": "d8d95580-5871-4fa7-83b2-f85d353e1f4c",
-    "exerciseName": "Battle Rope com Ondas Alternadas",
-    "tier": 3,
-    "order": 170,
-    "batch": "Transportes e condicionamento",
-    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
-  },
-  {
-    "exerciseId": "4a26d043-9e3e-4e16-891f-3e291bfed19e",
-    "exerciseName": "Kettlebell Swing até a Altura dos Ombros — alias: Russian swing",
-    "tier": 3,
-    "order": 171,
-    "batch": "Kettlebell e halteres: bases",
-    "reason": "Criar balan?o, transfer?ncia de carga e movimentos din?micos b?sicos antes de snatches e transi??es complexas."
-  },
-  {
-    "exerciseId": "4cca654e-e0cd-4d90-84be-053cab9e661b",
-    "exerciseName": "Kettlebell Swing Unilateral",
-    "tier": 3,
-    "order": 172,
-    "batch": "Kettlebell e halteres: bases",
-    "reason": "Criar balan?o, transfer?ncia de carga e movimentos din?micos b?sicos antes de snatches e transi??es complexas."
-  },
-  {
-    "exerciseId": "83b94d1b-77c7-4b0c-8881-7dc9974770b2",
-    "exerciseName": "Kettlebell Push Press Unilateral",
-    "tier": 3,
-    "order": 173,
-    "batch": "Kettlebell e halteres: bases",
-    "reason": "Criar balan?o, transfer?ncia de carga e movimentos din?micos b?sicos antes de snatches e transi??es complexas."
-  },
-  {
-    "exerciseId": "726bc1a0-a83d-4262-8898-791709f8c01f",
-    "exerciseName": "Push Press com Halteres",
-    "tier": 3,
-    "order": 174,
-    "batch": "Kettlebell e halteres: bases",
-    "reason": "Criar balan?o, transfer?ncia de carga e movimentos din?micos b?sicos antes de snatches e transi??es complexas."
-  },
-  {
-    "exerciseId": "5d74502e-8955-44ec-8e58-455dc39c8b1b",
-    "exerciseName": "Thruster com Barra",
-    "tier": 3,
-    "order": 175,
-    "batch": "Kettlebell e halteres: bases",
-    "reason": "Criar balan?o, transfer?ncia de carga e movimentos din?micos b?sicos antes de snatches e transi??es complexas."
-  },
-  {
-    "exerciseId": "f88b41e8-2d6e-4042-895a-e57c803401d2",
-    "exerciseName": "Thruster com Halteres",
-    "tier": 3,
-    "order": 176,
-    "batch": "Kettlebell e halteres: bases",
-    "reason": "Criar balan?o, transfer?ncia de carga e movimentos din?micos b?sicos antes de snatches e transi??es complexas."
-  },
-  {
-    "exerciseId": "42e439e0-6eca-416c-8d33-4bfa8d48ac36",
-    "exerciseName": "Remada Renegade com Halteres",
-    "tier": 3,
-    "order": 177,
-    "batch": "Kettlebell e halteres: bases",
-    "reason": "Criar balan?o, transfer?ncia de carga e movimentos din?micos b?sicos antes de snatches e transi??es complexas."
-  },
-  {
-    "exerciseId": "2c1657df-13fa-4644-82e3-11a17bc6cb9d",
-    "exerciseName": "Pogo Jump Bilateral",
-    "tier": 4,
-    "order": 178,
-    "batch": "Saltos: apoios e aterrissagem",
-    "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
-  },
-  {
-    "exerciseId": "5ec972bc-f8a0-47fd-8789-b9363ea28b84",
-    "exerciseName": "Salto Vertical com Contramovimento",
-    "tier": 4,
-    "order": 179,
-    "batch": "Saltos: apoios e aterrissagem",
-    "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
-  },
-  {
-    "exerciseId": "28893c38-900f-4518-844f-93471a3e0f0c",
-    "exerciseName": "Salto Vertical Partindo de Agachamento — alias: squat jump",
-    "tier": 4,
-    "order": 180,
-    "batch": "Saltos: apoios e aterrissagem",
-    "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
-  },
-  {
-    "exerciseId": "9d2667b4-14cc-4e63-8d4f-5a4757aaad74",
-    "exerciseName": "Salto Horizontal Parado — alias: standing broad jump",
-    "tier": 4,
-    "order": 181,
-    "batch": "Saltos: apoios e aterrissagem",
-    "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
-  },
-  {
-    "exerciseId": "c4ad50ca-6df3-4b61-83f0-02538c1507df",
-    "exerciseName": "Drop Landing — queda da caixa com estabilização",
-    "tier": 4,
-    "order": 182,
-    "batch": "Saltos: apoios e aterrissagem",
-    "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
-  },
-  {
-    "exerciseId": "87ef0649-841a-42c5-88c5-ae9447173c43",
-    "exerciseName": "Salto na Caixa — alias: box jump",
-    "tier": 4,
-    "order": 183,
-    "batch": "Saltos: apoios e aterrissagem",
-    "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
-  },
-  {
-    "exerciseId": "fc13b372-4454-459c-8cef-8e2242a23ebd",
-    "exerciseName": "Pogo Jump Unilateral",
-    "tier": 4,
-    "order": 184,
-    "batch": "Saltos: apoios e aterrissagem",
-    "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
-  },
-  {
-    "exerciseId": "78501398-5301-4325-8b2a-085c035b870e",
-    "exerciseName": "Salto Lateral Alternado — alias: skater jump",
-    "tier": 4,
-    "order": 185,
-    "batch": "Saltos: apoios e aterrissagem",
-    "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
-  },
-  {
-    "exerciseId": "67b27d44-92d8-4c58-8533-98967f89c92b",
-    "exerciseName": "Salto Unilateral para Frente",
-    "tier": 4,
-    "order": 186,
-    "batch": "Saltos: apoios e aterrissagem",
-    "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
-  },
-  {
-    "exerciseId": "1aad0068-09c5-4f78-8e4d-38343326fa91",
-    "exerciseName": "Saltos Alternados em Afundo — alias: split squat jump",
-    "tier": 4,
-    "order": 187,
-    "batch": "Saltos: apoios e aterrissagem",
-    "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
-  },
-  {
-    "exerciseId": "b79bd93b-72a4-443f-8c56-ebeee69d9d04",
-    "exerciseName": "Arremesso de Peito com Medicine Ball na Parede",
-    "tier": 4,
-    "order": 188,
-    "batch": "Bolas e pot?ncia",
-    "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
-  },
-  {
-    "exerciseId": "2d1fa957-9027-436f-8910-3c6f947a4fc1",
-    "exerciseName": "Arremesso de Peito Sentado com Medicine Ball",
-    "tier": 4,
-    "order": 189,
-    "batch": "Bolas e pot?ncia",
-    "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
-  },
-  {
-    "exerciseId": "5b198859-1552-48f7-81d5-ad176ffbb367",
-    "exerciseName": "Slam Ball no Solo",
-    "tier": 4,
-    "order": 190,
-    "batch": "Bolas e pot?ncia",
-    "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
-  },
-  {
-    "exerciseId": "cabc544c-fd0e-41f2-83b0-168605cd36b8",
-    "exerciseName": "Wall Ball — agachamento com lançamento da bola ao alvo",
-    "tier": 4,
-    "order": 191,
-    "batch": "Bolas e pot?ncia",
-    "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
-  },
-  {
-    "exerciseId": "1d432b5a-29b4-4d71-847a-2608f6650fda",
-    "exerciseName": "Clean com Medicine Ball",
-    "tier": 4,
-    "order": 192,
-    "batch": "Bolas e pot?ncia",
-    "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
-  },
-  {
-    "exerciseId": "da6137b3-c773-43f7-8b7c-fb0fbf2609b3",
-    "exerciseName": "Arremesso Rotacional de Medicine Ball na Parede",
-    "tier": 4,
-    "order": 193,
-    "batch": "Bolas e pot?ncia",
-    "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
-  },
-  {
-    "exerciseId": "bda3b4e0-4244-4010-83e6-ac5841b228d2",
-    "exerciseName": "Arremesso de Medicine Ball Acima da Cabeça para Frente",
-    "tier": 4,
-    "order": 194,
-    "batch": "Bolas e pot?ncia",
-    "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
-  },
-  {
-    "exerciseId": "1b833278-06be-4ad0-831a-e87c85564521",
-    "exerciseName": "Arremesso de Medicine Ball para Trás Acima da Cabeça",
-    "tier": 4,
-    "order": 195,
-    "batch": "Bolas e pot?ncia",
-    "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
-  },
-  {
-    "exerciseId": "0d3c8197-f719-4a93-8545-f00c52cec1a6",
-    "exerciseName": "Slam Ball Rotacional",
-    "tier": 4,
-    "order": 196,
-    "batch": "Bolas e pot?ncia",
-    "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
-  },
-  {
-    "exerciseId": "8bdde5b9-d201-40ab-8198-3ac1fe77d63c",
-    "exerciseName": "Push Press Unilateral no Landmine",
-    "tier": 4,
-    "order": 197,
-    "batch": "Landmine: movimentos combinados",
-    "reason": "Combinar as bases aprovadas de landmine com impulso, rota??o e afundo sem reutilizar poses incompat?veis."
-  },
-  {
-    "exerciseId": "37d17ee5-4fcd-45a0-8bd9-037a2c5f97bd",
-    "exerciseName": "Press Rotacional Unilateral no Landmine",
-    "tier": 4,
-    "order": 198,
-    "batch": "Landmine: movimentos combinados",
-    "reason": "Combinar as bases aprovadas de landmine com impulso, rota??o e afundo sem reutilizar poses incompat?veis."
-  },
-  {
-    "exerciseId": "45f82445-d2c4-4a74-858e-1b00f0fa178f",
-    "exerciseName": "Agachamento com Press no Landmine",
-    "tier": 4,
-    "order": 199,
-    "batch": "Landmine: movimentos combinados",
-    "reason": "Combinar as bases aprovadas de landmine com impulso, rota??o e afundo sem reutilizar poses incompat?veis."
-  },
-  {
-    "exerciseId": "eef396ad-8271-463d-844a-a7023f64bd8e",
-    "exerciseName": "Afundo Reverso com Press Unilateral no Landmine",
-    "tier": 4,
-    "order": 200,
-    "batch": "Landmine: movimentos combinados",
-    "reason": "Combinar as bases aprovadas de landmine com impulso, rota??o e afundo sem reutilizar poses incompat?veis."
-  },
-  {
-    "exerciseId": "8a0fa5b8-e102-4a6c-85c5-7a666d027296",
-    "exerciseName": "Overhead Squat",
-    "tier": 4,
-    "order": 201,
-    "batch": "LPO: prepara??o e movimentos principais",
-    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
-  },
-  {
-    "exerciseId": "8b10ad1c-4bb1-44ed-8d89-b916185451a3",
-    "exerciseName": "Clean Deadlift",
-    "tier": 4,
-    "order": 202,
-    "batch": "LPO: prepara??o e movimentos principais",
-    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
-  },
-  {
-    "exerciseId": "4fb4e4e6-e685-4a72-8da4-9af02ce80afd",
-    "exerciseName": "Clean Pull",
-    "tier": 4,
-    "order": 203,
-    "batch": "LPO: prepara??o e movimentos principais",
-    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
-  },
-  {
-    "exerciseId": "e94df5cc-688c-4894-8651-26bd0b7cd729",
-    "exerciseName": "Clean High Pull",
-    "tier": 4,
-    "order": 204,
-    "batch": "LPO: prepara??o e movimentos principais",
-    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
-  },
-  {
-    "exerciseId": "f3f156f0-523e-45d9-83e8-026e8299292e",
-    "exerciseName": "Muscle Clean",
-    "tier": 4,
-    "order": 205,
-    "batch": "LPO: prepara??o e movimentos principais",
-    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
-  },
-  {
-    "exerciseId": "1b7764ca-1826-488e-8734-fc88117ed9dd",
-    "exerciseName": "Hang Power Clean",
-    "tier": 4,
-    "order": 206,
-    "batch": "LPO: prepara??o e movimentos principais",
-    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
-  },
-  {
-    "exerciseId": "828d2135-37b8-4e03-8936-1554e4b3e99f",
-    "exerciseName": "Power Clean",
-    "tier": 4,
-    "order": 207,
-    "batch": "LPO: prepara??o e movimentos principais",
-    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
-  },
-  {
-    "exerciseId": "ee45732c-628c-4cb9-8386-b0a58b682fb1",
-    "exerciseName": "Clean — aliases: squat clean, full clean",
-    "tier": 4,
-    "order": 208,
-    "batch": "LPO: prepara??o e movimentos principais",
-    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
-  },
-  {
-    "exerciseId": "c7b1bd07-08d9-4794-8588-0534a607ae50",
-    "exerciseName": "Hang Clean",
-    "tier": 4,
-    "order": 209,
-    "batch": "LPO: prepara??o e movimentos principais",
-    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
-  },
-  {
-    "exerciseId": "3f008308-7990-4c42-8008-56916d3be09e",
-    "exerciseName": "Push Press com Barra",
-    "tier": 4,
-    "order": 210,
-    "batch": "LPO: prepara??o e movimentos principais",
-    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
-  },
-  {
-    "exerciseId": "ac8f7416-2631-427d-8368-d974889c1d14",
-    "exerciseName": "Jerk Dip",
-    "tier": 4,
-    "order": 211,
-    "batch": "LPO: prepara??o e movimentos principais",
-    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
-  },
-  {
-    "exerciseId": "1ad5f03c-0d81-4d28-8d0c-060726c06fb6",
-    "exerciseName": "Jerk Drive",
-    "tier": 4,
-    "order": 212,
-    "batch": "LPO: prepara??o e movimentos principais",
-    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
-  },
-  {
-    "exerciseId": "e5c85899-146d-49f8-8673-5c1c4e04eace",
-    "exerciseName": "Push Jerk",
-    "tier": 4,
-    "order": 213,
-    "batch": "LPO: prepara??o e movimentos principais",
-    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
-  },
-  {
-    "exerciseId": "a1a03a80-fdfe-4d0d-87ca-7b7a3d1b0a60",
-    "exerciseName": "Split Jerk",
-    "tier": 4,
-    "order": 214,
-    "batch": "LPO: prepara??o e movimentos principais",
-    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
-  },
-  {
-    "exerciseId": "c5443faf-a2b5-4ec7-8879-c6b1d38136e5",
-    "exerciseName": "Snatch Deadlift",
-    "tier": 4,
-    "order": 215,
-    "batch": "LPO: prepara??o e movimentos principais",
-    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
-  },
-  {
-    "exerciseId": "0dd16782-2671-4d6e-8cc8-7fa516b7a4c8",
-    "exerciseName": "Snatch Pull",
-    "tier": 4,
-    "order": 216,
-    "batch": "LPO: prepara??o e movimentos principais",
-    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
-  },
-  {
-    "exerciseId": "30dc93d6-27a3-4a69-81e4-c936412ce6a0",
-    "exerciseName": "Snatch High Pull",
-    "tier": 4,
-    "order": 217,
-    "batch": "LPO: prepara??o e movimentos principais",
-    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
-  },
-  {
-    "exerciseId": "67697db2-773d-4120-8305-ffc5c2179f31",
-    "exerciseName": "Muscle Snatch",
-    "tier": 4,
-    "order": 218,
-    "batch": "LPO: prepara??o e movimentos principais",
-    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
-  },
-  {
-    "exerciseId": "839f3abf-c126-4b5d-82f2-bcd3f5eea73c",
-    "exerciseName": "Hang Power Snatch",
-    "tier": 4,
-    "order": 219,
-    "batch": "LPO: prepara??o e movimentos principais",
-    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
-  },
-  {
-    "exerciseId": "4b5a6860-b5e5-4a5f-81db-ed2ffa42b8d0",
-    "exerciseName": "Power Snatch",
-    "tier": 4,
-    "order": 220,
-    "batch": "LPO: prepara??o e movimentos principais",
-    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
-  },
-  {
-    "exerciseId": "1c9d749e-bcdc-46ef-8c61-8f6c62495ad3",
-    "exerciseName": "Snatch — aliases: squat snatch, full snatch",
-    "tier": 4,
-    "order": 221,
-    "batch": "LPO: prepara??o e movimentos principais",
-    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
-  },
-  {
-    "exerciseId": "1fd318ce-de48-455a-8e0a-e2ab9c45681e",
-    "exerciseName": "Kettlebell Swing Acima da Cabeça — alias: American swing",
-    "tier": 4,
-    "order": 222,
-    "batch": "Funcional: transi??es e implementos",
-    "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
-  },
-  {
-    "exerciseId": "7a2d55db-be0a-4318-8978-92d32d01c1e7",
-    "exerciseName": "Kettlebell Clean Unilateral",
-    "tier": 4,
-    "order": 223,
-    "batch": "Funcional: transi??es e implementos",
-    "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
-  },
-  {
-    "exerciseId": "e70bbf0e-80d4-40ea-888c-8e0358c927ef",
-    "exerciseName": "Power Clean com Halteres",
-    "tier": 4,
-    "order": 224,
-    "batch": "Funcional: transi??es e implementos",
-    "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
-  },
-  {
-    "exerciseId": "1c57981e-05f6-498b-8975-2679a3c85d35",
-    "exerciseName": "Hang Power Clean com Halteres",
-    "tier": 4,
-    "order": 225,
-    "batch": "Funcional: transi??es e implementos",
-    "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
-  },
-  {
-    "exerciseId": "4291abd4-8b68-4b19-8223-27b5e9f2b4e8",
-    "exerciseName": "Snatch Unilateral com Halter",
-    "tier": 4,
-    "order": 226,
-    "batch": "Funcional: transi??es e implementos",
-    "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
-  },
-  {
-    "exerciseId": "59be040d-c5ed-45bb-82c0-b8369829e019",
-    "exerciseName": "Burpee",
-    "tier": 4,
-    "order": 227,
-    "batch": "Funcional: transi??es e implementos",
-    "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
-  },
-  {
-    "exerciseId": "cfd75a15-4513-4f01-89a6-5fbd8ecd1574",
-    "exerciseName": "Burpee sobre a Barra",
-    "tier": 4,
-    "order": 228,
-    "batch": "Funcional: transi??es e implementos",
-    "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
-  },
-  {
-    "exerciseId": "e63a558c-89d0-44ba-80ab-fdd2f3459092",
-    "exerciseName": "Remada nas Argolas",
-    "tier": 4,
-    "order": 229,
-    "batch": "Funcional: transi??es e implementos",
-    "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
-  },
-  {
-    "exerciseId": "9800a359-b8c3-4b4a-86d2-2e62a20b1d50",
-    "exerciseName": "Paralelas nas Argolas",
-    "tier": 4,
-    "order": 230,
-    "batch": "Funcional: transi??es e implementos",
-    "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
-  },
-  {
-    "exerciseId": "270f8e74-11d1-4cfd-8219-98dbd47ff372",
-    "exerciseName": "Flexão de Braços nas Argolas",
-    "tier": 4,
-    "order": 231,
-    "batch": "Funcional: transi??es e implementos",
-    "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
-  },
-  {
-    "exerciseId": "8d74b7a0-243a-42fd-8755-e984a7c62b22",
-    "exerciseName": "Pistol Squat",
-    "tier": 4,
-    "order": 232,
-    "batch": "Funcional: transi??es e implementos",
-    "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
-  },
-  {
-    "exerciseId": "216cde22-ddf3-4f36-88ae-6ee918e2d221",
-    "exerciseName": "L-Sit nas Paralelas",
-    "tier": 4,
-    "order": 233,
-    "batch": "Funcional: transi??es e implementos",
-    "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
-  },
-  {
-    "exerciseId": "90c19acb-1cfd-4da3-8a68-ac452ba58e5a",
-    "exerciseName": "Saltos Horizontais Consecutivos",
-    "tier": 5,
-    "order": 234,
-    "batch": "Saltos reativos e sequ?ncias",
-    "reason": "Exigem revis?o adicional de contatos sucessivos, obst?culos e aterrissagens; dependem das bases de salto."
-  },
-  {
-    "exerciseId": "97da65a9-0008-45a9-8779-865ae03c2a33",
-    "exerciseName": "Salto por Cima da Caixa — alias: box jump-over",
-    "tier": 5,
-    "order": 235,
-    "batch": "Saltos reativos e sequ?ncias",
-    "reason": "Exigem revis?o adicional de contatos sucessivos, obst?culos e aterrissagens; dependem das bases de salto."
-  },
-  {
-    "exerciseId": "f2d4ada3-9397-4a5e-8939-9573a52e2961",
-    "exerciseName": "Salto Lateral sobre Obstáculo",
-    "tier": 5,
-    "order": 236,
-    "batch": "Saltos reativos e sequ?ncias",
-    "reason": "Exigem revis?o adicional de contatos sucessivos, obst?culos e aterrissagens; dependem das bases de salto."
-  },
-  {
-    "exerciseId": "a4cefb4f-37cf-4489-8343-c56af23bbfa8",
-    "exerciseName": "Saltos sobre Barreiras",
-    "tier": 5,
-    "order": 237,
-    "batch": "Saltos reativos e sequ?ncias",
-    "reason": "Exigem revis?o adicional de contatos sucessivos, obst?culos e aterrissagens; dependem das bases de salto."
-  },
-  {
-    "exerciseId": "a1df9269-072d-411b-81b8-4197aa4a84c8",
-    "exerciseName": "Depth Jump — queda da caixa seguida de salto",
-    "tier": 5,
-    "order": 238,
-    "batch": "Saltos reativos e sequ?ncias",
-    "reason": "Exigem revis?o adicional de contatos sucessivos, obst?culos e aterrissagens; dependem das bases de salto."
-  },
-  {
-    "exerciseId": "5e4d8fc5-7566-41da-8589-7c4d90076292",
-    "exerciseName": "Flexão Pliométrica",
-    "tier": 5,
-    "order": 239,
-    "batch": "Saltos reativos e sequ?ncias",
-    "reason": "Exigem revis?o adicional de contatos sucessivos, obst?culos e aterrissagens; dependem das bases de salto."
-  },
-  {
-    "exerciseId": "625a2d84-4a60-4342-848a-bb176c4370df",
-    "exerciseName": "Clean a Partir de Blocos",
-    "tier": 5,
-    "order": 240,
-    "batch": "LPO: varia??es t?cnicas e complexos",
-    "reason": "Adicionar varia??es t?cnicas ap?s validar movimentos principais e suas recep??es; coordenar m?ltiplas fases sem deformar anatomia."
-  },
-  {
-    "exerciseId": "214278a7-0fb9-4657-8774-73203eb7a0ab",
-    "exerciseName": "Tall Clean",
-    "tier": 5,
-    "order": 241,
-    "batch": "LPO: varia??es t?cnicas e complexos",
-    "reason": "Adicionar varia??es t?cnicas ap?s validar movimentos principais e suas recep??es; coordenar m?ltiplas fases sem deformar anatomia."
-  },
-  {
-    "exerciseId": "d8ccf56a-3e42-4deb-8744-61a7bdba6a7a",
-    "exerciseName": "Hang Snatch",
-    "tier": 5,
-    "order": 242,
-    "batch": "LPO: varia??es t?cnicas e complexos",
-    "reason": "Adicionar varia??es t?cnicas ap?s validar movimentos principais e suas recep??es; coordenar m?ltiplas fases sem deformar anatomia."
-  },
-  {
-    "exerciseId": "e0f5d67f-493e-4352-834a-456560ecca2b",
-    "exerciseName": "Snatch a Partir de Blocos",
-    "tier": 5,
-    "order": 243,
-    "batch": "LPO: varia??es t?cnicas e complexos",
-    "reason": "Adicionar varia??es t?cnicas ap?s validar movimentos principais e suas recep??es; coordenar m?ltiplas fases sem deformar anatomia."
-  },
-  {
-    "exerciseId": "88bd42c5-11d8-41cd-87e3-409c005751e4",
-    "exerciseName": "Tall Snatch",
-    "tier": 5,
-    "order": 244,
-    "batch": "LPO: varia??es t?cnicas e complexos",
-    "reason": "Adicionar varia??es t?cnicas ap?s validar movimentos principais e suas recep??es; coordenar m?ltiplas fases sem deformar anatomia."
-  },
-  {
-    "exerciseId": "708862bf-1e56-437b-8ef8-fff5c581fdde",
-    "exerciseName": "Snatch Balance",
-    "tier": 5,
-    "order": 245,
-    "batch": "LPO: varia??es t?cnicas e complexos",
-    "reason": "Adicionar varia??es t?cnicas ap?s validar movimentos principais e suas recep??es; coordenar m?ltiplas fases sem deformar anatomia."
-  },
-  {
-    "exerciseId": "82e5d50e-7651-4f1c-88a4-424ad0354896",
-    "exerciseName": "Squat Jerk",
-    "tier": 5,
-    "order": 246,
-    "batch": "LPO: varia??es t?cnicas e complexos",
-    "reason": "Adicionar varia??es t?cnicas ap?s validar movimentos principais e suas recep??es; coordenar m?ltiplas fases sem deformar anatomia."
-  },
-  {
-    "exerciseId": "8b4a7da1-fc99-46b6-82ce-22b7f575d709",
-    "exerciseName": "Clean and Jerk",
-    "tier": 5,
-    "order": 247,
-    "batch": "LPO: varia??es t?cnicas e complexos",
-    "reason": "Adicionar varia??es t?cnicas ap?s validar movimentos principais e suas recep??es; coordenar m?ltiplas fases sem deformar anatomia."
-  },
-  {
-    "exerciseId": "319d60a2-9774-4b56-85e7-4649cf2d23d7",
-    "exerciseName": "Kettlebell Snatch Unilateral",
-    "tier": 5,
-    "order": 248,
-    "batch": "Kettlebell: coordena??o avan?ada",
-    "reason": "Revisar recep??o no antebra?o, passagem do implemento e transi??es antes de aprovar movimentos compostos."
-  },
-  {
-    "exerciseId": "2451bd48-05fb-473e-80cb-b0479bee48f5",
-    "exerciseName": "Kettlebell Jerk Unilateral",
-    "tier": 5,
-    "order": 249,
-    "batch": "Kettlebell: coordena??o avan?ada",
-    "reason": "Revisar recep??o no antebra?o, passagem do implemento e transi??es antes de aprovar movimentos compostos."
-  },
-  {
-    "exerciseId": "defa9909-90f4-4278-8351-8bdab5f6b7d4",
-    "exerciseName": "Turkish Get-up",
-    "tier": 5,
-    "order": 250,
-    "batch": "Kettlebell: coordena??o avan?ada",
-    "reason": "Revisar recep??o no antebra?o, passagem do implemento e transi??es antes de aprovar movimentos compostos."
-  },
-  {
-    "exerciseId": "f0eeccc0-954b-454d-8aaa-c272830213e8",
-    "exerciseName": "Devil Press com Halteres",
-    "tier": 5,
-    "order": 251,
-    "batch": "Kettlebell: coordena??o avan?ada",
-    "reason": "Revisar recep??o no antebra?o, passagem do implemento e transi??es antes de aprovar movimentos compostos."
-  },
-  {
-    "exerciseId": "84d0c069-21f2-4660-8ba1-b47bb09b3e81",
-    "exerciseName": "Burpee com Salto por Cima da Caixa",
-    "tier": 5,
-    "order": 252,
-    "batch": "Gin?stica din?mica e habilidades",
-    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
-  },
-  {
-    "exerciseId": "5c64df12-58dd-4840-8494-54b6fe10b54b",
-    "exerciseName": "Kipping Pull-up",
-    "tier": 5,
-    "order": 253,
-    "batch": "Gin?stica din?mica e habilidades",
-    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
-  },
-  {
-    "exerciseId": "2ec2e5b6-c015-4d08-8d4d-9577c410f143",
-    "exerciseName": "Butterfly Pull-up",
-    "tier": 5,
-    "order": 254,
-    "batch": "Gin?stica din?mica e habilidades",
-    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
-  },
-  {
-    "exerciseId": "3f882b66-3ba6-430c-8996-32179546dacd",
-    "exerciseName": "Chest-to-Bar Pull-up",
-    "tier": 5,
-    "order": 255,
-    "batch": "Gin?stica din?mica e habilidades",
-    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
-  },
-  {
-    "exerciseId": "a9c79cda-74c6-4fff-8b2a-01f3a0e4c91c",
-    "exerciseName": "Toes-to-Bar",
-    "tier": 5,
-    "order": 256,
-    "batch": "Gin?stica din?mica e habilidades",
-    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
-  },
-  {
-    "exerciseId": "eee0b56d-e70a-4c5f-8e33-32032f8b6c2f",
-    "exerciseName": "Knees-to-Elbows",
-    "tier": 5,
-    "order": 257,
-    "batch": "Gin?stica din?mica e habilidades",
-    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
-  },
-  {
-    "exerciseId": "b034a035-e699-4b70-858f-9f131820545e",
-    "exerciseName": "Muscle-up na Barra",
-    "tier": 5,
-    "order": 258,
-    "batch": "Gin?stica din?mica e habilidades",
-    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
-  },
-  {
-    "exerciseId": "66f7980f-4e11-4bd7-8a38-c45d5fe23e29",
-    "exerciseName": "Muscle-up nas Argolas",
-    "tier": 5,
-    "order": 259,
-    "batch": "Gin?stica din?mica e habilidades",
-    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
-  },
-  {
-    "exerciseId": "067c23df-07bc-4110-8022-e026d6697199",
-    "exerciseName": "Handstand Push-up Estrito",
-    "tier": 5,
-    "order": 260,
-    "batch": "Gin?stica din?mica e habilidades",
-    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
-  },
-  {
-    "exerciseId": "87bb8075-09af-43d8-813d-19b257bb67eb",
-    "exerciseName": "Kipping Handstand Push-up",
-    "tier": 5,
-    "order": 261,
-    "batch": "Gin?stica din?mica e habilidades",
-    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
-  },
-  {
-    "exerciseId": "df51e789-ae36-4ffc-8636-72e0d458ca4d",
-    "exerciseName": "Wall Walk",
-    "tier": 5,
-    "order": 262,
-    "batch": "Gin?stica din?mica e habilidades",
-    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
-  },
-  {
-    "exerciseId": "c9e30495-151c-4a1f-8e64-b5ea8ce767bb",
-    "exerciseName": "Handstand Walk",
-    "tier": 5,
-    "order": 263,
-    "batch": "Gin?stica din?mica e habilidades",
-    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
-  },
-  {
-    "exerciseId": "eab742e2-9380-4dfa-86fc-459d84157b6c",
-    "exerciseName": "Subida na Corda",
-    "tier": 5,
-    "order": 264,
-    "batch": "Gin?stica din?mica e habilidades",
-    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
-  },
-  {
-    "exerciseId": "3d8e35e1-3414-49c4-8100-923294135403",
-    "exerciseName": "Pular Corda com Giro Duplo — alias: double-under",
-    "tier": 5,
-    "order": 265,
-    "batch": "Corda: giro duplo",
-    "reason": "Sincronizar dois giros da corda por salto ap?s validar o giro simples e o ciclo de aterrissagem."
-  },
-  {
-    "exerciseId": "8108ae55-6046-46c0-8c58-5c07f176c220",
-    "exerciseName": "Tríceps Testa com Barra Reta",
-    "tier": 5,
-    "order": 266,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "cbad2819-72ac-403c-8c2f-6b13c8d287f1",
-    "exerciseName": "Tríceps Testa com Barra W",
-    "tier": 5,
-    "order": 267,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "c98a4420-38e7-42ae-8537-3a69d1fc9562",
-    "exerciseName": "Tríceps Testa com Halteres",
-    "tier": 5,
-    "order": 268,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "e64255a2-1671-4717-844c-db974350a5e5",
-    "exerciseName": "Tríceps Testa Unilateral com Halter",
-    "tier": 5,
-    "order": 269,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "0ba9b44b-90e4-453e-83a9-f99f545f66bd",
-    "exerciseName": "Tríceps Testa na Polia com Barra Reta",
-    "tier": 5,
-    "order": 270,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "17cd655b-1829-4b3e-86a9-47f2c4f46493",
-    "exerciseName": "Tríceps Testa na Polia com Barra W",
-    "tier": 5,
-    "order": 271,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "d7d1862b-4c92-49f7-879a-8e8425e3ad5d",
-    "exerciseName": "Tríceps Testa na Polia com Corda",
-    "tier": 5,
-    "order": 272,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "8f8b5524-6ccf-4c6b-832c-ac1e81e40b3c",
-    "exerciseName": "Tríceps Testa Unilateral na Polia",
-    "tier": 5,
-    "order": 273,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "b79fe345-974b-4e9f-85ac-ac732d241236",
-    "exerciseName": "Tríceps Francês com Halter Bilateral",
-    "tier": 5,
-    "order": 274,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "911558ab-c46f-4322-8295-8e102953330b",
-    "exerciseName": "Tríceps Francês com Barra W",
-    "tier": 5,
-    "order": 275,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "a714c255-5556-4704-84d4-90f44c87765a",
-    "exerciseName": "Tríceps Acima da Cabeça na Polia com Corda",
-    "tier": 5,
-    "order": 276,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "33effeb0-d0e4-43f6-80d2-65899ac12c0a",
-    "exerciseName": "Tríceps Acima da Cabeça na Polia com Barra Reta",
-    "tier": 5,
-    "order": 277,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "c9e53c15-ca89-4f91-845f-52e62076b1f8",
-    "exerciseName": "Tríceps Acima da Cabeça na Polia com Barra W",
-    "tier": 5,
-    "order": 278,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "96b9fc45-2a68-4021-8169-5f25ae82b78e",
-    "exerciseName": "Tríceps Acima da Cabeça Unilateral na Polia",
-    "tier": 5,
-    "order": 279,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "7050c35c-b90f-4168-8263-07c46cd54499",
-    "exerciseName": "Tríceps no Cabo com Barra V",
-    "tier": 5,
-    "order": 280,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "7df5de14-a676-42b7-86cd-485301adc0ef",
-    "exerciseName": "Tríceps no Cabo com Barra W",
-    "tier": 5,
-    "order": 281,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "1794f8a7-9ec0-4b77-8948-46669c7b2136",
-    "exerciseName": "Tríceps no Cabo com Barra Reta e Pegada Supinada",
-    "tier": 5,
-    "order": 282,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "0156a30b-bcf8-4a40-8458-8113ee2e61ce",
-    "exerciseName": "Tríceps Coice Unilateral no Cabo",
-    "tier": 5,
-    "order": 283,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "759baeb6-2a0a-47cc-8917-b2763c4a0410",
-    "exerciseName": "Tríceps na Máquina",
-    "tier": 5,
-    "order": 284,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "4b68c797-398e-4234-8206-c57464e145ec",
-    "exerciseName": "Rosca Direta com Barra W",
-    "tier": 5,
-    "order": 285,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "736f15d4-41cc-426f-8802-41e10e4c07dc",
-    "exerciseName": "Rosca Direta com Halteres",
-    "tier": 5,
-    "order": 286,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "2fe01c1c-1576-44a9-86bc-771718b10c80",
-    "exerciseName": "Rosca Direta na Polia com Barra W",
-    "tier": 5,
-    "order": 287,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "90cd5625-ac7f-4e6f-8544-2400379246c5",
-    "exerciseName": "Rosca Unilateral na Polia Baixa",
-    "tier": 5,
-    "order": 288,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "4e98a7b4-f613-4ab0-8098-1213052f6659",
-    "exerciseName": "Rosca Scott com Barra Reta",
-    "tier": 5,
-    "order": 289,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "accdb149-9c0c-42a5-8587-bdbe069306c1",
-    "exerciseName": "Rosca Scott com Barra W",
-    "tier": 5,
-    "order": 290,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "a8554100-a9d1-41f2-8b1b-9a9d6525178d",
-    "exerciseName": "Rosca Scott Unilateral com Halter",
-    "tier": 5,
-    "order": 291,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "6ad0d120-6c10-474e-8916-c27dc2502e26",
-    "exerciseName": "Rosca Scott na Polia com Barra Reta",
-    "tier": 5,
-    "order": 292,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "477d5b72-1f45-4962-875f-ee47333c9490",
-    "exerciseName": "Rosca Scott na Polia com Barra W",
-    "tier": 5,
-    "order": 293,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "989feba5-706b-4a3d-8738-7ac9a35d00ae",
-    "exerciseName": "Rosca Scott Unilateral na Polia",
-    "tier": 5,
-    "order": 294,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "2d643e1d-a376-4c42-8771-fe60addce003",
-    "exerciseName": "Rosca Spider com Barra Reta",
-    "tier": 5,
-    "order": 295,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "4c545004-497f-4cb4-85b3-2f9ac4f3f67d",
-    "exerciseName": "Rosca Spider com Barra W",
-    "tier": 5,
-    "order": 296,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "3ee30823-922e-45f4-86b9-ae99149c6f9f",
-    "exerciseName": "Rosca Spider com Halteres",
-    "tier": 5,
-    "order": 297,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "f32c1a74-af9b-4879-835f-d59fe71b31dc",
-    "exerciseName": "Rosca Spider na Polia",
-    "tier": 5,
-    "order": 298,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "f74cdc36-a067-4991-8852-f3bb6c873947",
-    "exerciseName": "Rosca Concentrada na Polia",
-    "tier": 5,
-    "order": 299,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "aa0f083c-78a4-4e5d-85ba-335d680e70c5",
-    "exerciseName": "Rosca Bayesian Unilateral na Polia",
-    "tier": 5,
-    "order": 300,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "c622c057-4915-44ff-87f5-68ac6d32bb7c",
-    "exerciseName": "Rosca Dupla na Polia Alta",
-    "tier": 5,
-    "order": 301,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "df54ce13-b047-487d-8de6-54eaa4d60ace",
-    "exerciseName": "Rosca Inclinada na Polia",
-    "tier": 5,
-    "order": 302,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "335c3df1-cc11-4535-8e14-faea33c123fd",
-    "exerciseName": "Rosca de Bíceps na Máquina",
-    "tier": 5,
-    "order": 303,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "1833c2cd-8928-4f4f-8106-dbc80628ee6f",
-    "exerciseName": "Rosca Martelo na Polia com Corda",
-    "tier": 5,
-    "order": 304,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "c88966f4-080a-4ce1-887b-4f5a412c6a8a",
-    "exerciseName": "Rosca Martelo Unilateral na Polia",
-    "tier": 5,
-    "order": 305,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "19e651e6-d2a9-47d0-8730-4b474f280042",
-    "exerciseName": "Rosca Martelo no Banco Inclinado",
-    "tier": 5,
-    "order": 306,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "dcccfeb3-86ba-438a-83cd-92146e3d6089",
-    "exerciseName": "Rosca Martelo Cruzada com Halter",
-    "tier": 5,
-    "order": 307,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "241128f6-138a-45d6-8516-546951a3756d",
-    "exerciseName": "Rosca Scott Martelo Unilateral com Halter",
-    "tier": 5,
-    "order": 308,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "cd8de8b7-1ddc-4424-8dfb-9813e4e92f0f",
-    "exerciseName": "Rosca Inversa com Barra W",
-    "tier": 5,
-    "order": 309,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "ee9c49a5-1e24-4328-845a-710cf88f5250",
-    "exerciseName": "Rosca Inversa na Polia com Barra Reta",
-    "tier": 5,
-    "order": 310,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "240cbd3b-e36f-4492-8043-76fe8a05093c",
-    "exerciseName": "Rosca Inversa com Halteres",
-    "tier": 5,
-    "order": 311,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "41795600-cfd1-4f4a-8ad9-dfb0dd2fe81b",
-    "exerciseName": "Rosca Zottman com Halteres",
-    "tier": 5,
-    "order": 312,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "6e1d783e-b1df-4dd8-8b52-3f753b014507",
-    "exerciseName": "Rosca de Punho Unilateral com Halter",
-    "tier": 5,
-    "order": 313,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "bb95eb80-0d1d-4624-8496-02c5d8c82c4e",
-    "exerciseName": "Extensão de Punho Unilateral com Halter",
-    "tier": 5,
-    "order": 314,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "9677a02a-4b47-4f89-8db9-3668429be65f",
-    "exerciseName": "Rosca de Punho na Polia",
-    "tier": 5,
-    "order": 315,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "c98d61cc-42d9-4b47-87cb-ad67c43fa9f7",
-    "exerciseName": "Extensão de Punho na Polia",
-    "tier": 5,
-    "order": 316,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "d45fe04a-7f04-4182-8e13-4f3de70788a4",
-    "exerciseName": "Supino Inclinado com Barra",
-    "tier": 5,
-    "order": 317,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "60e5760a-c34d-4749-8abd-707146b3c173",
-    "exerciseName": "Supino Reto com Halteres e Pegada Neutra",
-    "tier": 5,
-    "order": 318,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "05262dcc-461a-4f0d-8fa0-3c23f890aeeb",
-    "exerciseName": "Supino Inclinado com Halteres e Pegada Neutra",
-    "tier": 5,
-    "order": 319,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "57e56e35-826d-48de-898a-7a3bbaeef927",
-    "exerciseName": "Supino Reto Unilateral com Halter",
-    "tier": 5,
-    "order": 320,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "b87c1940-131a-4682-8c08-89a2194240de",
-    "exerciseName": "Supino Sentado no Cabo",
-    "tier": 5,
-    "order": 321,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "153b5672-d1fb-435a-885f-96de706bd5d9",
-    "exerciseName": "Supino Unilateral na Máquina",
-    "tier": 5,
-    "order": 322,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "8856e4c0-24ca-4522-807d-77b6b693da7d",
-    "exerciseName": "Crucifixo Inclinado com Halteres",
-    "tier": 5,
-    "order": 323,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "ac895f49-b850-4f5a-88e8-724b3c4d5dbf",
-    "exerciseName": "Crucifixo Declinado com Halteres",
-    "tier": 5,
-    "order": 324,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "dbe23d8a-2961-4579-85c4-75edaca7e304",
-    "exerciseName": "Crucifixo Reto no Cabo",
-    "tier": 5,
-    "order": 325,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "e5153e25-3c74-4471-8a04-54b1d738945b",
-    "exerciseName": "Crucifixo Inclinado no Cabo",
-    "tier": 5,
-    "order": 326,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "e186b5b1-8968-4302-87a1-6e782cbda592",
-    "exerciseName": "Crossover Unilateral na Polia Média",
-    "tier": 5,
-    "order": 327,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "1444333f-9fb0-4d74-843a-42b9480e5cfc",
-    "exerciseName": "Remada Curvada (Baixa) — Supinada",
-    "tier": 5,
-    "order": 328,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "d4ebcd94-81f7-48ea-85f5-2c50fd3017fd",
-    "exerciseName": "Remada Curvada com Halteres",
-    "tier": 5,
-    "order": 329,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "8e264eaa-4648-414a-8819-a5e82a08b98e",
-    "exerciseName": "Remada Curvada no Smith",
-    "tier": 5,
-    "order": 330,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "aae24196-1a55-4b56-8ece-7d8641c527c7",
-    "exerciseName": "Remada com Barra e Peito Apoiado",
-    "tier": 5,
-    "order": 331,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "7f95c7f6-bf42-4212-83f5-118c3be3489c",
-    "exerciseName": "Remada Baixa no Cabo com Barra e Pegada Supinada",
-    "tier": 5,
-    "order": 332,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "6524d22a-c735-43fd-866b-9bd7ca9c36b6",
-    "exerciseName": "Remada Baixa no Cabo com Corda",
-    "tier": 5,
-    "order": 333,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "de2be786-306b-489f-893d-32927c4c8104",
-    "exerciseName": "Remada Baixa Unilateral no Cabo",
-    "tier": 5,
-    "order": 334,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "28ba5821-9425-46dc-828f-1121b71bdc54",
-    "exerciseName": "Remada Cavalinho com Peito Apoiado",
-    "tier": 5,
-    "order": 335,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "3158cfe5-a5cc-454a-8e65-408e224821dc",
-    "exerciseName": "Puxada Frontal no Cabo com Triângulo",
-    "tier": 5,
-    "order": 336,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "c2fea3de-2db8-4c51-86d0-fa69e3dd33ed",
-    "exerciseName": "Puxada Frontal no Cabo com Pegada Pronada Aberta",
-    "tier": 5,
-    "order": 337,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "cf7b6604-3bc2-452f-84dc-3e4aff1f1554",
-    "exerciseName": "Puxada Frontal no Cabo com Pegada Pronada Fechada",
-    "tier": 5,
-    "order": 338,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "67ca3f6b-5999-48eb-8f50-8eeba3a99718",
-    "exerciseName": "Pulldown com Braços Estendidos no Cabo com Corda",
-    "tier": 5,
-    "order": 339,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "5ef1faac-fd97-4c5d-8908-1a7ea9038844",
-    "exerciseName": "Pulldown Unilateral com Braço Estendido no Cabo",
-    "tier": 5,
-    "order": 340,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "a2d9ce82-b1ba-4226-88a3-685882cecf04",
-    "exerciseName": "Pullover na Máquina",
-    "tier": 5,
-    "order": 341,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "f5463af1-5e09-4225-80a4-75e1f8142626",
-    "exerciseName": "Desenvolvimento Sentado com Barra",
-    "tier": 5,
-    "order": 342,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "d3b68768-5ba7-49c6-893a-cc525f412a36",
-    "exerciseName": "Desenvolvimento Sentado com Halteres e Pegada Neutra",
-    "tier": 5,
-    "order": 343,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "bd816af9-6962-4090-8ed2-b823dac3b22c",
-    "exerciseName": "Desenvolvimento Unilateral com Halter",
-    "tier": 5,
-    "order": 344,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "7f02567e-ffa6-476d-828b-b665fea59fd8",
-    "exerciseName": "Desenvolvimento Unilateral no Cabo",
-    "tier": 5,
-    "order": 345,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "25f7281a-ca21-499a-8ed0-494d71d724b1",
-    "exerciseName": "Elevação Lateral com Halteres",
-    "tier": 5,
-    "order": 346,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "4783cc8e-6eb6-4da7-8766-be5b41036a02",
-    "exerciseName": "Elevação Lateral Sentado com Halteres",
-    "tier": 5,
-    "order": 347,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "d28958b3-e4b5-4541-8f76-2b9fa139f998",
-    "exerciseName": "Elevação Lateral Unilateral no Cabo com Munhequeira",
-    "tier": 5,
-    "order": 348,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "54fc45df-ac17-48ae-8ea2-18f666a8e992",
-    "exerciseName": "Elevação Frontal com Barra",
-    "tier": 5,
-    "order": 349,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "b4734cc8-a7a4-4b34-89f6-095b98709a4e",
-    "exerciseName": "Elevação Frontal na Polia com Barra Reta",
-    "tier": 5,
-    "order": 350,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "76aac295-3bd9-4545-87bc-74510f8521dd",
-    "exerciseName": "Elevação Frontal na Polia com Corda",
-    "tier": 5,
-    "order": 351,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "a9a964fa-1896-4fc5-87e6-6295687cccbe",
-    "exerciseName": "Elevação Frontal Unilateral no Cabo",
-    "tier": 5,
-    "order": 352,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "a0c3fc44-584d-46cd-8ca3-e05b6322f169",
-    "exerciseName": "Crucifixo Inverso Unilateral no Cabo",
-    "tier": 5,
-    "order": 353,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "95a939a7-4772-4b65-8f22-ffb69f155818",
-    "exerciseName": "Encolhimento no Smith",
-    "tier": 5,
-    "order": 354,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "e42add13-60e7-4472-8a7e-35bbeb05439f",
-    "exerciseName": "Encolhimento no Cabo",
-    "tier": 5,
-    "order": 355,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "407cf54c-4d86-442b-828a-a08a8f4c1bc2",
-    "exerciseName": "Agachamento com Halteres",
-    "tier": 5,
-    "order": 356,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "562a9607-368f-4cb6-82ff-98626ad91f5b",
-    "exerciseName": "Agachamento Sumô com Barra",
-    "tier": 5,
-    "order": 357,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "c0099fa5-dc47-4277-8af9-e9e909782af2",
-    "exerciseName": "Agachamento Sumô no Smith",
-    "tier": 5,
-    "order": 358,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "acff5fdd-2936-4ee5-8455-8dda63f8d964",
-    "exerciseName": "Agachamento Búlgaro com Halteres",
-    "tier": 5,
-    "order": 359,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "c486f802-00b9-4aa4-8365-135fc77a4efb",
-    "exerciseName": "Agachamento Búlgaro com Barra",
-    "tier": 5,
-    "order": 360,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "8a509e18-1e7a-43f0-8f62-ffd5390284ac",
-    "exerciseName": "Agachamento Búlgaro no Smith",
-    "tier": 5,
-    "order": 361,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "6f56ae52-778c-4e80-84ed-8aeeb9de0fb6",
-    "exerciseName": "Afundo Estático com Barra",
-    "tier": 5,
-    "order": 362,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "9cfeba3b-0282-4560-87b9-566dce17db03",
-    "exerciseName": "Afundo Estático no Smith",
-    "tier": 5,
-    "order": 363,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "f54cf33d-cc08-429e-83a3-2be4590a1c5e",
-    "exerciseName": "Afundo Reverso com Barra",
-    "tier": 5,
-    "order": 364,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "a3fe2744-9f3d-4e46-819c-6da71dfa3f0e",
-    "exerciseName": "Afundo Reverso no Smith",
-    "tier": 5,
-    "order": 365,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "6f8b6049-c105-4504-8d7a-d5df61488b4e",
-    "exerciseName": "Avanço com Barra",
-    "tier": 5,
-    "order": 366,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "77874c34-9848-4448-8439-6c1f8b1adb73",
-    "exerciseName": "Step-up com Barra",
-    "tier": 5,
-    "order": 367,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "2ce3f212-8f40-493e-80b8-10900d3a45f5",
-    "exerciseName": "Step-up no Smith",
-    "tier": 5,
-    "order": 368,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "56cfa02e-dfa7-40b6-8b0a-8d3e23ba0202",
-    "exerciseName": "Stiff com Halteres",
-    "tier": 5,
-    "order": 369,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "76518f5e-2aaa-440f-8f06-73e75d7668b7",
-    "exerciseName": "Stiff no Smith",
-    "tier": 5,
-    "order": 370,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "2b5e1ea4-ae6b-4198-8909-f35bb2923339",
-    "exerciseName": "Levantamento Terra Romeno com Halteres",
-    "tier": 5,
-    "order": 371,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "6b8024e2-0472-4245-82b4-d66e4148db53",
-    "exerciseName": "Levantamento Terra Romeno no Smith",
-    "tier": 5,
-    "order": 372,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "de27f294-a664-423b-81da-dbd85a318c52",
-    "exerciseName": "Levantamento Terra Romeno Unilateral com Barra",
-    "tier": 5,
-    "order": 373,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "5c438236-2b03-4039-882a-16ab6dbb7c08",
-    "exerciseName": "Levantamento Terra Romeno Unilateral no Cabo",
-    "tier": 5,
-    "order": 374,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "0e876f56-b264-4c49-8253-c0e528ee11d5",
-    "exerciseName": "Good Morning no Smith",
-    "tier": 5,
-    "order": 375,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "266c42ff-bed0-4aa5-8ed5-c6bcc06eb643",
-    "exerciseName": "Cadeira Extensora Unilateral",
-    "tier": 5,
-    "order": 376,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "f71fe1b7-7471-4119-8648-2410dbde9748",
-    "exerciseName": "Extensão de Joelhos Unilateral no Cabo",
-    "tier": 5,
-    "order": 377,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "4c7bb65f-ab3d-4c79-8e1a-9351f3f38af0",
-    "exerciseName": "Cadeira Flexora Unilateral",
-    "tier": 5,
-    "order": 378,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "c8001351-5289-4571-8d89-a33de9d2d617",
-    "exerciseName": "Mesa Flexora Unilateral",
-    "tier": 5,
-    "order": 379,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "11928797-9c2e-4cf4-8ae6-e22bb2dcedca",
-    "exerciseName": "Flexão de Joelhos Unilateral no Cabo",
-    "tier": 5,
-    "order": 380,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "f54fd450-4b6c-4340-899a-269b8b264105",
-    "exerciseName": "Elevação Pélvica com Barra",
-    "tier": 5,
-    "order": 381,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "37145346-6a91-4833-83d4-f8bfa680594a",
-    "exerciseName": "Elevação Pélvica no Smith",
-    "tier": 5,
-    "order": 382,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "596a6263-cdbd-4b00-8b51-380208d934f5",
-    "exerciseName": "Elevação Pélvica na Máquina",
-    "tier": 5,
-    "order": 383,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "b632c129-4622-4927-8a7f-1c520c3cbe1d",
-    "exerciseName": "Elevação Pélvica com Halter",
-    "tier": 5,
-    "order": 384,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "07a6953c-9448-4041-8d70-796e30eb1820",
-    "exerciseName": "Ponte de Glúteos com Barra no Solo",
-    "tier": 5,
-    "order": 385,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "11756766-11ff-4116-8939-7ee10fb22c01",
-    "exerciseName": "Extensão de Quadril Unilateral na Máquina",
-    "tier": 5,
-    "order": 386,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "7ba73610-3331-45f5-8446-728875a4db94",
-    "exerciseName": "Extensão de Quadril Unilateral com Caneleira",
-    "tier": 5,
-    "order": 387,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "ca75ce5b-5071-4c1c-8cb9-f8cd018edd76",
-    "exerciseName": "Pull-through na Polia com Corda",
-    "tier": 5,
-    "order": 388,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "8ee46aac-dc93-42f5-8559-181000dc3357",
-    "exerciseName": "Abdução de Quadril Deitado com Caneleira",
-    "tier": 5,
-    "order": 389,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "75fcd52b-a156-439b-8b02-1ee065831e4e",
-    "exerciseName": "Abdução de Quadril em Pé com Miniband",
-    "tier": 5,
-    "order": 390,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "7c54719b-6029-40d1-8107-48e533c9298c",
-    "exerciseName": "Adução de Quadril Deitado com Caneleira",
-    "tier": 5,
-    "order": 391,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "518d8901-b7bd-439f-8e17-713403bf89c8",
-    "exerciseName": "Panturrilha em Pé no Smith",
-    "tier": 5,
-    "order": 392,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "34b634c3-ee55-4e83-8f5f-56a33a8cc77d",
-    "exerciseName": "Panturrilha em Pé com Halteres",
-    "tier": 5,
-    "order": 393,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "996b4399-febe-44ac-8734-8f1b924943b5",
-    "exerciseName": "Panturrilha Sentado com Halteres",
-    "tier": 5,
-    "order": 394,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "0e0c119f-12d2-4026-8e56-0b3dc7f49e54",
-    "exerciseName": "Panturrilha Unilateral no Leg Press",
-    "tier": 5,
-    "order": 395,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "026f8dcf-4868-4ac3-8548-60e80789c928",
-    "exerciseName": "Panturrilha Unilateral Sentado",
-    "tier": 5,
-    "order": 396,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "ba767a64-d2b5-4a15-8ab1-bb85e0cd3fe3",
-    "exerciseName": "Abdominal Crunch com Peso no Peito",
-    "tier": 5,
-    "order": 397,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "99246a58-d732-4f34-89f1-59bcd3fb4eb4",
-    "exerciseName": "Abdominal Crunch na Bola Suíça",
-    "tier": 5,
-    "order": 398,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "3502ac49-c62d-4756-8a5f-7f0474357e36",
-    "exerciseName": "Pallof Press Unilateral com Elástico",
-    "tier": 5,
-    "order": 399,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "1823cd69-49ae-4684-8802-0e80dd6c5dc9",
-    "exerciseName": "Woodchop no Cabo Baixo",
-    "tier": 5,
-    "order": 400,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
-    "exerciseId": "034f7921-ff02-4df5-8652-625247c0d241",
-    "exerciseName": "Prancha Ventral com Antebraços na Bola Suíça",
-    "tier": 5,
-    "order": 401,
-    "batch": "Variações de equipamento — cadastro",
-    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
-  },
-  {
     "exerciseId": "7f249b6a-85ad-45ca-9147-6cfa712547c7",
     "exerciseName": "Remada Curvada (Alta) — Pronada",
     "tier": 2,
-    "order": 402,
+    "order": 149,
     "batch": "Revis?o de remadas e esc?pulas",
     "reason": "Varia??o expl?cita ao peito com cotovelos abertos, distinta da remada ao abd?men."
   },
@@ -3219,7 +1195,7 @@
     "exerciseId": "92a8b19e-86b5-47ea-91d1-529fab4ab05c",
     "exerciseName": "Remada Curvada (Alta) — Supinada",
     "tier": 2,
-    "order": 403,
+    "order": 150,
     "batch": "Revisão de remadas — trajetórias anatômicas",
     "reason": "Variação com identidade, trajetória, postura e pegada próprias."
   },
@@ -3227,7 +1203,7 @@
     "exerciseId": "bb4607b8-c89b-4d22-bf59-1edf55c2ee77",
     "exerciseName": "Remada Yates — Pronada",
     "tier": 2,
-    "order": 404,
+    "order": 151,
     "batch": "Revisão de remadas — trajetórias anatômicas",
     "reason": "Variação com identidade, trajetória, postura e pegada próprias."
   },
@@ -3235,8 +1211,2032 @@
     "exerciseId": "824b6099-a3d9-41f9-bf52-d29587393c85",
     "exerciseName": "Remada Yates — Supinada",
     "tier": 2,
-    "order": 405,
+    "order": 152,
     "batch": "Revisão de remadas — trajetórias anatômicas",
     "reason": "Variação com identidade, trajetória, postura e pegada próprias."
+  },
+  {
+    "exerciseId": "c9bbf500-c289-441e-8162-afef74d25237",
+    "exerciseName": "Desenvolvimento Unilateral no Landmine — alias: single-arm landmine press",
+    "tier": 3,
+    "order": 153,
+    "batch": "Landmine: fundamentos",
+    "reason": "Introduzir piv? da barra e trajet?rias do landmine antes de rota??es explosivas e movimentos combinados."
+  },
+  {
+    "exerciseId": "ef1e3395-5f08-4c95-82ac-1a2bc5e099d1",
+    "exerciseName": "Desenvolvimento Bilateral no Landmine",
+    "tier": 3,
+    "order": 154,
+    "batch": "Landmine: fundamentos",
+    "reason": "Introduzir piv? da barra e trajet?rias do landmine antes de rota??es explosivas e movimentos combinados."
+  },
+  {
+    "exerciseId": "26e45901-2ccc-46df-8188-cd3503830860",
+    "exerciseName": "Desenvolvimento Unilateral Meio-Ajoelhado no Landmine",
+    "tier": 3,
+    "order": 155,
+    "batch": "Landmine: fundamentos",
+    "reason": "Introduzir piv? da barra e trajet?rias do landmine antes de rota??es explosivas e movimentos combinados."
+  },
+  {
+    "exerciseId": "566f3759-b346-4a4e-80b2-29618cda6dd1",
+    "exerciseName": "Agachamento no Landmine",
+    "tier": 3,
+    "order": 156,
+    "batch": "Landmine: fundamentos",
+    "reason": "Introduzir piv? da barra e trajet?rias do landmine antes de rota??es explosivas e movimentos combinados."
+  },
+  {
+    "exerciseId": "3e962d98-1b67-4280-899f-d965e3c1e257",
+    "exerciseName": "Remada Unilateral no Landmine",
+    "tier": 3,
+    "order": 157,
+    "batch": "Landmine: fundamentos",
+    "reason": "Introduzir piv? da barra e trajet?rias do landmine antes de rota??es explosivas e movimentos combinados."
+  },
+  {
+    "exerciseId": "6f49e547-9500-4888-8b46-09736d07a169",
+    "exerciseName": "Remada Meadows",
+    "tier": 3,
+    "order": 158,
+    "batch": "Landmine: fundamentos",
+    "reason": "Introduzir piv? da barra e trajet?rias do landmine antes de rota??es explosivas e movimentos combinados."
+  },
+  {
+    "exerciseId": "efa5ed74-0b27-4f99-89db-0546048b6b62",
+    "exerciseName": "Levantamento Terra no Landmine",
+    "tier": 3,
+    "order": 159,
+    "batch": "Landmine: fundamentos",
+    "reason": "Introduzir piv? da barra e trajet?rias do landmine antes de rota??es explosivas e movimentos combinados."
+  },
+  {
+    "exerciseId": "52b75b53-d5d9-4c4c-8929-aa6dece24b0d",
+    "exerciseName": "Anti-Rotação no Landmine",
+    "tier": 3,
+    "order": 160,
+    "batch": "Landmine: fundamentos",
+    "reason": "Introduzir piv? da barra e trajet?rias do landmine antes de rota??es explosivas e movimentos combinados."
+  },
+  {
+    "exerciseId": "e3f4caca-9f77-4e1b-8388-a84e51e96474",
+    "exerciseName": "Farmer Carry com Halteres",
+    "tier": 3,
+    "order": 161,
+    "batch": "Transportes e condicionamento",
+    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
+  },
+  {
+    "exerciseId": "85c4058a-918d-4934-8c31-5383ac68b765",
+    "exerciseName": "Suitcase Carry com Halter",
+    "tier": 3,
+    "order": 162,
+    "batch": "Transportes e condicionamento",
+    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
+  },
+  {
+    "exerciseId": "b36d7169-2020-46fb-8394-b1b8db2a5b86",
+    "exerciseName": "Front Rack Carry com Kettlebells",
+    "tier": 3,
+    "order": 163,
+    "batch": "Transportes e condicionamento",
+    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
+  },
+  {
+    "exerciseId": "fe2d1f67-ec85-46bc-8d0b-0c3611adefca",
+    "exerciseName": "Overhead Carry Unilateral",
+    "tier": 3,
+    "order": 164,
+    "batch": "Transportes e condicionamento",
+    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
+  },
+  {
+    "exerciseId": "cbc95d73-bdd6-4573-8d90-65c9dd256f62",
+    "exerciseName": "Empurrar Trenó",
+    "tier": 3,
+    "order": 165,
+    "batch": "Transportes e condicionamento",
+    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
+  },
+  {
+    "exerciseId": "28086afd-b431-453b-80f3-cca10db500a9",
+    "exerciseName": "Puxar Trenó Caminhando para Trás",
+    "tier": 3,
+    "order": 166,
+    "batch": "Transportes e condicionamento",
+    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
+  },
+  {
+    "exerciseId": "22de6ad2-4b31-4de1-8bc1-e3591b4af04c",
+    "exerciseName": "Remo no Ergômetro",
+    "tier": 3,
+    "order": 167,
+    "batch": "Transportes e condicionamento",
+    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
+  },
+  {
+    "exerciseId": "5a6c9f8a-7c11-40cf-80de-c6cd688bce32",
+    "exerciseName": "Bicicleta de Ar — alias: air bike",
+    "tier": 3,
+    "order": 168,
+    "batch": "Transportes e condicionamento",
+    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
+  },
+  {
+    "exerciseId": "ad10fe8f-b3c9-4b0a-83e5-d8aa6d82073f",
+    "exerciseName": "SkiErg",
+    "tier": 3,
+    "order": 169,
+    "batch": "Transportes e condicionamento",
+    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
+  },
+  {
+    "exerciseId": "86df7d73-c743-476e-8d46-719b916e17a9",
+    "exerciseName": "Corrida",
+    "tier": 3,
+    "order": 170,
+    "batch": "Transportes e condicionamento",
+    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
+  },
+  {
+    "exerciseId": "347a52f4-0233-4073-8d79-d01cfd6616d0",
+    "exerciseName": "Sprint",
+    "tier": 3,
+    "order": 171,
+    "batch": "Transportes e condicionamento",
+    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
+  },
+  {
+    "exerciseId": "ea1f87ba-f5c3-4c14-8ca3-670d4fb32c9b",
+    "exerciseName": "Corrida de Ida e Volta — alias: shuttle run",
+    "tier": 3,
+    "order": 172,
+    "batch": "Transportes e condicionamento",
+    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
+  },
+  {
+    "exerciseId": "d5231b45-3579-4418-85dd-dc44d8b9d2a9",
+    "exerciseName": "Pular Corda com Giro Simples — alias: single-under",
+    "tier": 3,
+    "order": 173,
+    "batch": "Transportes e condicionamento",
+    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
+  },
+  {
+    "exerciseId": "d8d95580-5871-4fa7-83b2-f85d353e1f4c",
+    "exerciseName": "Battle Rope com Ondas Alternadas",
+    "tier": 3,
+    "order": 174,
+    "batch": "Transportes e condicionamento",
+    "reason": "Criar marcha, ciclos cont?nuos e contato com implementos; ampliar cobertura funcional sem come?ar por acrobacias."
+  },
+  {
+    "exerciseId": "4a26d043-9e3e-4e16-891f-3e291bfed19e",
+    "exerciseName": "Kettlebell Swing até a Altura dos Ombros — alias: Russian swing",
+    "tier": 3,
+    "order": 175,
+    "batch": "Kettlebell e halteres: bases",
+    "reason": "Criar balan?o, transfer?ncia de carga e movimentos din?micos b?sicos antes de snatches e transi??es complexas."
+  },
+  {
+    "exerciseId": "4cca654e-e0cd-4d90-84be-053cab9e661b",
+    "exerciseName": "Kettlebell Swing Unilateral",
+    "tier": 3,
+    "order": 176,
+    "batch": "Kettlebell e halteres: bases",
+    "reason": "Criar balan?o, transfer?ncia de carga e movimentos din?micos b?sicos antes de snatches e transi??es complexas."
+  },
+  {
+    "exerciseId": "83b94d1b-77c7-4b0c-8881-7dc9974770b2",
+    "exerciseName": "Kettlebell Push Press Unilateral",
+    "tier": 3,
+    "order": 177,
+    "batch": "Kettlebell e halteres: bases",
+    "reason": "Criar balan?o, transfer?ncia de carga e movimentos din?micos b?sicos antes de snatches e transi??es complexas."
+  },
+  {
+    "exerciseId": "726bc1a0-a83d-4262-8898-791709f8c01f",
+    "exerciseName": "Push Press com Halteres",
+    "tier": 3,
+    "order": 178,
+    "batch": "Kettlebell e halteres: bases",
+    "reason": "Criar balan?o, transfer?ncia de carga e movimentos din?micos b?sicos antes de snatches e transi??es complexas."
+  },
+  {
+    "exerciseId": "5d74502e-8955-44ec-8e58-455dc39c8b1b",
+    "exerciseName": "Thruster com Barra",
+    "tier": 3,
+    "order": 179,
+    "batch": "Kettlebell e halteres: bases",
+    "reason": "Criar balan?o, transfer?ncia de carga e movimentos din?micos b?sicos antes de snatches e transi??es complexas."
+  },
+  {
+    "exerciseId": "f88b41e8-2d6e-4042-895a-e57c803401d2",
+    "exerciseName": "Thruster com Halteres",
+    "tier": 3,
+    "order": 180,
+    "batch": "Kettlebell e halteres: bases",
+    "reason": "Criar balan?o, transfer?ncia de carga e movimentos din?micos b?sicos antes de snatches e transi??es complexas."
+  },
+  {
+    "exerciseId": "42e439e0-6eca-416c-8d33-4bfa8d48ac36",
+    "exerciseName": "Remada Renegade com Halteres",
+    "tier": 3,
+    "order": 181,
+    "batch": "Kettlebell e halteres: bases",
+    "reason": "Criar balan?o, transfer?ncia de carga e movimentos din?micos b?sicos antes de snatches e transi??es complexas."
+  },
+  {
+    "exerciseId": "2c1657df-13fa-4644-82e3-11a17bc6cb9d",
+    "exerciseName": "Pogo Jump Bilateral",
+    "tier": 4,
+    "order": 182,
+    "batch": "Saltos: apoios e aterrissagem",
+    "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
+  },
+  {
+    "exerciseId": "5ec972bc-f8a0-47fd-8789-b9363ea28b84",
+    "exerciseName": "Salto Vertical com Contramovimento",
+    "tier": 4,
+    "order": 183,
+    "batch": "Saltos: apoios e aterrissagem",
+    "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
+  },
+  {
+    "exerciseId": "28893c38-900f-4518-844f-93471a3e0f0c",
+    "exerciseName": "Salto Vertical Partindo de Agachamento — alias: squat jump",
+    "tier": 4,
+    "order": 184,
+    "batch": "Saltos: apoios e aterrissagem",
+    "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
+  },
+  {
+    "exerciseId": "9d2667b4-14cc-4e63-8d4f-5a4757aaad74",
+    "exerciseName": "Salto Horizontal Parado — alias: standing broad jump",
+    "tier": 4,
+    "order": 185,
+    "batch": "Saltos: apoios e aterrissagem",
+    "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
+  },
+  {
+    "exerciseId": "c4ad50ca-6df3-4b61-83f0-02538c1507df",
+    "exerciseName": "Drop Landing — queda da caixa com estabilização",
+    "tier": 4,
+    "order": 186,
+    "batch": "Saltos: apoios e aterrissagem",
+    "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
+  },
+  {
+    "exerciseId": "87ef0649-841a-42c5-88c5-ae9447173c43",
+    "exerciseName": "Salto na Caixa — alias: box jump",
+    "tier": 4,
+    "order": 187,
+    "batch": "Saltos: apoios e aterrissagem",
+    "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
+  },
+  {
+    "exerciseId": "fc13b372-4454-459c-8cef-8e2242a23ebd",
+    "exerciseName": "Pogo Jump Unilateral",
+    "tier": 4,
+    "order": 188,
+    "batch": "Saltos: apoios e aterrissagem",
+    "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
+  },
+  {
+    "exerciseId": "78501398-5301-4325-8b2a-085c035b870e",
+    "exerciseName": "Salto Lateral Alternado — alias: skater jump",
+    "tier": 4,
+    "order": 189,
+    "batch": "Saltos: apoios e aterrissagem",
+    "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
+  },
+  {
+    "exerciseId": "67b27d44-92d8-4c58-8533-98967f89c92b",
+    "exerciseName": "Salto Unilateral para Frente",
+    "tier": 4,
+    "order": 190,
+    "batch": "Saltos: apoios e aterrissagem",
+    "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
+  },
+  {
+    "exerciseId": "1aad0068-09c5-4f78-8e4d-38343326fa91",
+    "exerciseName": "Saltos Alternados em Afundo — alias: split squat jump",
+    "tier": 4,
+    "order": 191,
+    "batch": "Saltos: apoios e aterrissagem",
+    "reason": "Validar sa?da do solo, fase a?rea e aterrissagem primeiro; somente depois derivar saltos reativos e unilaterais."
+  },
+  {
+    "exerciseId": "b79bd93b-72a4-443f-8c56-ebeee69d9d04",
+    "exerciseName": "Arremesso de Peito com Medicine Ball na Parede",
+    "tier": 4,
+    "order": 192,
+    "batch": "Bolas e pot?ncia",
+    "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
+  },
+  {
+    "exerciseId": "2d1fa957-9027-436f-8910-3c6f947a4fc1",
+    "exerciseName": "Arremesso de Peito Sentado com Medicine Ball",
+    "tier": 4,
+    "order": 193,
+    "batch": "Bolas e pot?ncia",
+    "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
+  },
+  {
+    "exerciseId": "5b198859-1552-48f7-81d5-ad176ffbb367",
+    "exerciseName": "Slam Ball no Solo",
+    "tier": 4,
+    "order": 194,
+    "batch": "Bolas e pot?ncia",
+    "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
+  },
+  {
+    "exerciseId": "cabc544c-fd0e-41f2-83b0-168605cd36b8",
+    "exerciseName": "Wall Ball — agachamento com lançamento da bola ao alvo",
+    "tier": 4,
+    "order": 195,
+    "batch": "Bolas e pot?ncia",
+    "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
+  },
+  {
+    "exerciseId": "1d432b5a-29b4-4d71-847a-2608f6650fda",
+    "exerciseName": "Clean com Medicine Ball",
+    "tier": 4,
+    "order": 196,
+    "batch": "Bolas e pot?ncia",
+    "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
+  },
+  {
+    "exerciseId": "da6137b3-c773-43f7-8b7c-fb0fbf2609b3",
+    "exerciseName": "Arremesso Rotacional de Medicine Ball na Parede",
+    "tier": 4,
+    "order": 197,
+    "batch": "Bolas e pot?ncia",
+    "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
+  },
+  {
+    "exerciseId": "bda3b4e0-4244-4010-83e6-ac5841b228d2",
+    "exerciseName": "Arremesso de Medicine Ball Acima da Cabeça para Frente",
+    "tier": 4,
+    "order": 198,
+    "batch": "Bolas e pot?ncia",
+    "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
+  },
+  {
+    "exerciseId": "1b833278-06be-4ad0-831a-e87c85564521",
+    "exerciseName": "Arremesso de Medicine Ball para Trás Acima da Cabeça",
+    "tier": 4,
+    "order": 199,
+    "batch": "Bolas e pot?ncia",
+    "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
+  },
+  {
+    "exerciseId": "0d3c8197-f719-4a93-8545-f00c52cec1a6",
+    "exerciseName": "Slam Ball Rotacional",
+    "tier": 4,
+    "order": 200,
+    "batch": "Bolas e pot?ncia",
+    "reason": "Implementar soltura e trajet?ria da bola, alvo e retorno; cada lan?amento recebe coordena??o pr?pria."
+  },
+  {
+    "exerciseId": "8bdde5b9-d201-40ab-8198-3ac1fe77d63c",
+    "exerciseName": "Push Press Unilateral no Landmine",
+    "tier": 4,
+    "order": 201,
+    "batch": "Landmine: movimentos combinados",
+    "reason": "Combinar as bases aprovadas de landmine com impulso, rota??o e afundo sem reutilizar poses incompat?veis."
+  },
+  {
+    "exerciseId": "37d17ee5-4fcd-45a0-8bd9-037a2c5f97bd",
+    "exerciseName": "Press Rotacional Unilateral no Landmine",
+    "tier": 4,
+    "order": 202,
+    "batch": "Landmine: movimentos combinados",
+    "reason": "Combinar as bases aprovadas de landmine com impulso, rota??o e afundo sem reutilizar poses incompat?veis."
+  },
+  {
+    "exerciseId": "45f82445-d2c4-4a74-858e-1b00f0fa178f",
+    "exerciseName": "Agachamento com Press no Landmine",
+    "tier": 4,
+    "order": 203,
+    "batch": "Landmine: movimentos combinados",
+    "reason": "Combinar as bases aprovadas de landmine com impulso, rota??o e afundo sem reutilizar poses incompat?veis."
+  },
+  {
+    "exerciseId": "eef396ad-8271-463d-844a-a7023f64bd8e",
+    "exerciseName": "Afundo Reverso com Press Unilateral no Landmine",
+    "tier": 4,
+    "order": 204,
+    "batch": "Landmine: movimentos combinados",
+    "reason": "Combinar as bases aprovadas de landmine com impulso, rota??o e afundo sem reutilizar poses incompat?veis."
+  },
+  {
+    "exerciseId": "8a0fa5b8-e102-4a6c-85c5-7a666d027296",
+    "exerciseName": "Overhead Squat",
+    "tier": 4,
+    "order": 205,
+    "batch": "LPO: prepara??o e movimentos principais",
+    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
+  },
+  {
+    "exerciseId": "8b10ad1c-4bb1-44ed-8d89-b916185451a3",
+    "exerciseName": "Clean Deadlift",
+    "tier": 4,
+    "order": 206,
+    "batch": "LPO: prepara??o e movimentos principais",
+    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
+  },
+  {
+    "exerciseId": "4fb4e4e6-e685-4a72-8da4-9af02ce80afd",
+    "exerciseName": "Clean Pull",
+    "tier": 4,
+    "order": 207,
+    "batch": "LPO: prepara??o e movimentos principais",
+    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
+  },
+  {
+    "exerciseId": "e94df5cc-688c-4894-8651-26bd0b7cd729",
+    "exerciseName": "Clean High Pull",
+    "tier": 4,
+    "order": 208,
+    "batch": "LPO: prepara??o e movimentos principais",
+    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
+  },
+  {
+    "exerciseId": "f3f156f0-523e-45d9-83e8-026e8299292e",
+    "exerciseName": "Muscle Clean",
+    "tier": 4,
+    "order": 209,
+    "batch": "LPO: prepara??o e movimentos principais",
+    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
+  },
+  {
+    "exerciseId": "1b7764ca-1826-488e-8734-fc88117ed9dd",
+    "exerciseName": "Hang Power Clean",
+    "tier": 4,
+    "order": 210,
+    "batch": "LPO: prepara??o e movimentos principais",
+    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
+  },
+  {
+    "exerciseId": "828d2135-37b8-4e03-8936-1554e4b3e99f",
+    "exerciseName": "Power Clean",
+    "tier": 4,
+    "order": 211,
+    "batch": "LPO: prepara??o e movimentos principais",
+    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
+  },
+  {
+    "exerciseId": "ee45732c-628c-4cb9-8386-b0a58b682fb1",
+    "exerciseName": "Clean — aliases: squat clean, full clean",
+    "tier": 4,
+    "order": 212,
+    "batch": "LPO: prepara??o e movimentos principais",
+    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
+  },
+  {
+    "exerciseId": "c7b1bd07-08d9-4794-8588-0534a607ae50",
+    "exerciseName": "Hang Clean",
+    "tier": 4,
+    "order": 213,
+    "batch": "LPO: prepara??o e movimentos principais",
+    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
+  },
+  {
+    "exerciseId": "3f008308-7990-4c42-8008-56916d3be09e",
+    "exerciseName": "Push Press com Barra",
+    "tier": 4,
+    "order": 214,
+    "batch": "LPO: prepara??o e movimentos principais",
+    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
+  },
+  {
+    "exerciseId": "ac8f7416-2631-427d-8368-d974889c1d14",
+    "exerciseName": "Jerk Dip",
+    "tier": 4,
+    "order": 215,
+    "batch": "LPO: prepara??o e movimentos principais",
+    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
+  },
+  {
+    "exerciseId": "1ad5f03c-0d81-4d28-8d0c-060726c06fb6",
+    "exerciseName": "Jerk Drive",
+    "tier": 4,
+    "order": 216,
+    "batch": "LPO: prepara??o e movimentos principais",
+    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
+  },
+  {
+    "exerciseId": "e5c85899-146d-49f8-8673-5c1c4e04eace",
+    "exerciseName": "Push Jerk",
+    "tier": 4,
+    "order": 217,
+    "batch": "LPO: prepara??o e movimentos principais",
+    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
+  },
+  {
+    "exerciseId": "a1a03a80-fdfe-4d0d-87ca-7b7a3d1b0a60",
+    "exerciseName": "Split Jerk",
+    "tier": 4,
+    "order": 218,
+    "batch": "LPO: prepara??o e movimentos principais",
+    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
+  },
+  {
+    "exerciseId": "c5443faf-a2b5-4ec7-8879-c6b1d38136e5",
+    "exerciseName": "Snatch Deadlift",
+    "tier": 4,
+    "order": 219,
+    "batch": "LPO: prepara??o e movimentos principais",
+    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
+  },
+  {
+    "exerciseId": "0dd16782-2671-4d6e-8cc8-7fa516b7a4c8",
+    "exerciseName": "Snatch Pull",
+    "tier": 4,
+    "order": 220,
+    "batch": "LPO: prepara??o e movimentos principais",
+    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
+  },
+  {
+    "exerciseId": "30dc93d6-27a3-4a69-81e4-c936412ce6a0",
+    "exerciseName": "Snatch High Pull",
+    "tier": 4,
+    "order": 221,
+    "batch": "LPO: prepara??o e movimentos principais",
+    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
+  },
+  {
+    "exerciseId": "67697db2-773d-4120-8305-ffc5c2179f31",
+    "exerciseName": "Muscle Snatch",
+    "tier": 4,
+    "order": 222,
+    "batch": "LPO: prepara??o e movimentos principais",
+    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
+  },
+  {
+    "exerciseId": "839f3abf-c126-4b5d-82f2-bcd3f5eea73c",
+    "exerciseName": "Hang Power Snatch",
+    "tier": 4,
+    "order": 223,
+    "batch": "LPO: prepara??o e movimentos principais",
+    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
+  },
+  {
+    "exerciseId": "4b5a6860-b5e5-4a5f-81db-ed2ffa42b8d0",
+    "exerciseName": "Power Snatch",
+    "tier": 4,
+    "order": 224,
+    "batch": "LPO: prepara??o e movimentos principais",
+    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
+  },
+  {
+    "exerciseId": "1c9d749e-bcdc-46ef-8c61-8f6c62495ad3",
+    "exerciseName": "Snatch — aliases: squat snatch, full snatch",
+    "tier": 4,
+    "order": 225,
+    "batch": "LPO: prepara??o e movimentos principais",
+    "reason": "Construir posi??es e puxadas antes de recep??es, giros da barra e encaixes; power clean e clean completo t?m recep??es distintas."
+  },
+  {
+    "exerciseId": "1fd318ce-de48-455a-8e0a-e2ab9c45681e",
+    "exerciseName": "Kettlebell Swing Acima da Cabeça — alias: American swing",
+    "tier": 4,
+    "order": 226,
+    "batch": "Funcional: transi??es e implementos",
+    "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
+  },
+  {
+    "exerciseId": "7a2d55db-be0a-4318-8978-92d32d01c1e7",
+    "exerciseName": "Kettlebell Clean Unilateral",
+    "tier": 4,
+    "order": 227,
+    "batch": "Funcional: transi??es e implementos",
+    "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
+  },
+  {
+    "exerciseId": "e70bbf0e-80d4-40ea-888c-8e0358c927ef",
+    "exerciseName": "Power Clean com Halteres",
+    "tier": 4,
+    "order": 228,
+    "batch": "Funcional: transi??es e implementos",
+    "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
+  },
+  {
+    "exerciseId": "1c57981e-05f6-498b-8975-2679a3c85d35",
+    "exerciseName": "Hang Power Clean com Halteres",
+    "tier": 4,
+    "order": 229,
+    "batch": "Funcional: transi??es e implementos",
+    "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
+  },
+  {
+    "exerciseId": "4291abd4-8b68-4b19-8223-27b5e9f2b4e8",
+    "exerciseName": "Snatch Unilateral com Halter",
+    "tier": 4,
+    "order": 230,
+    "batch": "Funcional: transi??es e implementos",
+    "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
+  },
+  {
+    "exerciseId": "59be040d-c5ed-45bb-82c0-b8369829e019",
+    "exerciseName": "Burpee",
+    "tier": 4,
+    "order": 231,
+    "batch": "Funcional: transi??es e implementos",
+    "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
+  },
+  {
+    "exerciseId": "cfd75a15-4513-4f01-89a6-5fbd8ecd1574",
+    "exerciseName": "Burpee sobre a Barra",
+    "tier": 4,
+    "order": 232,
+    "batch": "Funcional: transi??es e implementos",
+    "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
+  },
+  {
+    "exerciseId": "e63a558c-89d0-44ba-80ab-fdd2f3459092",
+    "exerciseName": "Remada nas Argolas",
+    "tier": 4,
+    "order": 233,
+    "batch": "Funcional: transi??es e implementos",
+    "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
+  },
+  {
+    "exerciseId": "9800a359-b8c3-4b4a-86d2-2e62a20b1d50",
+    "exerciseName": "Paralelas nas Argolas",
+    "tier": 4,
+    "order": 234,
+    "batch": "Funcional: transi??es e implementos",
+    "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
+  },
+  {
+    "exerciseId": "270f8e74-11d1-4cfd-8219-98dbd47ff372",
+    "exerciseName": "Flexão de Braços nas Argolas",
+    "tier": 4,
+    "order": 235,
+    "batch": "Funcional: transi??es e implementos",
+    "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
+  },
+  {
+    "exerciseId": "8d74b7a0-243a-42fd-8755-e984a7c62b22",
+    "exerciseName": "Pistol Squat",
+    "tier": 4,
+    "order": 236,
+    "batch": "Funcional: transi??es e implementos",
+    "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
+  },
+  {
+    "exerciseId": "216cde22-ddf3-4f36-88ae-6ee918e2d221",
+    "exerciseName": "L-Sit nas Paralelas",
+    "tier": 4,
+    "order": 237,
+    "batch": "Funcional: transi??es e implementos",
+    "reason": "Expandir bases din?micas aprovadas com transi??es no solo e coordena??o com halteres e kettlebells."
+  },
+  {
+    "exerciseId": "90c19acb-1cfd-4da3-8a68-ac452ba58e5a",
+    "exerciseName": "Saltos Horizontais Consecutivos",
+    "tier": 5,
+    "order": 238,
+    "batch": "Saltos reativos e sequ?ncias",
+    "reason": "Exigem revis?o adicional de contatos sucessivos, obst?culos e aterrissagens; dependem das bases de salto."
+  },
+  {
+    "exerciseId": "97da65a9-0008-45a9-8779-865ae03c2a33",
+    "exerciseName": "Salto por Cima da Caixa — alias: box jump-over",
+    "tier": 5,
+    "order": 239,
+    "batch": "Saltos reativos e sequ?ncias",
+    "reason": "Exigem revis?o adicional de contatos sucessivos, obst?culos e aterrissagens; dependem das bases de salto."
+  },
+  {
+    "exerciseId": "f2d4ada3-9397-4a5e-8939-9573a52e2961",
+    "exerciseName": "Salto Lateral sobre Obstáculo",
+    "tier": 5,
+    "order": 240,
+    "batch": "Saltos reativos e sequ?ncias",
+    "reason": "Exigem revis?o adicional de contatos sucessivos, obst?culos e aterrissagens; dependem das bases de salto."
+  },
+  {
+    "exerciseId": "a4cefb4f-37cf-4489-8343-c56af23bbfa8",
+    "exerciseName": "Saltos sobre Barreiras",
+    "tier": 5,
+    "order": 241,
+    "batch": "Saltos reativos e sequ?ncias",
+    "reason": "Exigem revis?o adicional de contatos sucessivos, obst?culos e aterrissagens; dependem das bases de salto."
+  },
+  {
+    "exerciseId": "a1df9269-072d-411b-81b8-4197aa4a84c8",
+    "exerciseName": "Depth Jump — queda da caixa seguida de salto",
+    "tier": 5,
+    "order": 242,
+    "batch": "Saltos reativos e sequ?ncias",
+    "reason": "Exigem revis?o adicional de contatos sucessivos, obst?culos e aterrissagens; dependem das bases de salto."
+  },
+  {
+    "exerciseId": "5e4d8fc5-7566-41da-8589-7c4d90076292",
+    "exerciseName": "Flexão Pliométrica",
+    "tier": 5,
+    "order": 243,
+    "batch": "Saltos reativos e sequ?ncias",
+    "reason": "Exigem revis?o adicional de contatos sucessivos, obst?culos e aterrissagens; dependem das bases de salto."
+  },
+  {
+    "exerciseId": "625a2d84-4a60-4342-848a-bb176c4370df",
+    "exerciseName": "Clean a Partir de Blocos",
+    "tier": 5,
+    "order": 244,
+    "batch": "LPO: varia??es t?cnicas e complexos",
+    "reason": "Adicionar varia??es t?cnicas ap?s validar movimentos principais e suas recep??es; coordenar m?ltiplas fases sem deformar anatomia."
+  },
+  {
+    "exerciseId": "214278a7-0fb9-4657-8774-73203eb7a0ab",
+    "exerciseName": "Tall Clean",
+    "tier": 5,
+    "order": 245,
+    "batch": "LPO: varia??es t?cnicas e complexos",
+    "reason": "Adicionar varia??es t?cnicas ap?s validar movimentos principais e suas recep??es; coordenar m?ltiplas fases sem deformar anatomia."
+  },
+  {
+    "exerciseId": "d8ccf56a-3e42-4deb-8744-61a7bdba6a7a",
+    "exerciseName": "Hang Snatch",
+    "tier": 5,
+    "order": 246,
+    "batch": "LPO: varia??es t?cnicas e complexos",
+    "reason": "Adicionar varia??es t?cnicas ap?s validar movimentos principais e suas recep??es; coordenar m?ltiplas fases sem deformar anatomia."
+  },
+  {
+    "exerciseId": "e0f5d67f-493e-4352-834a-456560ecca2b",
+    "exerciseName": "Snatch a Partir de Blocos",
+    "tier": 5,
+    "order": 247,
+    "batch": "LPO: varia??es t?cnicas e complexos",
+    "reason": "Adicionar varia??es t?cnicas ap?s validar movimentos principais e suas recep??es; coordenar m?ltiplas fases sem deformar anatomia."
+  },
+  {
+    "exerciseId": "88bd42c5-11d8-41cd-87e3-409c005751e4",
+    "exerciseName": "Tall Snatch",
+    "tier": 5,
+    "order": 248,
+    "batch": "LPO: varia??es t?cnicas e complexos",
+    "reason": "Adicionar varia??es t?cnicas ap?s validar movimentos principais e suas recep??es; coordenar m?ltiplas fases sem deformar anatomia."
+  },
+  {
+    "exerciseId": "708862bf-1e56-437b-8ef8-fff5c581fdde",
+    "exerciseName": "Snatch Balance",
+    "tier": 5,
+    "order": 249,
+    "batch": "LPO: varia??es t?cnicas e complexos",
+    "reason": "Adicionar varia??es t?cnicas ap?s validar movimentos principais e suas recep??es; coordenar m?ltiplas fases sem deformar anatomia."
+  },
+  {
+    "exerciseId": "82e5d50e-7651-4f1c-88a4-424ad0354896",
+    "exerciseName": "Squat Jerk",
+    "tier": 5,
+    "order": 250,
+    "batch": "LPO: varia??es t?cnicas e complexos",
+    "reason": "Adicionar varia??es t?cnicas ap?s validar movimentos principais e suas recep??es; coordenar m?ltiplas fases sem deformar anatomia."
+  },
+  {
+    "exerciseId": "8b4a7da1-fc99-46b6-82ce-22b7f575d709",
+    "exerciseName": "Clean and Jerk",
+    "tier": 5,
+    "order": 251,
+    "batch": "LPO: varia??es t?cnicas e complexos",
+    "reason": "Adicionar varia??es t?cnicas ap?s validar movimentos principais e suas recep??es; coordenar m?ltiplas fases sem deformar anatomia."
+  },
+  {
+    "exerciseId": "319d60a2-9774-4b56-85e7-4649cf2d23d7",
+    "exerciseName": "Kettlebell Snatch Unilateral",
+    "tier": 5,
+    "order": 252,
+    "batch": "Kettlebell: coordena??o avan?ada",
+    "reason": "Revisar recep??o no antebra?o, passagem do implemento e transi??es antes de aprovar movimentos compostos."
+  },
+  {
+    "exerciseId": "2451bd48-05fb-473e-80cb-b0479bee48f5",
+    "exerciseName": "Kettlebell Jerk Unilateral",
+    "tier": 5,
+    "order": 253,
+    "batch": "Kettlebell: coordena??o avan?ada",
+    "reason": "Revisar recep??o no antebra?o, passagem do implemento e transi??es antes de aprovar movimentos compostos."
+  },
+  {
+    "exerciseId": "defa9909-90f4-4278-8351-8bdab5f6b7d4",
+    "exerciseName": "Turkish Get-up",
+    "tier": 5,
+    "order": 254,
+    "batch": "Kettlebell: coordena??o avan?ada",
+    "reason": "Revisar recep??o no antebra?o, passagem do implemento e transi??es antes de aprovar movimentos compostos."
+  },
+  {
+    "exerciseId": "f0eeccc0-954b-454d-8aaa-c272830213e8",
+    "exerciseName": "Devil Press com Halteres",
+    "tier": 5,
+    "order": 255,
+    "batch": "Kettlebell: coordena??o avan?ada",
+    "reason": "Revisar recep??o no antebra?o, passagem do implemento e transi??es antes de aprovar movimentos compostos."
+  },
+  {
+    "exerciseId": "84d0c069-21f2-4660-8ba1-b47bb09b3e81",
+    "exerciseName": "Burpee com Salto por Cima da Caixa",
+    "tier": 5,
+    "order": 256,
+    "batch": "Gin?stica din?mica e habilidades",
+    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
+  },
+  {
+    "exerciseId": "5c64df12-58dd-4840-8494-54b6fe10b54b",
+    "exerciseName": "Kipping Pull-up",
+    "tier": 5,
+    "order": 257,
+    "batch": "Gin?stica din?mica e habilidades",
+    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
+  },
+  {
+    "exerciseId": "2ec2e5b6-c015-4d08-8d4d-9577c410f143",
+    "exerciseName": "Butterfly Pull-up",
+    "tier": 5,
+    "order": 258,
+    "batch": "Gin?stica din?mica e habilidades",
+    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
+  },
+  {
+    "exerciseId": "3f882b66-3ba6-430c-8996-32179546dacd",
+    "exerciseName": "Chest-to-Bar Pull-up",
+    "tier": 5,
+    "order": 259,
+    "batch": "Gin?stica din?mica e habilidades",
+    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
+  },
+  {
+    "exerciseId": "a9c79cda-74c6-4fff-8b2a-01f3a0e4c91c",
+    "exerciseName": "Toes-to-Bar",
+    "tier": 5,
+    "order": 260,
+    "batch": "Gin?stica din?mica e habilidades",
+    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
+  },
+  {
+    "exerciseId": "eee0b56d-e70a-4c5f-8e33-32032f8b6c2f",
+    "exerciseName": "Knees-to-Elbows",
+    "tier": 5,
+    "order": 261,
+    "batch": "Gin?stica din?mica e habilidades",
+    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
+  },
+  {
+    "exerciseId": "b034a035-e699-4b70-858f-9f131820545e",
+    "exerciseName": "Muscle-up na Barra",
+    "tier": 5,
+    "order": 262,
+    "batch": "Gin?stica din?mica e habilidades",
+    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
+  },
+  {
+    "exerciseId": "66f7980f-4e11-4bd7-8a38-c45d5fe23e29",
+    "exerciseName": "Muscle-up nas Argolas",
+    "tier": 5,
+    "order": 263,
+    "batch": "Gin?stica din?mica e habilidades",
+    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
+  },
+  {
+    "exerciseId": "067c23df-07bc-4110-8022-e026d6697199",
+    "exerciseName": "Handstand Push-up Estrito",
+    "tier": 5,
+    "order": 264,
+    "batch": "Gin?stica din?mica e habilidades",
+    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
+  },
+  {
+    "exerciseId": "87bb8075-09af-43d8-813d-19b257bb67eb",
+    "exerciseName": "Kipping Handstand Push-up",
+    "tier": 5,
+    "order": 265,
+    "batch": "Gin?stica din?mica e habilidades",
+    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
+  },
+  {
+    "exerciseId": "df51e789-ae36-4ffc-8636-72e0d458ca4d",
+    "exerciseName": "Wall Walk",
+    "tier": 5,
+    "order": 266,
+    "batch": "Gin?stica din?mica e habilidades",
+    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
+  },
+  {
+    "exerciseId": "c9e30495-151c-4a1f-8e64-b5ea8ce767bb",
+    "exerciseName": "Handstand Walk",
+    "tier": 5,
+    "order": 267,
+    "batch": "Gin?stica din?mica e habilidades",
+    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
+  },
+  {
+    "exerciseId": "eab742e2-9380-4dfa-86fc-459d84157b6c",
+    "exerciseName": "Subida na Corda",
+    "tier": 5,
+    "order": 268,
+    "batch": "Gin?stica din?mica e habilidades",
+    "reason": "Exigem suspens?o, balan?o, invers?o ou transi??o de apoio; validar m?os, contato e trajet?ria em todas as fases."
+  },
+  {
+    "exerciseId": "3d8e35e1-3414-49c4-8100-923294135403",
+    "exerciseName": "Pular Corda com Giro Duplo — alias: double-under",
+    "tier": 5,
+    "order": 269,
+    "batch": "Corda: giro duplo",
+    "reason": "Sincronizar dois giros da corda por salto ap?s validar o giro simples e o ciclo de aterrissagem."
+  },
+  {
+    "exerciseId": "8108ae55-6046-46c0-8c58-5c07f176c220",
+    "exerciseName": "Tríceps Testa com Barra Reta",
+    "tier": 5,
+    "order": 270,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "cbad2819-72ac-403c-8c2f-6b13c8d287f1",
+    "exerciseName": "Tríceps Testa com Barra W",
+    "tier": 5,
+    "order": 271,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "c98a4420-38e7-42ae-8537-3a69d1fc9562",
+    "exerciseName": "Tríceps Testa com Halteres",
+    "tier": 5,
+    "order": 272,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "e64255a2-1671-4717-844c-db974350a5e5",
+    "exerciseName": "Tríceps Testa Unilateral com Halter",
+    "tier": 5,
+    "order": 273,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "0ba9b44b-90e4-453e-83a9-f99f545f66bd",
+    "exerciseName": "Tríceps Testa na Polia com Barra Reta",
+    "tier": 5,
+    "order": 274,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "17cd655b-1829-4b3e-86a9-47f2c4f46493",
+    "exerciseName": "Tríceps Testa na Polia com Barra W",
+    "tier": 5,
+    "order": 275,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "d7d1862b-4c92-49f7-879a-8e8425e3ad5d",
+    "exerciseName": "Tríceps Testa na Polia com Corda",
+    "tier": 5,
+    "order": 276,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "8f8b5524-6ccf-4c6b-832c-ac1e81e40b3c",
+    "exerciseName": "Tríceps Testa Unilateral na Polia",
+    "tier": 5,
+    "order": 277,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "b79fe345-974b-4e9f-85ac-ac732d241236",
+    "exerciseName": "Tríceps Francês com Halter Bilateral",
+    "tier": 5,
+    "order": 278,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "911558ab-c46f-4322-8295-8e102953330b",
+    "exerciseName": "Tríceps Francês com Barra W",
+    "tier": 5,
+    "order": 279,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "a714c255-5556-4704-84d4-90f44c87765a",
+    "exerciseName": "Tríceps Acima da Cabeça na Polia com Corda",
+    "tier": 5,
+    "order": 280,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "33effeb0-d0e4-43f6-80d2-65899ac12c0a",
+    "exerciseName": "Tríceps Acima da Cabeça na Polia com Barra Reta",
+    "tier": 5,
+    "order": 281,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "c9e53c15-ca89-4f91-845f-52e62076b1f8",
+    "exerciseName": "Tríceps Acima da Cabeça na Polia com Barra W",
+    "tier": 5,
+    "order": 282,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "96b9fc45-2a68-4021-8169-5f25ae82b78e",
+    "exerciseName": "Tríceps Acima da Cabeça Unilateral na Polia",
+    "tier": 5,
+    "order": 283,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "7050c35c-b90f-4168-8263-07c46cd54499",
+    "exerciseName": "Tríceps no Cabo com Barra V",
+    "tier": 5,
+    "order": 284,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "7df5de14-a676-42b7-86cd-485301adc0ef",
+    "exerciseName": "Tríceps no Cabo com Barra W",
+    "tier": 5,
+    "order": 285,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "1794f8a7-9ec0-4b77-8948-46669c7b2136",
+    "exerciseName": "Tríceps no Cabo com Barra Reta e Pegada Supinada",
+    "tier": 5,
+    "order": 286,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "0156a30b-bcf8-4a40-8458-8113ee2e61ce",
+    "exerciseName": "Tríceps Coice Unilateral no Cabo",
+    "tier": 5,
+    "order": 287,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "759baeb6-2a0a-47cc-8917-b2763c4a0410",
+    "exerciseName": "Tríceps na Máquina",
+    "tier": 5,
+    "order": 288,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "4b68c797-398e-4234-8206-c57464e145ec",
+    "exerciseName": "Rosca Direta com Barra W",
+    "tier": 5,
+    "order": 289,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "736f15d4-41cc-426f-8802-41e10e4c07dc",
+    "exerciseName": "Rosca Direta com Halteres",
+    "tier": 5,
+    "order": 290,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "2fe01c1c-1576-44a9-86bc-771718b10c80",
+    "exerciseName": "Rosca Direta na Polia com Barra W",
+    "tier": 5,
+    "order": 291,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "90cd5625-ac7f-4e6f-8544-2400379246c5",
+    "exerciseName": "Rosca Unilateral na Polia Baixa",
+    "tier": 5,
+    "order": 292,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "4e98a7b4-f613-4ab0-8098-1213052f6659",
+    "exerciseName": "Rosca Scott com Barra Reta",
+    "tier": 5,
+    "order": 293,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "accdb149-9c0c-42a5-8587-bdbe069306c1",
+    "exerciseName": "Rosca Scott com Barra W",
+    "tier": 5,
+    "order": 294,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "a8554100-a9d1-41f2-8b1b-9a9d6525178d",
+    "exerciseName": "Rosca Scott Unilateral com Halter",
+    "tier": 5,
+    "order": 295,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "6ad0d120-6c10-474e-8916-c27dc2502e26",
+    "exerciseName": "Rosca Scott na Polia com Barra Reta",
+    "tier": 5,
+    "order": 296,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "477d5b72-1f45-4962-875f-ee47333c9490",
+    "exerciseName": "Rosca Scott na Polia com Barra W",
+    "tier": 5,
+    "order": 297,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "989feba5-706b-4a3d-8738-7ac9a35d00ae",
+    "exerciseName": "Rosca Scott Unilateral na Polia",
+    "tier": 5,
+    "order": 298,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "2d643e1d-a376-4c42-8771-fe60addce003",
+    "exerciseName": "Rosca Spider com Barra Reta",
+    "tier": 5,
+    "order": 299,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "4c545004-497f-4cb4-85b3-2f9ac4f3f67d",
+    "exerciseName": "Rosca Spider com Barra W",
+    "tier": 5,
+    "order": 300,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "3ee30823-922e-45f4-86b9-ae99149c6f9f",
+    "exerciseName": "Rosca Spider com Halteres",
+    "tier": 5,
+    "order": 301,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "f32c1a74-af9b-4879-835f-d59fe71b31dc",
+    "exerciseName": "Rosca Spider na Polia",
+    "tier": 5,
+    "order": 302,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "f74cdc36-a067-4991-8852-f3bb6c873947",
+    "exerciseName": "Rosca Concentrada na Polia",
+    "tier": 5,
+    "order": 303,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "aa0f083c-78a4-4e5d-85ba-335d680e70c5",
+    "exerciseName": "Rosca Bayesian Unilateral na Polia",
+    "tier": 5,
+    "order": 304,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "c622c057-4915-44ff-87f5-68ac6d32bb7c",
+    "exerciseName": "Rosca Dupla na Polia Alta",
+    "tier": 5,
+    "order": 305,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "df54ce13-b047-487d-8de6-54eaa4d60ace",
+    "exerciseName": "Rosca Inclinada na Polia",
+    "tier": 5,
+    "order": 306,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "335c3df1-cc11-4535-8e14-faea33c123fd",
+    "exerciseName": "Rosca de Bíceps na Máquina",
+    "tier": 5,
+    "order": 307,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "1833c2cd-8928-4f4f-8106-dbc80628ee6f",
+    "exerciseName": "Rosca Martelo na Polia com Corda",
+    "tier": 5,
+    "order": 308,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "c88966f4-080a-4ce1-887b-4f5a412c6a8a",
+    "exerciseName": "Rosca Martelo Unilateral na Polia",
+    "tier": 5,
+    "order": 309,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "19e651e6-d2a9-47d0-8730-4b474f280042",
+    "exerciseName": "Rosca Martelo no Banco Inclinado",
+    "tier": 5,
+    "order": 310,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "dcccfeb3-86ba-438a-83cd-92146e3d6089",
+    "exerciseName": "Rosca Martelo Cruzada com Halter",
+    "tier": 5,
+    "order": 311,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "241128f6-138a-45d6-8516-546951a3756d",
+    "exerciseName": "Rosca Scott Martelo Unilateral com Halter",
+    "tier": 5,
+    "order": 312,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "cd8de8b7-1ddc-4424-8dfb-9813e4e92f0f",
+    "exerciseName": "Rosca Inversa com Barra W",
+    "tier": 5,
+    "order": 313,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "ee9c49a5-1e24-4328-845a-710cf88f5250",
+    "exerciseName": "Rosca Inversa na Polia com Barra Reta",
+    "tier": 5,
+    "order": 314,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "240cbd3b-e36f-4492-8043-76fe8a05093c",
+    "exerciseName": "Rosca Inversa com Halteres",
+    "tier": 5,
+    "order": 315,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "41795600-cfd1-4f4a-8ad9-dfb0dd2fe81b",
+    "exerciseName": "Rosca Zottman com Halteres",
+    "tier": 5,
+    "order": 316,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "6e1d783e-b1df-4dd8-8b52-3f753b014507",
+    "exerciseName": "Rosca de Punho Unilateral com Halter",
+    "tier": 5,
+    "order": 317,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "bb95eb80-0d1d-4624-8496-02c5d8c82c4e",
+    "exerciseName": "Extensão de Punho Unilateral com Halter",
+    "tier": 5,
+    "order": 318,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "9677a02a-4b47-4f89-8db9-3668429be65f",
+    "exerciseName": "Rosca de Punho na Polia",
+    "tier": 5,
+    "order": 319,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "c98d61cc-42d9-4b47-87cb-ad67c43fa9f7",
+    "exerciseName": "Extensão de Punho na Polia",
+    "tier": 5,
+    "order": 320,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "d45fe04a-7f04-4182-8e13-4f3de70788a4",
+    "exerciseName": "Supino Inclinado com Barra",
+    "tier": 5,
+    "order": 321,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "60e5760a-c34d-4749-8abd-707146b3c173",
+    "exerciseName": "Supino Reto com Halteres e Pegada Neutra",
+    "tier": 5,
+    "order": 322,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "05262dcc-461a-4f0d-8fa0-3c23f890aeeb",
+    "exerciseName": "Supino Inclinado com Halteres e Pegada Neutra",
+    "tier": 5,
+    "order": 323,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "57e56e35-826d-48de-898a-7a3bbaeef927",
+    "exerciseName": "Supino Reto Unilateral com Halter",
+    "tier": 5,
+    "order": 324,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "b87c1940-131a-4682-8c08-89a2194240de",
+    "exerciseName": "Supino Sentado no Cabo",
+    "tier": 5,
+    "order": 325,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "153b5672-d1fb-435a-885f-96de706bd5d9",
+    "exerciseName": "Supino Unilateral na Máquina",
+    "tier": 5,
+    "order": 326,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "8856e4c0-24ca-4522-807d-77b6b693da7d",
+    "exerciseName": "Crucifixo Inclinado com Halteres",
+    "tier": 5,
+    "order": 327,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "ac895f49-b850-4f5a-88e8-724b3c4d5dbf",
+    "exerciseName": "Crucifixo Declinado com Halteres",
+    "tier": 5,
+    "order": 328,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "dbe23d8a-2961-4579-85c4-75edaca7e304",
+    "exerciseName": "Crucifixo Reto no Cabo",
+    "tier": 5,
+    "order": 329,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "e5153e25-3c74-4471-8a04-54b1d738945b",
+    "exerciseName": "Crucifixo Inclinado no Cabo",
+    "tier": 5,
+    "order": 330,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "e186b5b1-8968-4302-87a1-6e782cbda592",
+    "exerciseName": "Crossover Unilateral na Polia Média",
+    "tier": 5,
+    "order": 331,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "1444333f-9fb0-4d74-843a-42b9480e5cfc",
+    "exerciseName": "Remada Curvada (Baixa) — Supinada",
+    "tier": 5,
+    "order": 332,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "d4ebcd94-81f7-48ea-85f5-2c50fd3017fd",
+    "exerciseName": "Remada Curvada com Halteres",
+    "tier": 5,
+    "order": 333,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "8e264eaa-4648-414a-8819-a5e82a08b98e",
+    "exerciseName": "Remada Curvada no Smith",
+    "tier": 5,
+    "order": 334,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "aae24196-1a55-4b56-8ece-7d8641c527c7",
+    "exerciseName": "Remada com Barra e Peito Apoiado",
+    "tier": 5,
+    "order": 335,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "7f95c7f6-bf42-4212-83f5-118c3be3489c",
+    "exerciseName": "Remada Baixa no Cabo com Barra e Pegada Supinada",
+    "tier": 5,
+    "order": 336,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "6524d22a-c735-43fd-866b-9bd7ca9c36b6",
+    "exerciseName": "Remada Baixa no Cabo com Corda",
+    "tier": 5,
+    "order": 337,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "de2be786-306b-489f-893d-32927c4c8104",
+    "exerciseName": "Remada Baixa Unilateral no Cabo",
+    "tier": 5,
+    "order": 338,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "28ba5821-9425-46dc-828f-1121b71bdc54",
+    "exerciseName": "Remada Cavalinho com Peito Apoiado",
+    "tier": 5,
+    "order": 339,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "3158cfe5-a5cc-454a-8e65-408e224821dc",
+    "exerciseName": "Puxada Frontal no Cabo com Triângulo",
+    "tier": 5,
+    "order": 340,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "c2fea3de-2db8-4c51-86d0-fa69e3dd33ed",
+    "exerciseName": "Puxada Frontal no Cabo com Pegada Pronada Aberta",
+    "tier": 5,
+    "order": 341,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "cf7b6604-3bc2-452f-84dc-3e4aff1f1554",
+    "exerciseName": "Puxada Frontal no Cabo com Pegada Pronada Fechada",
+    "tier": 5,
+    "order": 342,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "67ca3f6b-5999-48eb-8f50-8eeba3a99718",
+    "exerciseName": "Pulldown com Braços Estendidos no Cabo com Corda",
+    "tier": 5,
+    "order": 343,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "5ef1faac-fd97-4c5d-8908-1a7ea9038844",
+    "exerciseName": "Pulldown Unilateral com Braço Estendido no Cabo",
+    "tier": 5,
+    "order": 344,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "a2d9ce82-b1ba-4226-88a3-685882cecf04",
+    "exerciseName": "Pullover na Máquina",
+    "tier": 5,
+    "order": 345,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "f5463af1-5e09-4225-80a4-75e1f8142626",
+    "exerciseName": "Desenvolvimento Sentado com Barra",
+    "tier": 5,
+    "order": 346,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "d3b68768-5ba7-49c6-893a-cc525f412a36",
+    "exerciseName": "Desenvolvimento Sentado com Halteres e Pegada Neutra",
+    "tier": 5,
+    "order": 347,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "bd816af9-6962-4090-8ed2-b823dac3b22c",
+    "exerciseName": "Desenvolvimento Unilateral com Halter",
+    "tier": 5,
+    "order": 348,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "7f02567e-ffa6-476d-828b-b665fea59fd8",
+    "exerciseName": "Desenvolvimento Unilateral no Cabo",
+    "tier": 5,
+    "order": 349,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "25f7281a-ca21-499a-8ed0-494d71d724b1",
+    "exerciseName": "Elevação Lateral com Halteres",
+    "tier": 5,
+    "order": 350,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "4783cc8e-6eb6-4da7-8766-be5b41036a02",
+    "exerciseName": "Elevação Lateral Sentado com Halteres",
+    "tier": 5,
+    "order": 351,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "d28958b3-e4b5-4541-8f76-2b9fa139f998",
+    "exerciseName": "Elevação Lateral Unilateral no Cabo com Munhequeira",
+    "tier": 5,
+    "order": 352,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "54fc45df-ac17-48ae-8ea2-18f666a8e992",
+    "exerciseName": "Elevação Frontal com Barra",
+    "tier": 5,
+    "order": 353,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "b4734cc8-a7a4-4b34-89f6-095b98709a4e",
+    "exerciseName": "Elevação Frontal na Polia com Barra Reta",
+    "tier": 5,
+    "order": 354,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "76aac295-3bd9-4545-87bc-74510f8521dd",
+    "exerciseName": "Elevação Frontal na Polia com Corda",
+    "tier": 5,
+    "order": 355,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "a9a964fa-1896-4fc5-87e6-6295687cccbe",
+    "exerciseName": "Elevação Frontal Unilateral no Cabo",
+    "tier": 5,
+    "order": 356,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "a0c3fc44-584d-46cd-8ca3-e05b6322f169",
+    "exerciseName": "Crucifixo Inverso Unilateral no Cabo",
+    "tier": 5,
+    "order": 357,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "95a939a7-4772-4b65-8f22-ffb69f155818",
+    "exerciseName": "Encolhimento no Smith",
+    "tier": 5,
+    "order": 358,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "e42add13-60e7-4472-8a7e-35bbeb05439f",
+    "exerciseName": "Encolhimento no Cabo",
+    "tier": 5,
+    "order": 359,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "407cf54c-4d86-442b-828a-a08a8f4c1bc2",
+    "exerciseName": "Agachamento com Halteres",
+    "tier": 5,
+    "order": 360,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "562a9607-368f-4cb6-82ff-98626ad91f5b",
+    "exerciseName": "Agachamento Sumô com Barra",
+    "tier": 5,
+    "order": 361,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "c0099fa5-dc47-4277-8af9-e9e909782af2",
+    "exerciseName": "Agachamento Sumô no Smith",
+    "tier": 5,
+    "order": 362,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "acff5fdd-2936-4ee5-8455-8dda63f8d964",
+    "exerciseName": "Agachamento Búlgaro com Halteres",
+    "tier": 5,
+    "order": 363,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "c486f802-00b9-4aa4-8365-135fc77a4efb",
+    "exerciseName": "Agachamento Búlgaro com Barra",
+    "tier": 5,
+    "order": 364,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "8a509e18-1e7a-43f0-8f62-ffd5390284ac",
+    "exerciseName": "Agachamento Búlgaro no Smith",
+    "tier": 5,
+    "order": 365,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "6f56ae52-778c-4e80-84ed-8aeeb9de0fb6",
+    "exerciseName": "Afundo Estático com Barra",
+    "tier": 5,
+    "order": 366,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "9cfeba3b-0282-4560-87b9-566dce17db03",
+    "exerciseName": "Afundo Estático no Smith",
+    "tier": 5,
+    "order": 367,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "f54cf33d-cc08-429e-83a3-2be4590a1c5e",
+    "exerciseName": "Afundo Reverso com Barra",
+    "tier": 5,
+    "order": 368,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "a3fe2744-9f3d-4e46-819c-6da71dfa3f0e",
+    "exerciseName": "Afundo Reverso no Smith",
+    "tier": 5,
+    "order": 369,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "6f8b6049-c105-4504-8d7a-d5df61488b4e",
+    "exerciseName": "Avanço com Barra",
+    "tier": 5,
+    "order": 370,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "77874c34-9848-4448-8439-6c1f8b1adb73",
+    "exerciseName": "Step-up com Barra",
+    "tier": 5,
+    "order": 371,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "2ce3f212-8f40-493e-80b8-10900d3a45f5",
+    "exerciseName": "Step-up no Smith",
+    "tier": 5,
+    "order": 372,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "56cfa02e-dfa7-40b6-8b0a-8d3e23ba0202",
+    "exerciseName": "Stiff com Halteres",
+    "tier": 5,
+    "order": 373,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "76518f5e-2aaa-440f-8f06-73e75d7668b7",
+    "exerciseName": "Stiff no Smith",
+    "tier": 5,
+    "order": 374,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "2b5e1ea4-ae6b-4198-8909-f35bb2923339",
+    "exerciseName": "Levantamento Terra Romeno com Halteres",
+    "tier": 5,
+    "order": 375,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "6b8024e2-0472-4245-82b4-d66e4148db53",
+    "exerciseName": "Levantamento Terra Romeno no Smith",
+    "tier": 5,
+    "order": 376,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "de27f294-a664-423b-81da-dbd85a318c52",
+    "exerciseName": "Levantamento Terra Romeno Unilateral com Barra",
+    "tier": 5,
+    "order": 377,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "5c438236-2b03-4039-882a-16ab6dbb7c08",
+    "exerciseName": "Levantamento Terra Romeno Unilateral no Cabo",
+    "tier": 5,
+    "order": 378,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "0e876f56-b264-4c49-8253-c0e528ee11d5",
+    "exerciseName": "Good Morning no Smith",
+    "tier": 5,
+    "order": 379,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "266c42ff-bed0-4aa5-8ed5-c6bcc06eb643",
+    "exerciseName": "Cadeira Extensora Unilateral",
+    "tier": 5,
+    "order": 380,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "f71fe1b7-7471-4119-8648-2410dbde9748",
+    "exerciseName": "Extensão de Joelhos Unilateral no Cabo",
+    "tier": 5,
+    "order": 381,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "4c7bb65f-ab3d-4c79-8e1a-9351f3f38af0",
+    "exerciseName": "Cadeira Flexora Unilateral",
+    "tier": 5,
+    "order": 382,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "c8001351-5289-4571-8d89-a33de9d2d617",
+    "exerciseName": "Mesa Flexora Unilateral",
+    "tier": 5,
+    "order": 383,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "11928797-9c2e-4cf4-8ae6-e22bb2dcedca",
+    "exerciseName": "Flexão de Joelhos Unilateral no Cabo",
+    "tier": 5,
+    "order": 384,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "f54fd450-4b6c-4340-899a-269b8b264105",
+    "exerciseName": "Elevação Pélvica com Barra",
+    "tier": 5,
+    "order": 385,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "37145346-6a91-4833-83d4-f8bfa680594a",
+    "exerciseName": "Elevação Pélvica no Smith",
+    "tier": 5,
+    "order": 386,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "596a6263-cdbd-4b00-8b51-380208d934f5",
+    "exerciseName": "Elevação Pélvica na Máquina",
+    "tier": 5,
+    "order": 387,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "b632c129-4622-4927-8a7f-1c520c3cbe1d",
+    "exerciseName": "Elevação Pélvica com Halter",
+    "tier": 5,
+    "order": 388,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "07a6953c-9448-4041-8d70-796e30eb1820",
+    "exerciseName": "Ponte de Glúteos com Barra no Solo",
+    "tier": 5,
+    "order": 389,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "11756766-11ff-4116-8939-7ee10fb22c01",
+    "exerciseName": "Extensão de Quadril Unilateral na Máquina",
+    "tier": 5,
+    "order": 390,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "7ba73610-3331-45f5-8446-728875a4db94",
+    "exerciseName": "Extensão de Quadril Unilateral com Caneleira",
+    "tier": 5,
+    "order": 391,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "ca75ce5b-5071-4c1c-8cb9-f8cd018edd76",
+    "exerciseName": "Pull-through na Polia com Corda",
+    "tier": 5,
+    "order": 392,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "8ee46aac-dc93-42f5-8559-181000dc3357",
+    "exerciseName": "Abdução de Quadril Deitado com Caneleira",
+    "tier": 5,
+    "order": 393,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "75fcd52b-a156-439b-8b02-1ee065831e4e",
+    "exerciseName": "Abdução de Quadril em Pé com Miniband",
+    "tier": 5,
+    "order": 394,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "7c54719b-6029-40d1-8107-48e533c9298c",
+    "exerciseName": "Adução de Quadril Deitado com Caneleira",
+    "tier": 5,
+    "order": 395,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "518d8901-b7bd-439f-8e17-713403bf89c8",
+    "exerciseName": "Panturrilha em Pé no Smith",
+    "tier": 5,
+    "order": 396,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "34b634c3-ee55-4e83-8f5f-56a33a8cc77d",
+    "exerciseName": "Panturrilha em Pé com Halteres",
+    "tier": 5,
+    "order": 397,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "996b4399-febe-44ac-8734-8f1b924943b5",
+    "exerciseName": "Panturrilha Sentado com Halteres",
+    "tier": 5,
+    "order": 398,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "0e0c119f-12d2-4026-8e56-0b3dc7f49e54",
+    "exerciseName": "Panturrilha Unilateral no Leg Press",
+    "tier": 5,
+    "order": 399,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "026f8dcf-4868-4ac3-8548-60e80789c928",
+    "exerciseName": "Panturrilha Unilateral Sentado",
+    "tier": 5,
+    "order": 400,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "ba767a64-d2b5-4a15-8ab1-bb85e0cd3fe3",
+    "exerciseName": "Abdominal Crunch com Peso no Peito",
+    "tier": 5,
+    "order": 401,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "99246a58-d732-4f34-89f1-59bcd3fb4eb4",
+    "exerciseName": "Abdominal Crunch na Bola Suíça",
+    "tier": 5,
+    "order": 402,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "3502ac49-c62d-4756-8a5f-7f0474357e36",
+    "exerciseName": "Pallof Press Unilateral com Elástico",
+    "tier": 5,
+    "order": 403,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "1823cd69-49ae-4684-8802-0e80dd6c5dc9",
+    "exerciseName": "Woodchop no Cabo Baixo",
+    "tier": 5,
+    "order": 404,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "034f7921-ff02-4df5-8652-625247c0d241",
+    "exerciseName": "Prancha Ventral com Antebraços na Bola Suíça",
+    "tier": 5,
+    "order": 405,
+    "batch": "Variações de equipamento — cadastro",
+    "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
   }
 ]

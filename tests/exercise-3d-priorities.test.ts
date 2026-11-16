@@ -3,11 +3,21 @@ import { describe, expect, it } from "vitest";
 import { CANONICAL_GLOBAL_CATALOG } from "../src/domain/canonical-catalog.js";
 import plan from "../src/domain/exercise-3d-priority.json" with { type: "json" };
 import expansion from "../src/domain/exercise-catalog-expansion.json" with { type: "json" };
+import { REVIEWED_EXERCISES } from "../src/domain/exercise-catalog-review.js";
+import { RETIRED_GLOBAL_EXERCISES } from "../src/domain/retired-global-exercises.js";
 import { AdminExerciseCatalog } from "../src/schemas/admin-exercises.js";
+
+// Retired choices remain attached to their history and retain their planning metadata.
+const catalog = [
+  ...CANONICAL_GLOBAL_CATALOG,
+  ...expansion,
+  ...REVIEWED_EXERCISES.filter((entry) => RETIRED_GLOBAL_EXERCISES.has(entry.id)),
+];
 
 describe("3D production plan integrity", () => {
   it("covers every existing canonical ID exactly once with a unique contiguous order", () => {
-    const ids = [...CANONICAL_GLOBAL_CATALOG, ...expansion].map(e => e.id);
+    const ids = catalog.map(e => e.id);
+    expect(new Set(ids).size).toBe(ids.length);
     expect(plan).toHaveLength(ids.length);
     expect(new Set(plan.map(e => e.exerciseId)).size).toBe(ids.length);
     expect(plan.map(e => e.exerciseId).sort()).toEqual(ids.sort());
@@ -15,7 +25,7 @@ describe("3D production plan integrity", () => {
     expect(plan.every((e, i) => !i || e.tier >= plan[i-1].tier)).toBe(true);
   });
   it("keeps each entry attached to its own exercise and valid API metadata", () => {
-    const names = new Map([...CANONICAL_GLOBAL_CATALOG, ...expansion].map(e => [e.id, e.name]));
+    const names = new Map(catalog.map(e => [e.id, e.name]));
     for (const item of plan) {
       expect(item.exerciseName).toBe(names.get(item.exerciseId));
       expect(item.reason.length).toBeGreaterThan(30);
