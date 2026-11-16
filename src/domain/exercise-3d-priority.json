@@ -3206,5 +3206,13 @@
     "order": 401,
     "batch": "Variações de equipamento — cadastro",
     "reason": "Cadastro sem mídia própria. Produzir demonstração específica somente após pesquisa e revisão independente do equipamento e da execução."
+  },
+  {
+    "exerciseId": "7f249b6a-85ad-45ca-9147-6cfa712547c7",
+    "exerciseName": "Remada Curvada com Barra ao Peito",
+    "tier": 2,
+    "order": 402,
+    "batch": "Revis?o de remadas e esc?pulas",
+    "reason": "Varia??o expl?cita ao peito com cotovelos abertos, distinta da remada ao abd?men."
   }
 ]

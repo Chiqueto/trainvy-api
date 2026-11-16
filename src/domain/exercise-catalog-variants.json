@@ -1254,15 +1254,20 @@
       "BACK"
     ],
     "secondary": [
+      "SHOULDERS",
       "BICEPS",
       "FOREARMS",
-      "SHOULDERS"
+      "CORE",
+      "QUADRICEPS",
+      "GLUTES",
+      "HAMSTRINGS",
+      "HIP_ABDUCTORS"
     ],
     "sourceIds": [
       "upper-anatomy",
       "ace"
     ],
-    "notes": "Tração por extensão/adução do ombro e movimento escapular, com flexores do cotovelo e pegada. Tronco deve ser estabilizado; apoio do peito diferencia a execução. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+    "notes": "Extensão do úmero e retração escapular: dorsal, redondo maior, romboides e trapézio médio principais. Braços, manguito, pegada e eretores/abdômen coenvolvidos. Glúteos, isquiotibiais e quadríceps sustentam quadril e joelhos, sem serem o alvo principal. Tronco fixo em cerca de 52° de flexão a partir da vertical no rig: escolha ilustrativa, não ângulo ótimo extraído de EMG. Sem impulso, isolamento ou intensidade medida. Mesmas cores básicas de outras remadas são fundamentadas por ações comuns, com mapa postural próprio. Ênfase média do trapézio funcional, não medição regional. Revisão escapular: Na volta, permita que as escápulas se afastem sobre o tórax; ao puxar, aproxime-as de modo coordenado com os braços, mantendo a coluna estável. Serrátil anterior participa do controle, em destaque secundário ilustrativo. Escápulas têm controles independentes e pesos anatômicos; a trajetória não é produzida apenas pelo cotovelo. Ângulos não são medidas individuais. Pegada supinada altera orientação do antebraço e palma; não justifica afirmar isolamento do dorsal ou superioridade sobre a pronada. Papéis anatômicos equivalentes foram revistos individualmente; estabilização das pernas é inferência para postura sem apoio."
   },
   {
     "id": "d4ebcd94-81f7-48ea-85f5-2c50fd3017fd",
@@ -2817,5 +2822,32 @@
       "upper-anatomy"
     ],
     "notes": "Flexão/controlar extensão ou rotação do tronco conforme o movimento. Pallof é anti-rotação com execução por lado; woodchop envolve movimento diagonal controlado. Classificação ilustrativa por ação articular; não representa EMG medido nem isolamento muscular. Equipamento e execução são os indicados no nome."
+  },
+  {
+    "id": "7f249b6a-85ad-45ca-9147-6cfa712547c7",
+    "name": "Remada Curvada com Barra ao Peito",
+    "isUnilateral": false,
+    "family": "Musculação tradicional — costas",
+    "groups": [
+      "RESISTANCE"
+    ],
+    "sourceIds": [
+      "bent-row-biomechanics",
+      "bent-row-angle"
+    ],
+    "primary": [
+      "BACK",
+      "SHOULDERS"
+    ],
+    "secondary": [
+      "BICEPS",
+      "FOREARMS",
+      "CORE",
+      "QUADRICEPS",
+      "GLUTES",
+      "HAMSTRINGS",
+      "HIP_ABDUCTORS"
+    ],
+    "notes": "Trajetória à parte inferior do peito, com maior abdução do úmero: ênfase ilustrativa em trapézio médio, romboides e deltoide posterior. Dorsal e redondo maior continuam envolvidos. Evidência de abdução provém de remada sentada no cabo: aplicação à barra livre é inferência anatômica/editorial, sem ranking de EMG ou hipertrofia. Mesma postura de quadril recuado, pernas e tronco estabilizando. Na volta, permita que as escápulas se afastem sobre o tórax; ao puxar, aproxime-as de modo coordenado com os braços, mantendo a coluna estável."
   }
 ]

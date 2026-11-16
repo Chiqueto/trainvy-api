@@ -1,0 +1,485 @@
+{
+  "version": "2026-11-16.scapular.1",
+  "reviewedAt": "2026-11-16T15:00:00.000Z",
+  "variant": "Remada curvada bilateral com barra livre, pegada pronada e tronco inclinado com quadril recuado.",
+  "aliases": [
+    "remada curvada com barra",
+    "remada curvada",
+    "remada curvada pronada",
+    "remada ao umbigo"
+  ],
+  "participants": [
+    {
+      "id": "LATISSIMUS_DORSI",
+      "label": "Latíssimo do dorso",
+      "muscleGroup": "BACK",
+      "role": "PRIMARY",
+      "aliases": [
+        "dorsal",
+        "grande dorsal",
+        "latissimus dorsi"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "FENWICK_2009",
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "TERES_MAJOR",
+      "label": "Redondo maior",
+      "muscleGroup": "BACK",
+      "role": "PRIMARY",
+      "aliases": [
+        "teres major"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "TRAPEZIUS",
+      "label": "Trapézio",
+      "muscleGroup": "BACK",
+      "role": "PRIMARY",
+      "aliases": [
+        "trapézio médio",
+        "trapézio inferior",
+        "trapezius"
+      ],
+      "regions": [
+        {
+          "id": "TRAPEZIUS_TRANSVERSE",
+          "label": "Porção média do trapézio",
+          "aliases": [
+            "trapézio médio",
+            "porção transversa"
+          ]
+        },
+        {
+          "id": "TRAPEZIUS_DESCENDING",
+          "label": "Porção superior do trapézio",
+          "aliases": [
+            "trapézio superior"
+          ]
+        },
+        {
+          "id": "TRAPEZIUS_ASCENDING",
+          "label": "Porção inferior do trapézio",
+          "aliases": [
+            "trapézio inferior"
+          ]
+        }
+      ],
+      "emphasizedRegionIds": [
+        "TRAPEZIUS_TRANSVERSE"
+      ],
+      "sourceIds": [
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "RHOMBOIDS",
+      "label": "Romboides",
+      "muscleGroup": "BACK",
+      "role": "PRIMARY",
+      "aliases": [
+        "romboide maior",
+        "romboide menor"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "DELTOID_POSTERIOR",
+      "label": "Deltoide posterior",
+      "muscleGroup": "SHOULDERS",
+      "role": "SECONDARY",
+      "aliases": [
+        "ombro posterior"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "INFRASPINATUS",
+      "label": "Infraespinal",
+      "muscleGroup": "SHOULDERS",
+      "role": "SECONDARY",
+      "aliases": [
+        "infraespinhoso",
+        "manguito rotador"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "BICEPS_BRACHII",
+      "label": "Bíceps braquial",
+      "muscleGroup": "BICEPS",
+      "role": "SECONDARY",
+      "aliases": [
+        "bíceps"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "BRACHIALIS",
+      "label": "Braquial",
+      "muscleGroup": "BICEPS",
+      "role": "SECONDARY",
+      "aliases": [
+        "braquial anterior"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "BRACHIORADIALIS",
+      "label": "Braquiorradial",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "braquiorradialis"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "FLEXOR_DIGITORUM_SUPERFICIALIS",
+      "label": "Flexor superficial dos dedos",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "pegada"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "FLEXOR_DIGITORUM_PROFUNDUS",
+      "label": "Flexor profundo dos dedos",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "pegada"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "FLEXOR_CARPI_ULNARIS",
+      "label": "Flexor ulnar do carpo",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "punho"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "EXTENSOR_CARPI_RADIALIS_BREVIS",
+      "label": "Extensor radial curto do carpo",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "punho"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "ERECTOR_SPINAE",
+      "label": "Eretores da coluna",
+      "muscleGroup": "BACK",
+      "role": "SECONDARY",
+      "aliases": [
+        "eretor da espinha",
+        "estabilizadores do tronco"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "FENWICK_2009",
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "RECTUS_ABDOMINIS",
+      "label": "Reto abdominal",
+      "muscleGroup": "CORE",
+      "role": "SECONDARY",
+      "aliases": [
+        "abdômen",
+        "abdominais"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "FENWICK_2009",
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "EXTERNAL_OBLIQUE",
+      "label": "Oblíquo externo",
+      "muscleGroup": "CORE",
+      "role": "SECONDARY",
+      "aliases": [
+        "oblíquos"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "FENWICK_2009",
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "RECTUS_FEMORIS",
+      "label": "Reto femoral",
+      "muscleGroup": "QUADRICEPS",
+      "role": "SECONDARY",
+      "aliases": [
+        "quadríceps",
+        "quadriceps"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "VASTUS_LATERALIS",
+      "label": "Vasto lateral",
+      "muscleGroup": "QUADRICEPS",
+      "role": "SECONDARY",
+      "aliases": [
+        "quadríceps"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "VASTUS_MEDIALIS",
+      "label": "Vasto medial",
+      "muscleGroup": "QUADRICEPS",
+      "role": "SECONDARY",
+      "aliases": [
+        "quadríceps"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "VASTUS_INTERMEDIUS",
+      "label": "Vasto intermédio",
+      "muscleGroup": "QUADRICEPS",
+      "role": "SECONDARY",
+      "aliases": [
+        "vasto intermediário",
+        "quadríceps"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "GLUTEUS_MAXIMUS",
+      "label": "Glúteo máximo",
+      "muscleGroup": "GLUTES",
+      "role": "SECONDARY",
+      "aliases": [
+        "glúteos",
+        "gluteus maximus"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "BICEPS_FEMORIS",
+      "label": "Bíceps femoral — cabeça longa",
+      "muscleGroup": "HAMSTRINGS",
+      "role": "SECONDARY",
+      "aliases": [
+        "posteriores da coxa",
+        "isquiotibiais"
+      ],
+      "regions": [
+        {
+          "id": "BICEPS_FEMORIS_LONG_HEAD",
+          "label": "Cabeça longa do bíceps femoral",
+          "aliases": [
+            "bíceps femoral cabeça longa"
+          ]
+        }
+      ],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "SEMITENDINOSUS",
+      "label": "Semitendíneo",
+      "muscleGroup": "HAMSTRINGS",
+      "role": "SECONDARY",
+      "aliases": [
+        "semitendinoso",
+        "semitendinosus",
+        "posteriores da coxa",
+        "isquiotibiais"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "SEMIMEMBRANOSUS",
+      "label": "Semimembranáceo",
+      "muscleGroup": "HAMSTRINGS",
+      "role": "SECONDARY",
+      "aliases": [
+        "semimembranoso",
+        "semimembranosus",
+        "posteriores da coxa",
+        "isquiotibiais"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "GLUTEUS_MEDIUS",
+      "label": "Glúteo médio",
+      "muscleGroup": "HIP_ABDUCTORS",
+      "role": "SECONDARY",
+      "aliases": [
+        "gluteus medius",
+        "abdutores do quadril"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ARNOLD_2010"
+      ]
+    },
+    {
+      "id": "SERRATUS_ANTERIOR",
+      "label": "Serrátil anterior",
+      "muscleGroup": "BACK",
+      "role": "SECONDARY",
+      "aliases": [
+        "serratus anterior",
+        "controle escapular"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OYAMA_2010"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "FENWICK_2009",
+      "title": "Fenwick, Brown & McGill — Comparison of Different Rowing Exercises (2009)",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19197209/",
+      "limitation": "Sete homens; remada curvada em pé, invertida e unilateral no cabo. Biomecânica/EMG aguda e amostra pequena; não comprova hipertrofia, segurança universal ou equivalência à remada apoiada com halter."
+    },
+    {
+      "id": "KANNO_2025",
+      "title": "Kanno et al. — Trunk flexion angle during bent-over rows (2025; online 2026)",
+      "url": "https://doi.org/10.32171/jscicoachingtraining.8.1_23",
+      "limitation": "Nove jogadores universitários de rugby; compara 40°/65°, quatro músculos. Diferenças individuais; sem ângulo ótimo universal e sem quantificar o avatar."
+    },
+    {
+      "id": "OPENSTAX_UPPER",
+      "title": "OpenStax Anatomy and Physiology 2e — Muscles of the Pectoral Girdle and Upper Limbs",
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-5-muscles-of-the-pectoral-girdle-and-upper-limbs",
+      "limitation": "Anatomia funcional: adução/extensão do ombro, flexão do cotovelo, controle escapular e pegada. Papéis não medidos no estudo e estabilização do tronco são inferências anatômicas/editoriais, sem quantificação nesta variação."
+    },
+    {
+      "id": "ARNOLD_2010",
+      "title": "Arnold et al. — A Model of the Lower Limb for Analysis of Human Movement",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2903973/",
+      "limitation": "Anatomia funcional das pernas. Sustentação da postura nesta remada é inferência anatômica, não intensidade EMG medida."
+    },
+    {
+      "id": "PADOVAN_SCAPULA_2026",
+      "title": "Padovan et al. — Scapular positions in the seated row (2026; online 24/12/2025)",
+      "url": "https://doi.org/10.3390/jfmk11010006",
+      "limitation": "14 homens treinados, remada sentada, 8RM, quatro repetições; HD-sEMG por fase, sem medir a cinemática do avatar ou hipertrofia. Movimento livre e escápulas fixas são condições distintas. Extrapolação para remada em pé/unilateral é anatômica e editorial."
+    },
+    {
+      "id": "OYAMA_2010",
+      "title": "Oyama et al. — Three-dimensional scapular and clavicular kinematics during retraction exercises",
+      "url": "https://doi.org/10.2519/jospt.2010.3018",
+      "limitation": "Adultos jovens saudáveis, seis exercícios de retração; rotação externa, rotação superior e inclinação posterior escapular, retração/depressão clavicular. Quantidades variam por tarefa. As amplitudes do avatar são ilustrativas, não valores medidos nesses exercícios."
+    },
+    {
+      "id": "VASCONCELOS_2023",
+      "title": "Vasconcelos et al. — Grip position and shoulder-abduction angle in the seated cable row",
+      "url": "https://doi.org/10.47206/ijsc.v3i1.190",
+      "limitation": "11 homens e 10 mulheres recreacionalmente treinados; testes isométricos/dinâmicos, pegadas pronada/supinada/neutra e abdução 30/60/90°. Maior abdução favoreceu trapézio/deltoide posterior nos registros; menor abdução, dorsal. Transferência para barra livre é inferência, não medição ou isolamento."
+    }
+  ],
+  "notes": "Extensão do úmero e retração escapular: dorsal, redondo maior, romboides e trapézio médio principais. Braços, manguito, pegada e eretores/abdômen coenvolvidos. Glúteos, isquiotibiais e quadríceps sustentam quadril e joelhos, sem serem o alvo principal. Tronco fixo em cerca de 52° de flexão a partir da vertical no rig: escolha ilustrativa, não ângulo ótimo extraído de EMG. Sem impulso, isolamento ou intensidade medida. Mesmas cores básicas de outras remadas são fundamentadas por ações comuns, com mapa postural próprio. Ênfase média do trapézio funcional, não medição regional. Revisão escapular: Na volta, permita que as escápulas se afastem sobre o tórax; ao puxar, aproxime-as de modo coordenado com os braços, mantendo a coluna estável. Serrátil anterior participa do controle, em destaque secundário ilustrativo. Escápulas têm controles independentes e pesos anatômicos; a trajetória não é produzida apenas pelo cotovelo. Ângulos não são medidas individuais.",
+  "instructions": {
+    "description": "Remada curvada bilateral com barra livre e pegada pronada, mantendo o quadril recuado e o tronco estável.",
+    "setup": "Apoie os pés no chão, flexione levemente os joelhos e incline o tronco a partir do quadril, preservando a curvatura natural da coluna. Segure a barra um pouco além dos ombros e mantenha o abdômen firme.",
+    "execution": "Puxe a barra em direção ao abdômen conduzindo os cotovelos para trás, sem levantar o tronco. Faça uma pausa breve e desça com controle até alongar os braços, mantendo os mesmos apoios. Na volta, permita que as escápulas se afastem sobre o tórax; ao puxar, aproxime-as de modo coordenado com os braços, mantendo a coluna estável.",
+    "tips": "Evite embalar o quadril, arredondar a coluna ou forçar o contato da barra com o corpo. Costas, braços, abdômen e músculos que sustentam a postura atuam juntos. Ângulos e cores são ilustrativos, sem medir EMG ou esforço real."
+  }
+}

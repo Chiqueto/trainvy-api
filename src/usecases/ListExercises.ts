@@ -1,10 +1,11 @@
-import { MuscleGroup, MuscleRole, Prisma } from "../generated/prisma/client.js";
 import {
-  getExerciseAnatomy,
   anatomySearchTerms,
   broadMuscleSearchTerms,
   type ExerciseAnatomy,
+  getExerciseAnatomy,
 } from "../domain/exercise-anatomy.js";
+import { RETIRED_GLOBAL_EXERCISES } from "../domain/retired-global-exercises.js";
+import { MuscleGroup, MuscleRole, Prisma } from "../generated/prisma/client.js";
 import { prisma } from "../lib/db.js";
 
 interface InputDto {
@@ -95,6 +96,7 @@ export class ListExercises {
     const deduplicatedMap = new Map<string, (typeof exercises)[0]>();
 
     for (const ex of exercises) {
+      if (ex.ownerUserId === null && RETIRED_GLOBAL_EXERCISES.has(ex.id) && !dto.onlyWithHistory) continue;
       const normalizedName = normalizeExerciseSearch(ex.name);
       const existing = deduplicatedMap.get(normalizedName);
 

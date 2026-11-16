@@ -1,14 +1,16 @@
 import { readFileSync } from "node:fs";
+
 import { describe, expect, it } from "vitest";
+
+import { CANONICAL_GLOBAL_CATALOG } from "../../src/domain/canonical-catalog.js";
+import priorities from "../../src/domain/exercise-3d-priority.json" with { type: "json" };
+import expansion from "../../src/domain/exercise-catalog-expansion.json" with { type: "json" };
 import {
   CatalogReviewEntry,
   REVIEWED_EXERCISES,
   REVIEWED_EXERCISES_BY_ID,
 } from "../../src/domain/exercise-catalog-review.js";
-import expansion from "../../src/domain/exercise-catalog-expansion.json" with { type: "json" };
 import variants from "../../src/domain/exercise-catalog-variants.json" with { type: "json" };
-import priorities from "../../src/domain/exercise-3d-priority.json" with { type: "json" };
-import { CANONICAL_GLOBAL_CATALOG } from "../../src/domain/canonical-catalog.js";
 
 const byName = (name: string) =>
   REVIEWED_EXERCISES.find((e) => e.name.split(" — ")[0] === name)!;
@@ -31,7 +33,7 @@ describe("Reviewed catalog coverage and biomechanics", () => {
   });
   it("covers all current IDs without aliases or missing classifications", () => {
     expect(REVIEWED_EXERCISES).toHaveLength(265 + variants.length);
-    expect(CANONICAL_GLOBAL_CATALOG).toHaveLength(51);
+    expect(CANONICAL_GLOBAL_CATALOG).toHaveLength(50);
     for (const exercise of [...CANONICAL_GLOBAL_CATALOG, ...expansion]) {
       expect(REVIEWED_EXERCISES_BY_ID.get(exercise.id)?.name).toBe(
         exercise.name,

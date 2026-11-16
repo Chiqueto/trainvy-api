@@ -1,6 +1,7 @@
 import { Prisma } from "../generated/prisma/client.js";
 import { prisma } from "../lib/db.js";
 import { GLOBAL_EXERCISE_ALIASES } from "./exercise-catalog-aliases.js";
+import { RETIRED_GLOBAL_EXERCISES } from "./retired-global-exercises.js";
 
 /**
  * Resolução canônica de exercício por nome exato normalizado (LOWER(TRIM(name))).
@@ -53,6 +54,7 @@ export async function resolveCanonicalExerciseMap(params: {
     if (ex.ownerUserId === userId) {
       userMap.set(key, ex.id);
     } else if (ex.ownerUserId === null) {
+      if (RETIRED_GLOBAL_EXERCISES.has(ex.id)) continue;
       if (!globalMap.has(key)) {
         globalMap.set(key, ex.id);
       }

@@ -1,5 +1,6 @@
 /** Exact legacy names; never infer equipment from a partial match. */
 export const GLOBAL_EXERCISE_ALIASES = new Map([
+  ["remada curvada", "00000000-0000-4000-8000-000000000121"],
   ["supino reto", "00000000-0000-4000-8000-000000000101"],
   ["agachamento", "00000000-0000-4000-8000-000000000105"],
   ["crucifixo no cabo na altura do peito", "46e31e5f-585b-4a3b-8b06-f6bed13440b5"],

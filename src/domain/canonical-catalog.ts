@@ -1,6 +1,7 @@
 import type { MuscleGroup } from "../generated/prisma/enums.js";
 import { GLOBAL_EXERCISE_ALIASES } from "./exercise-catalog-aliases.js";
 import { REVIEWED_EXERCISES } from "./exercise-catalog-review.js";
+import { RETIRED_GLOBAL_EXERCISES } from "./retired-global-exercises.js";
 
 export interface CanonicalGlobalExerciseDefinition {
   id: string;
@@ -13,7 +14,7 @@ export interface CanonicalGlobalExerciseDefinition {
 // Preserve retained bootstrap IDs; duplicate IDs are merged by the targeted migration.
 export const CANONICAL_GLOBAL_CATALOG: readonly CanonicalGlobalExerciseDefinition[] =
   REVIEWED_EXERCISES.filter((e) =>
-    /^00000000-0000-4000-8000-0000000001(?:0[1-9]|[1-4][0-9]|5[0-3])$/.test(
+    !RETIRED_GLOBAL_EXERCISES.has(e.id) && /^00000000-0000-4000-8000-0000000001(?:0[1-9]|[1-4][0-9]|5[0-3])$/.test(
       e.id,
     ),
   ).map(({ id, name, primary, secondary }) => ({
