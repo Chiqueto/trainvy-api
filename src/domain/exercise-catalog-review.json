@@ -424,12 +424,18 @@
       "BICEPS",
       "SHOULDERS",
       "FOREARMS",
-      "CORE"
+      "CORE",
+      "GLUTES",
+      "HAMSTRINGS",
+      "QUADRICEPS",
+      "HIP_ABDUCTORS"
     ],
     "sourceIds": [
-      "ace",
+      "bent-row-biomechanics",
+      "bent-row-angle",
       "upper-anatomy"
-    ]
+    ],
+    "notes": "Execução pronada com barra confirmada na mídia canônica; identidade e histórico próprios preservados."
   },
   {
     "id": "00000000-0000-4000-8000-000000000123",
