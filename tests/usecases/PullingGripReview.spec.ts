@@ -37,7 +37,7 @@ describe('pulldown identity and abdominal triangle grip review',()=>{
   }finally{await c.query('ROLLBACK');await c.end();}
  });
  it('offers one cable pulldown while retaining historical lookup and custom ownership',async()=>{
-  const row=(id:string,name:string,ownerUserId:string|null)=>({id,name,ownerUserId,isUnilateral:false,anatomyReview:null,muscles:[],media:[]});
+  const row=(id:string,name:string,ownerUserId:string|null)=>({id,name,ownerUserId,isUnilateral:false,anatomyReview:null,muscles:[],media:[],demonstrations:[]});
   const canonical=row(reviews[0].id,reviews[0].name,null),legacy=row(reviews[1].id,reviews[1].name,null),custom=row('custom','Puxada Frontal','athlete');
   const find=vi.spyOn(prisma.exercise,'findMany').mockResolvedValue([canonical,legacy] as never),sessions=vi.spyOn(prisma.sessionExercise,'findMany').mockResolvedValue([{exerciseId:legacy.id}] as never);
   try{
