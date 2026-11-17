@@ -1,6 +1,7 @@
 import type z from "zod";
 
 import { planDTO } from "../domain/admin-dto.js";
+import type { Prisma } from "../generated/prisma/client.js";
 import { prisma } from "../lib/db.js";
 import { AdminError, assertAdminUser } from "../lib/require-admin.js";
 import {
@@ -8,13 +9,36 @@ import {
   AdminEntitlementsBody,
   AdminPlanPatch,
 } from "../schemas/admin.js";
+import { readAiAvailability } from "./AiAvailability.js";
 
+async function assertPlanAiAvailable(
+  tx: Prisma.TransactionClient,
+  audience: string,
+  entitlements: { entitlement: string }[],
+) {
+  if (
+    !entitlements.some(
+      (e) =>
+        e.entitlement === "AI_CHAT" || e.entitlement === "AI_PLAN_GENERATION",
+    )
+  )
+    return;
+  const policy = await readAiAvailability(tx);
+  const enabled =
+    audience === "COACH"
+      ? policy.professionalAiEnabled
+      : audience === "ATHLETE"
+        ? policy.athleteAiEnabled
+        : policy.professionalAiEnabled && policy.athleteAiEnabled;
+  if (!enabled) throw new AdminError("PLAN_AI_DISABLED", 409);
+}
 export class ManageAdminPlan {
   async create(adminUserId: string, input: z.input<typeof AdminCreatePlan>) {
     const { entitlements, ...data } = AdminCreatePlan.parse(input);
     try {
       return await prisma.$transaction(async (tx) => {
         await assertAdminUser(tx, adminUserId);
+        await assertPlanAiAvailable(tx, data.audience, entitlements);
         const plan = await tx.plan.create({
           data: {
             ...data,
@@ -94,6 +118,7 @@ export class ManageAdminPlan {
         include: { entitlements: true },
       });
       if (!before) throw new AdminError("PLAN_NOT_FOUND", 404);
+      await assertPlanAiAvailable(tx, before.audience, data.entitlements);
       await tx.planEntitlement.deleteMany({ where: { planId } });
       if (data.entitlements.length)
         await tx.planEntitlement.createMany({

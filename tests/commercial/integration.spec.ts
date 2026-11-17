@@ -1,12 +1,14 @@
 import { readFile } from "node:fs/promises";
+
 import Fastify from "fastify";
 import {
   serializerCompiler,
   validatorCompiler,
 } from "fastify-type-provider-zod";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { prisma } from "../../src/lib/db.js";
+
 import { auth } from "../../src/lib/auth.js";
+import { prisma } from "../../src/lib/db.js";
 import { commercialRoutes } from "../../src/routes/commercial.js";
 import { CompleteSignup } from "../../src/usecases/CompleteSignup.js";
 import {
@@ -15,7 +17,7 @@ import {
 } from "../../src/usecases/CreateSignupIntent.js";
 import { GetCommercialContext } from "../../src/usecases/GetCommercialContext.js";
 import { ListPublicPlans } from "../../src/usecases/ListPublicPlans.js";
-import { createTestUser, cleanupTestUsers } from "../helpers/test-db.js";
+import { cleanupTestUsers,createTestUser } from "../helpers/test-db.js";
 
 const users: string[] = [],
   plans: string[] = [],
@@ -67,16 +69,37 @@ describe("Commercial integration (dedicated TEST_DATABASE_URL only)", () => {
       { accountType: "ATHLETE" as const, planCode: "COACH" },
       { accountType: "COACH" as const, planCode: "ATHLETE_FREE" },
     ]) {
-      await expect(new CreateSignupIntent().execute(input)).rejects.toThrow("INVALID_SIGNUP_PLAN");
+      await expect(new CreateSignupIntent().execute(input)).rejects.toThrow(
+        "INVALID_SIGNUP_PLAN",
+      );
     }
   });
   it("INTERNAL grants only after explicit trusted subscription assignment", async () => {
     const u = await user();
-    await prisma.user.update({ where: { id: u.id }, data: { accountSetupCompletedAt: new Date(), systemRole: "ADMIN" } });
-    expect((await new GetCommercialContext().execute({ userId: u.id })).entitlements).toEqual([]);
-    const internal = await prisma.plan.findUniqueOrThrow({ where: { code: "INTERNAL" } });
-    await prisma.subscription.create({ data: { userId: u.id, planId: internal.id, status: "ACTIVE", billingProvider: "MANUAL", priceInCentsSnapshot: 0, currencySnapshot: "BRL" } });
-    expect((await new GetCommercialContext().execute({ userId: u.id })).entitlements).toHaveLength(8);
+    await prisma.user.update({
+      where: { id: u.id },
+      data: { accountSetupCompletedAt: new Date(), systemRole: "ADMIN" },
+    });
+    expect(
+      (await new GetCommercialContext().execute({ userId: u.id })).entitlements,
+    ).toEqual([]);
+    const internal = await prisma.plan.findUniqueOrThrow({
+      where: { code: "INTERNAL" },
+      include: { entitlements: true },
+    });
+    await prisma.subscription.create({
+      data: {
+        userId: u.id,
+        planId: internal.id,
+        status: "ACTIVE",
+        billingProvider: "MANUAL",
+        priceInCentsSnapshot: 0,
+        currencySnapshot: "BRL",
+      },
+    });
+    expect(
+      (await new GetCommercialContext().execute({ userId: u.id })).entitlements,
+    ).toHaveLength(internal.entitlements.length);
   });
   it("creates a coach as PENDING/NONE, no paid entitlements, stores only token hash and snapshots price", async () => {
     const u = await user(),
@@ -369,6 +392,13 @@ describe("Commercial integration (dedicated TEST_DATABASE_URL only)", () => {
       new URL("../../prisma/commercial-bootstrap.sql", import.meta.url),
       "utf8",
     );
+    const catalogRevision = await readFile(
+      new URL(
+        "../../prisma/migrations/20261117120000_manual_commercial_catalog/migration.sql",
+        import.meta.url,
+      ),
+      "utf8",
+    );
     const rollback = new Error("ROLLBACK_FIXTURE");
     try {
       await prisma.$transaction(
@@ -415,6 +445,41 @@ describe("Commercial integration (dedicated TEST_DATABASE_URL only)", () => {
               'SELECT "accountSetupCompletedAt" FROM "user" WHERE id = \'new-user\'',
             ),
           ).toEqual([{ accountSetupCompletedAt: null }]);
+          // Exercise the actual revision against a legacy catalogue, without touching shared plans.
+          await tx.$executeRawUnsafe(
+            'UPDATE "Subscription" SET "planId" = \'commercial-coach-ai\', "priceInCentsSnapshot" = 7990',
+          );
+          for (const statement of catalogRevision
+            .replace(/\bBEGIN;/, "")
+            .replace(/COMMIT;\s*$/, "")
+            .split(";")
+            .filter((s) => s.trim()))
+            await tx.$executeRawUnsafe(statement);
+          expect(
+            await tx.$queryRawUnsafe(
+              'SELECT name, "monthlyPriceInCents" FROM "Plan" WHERE code = \'COACH_AI\'',
+            ),
+          ).toEqual([{ name: "Personal Pro", monthlyPriceInCents: 3990 }]);
+          expect(
+            await tx.$queryRawUnsafe(
+              "SELECT count(*)::int AS count FROM \"PlanEntitlement\" WHERE entitlement IN ('AI_CHAT', 'AI_PLAN_GENERATION', 'SOURCE_LIBRARY')",
+            ),
+          ).toEqual([{ count: 0 }]);
+          expect(
+            await tx.$queryRawUnsafe(
+              'SELECT "limitValue" FROM "PlanEntitlement" WHERE "planId" = \'commercial-coach\' AND entitlement = \'MANAGE_ATHLETES\'',
+            ),
+          ).toEqual([{ limitValue: 20 }]);
+          expect(
+            await tx.$queryRawUnsafe(
+              'SELECT "limitValue" FROM "PlanEntitlement" WHERE "planId" = \'commercial-coach-ai\' AND entitlement = \'MANAGE_ATHLETES\'',
+            ),
+          ).toEqual([{ limitValue: null }]);
+          expect(
+            await tx.$queryRawUnsafe(
+              'SELECT "priceInCentsSnapshot" FROM "Subscription"',
+            ),
+          ).toEqual([{ priceInCentsSnapshot: 7990 }]);
           await tx.$executeRawUnsafe(
             'UPDATE "Plan" SET "monthlyPriceInCents" = 4990 WHERE code = \'COACH\'',
           );

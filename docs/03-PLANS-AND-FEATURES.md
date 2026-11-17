@@ -1,5 +1,7 @@
 # 03 — Planos e Funcionalidades
 
+> Revisão de 17/11/2026: [catálogo comercial sem IA](COMMERCIAL-CATALOG-2026-11.md) substitui os preços e benefícios históricos abaixo. IA removida dos planos existentes; novas concessões dependem da flag da audiência.
+
 > Atualização de 10/11/2026: as permissões de IA dependem também dos controles globais por perfil, ambos desabilitados por padrão. Ofertas profissionais com IA ficam ocultas do cadastro quando a IA profissional está desligada. Assinaturas existentes são preservadas. Veja [disponibilidade de IA](AI-AVAILABILITY.md).
 
 ## Catálogo implementado — Task 4.1

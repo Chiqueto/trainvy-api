@@ -12,7 +12,9 @@ import {
   it,
   vi,
 } from "vitest";
+
 import { prisma } from "../../src/lib/db.js";
+import { aiAvailabilityRoutes } from "../../src/routes/ai-availability.js";
 import {
   AiAvailability,
   assertAiEnabledForUser,
@@ -21,7 +23,7 @@ import {
 import { CheckAndConsumeAiQuota } from "../../src/usecases/CheckAndConsumeAiQuota.js";
 import { CreateSignupIntent } from "../../src/usecases/CreateSignupIntent.js";
 import { ListPublicPlans } from "../../src/usecases/ListPublicPlans.js";
-import { aiAvailabilityRoutes } from "../../src/routes/ai-availability.js";
+import { ManageAdminPlan } from "../../src/usecases/ManageAdminPlan.js";
 import { cleanupTestUsers, createTestUser } from "../helpers/test-db.js";
 
 const session = vi.hoisted(() => ({ id: null as string | null }));
@@ -115,6 +117,68 @@ describe("persistent AI availability by account audience", () => {
     await expect(assertAiEnabledForUser(coach)).rejects.toMatchObject({
       code: "AI_DISABLED",
     });
+  });
+  it("blocks AI in plan creation and permission updates while allowing its removal", async () => {
+    const manager = new ManageAdminPlan();
+    const input = {
+      code: `FLAG_${crypto.randomUUID().replaceAll("-", "").toUpperCase()}`,
+      name: "Optional AI",
+      audience: "COACH" as const,
+      monthlyPriceInCents: 1990,
+      entitlements: [{ entitlement: "AI_CHAT" as const, limitValue: 10 }],
+    };
+    await expect(manager.create(admin, input)).rejects.toMatchObject({
+      code: "PLAN_AI_DISABLED",
+    });
+    await expect(
+      manager.entitlements(admin, planId, { entitlements: input.entitlements }),
+    ).rejects.toMatchObject({ code: "PLAN_AI_DISABLED" });
+    expect(
+      await prisma.plan.findUnique({ where: { code: input.code } }),
+    ).toBeNull();
+    const removed = await manager.entitlements(admin, planId, {
+      entitlements: [],
+    });
+    expect(removed.entitlements).toEqual([]);
+    // Restore the shared fixture used by subsequent availability cases.
+    await prisma.planEntitlement.create({
+      data: { planId, entitlement: "AI_CHAT" },
+    });
+  });
+  it("uses the target plan audience rather than the administrator's AI flag", async () => {
+    await prisma.aiAvailability.update({
+      where: { id: "global" },
+      data: { professionalAiEnabled: true },
+    });
+    const manager = new ManageAdminPlan();
+    const input = {
+      code: `FLAG_${crypto.randomUUID().replaceAll("-", "").toUpperCase()}`,
+      name: "Optional AI",
+      audience: "ATHLETE" as const,
+      monthlyPriceInCents: 1990,
+      entitlements: [{ entitlement: "AI_CHAT" as const, limitValue: 10 }],
+    };
+    await expect(manager.create(admin, input)).rejects.toMatchObject({
+      code: "PLAN_AI_DISABLED",
+    });
+    const created = await manager.create(admin, {
+      ...input,
+      audience: "COACH",
+    });
+    try {
+      expect(created.entitlements).toEqual(input.entitlements);
+      expect(
+        (
+          await manager.entitlements(admin, created.id, {
+            entitlements: [
+              { entitlement: "AI_PLAN_GENERATION", limitValue: 3 },
+            ],
+          })
+        ).entitlements[0].limitValue,
+      ).toBe(3);
+    } finally {
+      await prisma.plan.delete({ where: { id: created.id } });
+    }
   });
   it.each([
     [false, false],
