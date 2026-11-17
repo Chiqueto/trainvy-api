@@ -11,6 +11,7 @@ import {
   REVIEWED_EXERCISES_BY_ID,
 } from "../../src/domain/exercise-catalog-review.js";
 import variants from "../../src/domain/exercise-catalog-variants.json" with { type: "json" };
+import { RETIRED_GLOBAL_EXERCISES } from "../../src/domain/retired-global-exercises.js";
 
 const byName = (name: string) =>
   REVIEWED_EXERCISES.find((e) => e.name.split(" — ")[0] === name)!;
@@ -33,7 +34,7 @@ describe("Reviewed catalog coverage and biomechanics", () => {
   });
   it("covers all current IDs without aliases or missing classifications", () => {
     expect(REVIEWED_EXERCISES).toHaveLength(265 + variants.length);
-    expect(CANONICAL_GLOBAL_CATALOG).toHaveLength(50);
+    expect(CANONICAL_GLOBAL_CATALOG.some(e=>RETIRED_GLOBAL_EXERCISES.has(e.id))).toBe(false);
     for (const exercise of [...CANONICAL_GLOBAL_CATALOG, ...expansion]) {
       expect(REVIEWED_EXERCISES_BY_ID.get(exercise.id)?.name).toBe(
         exercise.name,

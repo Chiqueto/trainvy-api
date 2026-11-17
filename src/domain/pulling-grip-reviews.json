@@ -1,0 +1,27 @@
+[
+  {
+    "id": "00000000-0000-4000-8000-000000000119",
+    "slug": "lat-pulldown",
+    "oldName": "Puxada Frontal na Máquina",
+    "name": "Puxada Frontal no Cabo (Pronada)",
+    "previous": "lat-pulldown-scapular-anatomy.json",
+    "anatomyFile": "lat-pulldown-grip-anatomy.json"
+  },
+  {
+    "id": "00000000-0000-4000-8000-000000000120",
+    "slug": "front-lat-pulldown",
+    "oldName": "Puxada Frontal",
+    "name": "Puxada Frontal",
+    "previous": "front-lat-pulldown-scapular-anatomy.json",
+    "retired": true,
+    "anatomyFile": "front-lat-pulldown-grip-anatomy.json"
+  },
+  {
+    "id": "120f29ac-733c-478b-8aa9-a3f4c22f5e70",
+    "slug": "cable-row",
+    "oldName": "Remada Baixa no Cabo com Triângulo",
+    "name": "Remada Baixa no Cabo com Triângulo",
+    "previous": "cable-row-scapular-anatomy.json",
+    "anatomyFile": "cable-row-grip-anatomy.json"
+  }
+]

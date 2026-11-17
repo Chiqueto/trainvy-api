@@ -1,0 +1,334 @@
+{
+  "version": "2026-11-17.grip.1",
+  "reviewedAt": "2026-11-17T10:47:18.800Z",
+  "variant": "Remada baixa sentada no cabo com triângulo, pegada neutra e destino ao umbigo/abdômen, escápulas livres.",
+  "aliases": [
+    "remada baixa no cabo com triângulo",
+    "remada baixa no triângulo",
+    "seated cable row with triangle"
+  ],
+  "participants": [
+    {
+      "id": "LATISSIMUS_DORSI",
+      "label": "Latíssimo do dorso",
+      "muscleGroup": "BACK",
+      "role": "PRIMARY",
+      "aliases": [
+        "dorsal",
+        "grande dorsal",
+        "latissimus dorsi"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "PADOVAN_2025",
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "TERES_MAJOR",
+      "label": "Redondo maior",
+      "muscleGroup": "BACK",
+      "role": "PRIMARY",
+      "aliases": [
+        "teres major"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "TRAPEZIUS",
+      "label": "Trapézio",
+      "muscleGroup": "BACK",
+      "role": "PRIMARY",
+      "aliases": [
+        "trapézio médio",
+        "trapézio inferior",
+        "trapezius"
+      ],
+      "regions": [
+        {
+          "id": "TRAPEZIUS_TRANSVERSE",
+          "label": "Porção média do trapézio",
+          "aliases": [
+            "trapézio médio",
+            "porção transversa"
+          ]
+        },
+        {
+          "id": "TRAPEZIUS_DESCENDING",
+          "label": "Porção superior do trapézio",
+          "aliases": [
+            "trapézio superior"
+          ]
+        },
+        {
+          "id": "TRAPEZIUS_ASCENDING",
+          "label": "Porção inferior do trapézio",
+          "aliases": [
+            "trapézio inferior"
+          ]
+        }
+      ],
+      "emphasizedRegionIds": [
+        "TRAPEZIUS_TRANSVERSE"
+      ],
+      "sourceIds": [
+        "PADOVAN_2025",
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "RHOMBOIDS",
+      "label": "Romboides",
+      "muscleGroup": "BACK",
+      "role": "PRIMARY",
+      "aliases": [
+        "romboide maior",
+        "romboide menor"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "DELTOID_POSTERIOR",
+      "label": "Deltoide posterior",
+      "muscleGroup": "SHOULDERS",
+      "role": "SECONDARY",
+      "aliases": [
+        "ombro posterior"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "PADOVAN_2025",
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "INFRASPINATUS",
+      "label": "Infraespinal",
+      "muscleGroup": "SHOULDERS",
+      "role": "SECONDARY",
+      "aliases": [
+        "infraespinhoso",
+        "manguito rotador"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "BICEPS_BRACHII",
+      "label": "Bíceps braquial",
+      "muscleGroup": "BICEPS",
+      "role": "SECONDARY",
+      "aliases": [
+        "bíceps"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "PADOVAN_2025",
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "BRACHIALIS",
+      "label": "Braquial",
+      "muscleGroup": "BICEPS",
+      "role": "SECONDARY",
+      "aliases": [
+        "braquial anterior"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "BRACHIORADIALIS",
+      "label": "Braquiorradial",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "braquiorradialis"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "FLEXOR_DIGITORUM_SUPERFICIALIS",
+      "label": "Flexor superficial dos dedos",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "pegada"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "FLEXOR_DIGITORUM_PROFUNDUS",
+      "label": "Flexor profundo dos dedos",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "pegada"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "FLEXOR_CARPI_ULNARIS",
+      "label": "Flexor ulnar do carpo",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "punho"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "EXTENSOR_CARPI_RADIALIS_BREVIS",
+      "label": "Extensor radial curto do carpo",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "punho"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "ERECTOR_SPINAE",
+      "label": "Eretores da coluna",
+      "muscleGroup": "BACK",
+      "role": "SECONDARY",
+      "aliases": [
+        "eretor da espinha",
+        "estabilizadores do tronco"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "PADOVAN_2025",
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "RECTUS_ABDOMINIS",
+      "label": "Reto abdominal",
+      "muscleGroup": "CORE",
+      "role": "SECONDARY",
+      "aliases": [
+        "abdômen",
+        "abdominais"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "EXTERNAL_OBLIQUE",
+      "label": "Oblíquo externo",
+      "muscleGroup": "CORE",
+      "role": "SECONDARY",
+      "aliases": [
+        "oblíquos"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OPENSTAX_UPPER"
+      ]
+    },
+    {
+      "id": "SERRATUS_ANTERIOR",
+      "label": "Serrátil anterior",
+      "muscleGroup": "BACK",
+      "role": "SECONDARY",
+      "aliases": [
+        "serratus anterior",
+        "controle escapular"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "OYAMA_2010"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "PADOVAN_2025",
+      "title": "Padovan et al. — High-Density Surface Electromyography Excitation of Prime Movers in the Narrow vs. Wide Grip Seated Row Exercise (2025)",
+      "url": "https://doi.org/10.5114/jhk/209550",
+      "limitation": "14 homens treinados, 8RM, triângulo versus barra aberta; EMG por fase. Tronco fixo, joelhos levemente flexionados e triângulo ao abdômen. Diferenças agudas não medem hipertrofia nem definem anatomia individual ou ativação no avatar."
+    },
+    {
+      "id": "VASCONCELOS_2023",
+      "title": "Vasconcelos et al. — Effect of Different Grip Position and Shoulder-Abduction Angle During the Seated Cable Row (2023)",
+      "url": "https://doi.org/10.47206/ijsc.v3i1.190",
+      "limitation": "11 homens e 10 mulheres, análise isométrica/dinâmica, pegadas e abdução do ombro. Não estabelece a combinação ideal entre pegada e amplitude, nem permite extrapolar resultados a toda máquina de remada."
+    },
+    {
+      "id": "OPENSTAX_UPPER",
+      "title": "OpenStax Anatomy and Physiology 2e — Muscles of the Pectoral Girdle and Upper Limbs",
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-5-muscles-of-the-pectoral-girdle-and-upper-limbs",
+      "limitation": "Anatomia funcional: adução/extensão do ombro, flexão do cotovelo, controle escapular e pegada. Papéis não medidos no estudo e estabilização do tronco são inferências anatômicas/editoriais, sem quantificação nesta variação."
+    },
+    {
+      "id": "PADOVAN_SCAPULA_2026",
+      "title": "Padovan et al. — Scapular positions in the seated row (2026; online 24/12/2025)",
+      "url": "https://doi.org/10.3390/jfmk11010006",
+      "limitation": "14 homens treinados, remada sentada, 8RM, quatro repetições; HD-sEMG por fase, sem medir a cinemática do avatar ou hipertrofia. Movimento livre e escápulas fixas são condições distintas. Extrapolação para remada em pé/unilateral é anatômica e editorial."
+    },
+    {
+      "id": "OYAMA_2010",
+      "title": "Oyama et al. — Three-dimensional scapular and clavicular kinematics during retraction exercises",
+      "url": "https://doi.org/10.2519/jospt.2010.3018",
+      "limitation": "Adultos jovens saudáveis, seis exercícios de retração; rotação externa, rotação superior e inclinação posterior escapular, retração/depressão clavicular. Quantidades variam por tarefa. As amplitudes do avatar são ilustrativas, não valores medidos nesses exercícios."
+    },
+    {
+      "id": "CAUMES_GRIP_2019",
+      "title": "Caumes et al. — Complex couplings between joints, muscles and performance: the role of the wrist in grasping (2019)",
+      "url": "https://doi.org/10.1038/s41598-019-55443-w",
+      "limitation": "Preensão cilíndrica experimental e modelo musculoesquelético; informa a relação entre mão, dedos e punho, não mede estas animações nem prescreve um ângulo universal para remadas."
+    }
+  ],
+  "notes": "Extensão do ombro e retração escapular: dorsal, redondo maior, romboides e trapézio médio são principais na representação. Porções superior/inferior do trapézio e demais sinergistas/estabilizadores aparecem mais claros, sem mudar a classificação primária do grupo. A ênfase média é funcional/anatômica, não um mapa regional de EMG. Braços e manguito coenvolvidos; pegada/core mantêm apoio e estabilidade. Tronco fixo, cotovelos próximos e triângulo ao abdômen. Não há isolamento ou intensidade medida; ângulos e tempos do rig são ilustrativos, sem otimização universal. Revisão escapular: Na volta, permita que as escápulas se afastem sobre o tórax; ao puxar, aproxime-as de modo coordenado com os braços, mantendo a coluna estável. Serrátil anterior participa do controle, em destaque secundário ilustrativo. Escápulas têm controles independentes e pesos anatômicos; a trajetória não é produzida apenas pelo cotovelo. Ângulos não são medidas individuais. Mãos representam preensão cilíndrica com quatro dedos e polegar oposto, respeitando o eixo do acessório. Antebraço e punho têm orientações distintas para preservar o eixo ósseo e acomodar o encaixe; sem simulação de força de pegada ou ângulo ideal universal. O centro do triângulo usa o marco abdominal do atlas (y=1,065 m na pose de repouso; raiz y=1,142 m), transformado para a posição sentada. A orientação do acessório é definida pela linha do cabo até a polia baixa; não é herdada da rotação da mão. Estrutura, pegadores e cabo são conferidos fora do tórax em todas as fases.",
+  "instructions": {
+    "description": "Remada baixa bilateral na polia com triângulo e pegada neutra, palmas voltadas uma para a outra.",
+    "setup": "Sente-se no banco, apoie os pés na plataforma e mantenha os joelhos ligeiramente flexionados. Segure o triângulo com os braços alongados, coluna em posição confortável e tronco firme.",
+    "execution": "Conduza os cotovelos próximos ao corpo e puxe o triângulo em direção ao umbigo/abdômen, mantendo o tronco estável. O triângulo e o cabo permanecem à frente do corpo. Faça uma pausa breve e estenda os braços com controle, deixando as escápulas se afastarem naturalmente.",
+    "tips": "Mantenha os pés apoiados e a coluna estável. Segure os pegadores com as palmas voltadas uma para a outra, dedos envolvendo o metal e polegares opostos. Evite puxar ao peito ou usar o balanço do tronco. As cores são participação ilustrativa, sem EMG medido."
+  }
+}

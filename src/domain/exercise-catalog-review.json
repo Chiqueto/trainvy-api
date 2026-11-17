@@ -341,7 +341,7 @@
   },
   {
     "id": "00000000-0000-4000-8000-000000000119",
-    "name": "Puxada Frontal na Máquina",
+    "name": "Puxada Frontal no Cabo (Pronada)",
     "family": "Musculação tradicional — costas",
     "groups": [
       "RESISTANCE"
@@ -359,7 +359,7 @@
       "pulldown-emg-2025",
       "upper-anatomy"
     ],
-    "notes": "Puxada frontal pronada na polia alta: dorsal e redondo maior principais; bíceps, antebraços, estabilizadores escapulares/ombro e tronco coenvolvidos. Sem ênfase regional ou isolamento."
+    "notes": "Dorsal e redondo maior são os motores destacados; flexores do cotovelo, controle escapular, manguito, pegada e estabilizadores do tronco são coenvolvidos. Grupo BACK permanece principal, embora eretores/trapézio/romboides tenham papel secundário específico. Sem isolamento do dorsal, ranking de EMG ou ênfase regional demonstrada. Inclinação fixa de cerca de 7°, barra à frente do rosto e pegada de 1,5 vez os ombros são escolhas ilustrativas confortáveis do rig, não ótimos universais. Não extrapolar os resultados de 30° para esta postura. Sem subdividir dorsal em regiões não comprovadas. Cores representam categorias ilustrativas. Revisão escapular: Na volta acima da cabeça, permita elevação e rotação superior das escápulas. Ao puxar, elas acompanham a descida dos braços; não as mantenha permanentemente presas para baixo. Serrátil anterior participa do controle, em destaque secundário ilustrativo. Escápulas têm controles independentes e pesos anatômicos; a trajetória não é produzida apenas pelo cotovelo. Ângulos não são medidas individuais. Mãos representam preensão cilíndrica com quatro dedos e polegar oposto, respeitando o eixo do acessório. Antebraço e punho têm orientações distintas para preservar o eixo ósseo e acomodar o encaixe; sem simulação de força de pegada ou ângulo ideal universal. Consolida a antiga duplicidade entre os cadastros “Puxada Frontal na Máquina” e “Puxada Frontal”, que representavam a mesma execução no cabo. Nenhum histórico é transferido ou excluído."
   },
   {
     "id": "00000000-0000-4000-8000-000000000120",
@@ -381,7 +381,7 @@
       "pulldown-emg-2025",
       "upper-anatomy"
     ],
-    "notes": "Puxada frontal tradicional no pulley alto com pegada pronada; execução equivalente ao cadastro ...119, com identidade preservada e revisão anatômica própria."
+    "notes": "Dorsal e redondo maior são os motores destacados; flexores do cotovelo, controle escapular, manguito, pegada e estabilizadores do tronco são coenvolvidos. Grupo BACK permanece principal, embora eretores/trapézio/romboides tenham papel secundário específico. Sem isolamento do dorsal, ranking de EMG ou ênfase regional demonstrada. Inclinação fixa de cerca de 7°, barra à frente do rosto e pegada de 1,5 vez os ombros são escolhas ilustrativas confortáveis do rig, não ótimos universais. Não extrapolar os resultados de 30° para esta postura. Sem subdividir dorsal em regiões não comprovadas. Cores representam categorias ilustrativas. Equivalência da execução pronada no pulley verificada no canonical-media-catalog para o UUID ...120; preservado como cadastro distinto, sem fusão de IDs. Revisão escapular: Na volta acima da cabeça, permita elevação e rotação superior das escápulas. Ao puxar, elas acompanham a descida dos braços; não as mantenha permanentemente presas para baixo. Serrátil anterior participa do controle, em destaque secundário ilustrativo. Escápulas têm controles independentes e pesos anatômicos; a trajetória não é produzida apenas pelo cotovelo. Ângulos não são medidas individuais. Mãos representam preensão cilíndrica com quatro dedos e polegar oposto, respeitando o eixo do acessório. Antebraço e punho têm orientações distintas para preservar o eixo ósseo e acomodar o encaixe; sem simulação de força de pegada ou ângulo ideal universal. Cadastro equivalente ao UUID 00000000-0000-4000-8000-000000000119. Preservado somente para histórico e planos existentes; oculto das novas escolhas. O nome genérico resolve para a puxada no cabo canônica."
   },
   {
     "id": "00000000-0000-4000-8000-000000000121",
@@ -1201,7 +1201,7 @@
       "seated-row-angles",
       "upper-anatomy"
     ],
-    "notes": "Triângulo com pegada neutra, cotovelos próximos e tronco estável; extensão do ombro e retração escapular, sem isolamento do dorsal."
+    "notes": "Extensão do ombro e retração escapular: dorsal, redondo maior, romboides e trapézio médio são principais na representação. Porções superior/inferior do trapézio e demais sinergistas/estabilizadores aparecem mais claros, sem mudar a classificação primária do grupo. A ênfase média é funcional/anatômica, não um mapa regional de EMG. Braços e manguito coenvolvidos; pegada/core mantêm apoio e estabilidade. Tronco fixo, cotovelos próximos e triângulo ao abdômen. Não há isolamento ou intensidade medida; ângulos e tempos do rig são ilustrativos, sem otimização universal. Revisão escapular: Na volta, permita que as escápulas se afastem sobre o tórax; ao puxar, aproxime-as de modo coordenado com os braços, mantendo a coluna estável. Serrátil anterior participa do controle, em destaque secundário ilustrativo. Escápulas têm controles independentes e pesos anatômicos; a trajetória não é produzida apenas pelo cotovelo. Ângulos não são medidas individuais. Mãos representam preensão cilíndrica com quatro dedos e polegar oposto, respeitando o eixo do acessório. Antebraço e punho têm orientações distintas para preservar o eixo ósseo e acomodar o encaixe; sem simulação de força de pegada ou ângulo ideal universal. O centro do triângulo usa o marco abdominal do atlas (y=1,065 m na pose de repouso; raiz y=1,142 m), transformado para a posição sentada. A orientação do acessório é definida pela linha do cabo até a polia baixa; não é herdada da rotação da mão. Estrutura, pegadores e cabo são conferidos fora do tórax em todas as fases."
   },
   {
     "id": "16d9c6f7-ebb7-41d1-8743-ff22fdd72748",
