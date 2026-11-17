@@ -48,7 +48,7 @@ describe('row variants and scapular review delivery',()=>{
     }finally{await c.query('ROLLBACK');await c.end();}
   });
   it('retains the historical ID while excluding the duplicate from new selections and respecting custom ownership',async()=>{
-    const row=(id:string,name:string,ownerUserId:string|null)=>({id,name,ownerUserId,isUnilateral:false,anatomyReview:null,muscles:[],media:[]});
+    const row=(id:string,name:string,ownerUserId:string|null)=>({id,name,ownerUserId,isUnilateral:false,anatomyReview:null,muscles:[],media:[],demonstrations:[]});
     const canonical=row(ids[0],'Remada Curvada com Barra',null),legacy=row(ids[1],'Remada Curvada',null),custom=row('custom','Remada Curvada','athlete');
     const find=vi.spyOn(prisma.exercise,'findMany').mockResolvedValue([canonical,legacy,custom] as never);
     const sessions=vi.spyOn(prisma.sessionExercise,'findMany').mockResolvedValue([{exerciseId:ids[1]}] as never);
