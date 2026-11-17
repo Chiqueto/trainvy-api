@@ -37,17 +37,11 @@ export class FeatureTerms {
     const terms = getFeatureTerms(input.feature);
     if (input.version !== terms.version || input.textHash !== terms.textHash)
       throw new FeatureTermsError("FEATURE_TERMS_CHANGED", 409);
-    // Idempotent: retries never overwrite the original server timestamp or evidence.
-    await prisma.featureTermsAcceptance.upsert({
-      where: {
-        userId_feature_version_textHash: {
-          userId: input.userId,
-          feature: input.feature,
-          version: terms.version,
-          textHash: terms.textHash,
-        },
-      },
-      create: {
+    // PostgreSQL resolves concurrent inserts through the unique constraint.
+    // Unlike an upsert with an empty update, this never does a read-then-create
+    // and never overwrites the original timestamp or evidence on retries.
+    await prisma.featureTermsAcceptance.createMany({
+      data: {
         userId: input.userId,
         feature: input.feature,
         version: terms.version,
@@ -57,7 +51,7 @@ export class FeatureTerms {
         ipAddress: input.ipAddress,
         userAgent: input.userAgent?.slice(0, 1024) ?? null,
       },
-      update: {},
+      skipDuplicates: true,
     });
     return this.status(input.userId, input.feature);
   }

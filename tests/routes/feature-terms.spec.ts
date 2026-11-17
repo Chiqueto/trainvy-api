@@ -4,15 +4,17 @@ import {
   validatorCompiler,
 } from "fastify-type-provider-zod";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+
+import { getPersonalPlanningAiTools } from "../../src/ai/tools.js";
+import { getFeatureTerms } from "../../src/domain/feature-terms.js";
+import type { FeatureAccessEvent,FeatureTermsAcceptance } from "../../src/generated/prisma/client.js";
 import { featureTermsRoutes } from "../../src/routes/feature-terms.js";
 import { FeatureTerms } from "../../src/usecases/FeatureTerms.js";
-import { getFeatureTerms } from "../../src/domain/feature-terms.js";
-import { getPersonalPlanningAiTools } from "../../src/ai/tools.js";
 
 const state = vi.hoisted(() => ({
   userId: "user-a" as string | null,
-  rows: new Map<string, any>(),
-  events: [] as any[],
+  rows: new Map<string, FeatureTermsAcceptance>(),
+  events: [] as FeatureAccessEvent[],
 }));
 vi.mock("../../src/lib/auth.js", () => ({
   auth: {
@@ -32,20 +34,21 @@ vi.mock("../../src/lib/db.js", () => ({
             JSON.stringify(where.userId_feature_version_textHash),
           ) ?? null,
       ),
-      upsert: vi.fn(async ({ where, create }) => {
-        const key = JSON.stringify(where.userId_feature_version_textHash);
-        if (!state.rows.has(key))
+      createMany: vi.fn(async ({ data }) => {
+        const key = JSON.stringify({ userId: data.userId, feature: data.feature, version: data.version, textHash: data.textHash });
+        const exists = state.rows.has(key);
+        if (!exists)
           state.rows.set(key, {
-            ...create,
+            ...data,
             id: crypto.randomUUID(),
             acceptedAt: new Date(),
           });
-        return state.rows.get(key);
+        return { count: exists ? 0 : 1 };
       }),
     },
     featureAccessEvent: {
       create: vi.fn(async ({ data }) => {
-        const event = { ...data, id: crypto.randomUUID() };
+        const event = { ...data, id: crypto.randomUUID(), createdAt: new Date() };
         state.events.push(event);
         return event;
       }),

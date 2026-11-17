@@ -1,8 +1,9 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
+
+import { getFeatureTerms } from "../../src/domain/feature-terms.js";
 import { prisma } from "../../src/lib/db.js";
 import { FeatureTerms } from "../../src/usecases/FeatureTerms.js";
 import { ListFeatureTermsEvidence } from "../../src/usecases/ListFeatureTermsEvidence.js";
-import { getFeatureTerms } from "../../src/domain/feature-terms.js";
 
 const ownerId = crypto.randomUUID();
 const otherId = crypto.randomUUID();
@@ -24,14 +25,23 @@ describe("Feature terms PostgreSQL persistence", () => {
   it("persists exact terms and one immutable receipt even with concurrent retries", async () => {
     const t = getFeatureTerms("AI_WORKOUT");
     const input = { userId: ownerId, feature: t.feature, version: t.version, textHash: t.textHash, ipAddress: "127.0.0.1", userAgent: "Integration test browser" };
-    const [first, second] = await Promise.all([service.accept(input), service.accept(input)]);
-    expect(first.acceptanceId).toBe(second.acceptanceId);
-    expect(first.acceptedAt).toBe(second.acceptedAt);
+    const receipts = await Promise.all(Array.from({ length: 12 }, (_, index) =>
+      service.accept({ ...input, ipAddress: `127.0.0.${index + 1}`, userAgent: `Concurrent browser ${index}` }),
+    ));
+    const first = receipts[0];
+    expect(first.accepted).toBe(true);
+    expect(first.acceptanceId).toBeTruthy();
+    expect(new Set(receipts.map(receipt => receipt.acceptanceId)).size).toBe(1);
+    expect(new Set(receipts.map(receipt => receipt.acceptedAt)).size).toBe(1);
     const saved = await prisma.featureTermsAcceptance.findUniqueOrThrow({ where: { id: first.acceptanceId! } });
     expect(saved.text).toBe(t.text); expect(saved.textHash).toBe(t.textHash); expect(saved.title).toBe(t.title);
-    await service.accept({ ...input, userAgent: "Changed" });
+    await service.accept({ ...input, ipAddress: "192.0.2.1", userAgent: "Changed" });
     const again = await prisma.featureTermsAcceptance.findUniqueOrThrow({ where: { id: first.acceptanceId! } });
     expect(again.userAgent).toBe(saved.userAgent); expect(again.acceptedAt).toEqual(saved.acceptedAt);
+    expect(again.ipAddress).toBe(saved.ipAddress);
+    expect(saved.userAgent).toMatch(/^Concurrent browser \d+$/);
+    const winningRequest = Number(saved.userAgent!.split(" ").at(-1));
+    expect(saved.ipAddress).toBe(`127.0.0.${winningRequest + 1}`);
     expect(await prisma.featureTermsAcceptance.count({ where: { userId: ownerId } })).toBe(1);
   });
   it("keeps features and accounts isolated and refuses stale terms", async () => {

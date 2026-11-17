@@ -23,7 +23,7 @@ jobs:
   # =========================================================================
   validate-and-test:
     name: 1. Quality Gates & Test Database Validation
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     services:
       postgres:
         image: postgres:16
@@ -47,12 +47,12 @@ jobs:
       AI_DAILY_GLOBAL_LIMIT: "100000"
     steps:
       - name: Checkout API
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: bootcamp-treinos-api
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 24
           cache: 'npm'
@@ -89,7 +89,7 @@ jobs:
   production-deploy:
     name: 2. Production Migration & Deployment
     needs: [validate-and-test]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment:
       name: production
       url: ${{ steps.deploy-frontend.outputs.url || 'https://trainvy.app' }}
@@ -104,12 +104,12 @@ jobs:
           fi
 
       - name: Checkout API
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: bootcamp-treinos-api
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 24
 
@@ -201,7 +201,7 @@ jobs:
       # 2.6 Checkout e Publicação do Frontend
       # ---------------------------------------------------------------------
       - name: Checkout Frontend
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: Chiqueto/bootcamp-treinos-frontend
           path: bootcamp-treinos-frontend
