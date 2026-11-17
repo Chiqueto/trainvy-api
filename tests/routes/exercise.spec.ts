@@ -3,7 +3,16 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from "fastify-type-provider-zod";
-import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
+import {
+  afterAll,
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+} from "vitest";
 
 import { auth } from "../../src/lib/auth.js";
 import { exerciseRoutes } from "../../src/routes/exercise.js";
@@ -109,6 +118,66 @@ describe("Exercise HTTP Routes", () => {
       },
     });
     expect(dupRes.statusCode).toBe(409);
+  });
+
+  it("persiste detalhes por grupo, pesquisa regiões e mantém ownership e identidade", async () => {
+    mockAuthUser(userA);
+    const muscleDetails = [
+      { muscleGroup: "BACK", role: "PRIMARY", detailIds: ["RHOMBOIDS"] },
+    ];
+    const created = await app.inject({
+      method: "POST",
+      url: "/exercises",
+      payload: {
+        name: "Remada regional própria",
+        primaryMuscleGroups: ["BACK"],
+        muscleDetails,
+      },
+    });
+    expect(created.statusCode).toBe(201);
+    const id = created.json().id;
+    expect(created.json().muscleDetails).toEqual(muscleDetails);
+    const listed = await app.inject({
+      method: "GET",
+      url: "/exercises?onlyCustom=true&q=romboides",
+    });
+    expect(listed.json()).toEqual(
+      expect.arrayContaining([expect.objectContaining({ id, muscleDetails })]),
+    );
+    const invalid = await app.inject({
+      method: "PATCH",
+      url: `/exercises/${id}`,
+      payload: {
+        muscleDetails: [
+          { muscleGroup: "CHEST", role: "PRIMARY", detailIds: ["RHOMBOIDS"] },
+        ],
+      },
+    });
+    expect(invalid.statusCode).toBe(400);
+    mockAuthUser(userB);
+    const forbidden = await app.inject({
+      method: "PATCH",
+      url: `/exercises/${id}`,
+      payload: { muscleDetails: [] },
+    });
+    expect(forbidden.statusCode).toBe(404);
+    mockAuthUser(userA);
+    const renamed = await app.inject({
+      method: "PATCH",
+      url: `/exercises/${id}`,
+      payload: { name: "Remada renomeada" },
+    });
+    expect(renamed.statusCode).toBe(200);
+    expect(renamed.json()).toEqual(
+      expect.objectContaining({ id, muscleDetails }),
+    );
+    const cleared = await app.inject({
+      method: "PATCH",
+      url: `/exercises/${id}`,
+      payload: { muscleDetails: [] },
+    });
+    expect(cleared.statusCode).toBe(200);
+    expect(cleared.json().muscleDetails).toEqual([]);
   });
 
   it("GET /exercises/version — retorna versão e ETag para validação de cache", async () => {

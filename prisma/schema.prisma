@@ -247,6 +247,7 @@ model Exercise {
   name          String
   isUnilateral  Boolean  @default(false)
   anatomyReview Json?
+  muscleDetails Json?
   createdAt     DateTime @default(now()) @db.Timestamptz()
   updatedAt     DateTime @updatedAt @db.Timestamptz()
 

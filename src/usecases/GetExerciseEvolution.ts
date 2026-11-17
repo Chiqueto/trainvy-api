@@ -1,3 +1,4 @@
+import { readMuscleDetails, type MuscleDetails } from "../domain/muscle-details.js";
 import { resolveCanonicalExerciseId } from "../domain/canonical-exercise.js";
 import { decodeHistoryCursor, encodeHistoryCursor } from "../domain/history-cursor.js";
 import { NotFoundError } from "../errors/index.js";
@@ -24,6 +25,7 @@ export interface ExerciseEvolutionMuscle {
 }
 
 export interface ExerciseEvolutionExercise {
+  muscleDetails?: MuscleDetails;
   id: string;
   name: string;
   ownerUserId: string | null;
@@ -260,6 +262,7 @@ export class GetExerciseEvolution {
           name: targetExercise.name,
           ownerUserId: targetExercise.ownerUserId,
           muscles: sortedMuscles,
+        muscleDetails: readMuscleDetails(targetExercise.muscleDetails, targetExercise.muscles),
         },
         loadPR,
         items: [],
@@ -454,6 +457,7 @@ export class GetExerciseEvolution {
         name: targetExercise.name,
         ownerUserId: targetExercise.ownerUserId,
         muscles: sortedMuscles,
+        muscleDetails: readMuscleDetails(targetExercise.muscleDetails, targetExercise.muscles),
       },
       loadPR,
       items,

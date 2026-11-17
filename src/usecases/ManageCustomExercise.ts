@@ -10,6 +10,12 @@ import {
   type ExerciseDemonstrationInput,
 } from "../schemas/exercise-demonstration.js";
 
+import {
+  readMuscleDetails,
+  validateMuscleDetails,
+  type MuscleDetails,
+} from "../domain/muscle-details.js";
+
 export class DeleteCustomExercise {
   async execute({
     userId,
@@ -38,6 +44,7 @@ export class DeleteCustomExercise {
 }
 
 export interface UpdateCustomExerciseInput {
+  muscleDetails?: MuscleDetails;
   demonstration?: ExerciseDemonstrationInput;
   userId: string;
   exerciseId: string;
@@ -91,6 +98,25 @@ export class UpdateCustomExercise {
       }
     }
 
+    const primary =
+      dto.primaryMuscleGroups ??
+      existing.muscles
+        .filter((m) => m.role === "PRIMARY")
+        .map((m) => m.muscleGroup);
+    const secondary =
+      dto.secondaryMuscleGroups ??
+      existing.muscles
+        .filter((m) => m.role === "SECONDARY")
+        .map((m) => m.muscleGroup);
+    const pairs = [
+      ...primary.map((muscleGroup) => ({ muscleGroup, role: "PRIMARY" })),
+      ...secondary.map((muscleGroup) => ({ muscleGroup, role: "SECONDARY" })),
+    ];
+    const muscleDetails =
+      dto.muscleDetails === undefined
+        ? readMuscleDetails(existing.muscleDetails, pairs)
+        : validateMuscleDetails(dto.muscleDetails, primary, secondary);
+
     return await prisma.$transaction(async (tx) => {
       if (demonstration) {
         if (!demonstration.youtubeUrl && !demonstration.animationKey) {
@@ -119,6 +145,7 @@ export class UpdateCustomExercise {
         where: { id: dto.exerciseId },
         data: {
           name: trimmedName,
+          muscleDetails,
           isUnilateral:
             dto.isUnilateral !== undefined
               ? dto.isUnilateral
@@ -131,8 +158,8 @@ export class UpdateCustomExercise {
         dto.primaryMuscleGroups !== undefined ||
         dto.secondaryMuscleGroups !== undefined
       ) {
-        const primaries = dto.primaryMuscleGroups ?? [];
-        const secondaries = dto.secondaryMuscleGroups ?? [];
+        const primaries = primary;
+        const secondaries = secondary;
 
         // Validar que nenhum grupo é primário e secundário simultaneamente
         for (const p of primaries) {
@@ -182,6 +209,7 @@ export class UpdateCustomExercise {
       });
 
       return {
+        muscleDetails,
         demonstration: finalExercise.demonstrations[0]
           ? ExerciseDemonstrationSchema.parse(finalExercise.demonstrations[0])
           : null,

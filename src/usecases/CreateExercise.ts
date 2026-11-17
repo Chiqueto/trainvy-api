@@ -7,7 +7,13 @@ import {
   type ExerciseDemonstrationInput,
 } from "../schemas/exercise-demonstration.js";
 
+import {
+  validateMuscleDetails,
+  type MuscleDetails,
+} from "../domain/muscle-details.js";
+
 interface InputDto {
+  muscleDetails?: MuscleDetails;
   demonstration?: ExerciseDemonstrationInput;
   userId: string;
   name: string;
@@ -17,6 +23,7 @@ interface InputDto {
 }
 
 interface OutputDto {
+  muscleDetails?: MuscleDetails;
   hasMedia?: boolean;
   id: string;
   name: string;
@@ -45,6 +52,12 @@ export class CreateExercise {
       dto.secondaryMuscleGroups,
     );
 
+    const muscleDetails = validateMuscleDetails(
+      dto.muscleDetails ?? [],
+      primary,
+      secondary,
+    );
+
     try {
       const existing = await prisma.exercise.findFirst({
         where: {
@@ -61,6 +74,7 @@ export class CreateExercise {
         data: {
           id: crypto.randomUUID(),
           name: trimmedName,
+          muscleDetails,
           ownerUserId: dto.userId,
           isUnilateral: dto.isUnilateral ?? false,
           ...(demonstration &&
@@ -99,6 +113,7 @@ export class CreateExercise {
       });
 
       return {
+        muscleDetails,
         hasMedia: Boolean(
           demonstration?.youtubeUrl || demonstration?.animationKey,
         ),

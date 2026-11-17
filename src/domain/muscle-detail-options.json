@@ -1,0 +1,232 @@
+{
+  "BACK": [
+    {
+      "id": "LATISSIMUS_DORSI",
+      "label": "Latíssimo do dorso"
+    },
+    {
+      "id": "TERES_MAJOR",
+      "label": "Redondo maior"
+    },
+    {
+      "id": "TRAPEZIUS",
+      "label": "Trapézio"
+    },
+    {
+      "id": "TRAPEZIUS_TRANSVERSE",
+      "label": "Porção média do trapézio"
+    },
+    {
+      "id": "TRAPEZIUS_DESCENDING",
+      "label": "Porção superior do trapézio"
+    },
+    {
+      "id": "TRAPEZIUS_ASCENDING",
+      "label": "Porção inferior do trapézio"
+    },
+    {
+      "id": "RHOMBOIDS",
+      "label": "Romboides"
+    },
+    {
+      "id": "ERECTOR_SPINAE",
+      "label": "Eretores da coluna"
+    },
+    {
+      "id": "SERRATUS_ANTERIOR",
+      "label": "Serrátil anterior"
+    }
+  ],
+  "SHOULDERS": [
+    {
+      "id": "DELTOID_POSTERIOR",
+      "label": "Deltoide posterior"
+    },
+    {
+      "id": "INFRASPINATUS",
+      "label": "Infraespinal"
+    },
+    {
+      "id": "DELTOID_ANTERIOR",
+      "label": "Deltoide anterior"
+    }
+  ],
+  "BICEPS": [
+    {
+      "id": "BICEPS_BRACHII",
+      "label": "Bíceps braquial"
+    },
+    {
+      "id": "BRACHIALIS",
+      "label": "Braquial"
+    }
+  ],
+  "FOREARMS": [
+    {
+      "id": "BRACHIORADIALIS",
+      "label": "Braquiorradial"
+    },
+    {
+      "id": "FLEXOR_DIGITORUM_SUPERFICIALIS",
+      "label": "Flexor superficial dos dedos"
+    },
+    {
+      "id": "FLEXOR_DIGITORUM_PROFUNDUS",
+      "label": "Flexor profundo dos dedos"
+    },
+    {
+      "id": "FLEXOR_CARPI_ULNARIS",
+      "label": "Flexor ulnar do carpo"
+    },
+    {
+      "id": "EXTENSOR_CARPI_RADIALIS_BREVIS",
+      "label": "Extensor radial curto do carpo"
+    },
+    {
+      "id": "FOREARM_FLEXORS",
+      "label": "Flexores do antebraço"
+    }
+  ],
+  "CORE": [
+    {
+      "id": "RECTUS_ABDOMINIS",
+      "label": "Reto abdominal"
+    },
+    {
+      "id": "EXTERNAL_OBLIQUE",
+      "label": "Oblíquo externo"
+    }
+  ],
+  "QUADRICEPS": [
+    {
+      "id": "RECTUS_FEMORIS",
+      "label": "Reto femoral"
+    },
+    {
+      "id": "VASTUS_LATERALIS",
+      "label": "Vasto lateral"
+    },
+    {
+      "id": "VASTUS_MEDIALIS",
+      "label": "Vasto medial"
+    },
+    {
+      "id": "VASTUS_INTERMEDIUS",
+      "label": "Vasto intermédio"
+    }
+  ],
+  "GLUTES": [
+    {
+      "id": "GLUTEUS_MAXIMUS",
+      "label": "Glúteo máximo"
+    }
+  ],
+  "HAMSTRINGS": [
+    {
+      "id": "BICEPS_FEMORIS",
+      "label": "B?ceps femoral"
+    },
+    {
+      "id": "BICEPS_FEMORIS_LONG_HEAD",
+      "label": "Cabeça longa do bíceps femoral"
+    },
+    {
+      "id": "SEMITENDINOSUS",
+      "label": "Semitendíneo"
+    },
+    {
+      "id": "SEMIMEMBRANOSUS",
+      "label": "Semimembranáceo"
+    },
+    {
+      "id": "BICEPS_FEMORIS_SHORT_HEAD",
+      "label": "Cabeça curta do bíceps femoral"
+    }
+  ],
+  "HIP_ABDUCTORS": [
+    {
+      "id": "GLUTEUS_MEDIUS",
+      "label": "Glúteo médio"
+    },
+    {
+      "id": "GLUTEUS_MINIMUS",
+      "label": "Glúteo mínimo"
+    },
+    {
+      "id": "TENSOR_FASCIAE_LATAE",
+      "label": "Tensor da fáscia lata"
+    }
+  ],
+  "ADDUCTORS": [
+    {
+      "id": "ADDUCTOR_MAGNUS",
+      "label": "Adutor magno"
+    },
+    {
+      "id": "GRACILIS",
+      "label": "Grácil"
+    },
+    {
+      "id": "ADDUCTOR_LONGUS",
+      "label": "Adutor longo"
+    }
+  ],
+  "CHEST": [
+    {
+      "id": "PECTORALIS_MAJOR",
+      "label": "Peitoral maior"
+    },
+    {
+      "id": "PECTORALIS_MAJOR_CLAVICULAR",
+      "label": "Porção clavicular"
+    },
+    {
+      "id": "PECTORALIS_MAJOR_STERNOCOSTAL",
+      "label": "Porção esternocostal"
+    }
+  ],
+  "CALVES": [
+    {
+      "id": "GASTROCNEMIUS_MEDIAL",
+      "label": "Gastrocnêmio medial"
+    },
+    {
+      "id": "GASTROCNEMIUS_LATERAL",
+      "label": "Gastrocnêmio lateral"
+    },
+    {
+      "id": "SOLEUS",
+      "label": "Sóleo"
+    },
+    {
+      "id": "GASTROCNEMIUS",
+      "label": "Gastrocnêmio"
+    },
+    {
+      "id": "FIBULARIS_LONGUS",
+      "label": "Fibular longo"
+    },
+    {
+      "id": "FIBULARIS_BREVIS",
+      "label": "Fibular curto"
+    }
+  ],
+  "TIBIALIS_ANTERIOR": [
+    {
+      "id": "TIBIALIS_ANTERIOR",
+      "label": "Tibial anterior"
+    }
+  ],
+  "TRICEPS": [
+    {
+      "id": "TRICEPS_BRACHII",
+      "label": "Tríceps braquial"
+    }
+  ],
+  "HIP_FLEXORS": [
+    {
+      "id": "SARTORIUS",
+      "label": "Sartório"
+    }
+  ]
+}

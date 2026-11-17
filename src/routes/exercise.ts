@@ -81,19 +81,15 @@ export const exerciseRoutes: FastifyPluginAsyncZod = async (app) => {
             .status(error.status)
             .send({ error: error.message, code: error.code });
         if (error instanceof z.ZodError)
-          return reply
-            .status(400)
-            .send({
-              error: "Demonstração inválida.",
-              code: "VALIDATION_ERROR",
-            });
-        app.log.error(error);
-        return reply
-          .status(500)
-          .send({
-            error: "Internal server error",
-            code: "INTERNAL_SERVER_ERROR",
+          return reply.status(400).send({
+            error: "Demonstração inválida.",
+            code: "VALIDATION_ERROR",
           });
+        app.log.error(error);
+        return reply.status(500).send({
+          error: "Internal server error",
+          code: "INTERNAL_SERVER_ERROR",
+        });
       }
     },
   });
@@ -240,6 +236,7 @@ export const exerciseRoutes: FastifyPluginAsyncZod = async (app) => {
         const createExercise = new CreateExercise();
         const result = await createExercise.execute({
           demonstration: request.body.demonstration,
+          muscleDetails: request.body.muscleDetails,
           userId: session.user.id,
           name: request.body.name,
           isUnilateral: request.body.isUnilateral,
@@ -422,6 +419,7 @@ export const exerciseRoutes: FastifyPluginAsyncZod = async (app) => {
         const updateCustomExercise = new UpdateCustomExercise();
         const result = await updateCustomExercise.execute({
           demonstration: request.body.demonstration,
+          muscleDetails: request.body.muscleDetails,
           userId: session.user.id,
           exerciseId: request.params.id,
           name: request.body.name,

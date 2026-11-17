@@ -1,4 +1,5 @@
 import z from "zod";
+import { MuscleDetailsSchema } from "../domain/muscle-details.js";
 
 import { BirthDateSchema } from "../domain/birth-date.js";
 import { ExerciseAnatomySchema } from "../domain/exercise-anatomy.js";
@@ -592,6 +593,7 @@ export { ExerciseDemonstrationSchema } from "./exercise-demonstration.js";
 import { ExerciseDemonstrationSchema } from "./exercise-demonstration.js";
 
 export const ExerciseResponseSchema = z.object({
+  muscleDetails: MuscleDetailsSchema.optional(),
   demonstration: ExerciseDemonstrationSchema.nullable().optional(),
   id: z.uuid(),
   name: z.string(),
@@ -643,6 +645,7 @@ export const ListExercisesQuerySchema = z.object({
 });
 
 export const CreateExerciseBodySchema = z.object({
+  muscleDetails: MuscleDetailsSchema.optional(),
   demonstration: ExerciseDemonstrationSchema.optional(),
   name: z.string().min(1),
   isUnilateral: z.boolean().optional().default(false),
@@ -655,6 +658,7 @@ export const UpdateExerciseParamsSchema = z.object({
 });
 
 export const UpdateExerciseBodySchema = z.object({
+  muscleDetails: MuscleDetailsSchema.optional(),
   demonstration: ExerciseDemonstrationSchema.optional(),
   name: z.string().trim().min(1).optional(),
   isUnilateral: z.boolean().optional(),
@@ -1146,6 +1150,7 @@ export const ExerciseEvolutionMuscleSchema = z.object({
 });
 
 export const ExerciseEvolutionExerciseSchema = z.object({
+  muscleDetails: MuscleDetailsSchema.optional(),
   id: z.uuid(),
   name: z.string(),
   ownerUserId: z.string().nullable(),

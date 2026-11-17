@@ -12,6 +12,12 @@ import {
   type ExerciseDemonstrationInput,
 } from "../schemas/exercise-demonstration.js";
 
+import {
+  readMuscleDetails,
+  type MuscleDetails,
+} from "../domain/muscle-details.js";
+import detailOptions from "../domain/muscle-detail-options.json" with { type: "json" };
+
 interface InputDto {
   userId: string;
   query?: string;
@@ -23,6 +29,7 @@ interface InputDto {
 }
 
 export interface ExerciseOutputDto {
+  muscleDetails?: MuscleDetails;
   demonstration?: ExerciseDemonstrationInput | null;
   id: string;
   name: string;
@@ -82,6 +89,7 @@ export class ListExercises {
         ownerUserId: true,
         isUnilateral: true,
         anatomyReview: true,
+        muscleDetails: true,
         demonstrations: { where: { ownerUserId: dto.userId }, take: 1 },
         media: {
           where: { isActive: true },
@@ -140,6 +148,14 @@ export class ListExercises {
           .filter((exercise) =>
             [
               exercise.name,
+              ...readMuscleDetails(
+                exercise.muscleDetails,
+                exercise.muscles,
+              ).flatMap((d) =>
+                detailOptions[d.muscleGroup]
+                  .filter((o) => d.detailIds.includes(o.id))
+                  .map((o) => o.label),
+              ),
               ...anatomySearchTerms(
                 getExerciseAnatomy(exercise.anatomyReview, exercise.muscles),
               ),
@@ -183,6 +199,7 @@ export class ListExercises {
     const mappedExercises: ExerciseOutputDto[] = matchingExercises.map(
       (ex) => ({
         id: ex.id,
+        muscleDetails: readMuscleDetails(ex.muscleDetails, ex.muscles),
         demonstration: ex.demonstrations[0]
           ? {
               youtubeUrl: ex.demonstrations[0].youtubeUrl,
