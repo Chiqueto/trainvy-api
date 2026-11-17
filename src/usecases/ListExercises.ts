@@ -7,6 +7,10 @@ import {
 import { RETIRED_GLOBAL_EXERCISES } from "../domain/retired-global-exercises.js";
 import { MuscleGroup, MuscleRole, Prisma } from "../generated/prisma/client.js";
 import { prisma } from "../lib/db.js";
+import {
+  AnimationKeySchema,
+  type ExerciseDemonstrationInput,
+} from "../schemas/exercise-demonstration.js";
 
 interface InputDto {
   userId: string;
@@ -14,10 +18,12 @@ interface InputDto {
   limit?: number;
   onlyWithHistory?: boolean;
   onlyCustom?: boolean;
+  onlyGlobal?: boolean;
   minCompletedAt?: Date;
 }
 
 export interface ExerciseOutputDto {
+  demonstration?: ExerciseDemonstrationInput | null;
   id: string;
   name: string;
   ownerUserId: string | null;
@@ -57,9 +63,11 @@ export class ListExercises {
     // 2. Busca exercícios globais e customizados do usuário
     const where: Prisma.ExerciseWhereInput = dto.onlyCustom
       ? { ownerUserId: dto.userId }
-      : {
-          OR: [{ ownerUserId: null }, { ownerUserId: dto.userId }],
-        };
+      : dto.onlyGlobal
+        ? { ownerUserId: null }
+        : {
+            OR: [{ ownerUserId: null }, { ownerUserId: dto.userId }],
+          };
 
     if (dto.onlyWithHistory) {
       where.id = { in: Array.from(exercisedIds) };
@@ -74,6 +82,7 @@ export class ListExercises {
         ownerUserId: true,
         isUnilateral: true,
         anatomyReview: true,
+        demonstrations: { where: { ownerUserId: dto.userId }, take: 1 },
         media: {
           where: { isActive: true },
           select: { id: true },
@@ -96,7 +105,12 @@ export class ListExercises {
     const deduplicatedMap = new Map<string, (typeof exercises)[0]>();
 
     for (const ex of exercises) {
-      if (ex.ownerUserId === null && RETIRED_GLOBAL_EXERCISES.has(ex.id) && !dto.onlyWithHistory) continue;
+      if (
+        ex.ownerUserId === null &&
+        RETIRED_GLOBAL_EXERCISES.has(ex.id) &&
+        !dto.onlyWithHistory
+      )
+        continue;
       const normalizedName = normalizeExerciseSearch(ex.name);
       const existing = deduplicatedMap.get(normalizedName);
 
@@ -169,10 +183,18 @@ export class ListExercises {
     const mappedExercises: ExerciseOutputDto[] = matchingExercises.map(
       (ex) => ({
         id: ex.id,
+        demonstration: ex.demonstrations[0]
+          ? {
+              youtubeUrl: ex.demonstrations[0].youtubeUrl,
+              animationKey: AnimationKeySchema.nullable()
+                .catch(null)
+                .parse(ex.demonstrations[0].animationKey),
+            }
+          : null,
         name: ex.name,
         ownerUserId: ex.ownerUserId,
         isUnilateral: ex.isUnilateral,
-        hasMedia: ex.media.length > 0,
+        hasMedia: ex.media.length > 0 || ex.demonstrations.length > 0,
         muscles: ex.muscles,
         anatomy: getExerciseAnatomy(ex.anatomyReview, ex.muscles),
       }),

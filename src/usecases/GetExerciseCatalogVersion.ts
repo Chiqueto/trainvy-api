@@ -27,7 +27,12 @@ export class GetExerciseCatalogVersion {
     const count = aggregate._count.id;
     const maxUpdatedAt = aggregate._max.updatedAt;
     const timestamp = maxUpdatedAt ? maxUpdatedAt.getTime() : 0;
-    const version = `v${count}-${timestamp}`;
+    const demonstration = await prisma.exerciseDemonstration.aggregate({
+      where: { ownerUserId: dto.userId },
+      _count: { id: true },
+      _max: { updatedAt: true },
+    });
+    const version = `v${count}-${timestamp}-d${demonstration._count.id}-${demonstration._max.updatedAt?.getTime() ?? 0}`;
 
     return {
       version,

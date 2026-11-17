@@ -77,6 +77,7 @@ enum ExerciseMediaType {
 }
 
 model User {
+  exerciseDemonstrations ExerciseDemonstration[]
   coachOnboardingCompleted Boolean @default(false)
   workoutBuilderOnboardingCompleted Boolean @default(false)
   // Private, credential-free record created by a coach before the athlete signs up.
@@ -233,6 +234,7 @@ model WorkoutDay {
 }
 
 model Exercise {
+  demonstrations ExerciseDemonstration[]
   biomechanicalReviewStatus String @default("PENDING_REVIEW")
   reviewedByProfessionalName String?
   reviewedByCref String?
@@ -261,6 +263,21 @@ model Exercise {
   workoutSetProposals          WorkoutSetProposal[]
 
   @@index([ownerUserId, name])
+}
+
+model ExerciseDemonstration {
+  id String @id @default(uuid())
+  exerciseId String
+  exercise Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  ownerUserId String
+  owner User @relation(fields: [ownerUserId], references: [id], onDelete: Cascade)
+  youtubeUrl String?
+  animationKey String?
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  updatedAt DateTime @updatedAt @db.Timestamptz()
+
+  @@unique([exerciseId, ownerUserId])
+  @@index([ownerUserId])
 }
 
 model ExerciseMedia {

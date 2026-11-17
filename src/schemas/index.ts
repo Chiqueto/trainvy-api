@@ -381,17 +381,20 @@ export const UpdateGamificationThemeResponseSchema = z.object({
   gamificationTheme: z.enum(GamificationTheme),
 });
 
-export const UserTrainDataBodySchema = z.object({
-  weightInGrams: z.number().min(1),
-  heightInCentimeters: z.number().min(1),
-  age: z.number().int().min(1).optional(),
-  birthDate: BirthDateSchema.optional(),
-  trainingGoals: z.string().trim().min(1).max(1000).optional(),
-  bodyFatPercentage: z.number().int().min(0).max(100).nullable().optional(),
-  gamificationTheme: z.enum(GamificationTheme).optional(),
-}).refine((value) => value.age !== undefined || value.birthDate !== undefined, {
-  message: "Informe a data de nascimento ou a idade legada.", path: ["birthDate"],
-});
+export const UserTrainDataBodySchema = z
+  .object({
+    weightInGrams: z.number().min(1),
+    heightInCentimeters: z.number().min(1),
+    age: z.number().int().min(1).optional(),
+    birthDate: BirthDateSchema.optional(),
+    trainingGoals: z.string().trim().min(1).max(1000).optional(),
+    bodyFatPercentage: z.number().int().min(0).max(100).nullable().optional(),
+    gamificationTheme: z.enum(GamificationTheme).optional(),
+  })
+  .refine((value) => value.age !== undefined || value.birthDate !== undefined, {
+    message: "Informe a data de nascimento ou a idade legada.",
+    path: ["birthDate"],
+  });
 
 export const UserTrainDataResponseSchema = z.object({
   userId: z.string(),
@@ -585,7 +588,11 @@ export const ExerciseMuscleResponseSchema = z.object({
   role: MuscleRoleSchema,
 });
 
+export { ExerciseDemonstrationSchema } from "./exercise-demonstration.js";
+import { ExerciseDemonstrationSchema } from "./exercise-demonstration.js";
+
 export const ExerciseResponseSchema = z.object({
+  demonstration: ExerciseDemonstrationSchema.nullable().optional(),
   id: z.uuid(),
   name: z.string(),
   ownerUserId: z.string().nullable(),
@@ -613,6 +620,7 @@ export const ExerciseMediaParamsSchema = z.object({
 });
 
 export const ExerciseMediaResponseSchema = z.object({
+  demonstration: ExerciseDemonstrationSchema.nullable().optional(),
   biomechanicalReviewStatus: z.string().optional(),
   safetyDisclaimerMd: z.string().nullable().optional(),
   anatomy: ExerciseAnatomySchema.nullable().optional(),
@@ -628,12 +636,14 @@ export const ExerciseMediaResponseSchema = z.object({
 });
 
 export const ListExercisesQuerySchema = z.object({
+  onlyGlobal: z.string().optional(),
   q: z.string().optional(),
   onlyWithHistory: z.string().optional(),
   onlyCustom: z.string().optional(),
 });
 
 export const CreateExerciseBodySchema = z.object({
+  demonstration: ExerciseDemonstrationSchema.optional(),
   name: z.string().min(1),
   isUnilateral: z.boolean().optional().default(false),
   primaryMuscleGroups: z.array(MuscleGroupSchema).optional(),
@@ -645,6 +655,7 @@ export const UpdateExerciseParamsSchema = z.object({
 });
 
 export const UpdateExerciseBodySchema = z.object({
+  demonstration: ExerciseDemonstrationSchema.optional(),
   name: z.string().trim().min(1).optional(),
   isUnilateral: z.boolean().optional(),
   primaryMuscleGroups: z.array(MuscleGroupSchema).optional(),
@@ -1655,4 +1666,3 @@ export type UpdateNotificationPreferencesBody = z.infer<
 export const CronStreakRemindersResponseSchema = z.object({
   sent: z.number(),
 });
-

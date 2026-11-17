@@ -2,8 +2,13 @@ import { validateAndSanitizeMuscles } from "../domain/muscle-taxonomy.js";
 import { ConflictError, ValidationError } from "../errors/index.js";
 import { MuscleGroup, MuscleRole, Prisma } from "../generated/prisma/client.js";
 import { prisma } from "../lib/db.js";
+import {
+  ExerciseDemonstrationSchema,
+  type ExerciseDemonstrationInput,
+} from "../schemas/exercise-demonstration.js";
 
 interface InputDto {
+  demonstration?: ExerciseDemonstrationInput;
   userId: string;
   name: string;
   isUnilateral?: boolean;
@@ -12,6 +17,7 @@ interface InputDto {
 }
 
 interface OutputDto {
+  hasMedia?: boolean;
   id: string;
   name: string;
   ownerUserId: string;
@@ -25,6 +31,9 @@ interface OutputDto {
 
 export class CreateExercise {
   async execute(dto: InputDto): Promise<OutputDto> {
+    const demonstration = dto.demonstration
+      ? ExerciseDemonstrationSchema.parse(dto.demonstration)
+      : undefined;
     const trimmedName = dto.name.trim();
 
     if (!trimmedName) {
@@ -54,6 +63,14 @@ export class CreateExercise {
           name: trimmedName,
           ownerUserId: dto.userId,
           isUnilateral: dto.isUnilateral ?? false,
+          ...(demonstration &&
+          (demonstration.youtubeUrl || demonstration.animationKey)
+            ? {
+                demonstrations: {
+                  create: { ownerUserId: dto.userId, ...demonstration },
+                },
+              }
+            : {}),
           muscles: {
             create: [
               ...primary.map((mg) => ({
@@ -82,6 +99,9 @@ export class CreateExercise {
       });
 
       return {
+        hasMedia: Boolean(
+          demonstration?.youtubeUrl || demonstration?.animationKey,
+        ),
         id: exercise.id,
         name: exercise.name,
         ownerUserId: dto.userId,
