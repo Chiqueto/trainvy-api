@@ -1,6 +1,14 @@
 import { MuscleGroup, MuscleRole } from "../generated/prisma/enums.js";
-import { ConflictError, NotFoundError, ValidationError } from "../errors/index.js";
+import {
+  ConflictError,
+  NotFoundError,
+  ValidationError,
+} from "../errors/index.js";
 import { prisma } from "../lib/db.js";
+import {
+  ExerciseDemonstrationSchema,
+  type ExerciseDemonstrationInput,
+} from "../schemas/exercise-demonstration.js";
 
 export class DeleteCustomExercise {
   async execute({
@@ -30,6 +38,7 @@ export class DeleteCustomExercise {
 }
 
 export interface UpdateCustomExerciseInput {
+  demonstration?: ExerciseDemonstrationInput;
   userId: string;
   exerciseId: string;
   name?: string;
@@ -40,6 +49,9 @@ export interface UpdateCustomExerciseInput {
 
 export class UpdateCustomExercise {
   async execute(dto: UpdateCustomExerciseInput) {
+    const demonstration = dto.demonstration
+      ? ExerciseDemonstrationSchema.parse(dto.demonstration)
+      : undefined;
     const existing = await prisma.exercise.findUnique({
       where: { id: dto.exerciseId },
       include: { muscles: true },
@@ -52,7 +64,8 @@ export class UpdateCustomExercise {
       );
     }
 
-    const trimmedName = dto.name !== undefined ? dto.name.trim() : existing.name;
+    const trimmedName =
+      dto.name !== undefined ? dto.name.trim() : existing.name;
     if (!trimmedName) {
       throw new ValidationError("O nome do exercício não pode ser vazio.");
     }
@@ -79,17 +92,45 @@ export class UpdateCustomExercise {
     }
 
     return await prisma.$transaction(async (tx) => {
+      if (demonstration) {
+        if (!demonstration.youtubeUrl && !demonstration.animationKey) {
+          await tx.exerciseDemonstration.deleteMany({
+            where: { exerciseId: dto.exerciseId, ownerUserId: dto.userId },
+          });
+        } else {
+          await tx.exerciseDemonstration.upsert({
+            where: {
+              exerciseId_ownerUserId: {
+                exerciseId: dto.exerciseId,
+                ownerUserId: dto.userId,
+              },
+            },
+            create: {
+              exerciseId: dto.exerciseId,
+              ownerUserId: dto.userId,
+              ...demonstration,
+            },
+            update: demonstration,
+          });
+        }
+      }
       // 1. Atualizar campos básicos
       const updatedExercise = await tx.exercise.update({
         where: { id: dto.exerciseId },
         data: {
           name: trimmedName,
-          isUnilateral: dto.isUnilateral !== undefined ? dto.isUnilateral : existing.isUnilateral,
+          isUnilateral:
+            dto.isUnilateral !== undefined
+              ? dto.isUnilateral
+              : existing.isUnilateral,
         },
       });
 
       // 2. Se foram passados grupos musculares, substituir relações
-      if (dto.primaryMuscleGroups !== undefined || dto.secondaryMuscleGroups !== undefined) {
+      if (
+        dto.primaryMuscleGroups !== undefined ||
+        dto.secondaryMuscleGroups !== undefined
+      ) {
         const primaries = dto.primaryMuscleGroups ?? [];
         const secondaries = dto.secondaryMuscleGroups ?? [];
 
@@ -136,15 +177,21 @@ export class UpdateCustomExercise {
         include: {
           muscles: true,
           media: { where: { isActive: true }, take: 1 },
+          demonstrations: { where: { ownerUserId: dto.userId }, take: 1 },
         },
       });
 
       return {
+        demonstration: finalExercise.demonstrations[0]
+          ? ExerciseDemonstrationSchema.parse(finalExercise.demonstrations[0])
+          : null,
         id: finalExercise.id,
         name: finalExercise.name,
         ownerUserId: finalExercise.ownerUserId,
         isUnilateral: finalExercise.isUnilateral,
-        hasMedia: finalExercise.media.length > 0,
+        hasMedia:
+          finalExercise.media.length > 0 ||
+          finalExercise.demonstrations.length > 0,
         muscles: finalExercise.muscles.map((m) => ({
           id: m.id,
           muscleGroup: m.muscleGroup,

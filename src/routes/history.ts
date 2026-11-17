@@ -22,6 +22,11 @@ import {
   ListWorkoutHistoryQuerySchema,
   ListWorkoutHistoryResponseSchema,
 } from "../schemas/index.js";
+import {
+  CurrentTrainingWeekQuerySchema,
+  CurrentTrainingWeekResponseSchema,
+} from "../schemas/training-week.js";
+import { GetCurrentTrainingWeek } from "../usecases/GetCurrentTrainingWeek.js";
 import { GetExerciseEvolution } from "../usecases/GetExerciseEvolution.js";
 import { GetMuscleTrainingAnalytics } from "../usecases/GetMuscleTrainingAnalytics.js";
 import { GetWeeklyTrainingAnalytics } from "../usecases/GetWeeklyTrainingAnalytics.js";
@@ -29,6 +34,50 @@ import { GetWorkoutHistorySession } from "../usecases/GetWorkoutHistorySession.j
 import { ListWorkoutHistory } from "../usecases/ListWorkoutHistory.js";
 
 export const historyRoutes: FastifyPluginAsyncZod = async (app) => {
+  app.route({
+    method: "GET",
+    url: "/analytics/current-week",
+    schema: {
+      operationId: "getCurrentTrainingWeek",
+      tags: ["History"],
+      summary: "Get completed training for the current Sunday–Saturday week",
+      querystring: CurrentTrainingWeekQuerySchema,
+      response: {
+        200: CurrentTrainingWeekResponseSchema,
+        400: ErrorSchema,
+        401: ErrorSchema,
+        500: ErrorSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      try {
+        const session = await auth.api.getSession({
+          headers: fromNodeHeaders(request.headers),
+        });
+        if (!session)
+          return reply
+            .status(401)
+            .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+        const result = await new GetCurrentTrainingWeek().execute({
+          userId: session.user.id,
+          tz: request.query.tz,
+        });
+        return reply.status(200).send(result);
+      } catch (error) {
+        if (error instanceof InvalidTimezoneError)
+          return reply
+            .status(400)
+            .send({ error: error.message, code: error.code });
+        app.log.error(error);
+        return reply
+          .status(500)
+          .send({
+            error: "Internal server error",
+            code: "INTERNAL_SERVER_ERROR",
+          });
+      }
+    },
+  });
   // GET /history/analytics/weekly
   app.route({
     method: "GET",
@@ -68,7 +117,10 @@ export const historyRoutes: FastifyPluginAsyncZod = async (app) => {
 
         return reply.status(200).send(result);
       } catch (error) {
-        if (error instanceof InvalidTimezoneError || error instanceof InvalidDateRangeError) {
+        if (
+          error instanceof InvalidTimezoneError ||
+          error instanceof InvalidDateRangeError
+        ) {
           return reply.status(400).send({
             error: error.message,
             code: error.code,
@@ -122,7 +174,10 @@ export const historyRoutes: FastifyPluginAsyncZod = async (app) => {
 
         return reply.status(200).send(result);
       } catch (error) {
-        if (error instanceof InvalidTimezoneError || error instanceof InvalidDateRangeError) {
+        if (
+          error instanceof InvalidTimezoneError ||
+          error instanceof InvalidDateRangeError
+        ) {
           return reply.status(400).send({
             error: error.message,
             code: error.code,
@@ -251,7 +306,8 @@ export const historyRoutes: FastifyPluginAsyncZod = async (app) => {
     schema: {
       operationId: "getExerciseEvolution",
       tags: ["History"],
-      summary: "Get longitudinal evolution and load PR for a specific canonical exercise",
+      summary:
+        "Get longitudinal evolution and load PR for a specific canonical exercise",
       params: GetExerciseEvolutionParamsSchema,
       querystring: GetExerciseEvolutionQuerySchema,
       response: {

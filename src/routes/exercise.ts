@@ -2,7 +2,11 @@ import { fromNodeHeaders } from "better-auth/node";
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import z from "zod";
 
-import { ConflictError, NotFoundError, ValidationError } from "../errors/index.js";
+import {
+  ConflictError,
+  NotFoundError,
+  ValidationError,
+} from "../errors/index.js";
 import { auth } from "../lib/auth.js";
 import {
   CreateExerciseBodySchema,
@@ -27,8 +31,72 @@ import {
   UpdateCustomExercise,
 } from "../usecases/ManageCustomExercise.js";
 import { UpdateExerciseMuscles } from "../usecases/UpdateExerciseMuscles.js";
+import { ExerciseDemonstrationSchema } from "../schemas/exercise-demonstration.js";
+import { SaveExerciseDemonstration } from "../usecases/SaveExerciseDemonstration.js";
+import { CoachAthleteError } from "../domain/coach-athlete.js";
 
 export const exerciseRoutes: FastifyPluginAsyncZod = async (app) => {
+  app.route({
+    method: "PUT",
+    url: "/:exerciseId/demonstration",
+    schema: {
+      operationId: "saveExerciseDemonstration",
+      tags: ["Exercise"],
+      summary:
+        "Save or remove a private exercise demonstration; never changes global media",
+      params: ExerciseMediaParamsSchema,
+      body: ExerciseDemonstrationSchema,
+      response: {
+        200: ExerciseDemonstrationSchema,
+        400: ErrorSchema,
+        401: ErrorSchema,
+        403: ErrorSchema,
+        404: ErrorSchema,
+        409: ErrorSchema,
+        500: ErrorSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const session = await auth.api.getSession({
+        headers: fromNodeHeaders(request.headers),
+      });
+      if (!session)
+        return reply
+          .status(401)
+          .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+      try {
+        const result = await new SaveExerciseDemonstration().execute({
+          userId: session.user.id,
+          exerciseId: request.params.exerciseId,
+          demonstration: request.body,
+        });
+        return reply.status(200).send(result);
+      } catch (error) {
+        if (error instanceof NotFoundError)
+          return reply
+            .status(404)
+            .send({ error: error.message, code: error.code });
+        if (error instanceof CoachAthleteError)
+          return reply
+            .status(error.status)
+            .send({ error: error.message, code: error.code });
+        if (error instanceof z.ZodError)
+          return reply
+            .status(400)
+            .send({
+              error: "Demonstração inválida.",
+              code: "VALIDATION_ERROR",
+            });
+        app.log.error(error);
+        return reply
+          .status(500)
+          .send({
+            error: "Internal server error",
+            code: "INTERNAL_SERVER_ERROR",
+          });
+      }
+    },
+  });
   // GET /exercises/version — Retorna versão leve do catálogo para validação de cache
   app.route({
     method: "GET",
@@ -36,7 +104,8 @@ export const exerciseRoutes: FastifyPluginAsyncZod = async (app) => {
     schema: {
       operationId: "getExerciseCatalogVersion",
       tags: ["Exercise"],
-      summary: "Get the current version and timestamp of the exercise catalog for caching",
+      summary:
+        "Get the current version and timestamp of the exercise catalog for caching",
       response: {
         200: ExerciseCatalogVersionResponseSchema,
         401: ErrorSchema,
@@ -78,7 +147,8 @@ export const exerciseRoutes: FastifyPluginAsyncZod = async (app) => {
     schema: {
       operationId: "listExercises",
       tags: ["Exercise"],
-      summary: "List global exercises and user custom exercises with optional search query",
+      summary:
+        "List global exercises and user custom exercises with optional search query",
       querystring: ListExercisesQuerySchema,
       response: {
         200: z.array(ExerciseResponseSchema),
@@ -100,7 +170,9 @@ export const exerciseRoutes: FastifyPluginAsyncZod = async (app) => {
         }
 
         const getVersion = new GetExerciseCatalogVersion();
-        const versionResult = await getVersion.execute({ userId: session.user.id });
+        const versionResult = await getVersion.execute({
+          userId: session.user.id,
+        });
         const etag = `"${versionResult.version}"`;
         reply.header("ETag", etag);
         reply.header("Cache-Control", "private, no-cache");
@@ -110,6 +182,7 @@ export const exerciseRoutes: FastifyPluginAsyncZod = async (app) => {
           !request.query.q &&
           !request.query.onlyWithHistory &&
           !request.query.onlyCustom &&
+          !request.query.onlyGlobal &&
           request.headers["if-none-match"] === etag
         ) {
           return reply.status(304).send(undefined as any);
@@ -121,6 +194,7 @@ export const exerciseRoutes: FastifyPluginAsyncZod = async (app) => {
           query: request.query.q,
           onlyWithHistory: request.query.onlyWithHistory === "true",
           onlyCustom: request.query.onlyCustom === "true",
+          onlyGlobal: request.query.onlyGlobal === "true",
         });
 
         return reply.status(200).send(result);
@@ -165,6 +239,7 @@ export const exerciseRoutes: FastifyPluginAsyncZod = async (app) => {
 
         const createExercise = new CreateExercise();
         const result = await createExercise.execute({
+          demonstration: request.body.demonstration,
           userId: session.user.id,
           name: request.body.name,
           isUnilateral: request.body.isUnilateral,
@@ -289,6 +364,7 @@ export const exerciseRoutes: FastifyPluginAsyncZod = async (app) => {
         }
 
         const getExerciseMedia = new GetExerciseMedia();
+        reply.header("Cache-Control", "private, no-store");
         const result = await getExerciseMedia.execute({
           userId: session.user.id,
           exerciseId: request.params.exerciseId,
@@ -345,6 +421,7 @@ export const exerciseRoutes: FastifyPluginAsyncZod = async (app) => {
 
         const updateCustomExercise = new UpdateCustomExercise();
         const result = await updateCustomExercise.execute({
+          demonstration: request.body.demonstration,
           userId: session.user.id,
           exerciseId: request.params.id,
           name: request.body.name,

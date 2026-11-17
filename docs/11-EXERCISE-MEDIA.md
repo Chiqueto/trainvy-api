@@ -1,5 +1,7 @@
 # 11 — Exercise Media Foundation (Task 4.X)
 
+Atualização de 17/11/2026: [vídeos do YouTube e referências 3D por personal](25-EXERCISE-DEMONSTRATIONS.md) complementam esta fundação, com resolução privada por ownership e vínculo ativo.
+
 ## 1. Visão Geral e Objetivos
 
 A **Task 4.X: Exercise Media Foundation** introduz o suporte à visualização de demonstração visual de exercícios para os atletas do Trainvy durante suas sessões de treino e nos detalhes de planejamento de dias de treino.
