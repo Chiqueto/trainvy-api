@@ -1,5 +1,6 @@
 /** Exact legacy names; never infer equipment from a partial match. */
 export const GLOBAL_EXERCISE_ALIASES = new Map([
+  ["rosca direta", "00000000-0000-4000-8000-000000000127"],
   ["puxada frontal", "00000000-0000-4000-8000-000000000119"],
   ["puxada frontal na máquina", "00000000-0000-4000-8000-000000000119"],
   ["puxada frontal no cabo (pronada)", "00000000-0000-4000-8000-000000000119"],

@@ -1,0 +1,190 @@
+{
+  "version": "2026-11-18.upper.1",
+  "reviewedAt": "2026-11-18T10:31:38.543Z",
+  "variant": "Rosca bilateral em pé com barra reta e pegada supinada; braços próximos às costelas.",
+  "aliases": [
+    "Rosca Direta com Barra",
+    "Rosca Direta",
+    "rosca com barra reta",
+    "bíceps com barra"
+  ],
+  "participants": [
+    {
+      "id": "BICEPS_BRACHII",
+      "label": "Bíceps braquial",
+      "muscleGroup": "BICEPS",
+      "role": "PRIMARY",
+      "aliases": [
+        "bíceps"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY",
+        "CURL_2023"
+      ]
+    },
+    {
+      "id": "BRACHIALIS",
+      "label": "Braquial",
+      "muscleGroup": "BICEPS",
+      "role": "PRIMARY",
+      "aliases": [
+        "braquial anterior"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY",
+        "CURL_2023"
+      ]
+    },
+    {
+      "id": "BRACHIORADIALIS",
+      "label": "Braquiorradial",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "braquiorradial"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY",
+        "CURL_2023"
+      ]
+    },
+    {
+      "id": "DELTOID_ANTERIOR",
+      "label": "Deltoide anterior",
+      "muscleGroup": "SHOULDERS",
+      "role": "SECONDARY",
+      "aliases": [
+        "ombro anterior"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY",
+        "CURL_2023"
+      ]
+    },
+    {
+      "id": "FLEXOR_DIGITORUM_SUPERFICIALIS",
+      "label": "Flexor superficial dos dedos",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "pegada"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY",
+        "CURL_2023"
+      ]
+    },
+    {
+      "id": "FLEXOR_CARPI_ULNARIS",
+      "label": "Flexor ulnar do carpo",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "punho"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY",
+        "CURL_2023"
+      ]
+    },
+    {
+      "id": "EXTENSOR_CARPI_RADIALIS_BREVIS",
+      "label": "Extensor radial curto do carpo",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "punho"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY",
+        "CURL_2023"
+      ]
+    },
+    {
+      "id": "RECTUS_ABDOMINIS",
+      "label": "Reto abdominal",
+      "muscleGroup": "CORE",
+      "role": "SECONDARY",
+      "aliases": [
+        "abdômen"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY",
+        "CURL_2023"
+      ]
+    },
+    {
+      "id": "EXTERNAL_OBLIQUE",
+      "label": "Oblíquo externo",
+      "muscleGroup": "CORE",
+      "role": "SECONDARY",
+      "aliases": [
+        "abdômen"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY",
+        "CURL_2023"
+      ]
+    },
+    {
+      "id": "ERECTOR_SPINAE",
+      "label": "Eretores da coluna",
+      "muscleGroup": "BACK",
+      "role": "SECONDARY",
+      "aliases": [
+        "estabilizadores do tronco"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY",
+        "CURL_2023"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "CURL_2023",
+      "title": "Coratella et al. (2023): Biceps Brachii and Brachioradialis Excitation in Biceps Curl Exercise: Different Handgrips, Different Synergy",
+      "url": "https://doi.org/10.3390/sports11030064",
+      "limitation": "Dez fisiculturistas; não separa as cabeças do bíceps. Pegada neutra não elimina o bíceps nem implica maior EMG universal do braquiorradial."
+    },
+    {
+      "id": "CURL_2026",
+      "title": "Uysal et al. (2026): Effects of grip variation on biceps brachii and brachioradialis electromyographic activity",
+      "url": "https://doi.org/10.1186/s13102-026-01867-7",
+      "limitation": "EMG aguda de configurações de pegada/barra e fases. Não mede hipertrofia nem fornece percentuais de esforço para esta visualização."
+    },
+    {
+      "id": "ANATOMY",
+      "title": "OpenStax Anatomy and Physiology 2e: Muscles of the Pectoral Girdle and Upper Limbs",
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-5-muscles-of-the-pectoral-girdle-and-upper-limbs",
+      "limitation": "Referência anatômica de ações e estabilização; não mede EMG das execuções modeladas."
+    }
+  ],
+  "notes": "Revisão individual 3D: Rosca bilateral em pé com barra reta e pegada supinada; braços próximos às costelas. Participação muscular ilustrativa, sem percentuais de EMG, isolamento ou promessa de resultado.  Ângulos, cadência e apoios são decisões ilustrativas deste avatar. Supraespinal e subescapular não têm superfícies separadas neste atlas e não são pintados por substituição. Sem inferir ênfase entre cabeças do bíceps. Escápulas acompanham a elevação; cotovelos e punhos preservam seus próprios eixos.",
+  "instructions": {
+    "description": "Rosca bilateral em pé com barra reta e pegada supinada; braços próximos às costelas.",
+    "setup": "Fique em pé com os pés firmes e segure a barra na largura confortável dos ombros, com palmas para a frente. Deixe os braços próximos ao tronco e os punhos alinhados.",
+    "execution": "Flexione os cotovelos para elevar a barra sem lançar o quadril ou levar os cotovelos muito à frente. Pare antes de perder o alinhamento do punho. Desça devagar até quase estender os cotovelos, sem bater a barra nas coxas.",
+    "tips": "Mantenha a pegada supinada durante todo o percurso. Bíceps, braquial e braquiorradial trabalham juntos; esta execução não isola uma cabeça do bíceps. Cores mostram participação ilustrativa, sem medir esforço ou EMG."
+  }
+}

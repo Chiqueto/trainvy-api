@@ -2,6 +2,12 @@ import z from "zod";
 
 // Keys of the existing Trainvy 3D library. No model is inferred from a name.
 export const AnimationKeySchema = z.enum([
+  "military-press",
+  "dumbbell-shoulder-press",
+  "lateral-raise",
+  "barbell-curl",
+  "legacy-barbell-curl",
+  "hammer-curl",
   "high-supinated-bent-row",
   "yates-row",
   "supinated-yates-row",

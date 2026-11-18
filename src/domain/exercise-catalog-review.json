@@ -449,13 +449,16 @@
     ],
     "secondary": [
       "TRICEPS",
+      "CHEST",
       "BACK",
+      "FOREARMS",
       "CORE"
     ],
     "sourceIds": [
       "ace",
       "upper-anatomy"
-    ]
+    ],
+    "notes": "Revisão individual 3D: Desenvolvimento militar estrito em pé com barra, pegada pronada e passagem à frente da cabeça. Participação muscular ilustrativa, sem percentuais de EMG, isolamento ou promessa de resultado. "
   },
   {
     "id": "00000000-0000-4000-8000-000000000124",
@@ -469,12 +472,16 @@
     ],
     "secondary": [
       "TRICEPS",
-      "BACK"
+      "CHEST",
+      "BACK",
+      "FOREARMS",
+      "CORE"
     ],
     "sourceIds": [
       "ace",
       "upper-anatomy"
-    ]
+    ],
+    "notes": "Revisão individual 3D: Desenvolvimento bilateral sentado com halteres, encosto vertical e pegada pronada; não é Arnold press. Participação muscular ilustrativa, sem percentuais de EMG, isolamento ou promessa de resultado. "
   },
   {
     "id": "00000000-0000-4000-8000-000000000125",
@@ -487,12 +494,16 @@
       "SHOULDERS"
     ],
     "secondary": [
-      "BACK"
+      "BACK",
+      "TRICEPS",
+      "FOREARMS",
+      "CORE"
     ],
     "sourceIds": [
       "ace",
       "upper-anatomy"
-    ]
+    ],
+    "notes": "Revisão individual 3D: Elevação lateral em pé com halteres, cotovelos levemente flexionados e braços discretamente à frente do plano frontal. Participação muscular ilustrativa, sem percentuais de EMG, isolamento ou promessa de resultado. "
   },
   {
     "id": "00000000-0000-4000-8000-000000000126",
@@ -522,12 +533,16 @@
       "BICEPS"
     ],
     "secondary": [
-      "FOREARMS"
+      "FOREARMS",
+      "SHOULDERS",
+      "CORE",
+      "BACK"
     ],
     "sourceIds": [
       "ace",
       "upper-anatomy"
-    ]
+    ],
+    "notes": "Revisão individual 3D: Rosca bilateral em pé com barra reta e pegada supinada; braços próximos às costelas. Participação muscular ilustrativa, sem percentuais de EMG, isolamento ou promessa de resultado. "
   },
   {
     "id": "00000000-0000-4000-8000-000000000128",
@@ -540,12 +555,16 @@
       "BICEPS"
     ],
     "secondary": [
-      "FOREARMS"
+      "FOREARMS",
+      "SHOULDERS",
+      "CORE",
+      "BACK"
     ],
     "sourceIds": [
       "ace",
       "upper-anatomy"
-    ]
+    ],
+    "notes": "Revisão individual 3D: Rosca bilateral em pé com barra reta e pegada supinada; braços próximos às costelas. Participação muscular ilustrativa, sem percentuais de EMG, isolamento ou promessa de resultado. Cadastro legado equivalente a Rosca Direta com Barra; manter UUID e histórico, retirar de novas escolhas."
   },
   {
     "id": "00000000-0000-4000-8000-000000000129",
@@ -558,11 +577,16 @@
       "BICEPS",
       "FOREARMS"
     ],
-    "secondary": [],
+    "secondary": [
+      "SHOULDERS",
+      "CORE",
+      "BACK"
+    ],
     "sourceIds": [
       "ace",
       "upper-anatomy"
-    ]
+    ],
+    "notes": "Revisão individual 3D: Rosca martelo bilateral em pé com halteres e pegada neutra, sem alternância nem supinação dinâmica. Participação muscular ilustrativa, sem percentuais de EMG, isolamento ou promessa de resultado. "
   },
   {
     "id": "00000000-0000-4000-8000-000000000130",

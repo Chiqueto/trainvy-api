@@ -1,0 +1,155 @@
+[
+  {
+    "id": "00000000-0000-4000-8000-000000000123",
+    "key": "military-press",
+    "name": "Desenvolvimento Militar",
+    "anatomyFile": "military-press-anatomy.json",
+    "migration": "20261118110000_military_press",
+    "previous": {
+      "id": "00000000-0000-4000-8000-000000000123",
+      "name": "Desenvolvimento Militar",
+      "family": "Musculação tradicional — ombros, braços e antebraços",
+      "groups": [
+        "RESISTANCE"
+      ],
+      "primary": [
+        "SHOULDERS"
+      ],
+      "secondary": [
+        "TRICEPS",
+        "BACK",
+        "CORE"
+      ],
+      "sourceIds": [
+        "ace",
+        "upper-anatomy"
+      ]
+    }
+  },
+  {
+    "id": "00000000-0000-4000-8000-000000000124",
+    "key": "dumbbell-shoulder-press",
+    "name": "Desenvolvimento com Halteres",
+    "anatomyFile": "dumbbell-shoulder-press-anatomy.json",
+    "migration": "20261118110100_dumbbell_shoulder_press",
+    "previous": {
+      "id": "00000000-0000-4000-8000-000000000124",
+      "name": "Desenvolvimento com Halteres",
+      "family": "Musculação tradicional — ombros, braços e antebraços",
+      "groups": [
+        "RESISTANCE"
+      ],
+      "primary": [
+        "SHOULDERS"
+      ],
+      "secondary": [
+        "TRICEPS",
+        "BACK"
+      ],
+      "sourceIds": [
+        "ace",
+        "upper-anatomy"
+      ]
+    }
+  },
+  {
+    "id": "00000000-0000-4000-8000-000000000125",
+    "key": "lateral-raise",
+    "name": "Elevação Lateral",
+    "anatomyFile": "lateral-raise-anatomy.json",
+    "migration": "20261118110200_lateral_raise",
+    "previous": {
+      "id": "00000000-0000-4000-8000-000000000125",
+      "name": "Elevação Lateral",
+      "family": "Musculação tradicional — ombros, braços e antebraços",
+      "groups": [
+        "RESISTANCE"
+      ],
+      "primary": [
+        "SHOULDERS"
+      ],
+      "secondary": [
+        "BACK"
+      ],
+      "sourceIds": [
+        "ace",
+        "upper-anatomy"
+      ]
+    }
+  },
+  {
+    "id": "00000000-0000-4000-8000-000000000127",
+    "key": "barbell-curl",
+    "name": "Rosca Direta com Barra",
+    "anatomyFile": "barbell-curl-anatomy.json",
+    "migration": "20261118110300_barbell_curl",
+    "previous": {
+      "id": "00000000-0000-4000-8000-000000000127",
+      "name": "Rosca Direta com Barra",
+      "family": "Musculação tradicional — ombros, braços e antebraços",
+      "groups": [
+        "RESISTANCE"
+      ],
+      "primary": [
+        "BICEPS"
+      ],
+      "secondary": [
+        "FOREARMS"
+      ],
+      "sourceIds": [
+        "ace",
+        "upper-anatomy"
+      ]
+    }
+  },
+  {
+    "id": "00000000-0000-4000-8000-000000000128",
+    "key": "legacy-barbell-curl",
+    "name": "Rosca Direta",
+    "retired": true,
+    "anatomyFile": "legacy-barbell-curl-anatomy.json",
+    "migration": "20261118110400_legacy_barbell_curl",
+    "previous": {
+      "id": "00000000-0000-4000-8000-000000000128",
+      "name": "Rosca Direta",
+      "family": "Musculação tradicional — ombros, braços e antebraços",
+      "groups": [
+        "RESISTANCE"
+      ],
+      "primary": [
+        "BICEPS"
+      ],
+      "secondary": [
+        "FOREARMS"
+      ],
+      "sourceIds": [
+        "ace",
+        "upper-anatomy"
+      ]
+    }
+  },
+  {
+    "id": "00000000-0000-4000-8000-000000000129",
+    "key": "hammer-curl",
+    "name": "Rosca Martelo",
+    "anatomyFile": "hammer-curl-anatomy.json",
+    "migration": "20261118110500_hammer_curl",
+    "previous": {
+      "id": "00000000-0000-4000-8000-000000000129",
+      "name": "Rosca Martelo",
+      "family": "Musculação tradicional — ombros, braços e antebraços",
+      "groups": [
+        "RESISTANCE"
+      ],
+      "primary": [
+        "BICEPS",
+        "FOREARMS"
+      ],
+      "secondary": [],
+      "sourceIds": [
+        "ace",
+        "upper-anatomy"
+      ]
+    }
+  }
+]
