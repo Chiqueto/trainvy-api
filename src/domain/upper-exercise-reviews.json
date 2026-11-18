@@ -151,5 +151,30 @@
         "upper-anatomy"
       ]
     }
+  },
+  {
+    "id": "00000000-0000-4000-8000-000000000130",
+    "key": "preacher-curl",
+    "name": "Rosca Scott",
+    "anatomyFile": "preacher-curl-anatomy.json",
+    "migration": "20261118190000_preacher_curl_000130",
+    "previous": {
+      "id": "00000000-0000-4000-8000-000000000130",
+      "name": "Rosca Scott",
+      "family": "Musculação tradicional — ombros, braços e antebraços",
+      "groups": [
+        "RESISTANCE"
+      ],
+      "primary": [
+        "BICEPS"
+      ],
+      "secondary": [
+        "FOREARMS"
+      ],
+      "sourceIds": [
+        "ace",
+        "upper-anatomy"
+      ]
+    }
   }
 ]
