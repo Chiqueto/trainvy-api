@@ -616,7 +616,9 @@
     "primary": [
       "TRICEPS"
     ],
-    "secondary": [],
+    "secondary": [
+      "FOREARMS"
+    ],
     "sourceIds": [
       "ace",
       "upper-anatomy"

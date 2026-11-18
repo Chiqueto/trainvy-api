@@ -176,5 +176,28 @@
         "upper-anatomy"
       ]
     }
+  },
+  {
+    "id": "00000000-0000-4000-8000-000000000131",
+    "key": "rope-pushdown",
+    "name": "Tríceps Corda",
+    "anatomyFile": "rope-pushdown-anatomy.json",
+    "migration": "20261118190100_rope_pushdown_000131",
+    "previous": {
+      "id": "00000000-0000-4000-8000-000000000131",
+      "name": "Tríceps Corda",
+      "family": "Musculação tradicional — ombros, braços e antebraços",
+      "groups": [
+        "RESISTANCE"
+      ],
+      "primary": [
+        "TRICEPS"
+      ],
+      "secondary": [],
+      "sourceIds": [
+        "ace",
+        "upper-anatomy"
+      ]
+    }
   }
 ]

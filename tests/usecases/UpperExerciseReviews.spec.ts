@@ -59,6 +59,11 @@ describe('individual shoulder and curl review delivery',()=>{
    for(const job of manifest.filter(j=>!('retired' in j&&j.retired))){const review=anatomy(job.anatomyFile),entry=REVIEWED_EXERCISES_BY_ID.get(job.id)!;
     const exercise=await prisma.exercise.create({data:{name:job.name,ownerUserId:user.id,anatomyReview:review,muscles:{create:[...entry.primary.map(muscleGroup=>({muscleGroup,role:'PRIMARY' as const})),...entry.secondary.map(muscleGroup=>({muscleGroup,role:'SECONDARY' as const}))]}}});created.push(exercise.id);
     expect((await new ListExercises().execute({userId:user.id,query:review.participants[0].label})).some(e=>e.id===exercise.id)).toBe(true);
+    if (job.key === 'preacher-curl' || job.key === 'rope-pushdown') {
+      const region = review.participants[0].regions[0];
+      const matches = await new ListExercises().execute({userId:user.id,query:region.label});
+      expect(matches.filter(result => result.id === exercise.id)).toHaveLength(1);
+    }
     expect((await new GetExerciseMedia().execute({userId:user.id,exerciseId:exercise.id})).instructions).toEqual(review.instructions);
    }
   }finally{await prisma.exercise.deleteMany({where:{id:{in:created}}});await cleanupTestUsers([user.id]);}

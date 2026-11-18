@@ -8,6 +8,7 @@ export const AnimationKeySchema = z.enum([
   "barbell-curl",
   "legacy-barbell-curl",
   "hammer-curl",
+  "rope-pushdown",
   "preacher-curl",
   "high-supinated-bent-row",
   "yates-row",
