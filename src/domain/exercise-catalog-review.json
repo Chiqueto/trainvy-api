@@ -634,7 +634,10 @@
     "primary": [
       "TRICEPS"
     ],
-    "secondary": [],
+    "secondary": [
+      "SHOULDERS",
+      "FOREARMS"
+    ],
     "sourceIds": [
       "ace",
       "upper-anatomy"
@@ -1085,7 +1088,10 @@
     "primary": [
       "TRICEPS"
     ],
-    "secondary": [],
+    "secondary": [
+      "FOREARMS",
+      "CORE"
+    ],
     "sourceIds": [
       "ace",
       "upper-anatomy"
@@ -4820,7 +4826,8 @@
     ],
     "secondary": [
       "TRICEPS",
-      "SHOULDERS"
+      "SHOULDERS",
+      "FOREARMS"
     ],
     "sourceIds": [
       "press",
@@ -4866,7 +4873,8 @@
     ],
     "secondary": [
       "TRICEPS",
-      "SHOULDERS"
+      "SHOULDERS",
+      "FOREARMS"
     ],
     "sourceIds": [
       "press",
@@ -5077,7 +5085,9 @@
     ],
     "secondary": [
       "TRICEPS",
-      "SHOULDERS"
+      "SHOULDERS",
+      "BICEPS",
+      "FOREARMS"
     ],
     "sourceIds": [
       "press",

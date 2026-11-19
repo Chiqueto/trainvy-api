@@ -1,0 +1,166 @@
+{
+  "version": "2026-11-19.3d.1",
+  "reviewedAt": "2026-11-19T16:31:00.000Z",
+  "variant": "Supino com halteres em banco declinado, com cabeça abaixo do quadril.",
+  "aliases": [
+    "supino com halteres no banco declinado",
+    "decline dumbbell press"
+  ],
+  "participants": [
+    {
+      "id": "PECTORALIS_MAJOR",
+      "label": "Peitoral maior",
+      "muscleGroup": "CHEST",
+      "role": "PRIMARY",
+      "aliases": [],
+      "regions": [
+        {
+          "id": "CLAVICULAR",
+          "label": "Porção clavicular do peitoral",
+          "aliases": [
+            "peitoral superior"
+          ]
+        },
+        {
+          "id": "STERNOCOSTAL",
+          "label": "Porção esternocostal do peitoral",
+          "aliases": [
+            "peitoral médio e inferior"
+          ]
+        }
+      ],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY",
+        "BENCH_ANGLE"
+      ]
+    },
+    {
+      "id": "TRICEPS_BRACHII",
+      "label": "Tríceps braquial",
+      "muscleGroup": "TRICEPS",
+      "role": "SECONDARY",
+      "aliases": [
+        "tríceps"
+      ],
+      "regions": [
+        {
+          "id": "LONG_HEAD",
+          "label": "Cabeça longa do tríceps",
+          "aliases": []
+        },
+        {
+          "id": "LATERAL_HEAD",
+          "label": "Cabeça lateral do tríceps",
+          "aliases": []
+        },
+        {
+          "id": "MEDIAL_HEAD",
+          "label": "Cabeça medial do tríceps",
+          "aliases": []
+        }
+      ],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY",
+        "DUMBBELLS"
+      ]
+    },
+    {
+      "id": "DELTOID",
+      "label": "Deltoide anterior",
+      "muscleGroup": "SHOULDERS",
+      "role": "SECONDARY",
+      "aliases": [],
+      "regions": [
+        {
+          "id": "ANTERIOR",
+          "label": "Porção anterior do deltoide",
+          "aliases": []
+        }
+      ],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY"
+      ]
+    },
+    {
+      "id": "BICEPS_BRACHII",
+      "label": "Bíceps braquial",
+      "muscleGroup": "BICEPS",
+      "role": "SECONDARY",
+      "aliases": [],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY",
+        "DUMBBELLS"
+      ]
+    },
+    {
+      "id": "FLEXOR_DIGITORUM_SUPERFICIALIS",
+      "label": "Flexor superficial dos dedos",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "pegada"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY"
+      ]
+    },
+    {
+      "id": "FLEXOR_CARPI_ULNARIS",
+      "label": "Flexor ulnar do carpo",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY"
+      ]
+    },
+    {
+      "id": "EXTENSOR_CARPI_RADIALIS_BREVIS",
+      "label": "Extensor radial curto do carpo",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "ANATOMY",
+      "title": "OpenStax Anatomy and Physiology 2e: Muscles of the Pectoral Girdle and Upper Limbs",
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-5-muscles-of-the-pectoral-girdle-and-upper-limbs",
+      "limitation": "Referência anatômica para ações do cotovelo, ombro e punho."
+    },
+    {
+      "id": "BENCH_ANGLE",
+      "title": "Saeterbakken et al. — The Effects of Bench Press Variations in Competitive Athletes on Muscle Activity and Performance",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5504579/",
+      "limitation": "Doze atletas de supino, 6RM com barra livre em posições reta, inclinada e declinada. A resposta do peitoral foi semelhante entre ângulos nessa amostra; os resultados não estabelecem ênfase regional para halteres ou trilhos."
+    },
+    {
+      "id": "DUMBBELLS",
+      "title": "Saeterbakken et al. — A comparison of muscle activity and 1-RM strength of three chest-press exercises with different stability requirements",
+      "url": "https://doi.org/10.1080/02640414.2010.543916",
+      "limitation": "Comparou halteres, barra e Smith no supino reto em homens treinados. A contribuição estabilizadora do bíceps no declinado com halteres é uma extrapolação."
+    }
+  ],
+  "notes": "Banco a −18° com apoios de joelho e tornozelo. Halteres seguem trajetórias convergentes independentes, com antebraços aproximadamente verticais no fundo. Os dois feixes do peitoral permanecem primários. A participação estabilizadora de bíceps e punho é inferida a partir do supino reto com halteres e da mecânica de pegada.",
+  "instructions": {
+    "description": "Supino com halteres em banco declinado, com cabeça abaixo do quadril.",
+    "setup": "Prenda as pernas nos rolos, apoie cabeça, costas e quadril e posicione os halteres sobre o peito.",
+    "execution": "Desça os halteres para os lados da parte inferior do peito. Faça uma pausa breve e suba aproximando as cargas, deixando um espaço entre elas no topo.",
+    "tips": "Mantenha os punhos sobre os cotovelos no ponto baixo e os apoios firmes durante a repetição. As cores indicam participação muscular ilustrativa."
+  }
+}

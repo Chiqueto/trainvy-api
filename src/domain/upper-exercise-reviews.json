@@ -199,5 +199,129 @@
         "upper-anatomy"
       ]
     }
+  },
+  {
+    "id": "00000000-0000-4000-8000-000000000132",
+    "key": "skull-crusher",
+    "name": "Tríceps Testa",
+    "anatomyFile": "skull-crusher-anatomy.json",
+    "migration": "20261119163100_skull_crusher",
+    "previous": {
+      "id": "00000000-0000-4000-8000-000000000132",
+      "name": "Tríceps Testa",
+      "family": "Musculação tradicional — ombros, braços e antebraços",
+      "groups": [
+        "RESISTANCE"
+      ],
+      "primary": [
+        "TRICEPS"
+      ],
+      "secondary": [],
+      "sourceIds": [
+        "ace",
+        "upper-anatomy"
+      ]
+    }
+  },
+  {
+    "id": "044421ae-d368-47a5-83e0-2af37dc61131",
+    "key": "straight-bar-pushdown",
+    "name": "Tríceps no Cabo com Barra Reta",
+    "anatomyFile": "straight-bar-pushdown-anatomy.json",
+    "migration": "20261119163200_straight_bar_pushdown",
+    "previous": {
+      "id": "044421ae-d368-47a5-83e0-2af37dc61131",
+      "name": "Tríceps no Cabo com Barra Reta",
+      "family": "Musculação tradicional — ombros, braços e antebraços",
+      "groups": [
+        "RESISTANCE"
+      ],
+      "primary": [
+        "TRICEPS"
+      ],
+      "secondary": [],
+      "sourceIds": [
+        "ace",
+        "upper-anatomy"
+      ]
+    }
+  },
+  {
+    "id": "d8e07a71-16ec-4ed8-8236-861a26c869e8",
+    "key": "decline-dumbbell-press",
+    "name": "Supino Declinado com Halteres",
+    "anatomyFile": "decline-dumbbell-press-anatomy.json",
+    "migration": "20261119163300_decline_dumbbell_press",
+    "previous": {
+      "id": "d8e07a71-16ec-4ed8-8236-861a26c869e8",
+      "name": "Supino Declinado com Halteres",
+      "family": "Musculação tradicional — peito",
+      "groups": [
+        "RESISTANCE"
+      ],
+      "primary": [
+        "CHEST"
+      ],
+      "secondary": [
+        "TRICEPS",
+        "SHOULDERS"
+      ],
+      "sourceIds": [
+        "press",
+        "ace"
+      ]
+    }
+  },
+  {
+    "id": "cf30614a-819d-42ee-8dfd-5564f9ea9da2",
+    "key": "incline-smith-press",
+    "name": "Supino Inclinado no Smith",
+    "anatomyFile": "incline-smith-press-anatomy.json",
+    "migration": "20261119163400_incline_smith_press",
+    "previous": {
+      "id": "cf30614a-819d-42ee-8dfd-5564f9ea9da2",
+      "name": "Supino Inclinado no Smith",
+      "family": "Musculação tradicional — peito",
+      "groups": [
+        "RESISTANCE"
+      ],
+      "primary": [
+        "CHEST"
+      ],
+      "secondary": [
+        "TRICEPS",
+        "SHOULDERS"
+      ],
+      "sourceIds": [
+        "press",
+        "ace"
+      ]
+    }
+  },
+  {
+    "id": "d0a2d0cf-c6b3-4bfb-889e-82ccd3701ede",
+    "key": "decline-smith-press",
+    "name": "Supino Declinado no Smith",
+    "anatomyFile": "decline-smith-press-anatomy.json",
+    "migration": "20261119163500_decline_smith_press",
+    "previous": {
+      "id": "d0a2d0cf-c6b3-4bfb-889e-82ccd3701ede",
+      "name": "Supino Declinado no Smith",
+      "family": "Musculação tradicional — peito",
+      "groups": [
+        "RESISTANCE"
+      ],
+      "primary": [
+        "CHEST"
+      ],
+      "secondary": [
+        "TRICEPS",
+        "SHOULDERS"
+      ],
+      "sourceIds": [
+        "press",
+        "ace"
+      ]
+    }
   }
 ]

@@ -1,0 +1,27 @@
+BEGIN;
+
+SELECT id FROM "Exercise" WHERE id = 'cf30614a-819d-42ee-8dfd-5564f9ea9da2' FOR UPDATE;
+
+CREATE TEMP TABLE reviewed_exercise ON COMMIT DROP AS
+SELECT id
+FROM "Exercise"
+WHERE id = 'cf30614a-819d-42ee-8dfd-5564f9ea9da2'
+  AND "ownerUserId" IS NULL
+  AND name = 'Supino Inclinado no Smith'
+  AND "anatomyReview" IS NULL
+  AND (
+    SELECT string_agg(m.role::text || ':' || m."muscleGroup"::text, '|' ORDER BY m.role::text || ':' || m."muscleGroup"::text)
+    FROM "ExerciseMuscle" m WHERE m."exerciseId" = "Exercise".id
+  ) = 'PRIMARY:CHEST|SECONDARY:SHOULDERS|SECONDARY:TRICEPS';
+
+INSERT INTO "ExerciseMuscle"(id, "exerciseId", "muscleGroup", role, "createdAt")
+SELECT gen_random_uuid()::text, id, muscle_group::"MuscleGroup", 'SECONDARY'::"MuscleRole", now()
+FROM reviewed_exercise
+CROSS JOIN (VALUES ('FOREARMS')) AS added(muscle_group);
+
+UPDATE "Exercise"
+SET "anatomyReview" = '{"version":"2026-11-19.3d.1","reviewedAt":"2026-11-19T16:31:00.000Z","variant":"Supino inclinado com barra guiada em trilhos verticais.","aliases":["supino inclinado na máquina Smith","incline Smith bench press"],"participants":[{"id":"PECTORALIS_MAJOR","label":"Peitoral maior","muscleGroup":"CHEST","role":"PRIMARY","aliases":[],"regions":[{"id":"CLAVICULAR","label":"Porção clavicular do peitoral","aliases":["peitoral superior"]},{"id":"STERNOCOSTAL","label":"Porção esternocostal do peitoral","aliases":["peitoral médio e inferior"]}],"emphasizedRegionIds":[],"sourceIds":["ANATOMY","INCLINE"]},{"id":"TRICEPS_BRACHII","label":"Tríceps braquial","muscleGroup":"TRICEPS","role":"SECONDARY","aliases":["tríceps"],"regions":[{"id":"LONG_HEAD","label":"Cabeça longa do tríceps","aliases":[]},{"id":"LATERAL_HEAD","label":"Cabeça lateral do tríceps","aliases":[]},{"id":"MEDIAL_HEAD","label":"Cabeça medial do tríceps","aliases":[]}],"emphasizedRegionIds":[],"sourceIds":["ANATOMY","INCLINE"]},{"id":"DELTOID","label":"Deltoide anterior","muscleGroup":"SHOULDERS","role":"SECONDARY","aliases":[],"regions":[{"id":"ANTERIOR","label":"Porção anterior do deltoide","aliases":[]}],"emphasizedRegionIds":[],"sourceIds":["ANATOMY"]},{"id":"FLEXOR_DIGITORUM_SUPERFICIALIS","label":"Flexor superficial dos dedos","muscleGroup":"FOREARMS","role":"SECONDARY","aliases":["pegada"],"regions":[],"emphasizedRegionIds":[],"sourceIds":["ANATOMY"]},{"id":"FLEXOR_CARPI_ULNARIS","label":"Flexor ulnar do carpo","muscleGroup":"FOREARMS","role":"SECONDARY","aliases":[],"regions":[],"emphasizedRegionIds":[],"sourceIds":["ANATOMY"]},{"id":"EXTENSOR_CARPI_RADIALIS_BREVIS","label":"Extensor radial curto do carpo","muscleGroup":"FOREARMS","role":"SECONDARY","aliases":[],"regions":[],"emphasizedRegionIds":[],"sourceIds":["ANATOMY"]}],"sources":[{"id":"ANATOMY","title":"OpenStax Anatomy and Physiology 2e: Muscles of the Pectoral Girdle and Upper Limbs","url":"https://openstax.org/books/anatomy-and-physiology-2e/pages/11-5-muscles-of-the-pectoral-girdle-and-upper-limbs","limitation":"Referência anatômica para ações do cotovelo, ombro e punho."},{"id":"INCLINE","title":"Rodríguez-Ridao et al. — Effect of Five Bench Inclinations on Electromyographic Activity","url":"https://pmc.ncbi.nlm.nih.gov/articles/PMC7579505/","limitation":"Trinta adultos treinados, EMG de cinco ângulos entre 0° e 60° com barra, incluindo 30°. A condição de 30° mostrou maior atividade clavicular nesse teste; não foi comparação entre inclinações no Smith."},{"id":"SMITH","title":"Schick et al. — A comparison of muscle activation between a Smith machine and free weight bench press","url":"https://pubmed.ncbi.nlm.nih.gov/20093960/","limitation":"EMG do peitoral maior e deltoides em homens treinados e não treinados, em supino no Smith e livre. A comparação não estudou o efeito do ângulo do banco."}],"notes":"Banco a +30° e trajetória vertical com pegada fixa. A posição do banco alinha o trilho com a região superior do peito. A escolha de 30° é ilustrativa, baseada em supino inclinado com barra; os dois feixes ficam primários e não há ranking regional específico do Smith.","instructions":{"description":"Supino inclinado com barra guiada em trilhos verticais.","setup":"Posicione o banco a cerca de 30° para alinhar a descida da barra à parte alta do peito. Apoie cabeça e costas, plante os pés e ajuste os batentes.","execution":"Desça a barra pelo trilho em direção à parte alta do peito. Faça uma pausa breve e empurre para cima, mantendo os punhos alinhados.","tips":"Mantenha o banco centralizado e termine a subida com os cotovelos próximos da extensão. As cores indicam participação muscular ilustrativa."}}'::jsonb, "updatedAt" = now()
+WHERE id IN (SELECT id FROM reviewed_exercise);
+
+DROP TABLE reviewed_exercise;
+COMMIT;

@@ -12,6 +12,14 @@ async function main() {
     args.find((arg) => !arg.startsWith("--")) ?? "../trainvy-frontend",
   );
   const apply = args.includes("--apply");
+  const animationPrefix = "--animation=";
+  const unknownFlag = args.find(
+    (arg) =>
+      arg.startsWith("--") &&
+      arg !== "--apply" &&
+      !arg.startsWith(animationPrefix),
+  );
+  if (unknownFlag) throw new Error("Unknown argument: " + unknownFlag);
 
   const registryUrl = pathToFileURL(
     resolve(frontend, "app/_components/exercise-3d/exercises.ts"),
@@ -19,8 +27,23 @@ async function main() {
   const { EXERCISE_ANIMATIONS } = (await import(registryUrl.href)) as {
     EXERCISE_ANIMATIONS: Record<string, { id: string }>;
   };
+  const requested = new Set(
+    args
+      .filter((arg) => arg.startsWith(animationPrefix))
+      .map((arg) => arg.slice(animationPrefix.length)),
+  );
+  const registry = Object.entries(EXERCISE_ANIMATIONS);
+  const unknown = [...requested].filter(
+    (key) => !Object.hasOwn(EXERCISE_ANIMATIONS, key),
+  );
+  if (unknown.length)
+    throw new Error(`Unknown animation keys: ${unknown.join(", ")}`);
+  const entries = requested.size
+    ? registry.filter(([key]) => requested.has(key))
+    : registry;
+
   const images = await Promise.all(
-    Object.entries(EXERCISE_ANIMATIONS).map(async ([animation, { id }]) => {
+    entries.map(async ([animation, { id }]) => {
       const image = await readFile(
         resolve(
           frontend,
