@@ -1,4 +1,5 @@
 import { fromNodeHeaders } from "better-auth/node";
+import type { FastifyBaseLogger, FastifyReply } from "fastify";
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import z from "zod";
 
@@ -12,12 +13,39 @@ import { auth } from "../lib/auth.js";
 import { ErrorSchema } from "../schemas/index.js";
 import {
   EditableWorkoutPlanResponse,
+  UpdateWorkoutDayBody,
   UpdateWorkoutPlanBody,
 } from "../schemas/workout-edit.js";
 import {
   EditWorkoutPlan,
   GetEditableWorkoutPlan,
 } from "../usecases/EditWorkoutPlan.js";
+
+function editError(
+  error: unknown,
+  log: FastifyBaseLogger,
+  reply: FastifyReply,
+  entity: "plano" | "treino",
+) {
+  if (error instanceof NotFoundError)
+    return reply.status(404).send({ error: error.message, code: error.code });
+  if (error instanceof ConflictError)
+    return reply.status(409).send({ error: error.message, code: error.code });
+  if (
+    error instanceof BadRequestError ||
+    error instanceof ValidationError ||
+    error instanceof z.ZodError
+  ) {
+    return reply
+      .status(400)
+      .send({ error: error.message, code: "VALIDATION_ERROR" });
+  }
+  log.error(error);
+  return reply.status(500).send({
+    error: `Não foi possível salvar o ${entity}.`,
+    code: "INTERNAL_ERROR",
+  });
+}
 
 export const workoutEditRoutes: FastifyPluginAsyncZod = async (app) => {
   const params = z.object({ id: z.uuid() });
@@ -58,12 +86,10 @@ export const workoutEditRoutes: FastifyPluginAsyncZod = async (app) => {
             .status(404)
             .send({ error: error.message, code: error.code });
         request.log.error(error);
-        return reply
-          .status(500)
-          .send({
-            error: "Não foi possível carregar o plano.",
-            code: "INTERNAL_ERROR",
-          });
+        return reply.status(500).send({
+          error: "Não foi possível carregar o plano.",
+          code: "INTERNAL_ERROR",
+        });
       }
     },
   );
@@ -98,30 +124,43 @@ export const workoutEditRoutes: FastifyPluginAsyncZod = async (app) => {
           request.body,
         );
       } catch (error) {
-        if (error instanceof NotFoundError)
-          return reply
-            .status(404)
-            .send({ error: error.message, code: error.code });
-        if (error instanceof ConflictError)
-          return reply
-            .status(409)
-            .send({ error: error.message, code: error.code });
-        if (
-          error instanceof BadRequestError ||
-          error instanceof ValidationError ||
-          error instanceof z.ZodError
-        ) {
-          return reply
-            .status(400)
-            .send({ error: error.message, code: "VALIDATION_ERROR" });
-        }
-        request.log.error(error);
+        return editError(error, request.log, reply, "plano");
+      }
+    },
+  );
+
+  app.patch(
+    "/workout-plans/:id/days/:dayId",
+    {
+      schema: {
+        operationId: "editWorkoutDay",
+        tags: ["Workout Plan"],
+        summary: "Edit a single workout in an owned plan",
+        params: params.extend({ dayId: z.uuid() }),
+        body: UpdateWorkoutDayBody,
+        response: {
+          200: z.object({ id: z.uuid(), success: z.boolean() }),
+          ...errors,
+        },
+      },
+    },
+    async (request, reply) => {
+      const session = await auth.api.getSession({
+        headers: fromNodeHeaders(request.headers),
+      });
+      if (!session)
         return reply
-          .status(500)
-          .send({
-            error: "Não foi possível salvar o plano.",
-            code: "INTERNAL_ERROR",
-          });
+          .status(401)
+          .send({ error: "Unauthorized", code: "UNAUTHORIZED" });
+      try {
+        return await new EditWorkoutPlan().executeDay(
+          session.user.id,
+          request.params.id,
+          request.params.dayId,
+          request.body,
+        );
+      } catch (error) {
+        return editError(error, request.log, reply, "treino");
       }
     },
   );

@@ -13,6 +13,9 @@ export const EditableWorkoutDay = WorkoutDaySchema.safeExtend({
   id: z.uuid().optional(),
   exercises: z.array(EditableWorkoutExercise).max(100),
 });
+export const UpdateWorkoutDayBody = EditableWorkoutDay.safeExtend({
+  isRest: z.literal(false),
+});
 export const UpdateWorkoutPlanBody = z
   .object({
     name: z.string().trim().min(1).max(120),
@@ -22,4 +25,5 @@ export const UpdateWorkoutPlanBody = z
 export const EditableWorkoutPlanResponse = UpdateWorkoutPlanBody.extend({
   id: z.uuid(),
   isActive: z.boolean(),
+  canEdit: z.boolean().optional(),
 });

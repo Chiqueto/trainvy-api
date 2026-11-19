@@ -191,6 +191,84 @@ describe("Plan editing ownership and historical snapshots", () => {
       "Original",
     );
   });
+  it("edits one workout through the API while preserving the plan, sibling workout and history", async () => {
+    const { owner, plan, day: sibling } = await fixture();
+    const day = await prisma.workoutDay.create({
+      data: {
+        workoutPlanId: plan.id,
+        name: "Treino B",
+        weekDay: "FRIDAY",
+        order: 1,
+        estimatedDurationInSeconds: 3600,
+        coverImageUrl: "https://example.test/workout.webp",
+      },
+    });
+    const exercise = await createTestWorkoutExercise(day.id);
+    const session = await new StartWorkoutSession().execute({
+      userId: owner.id,
+      workoutPlanId: plan.id,
+      workoutDayId: day.id,
+    });
+    const sessionWhere = { id: session.userWorkoutSessionId };
+    await prisma.workoutSession.update({
+      where: sessionWhere,
+      data: { completedAt: new Date() },
+    });
+    const before = await prisma.workoutSession.findUniqueOrThrow({
+      where: sessionWhere,
+      include: { sessionExercises: true },
+    });
+    const siblingBefore = await prisma.workoutDay.findUnique({
+      where: { id: sibling.id },
+      include: { exercises: true },
+    });
+
+    login(owner);
+    const response = await app.inject({
+      method: "PATCH",
+      url: `/workout-plans/${plan.id}/days/${day.id}`,
+      payload: body(day.id, exercise.id).workoutDays[0],
+    });
+
+    expect(response.statusCode).toBe(200);
+    const saved = await new GetEditableWorkoutPlan().execute(owner.id, plan.id);
+    expect(saved).toMatchObject({ name: plan.name, isActive: plan.isActive });
+    expect(saved.workoutDays).toHaveLength(2);
+    expect(saved.workoutDays[1]).toMatchObject({
+      id: day.id,
+      order: 1,
+      name: "Treino editado",
+      coverImageUrl: day.coverImageUrl,
+      exercises: [{ id: exercise.id, sets: 4, reps: 8 }],
+    });
+    expect(await prisma.workoutDay.findUnique({
+      where: { id: sibling.id },
+      include: { exercises: true },
+    })).toEqual(siblingBefore);
+    expect(await prisma.workoutSession.findUniqueOrThrow({
+      where: sessionWhere,
+      include: { sessionExercises: true },
+    })).toEqual(before);
+  });
+
+  it("rejects editing another plan's workout or a workout in an active session", async () => {
+    const { owner, plan, day } = await fixture();
+    const other = await fixture();
+    login(owner);
+    const patch = (dayId: string) =>
+      app.inject({
+        method: "PATCH",
+        url: `/workout-plans/${plan.id}/days/${dayId}`,
+        payload: body().workoutDays[0],
+      });
+
+    expect((await patch(other.day.id)).statusCode).toBe(404);
+    await createTestWorkoutSession(day.id);
+    const blocked = await patch(day.id);
+    expect(blocked.statusCode).toBe(409);
+    expect(blocked.json().code).toBe("ACTIVE_WORKOUT_SESSION");
+  });
+
   it("blocks active sessions and prevents cross-user plan/day/exercise access atomically", async () => {
     const { owner, plan, day, exercise } = await fixture();
     const other = await fixture();

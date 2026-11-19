@@ -9,7 +9,23 @@ import {
 } from "../errors/index.js";
 import { prisma } from "../lib/db.js";
 import { advancedPrescription } from "../schemas/advanced-prescription.js";
-import { UpdateWorkoutPlanBody } from "../schemas/workout-edit.js";
+import {
+  UpdateWorkoutDayBody,
+  UpdateWorkoutPlanBody,
+} from "../schemas/workout-edit.js";
+
+function isEditablePlan(plan: {
+  originType: string;
+  prescriptionStatus: string;
+}) {
+  return !(
+    plan.originType.startsWith("PROFESSIONAL_") &&
+    plan.prescriptionStatus === "APPROVED_PRESCRIBED"
+  );
+}
+
+type PlanEdit = z.output<typeof UpdateWorkoutPlanBody>;
+type DayEdit = { dayId: string; day: z.output<typeof UpdateWorkoutDayBody> };
 
 const include = {
   workoutDays: {
@@ -37,6 +53,7 @@ export class GetEditableWorkoutPlan {
       id: plan.id,
       name: plan.name,
       isActive: plan.isActive,
+      canEdit: isEditablePlan(plan),
       workoutDays: plan.workoutDays.map((day) => ({
         ...day,
         exercises: day.exercises.map((e) => ({
@@ -56,7 +73,22 @@ export class EditWorkoutPlan {
     id: string,
     input: z.input<typeof UpdateWorkoutPlanBody>,
   ) {
-    const data = UpdateWorkoutPlanBody.parse(input);
+    return this.save(userId, id, UpdateWorkoutPlanBody.parse(input));
+  }
+
+  async executeDay(
+    userId: string,
+    id: string,
+    dayId: string,
+    input: z.input<typeof UpdateWorkoutDayBody>,
+  ) {
+    return this.save(userId, id, {
+      dayId,
+      day: UpdateWorkoutDayBody.parse(input),
+    });
+  }
+
+  private async save(userId: string, id: string, edit: PlanEdit | DayEdit) {
     await prisma.$transaction(
       async (tx) => {
         // Shared with StartWorkoutSession: editing and snapshot creation cannot interleave.
@@ -67,8 +99,25 @@ export class EditWorkoutPlan {
             workoutDays: { include: { exercises: true } },
           },
         });
-        if (plan?.originType.startsWith("PROFESSIONAL_") && plan.prescriptionStatus === "APPROVED_PRESCRIBED") throw new BadRequestError("Duplique a prescrição para organizar uma ficha pessoal. A versão prescrita deve ser preservada.");
         if (!plan) throw new NotFoundError("Plano de treino não encontrado.");
+        if (!isEditablePlan(plan))
+          throw new BadRequestError(
+            "Duplique a prescrição para organizar uma ficha pessoal. A versão prescrita deve ser preservada.",
+          );
+
+        const target =
+          "dayId" in edit
+            ? plan.workoutDays.find(
+                (day) => day.id === edit.dayId && !day.isRest,
+              )
+            : undefined;
+        if ("dayId" in edit && !target)
+          throw new NotFoundError("Treino não encontrado neste plano.");
+        const workoutDays =
+          "dayId" in edit
+            ? [{ ...edit.day, id: edit.dayId }]
+            : edit.workoutDays;
+
         if (
           await tx.workoutSession.findFirst({
             where: { athleteId: userId, workoutPlanId: id, completedAt: null },
@@ -84,8 +133,8 @@ export class EditWorkoutPlan {
           where: { acceptedWorkoutPlanId: id },
           data: { acceptedWorkoutPlanId: null },
         });
-        const dayIds = data.workoutDays.flatMap((d) => (d.id ? [d.id] : []));
-        const exerciseIds = data.workoutDays.flatMap((d) =>
+        const dayIds = workoutDays.flatMap((d) => (d.id ? [d.id] : []));
+        const exerciseIds = workoutDays.flatMap((d) =>
           d.exercises.flatMap((e) => (e.id ? [e.id] : [])),
         );
         if (
@@ -95,7 +144,7 @@ export class EditWorkoutPlan {
           throw new BadRequestError("Dias ou exercícios duplicados.");
         }
         // IDs from the browser must belong to this plan/day; foreign IDs never get reassigned.
-        for (const day of data.workoutDays) {
+        for (const day of workoutDays) {
           const existing = plan.workoutDays.find((d) => d.id === day.id);
           if (day.id && !existing)
             throw new NotFoundError("Treino não encontrado neste plano.");
@@ -104,7 +153,7 @@ export class EditWorkoutPlan {
               throw new NotFoundError("Exercício não encontrado neste treino.");
           }
         }
-        const exercises = data.workoutDays.flatMap((d) => d.exercises);
+        const exercises = workoutDays.flatMap((d) => d.exercises);
         const requestedIds = exercises
           .flatMap((e) => [
             e.exerciseId,
@@ -130,14 +179,17 @@ export class EditWorkoutPlan {
             ),
           ),
         });
-        for (const [order, day] of data.workoutDays.entries()) {
+        for (const [order, day] of workoutDays.entries()) {
           const dayData = {
             name: day.name,
-            order,
+            order: target?.order ?? order,
             weekDay: day.weekDay,
             isRest: day.isRest,
             estimatedDurationInSeconds: day.estimatedDurationInSeconds,
-            coverImageUrl: day.coverImageUrl ?? null,
+            coverImageUrl:
+              target && day.coverImageUrl === undefined
+                ? target.coverImageUrl
+                : (day.coverImageUrl ?? null),
           };
           const savedDay = day.id
             ? await tx.workoutDay.update({
@@ -189,19 +241,22 @@ export class EditWorkoutPlan {
               });
           }
         }
-        // Historical executions retain their immutable snapshots when a prescribed day is removed.
-        const removedDays = plan.workoutDays
-          .filter((d) => !dayIds.includes(d.id))
-          .map((d) => d.id);
-        await tx.workoutExercise.deleteMany({
-          where: { workoutDayId: { in: removedDays } },
-        });
-        await tx.workoutDay.deleteMany({
-          where: { id: { in: removedDays }, workoutPlanId: id },
-        });
+        if ("name" in edit) {
+          // Historical executions retain their immutable snapshots when a prescribed day is removed.
+          const removedDays = plan.workoutDays
+            .filter((day) => !dayIds.includes(day.id))
+            .map((day) => day.id);
+          await tx.workoutExercise.deleteMany({
+            where: { workoutDayId: { in: removedDays } },
+          });
+          await tx.workoutDay.deleteMany({
+            where: { id: { in: removedDays }, workoutPlanId: id },
+          });
+        }
         await tx.workoutPlan.update({
           where: { id },
-          data: { name: data.name },
+          data:
+            "name" in edit ? { name: edit.name } : { updatedAt: new Date() },
         });
       },
       { timeout: 15000 },
