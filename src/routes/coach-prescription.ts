@@ -169,7 +169,7 @@ export const coachPrescriptionRoutes: FastifyPluginAsyncZod = async (app) => {
       schema: {
         operationId: "updateWorkoutPrescriptionDraft",
         tags: ["Coach"],
-        summary: "Atualizar rascunho de prescrição existente antes do envio",
+        summary: "Atualizar rascunho ou publicar uma revisão da prescrição",
         params: PrescriptionIdParamsSchema,
         body: UpdatePrescriptionDraftBodySchema,
         response: {
@@ -197,6 +197,7 @@ export const coachPrescriptionRoutes: FastifyPluginAsyncZod = async (app) => {
           notes: request.body.notes,
           allowStudentSubstitution: request.body.allowStudentSubstitution,
           expectedVersion: request.body.version,
+          approval: request.body.approval,
           workoutDays: request.body.workoutDays,
         });
 

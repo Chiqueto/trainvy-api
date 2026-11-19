@@ -12,6 +12,7 @@ import { auth } from "../../src/lib/auth.js";
 import { prisma } from "../../src/lib/db.js";
 import { coachPrescriptionRoutes } from "../../src/routes/coach-prescription.js";
 import { ActivateWorkoutPlan } from "../../src/usecases/ActivateWorkoutPlan.js";
+import { StartWorkoutSession } from "../../src/usecases/StartWorkoutSession.js";
 
 vi.mock("ai", async (importOriginal) => ({
   ...(await importOriginal<typeof import("ai")>()),
@@ -366,7 +367,7 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
     expect(body.sentAt).not.toBeNull();
   });
 
-  it("PUT /coach/prescriptions/:id — bloqueia edição de prescrição já enviada (imutabilidade)", async () => {
+  it("PUT /coach/prescriptions/:id — bloqueia revisão sem aprovação explícita", async () => {
     const sent = await prisma.workoutPrescription.create({
       data: {
         approvedByUserId: coachUser.id,
@@ -404,6 +405,168 @@ describe("Coach Workout Prescriptions Integration Tests", () => {
     expect(res.statusCode).toBe(409);
     const body = res.json();
     expect(body.code).toBe("PRESCRIPTION_ALREADY_SENT");
+  });
+
+  it("revisa uma prescrição enviada e atualiza o plano aceito sem alterar a sessão já iniciada", async () => {
+    const draft = await prisma.workoutPrescription.create({
+      data: {
+        coachId: coachUser.id,
+        athleteId: athleteUser.id,
+        name: "Treino original",
+        status: "DRAFT",
+        payload: { workoutDays: validWorkoutDays },
+      },
+    });
+    const coachUrl = `/coach/prescriptions/${draft.id}`;
+    const athleteUrl = `/me/prescriptions/${draft.id}`;
+    function authenticate(user: typeof coachUser) {
+      vi.spyOn(auth.api, "getSession").mockResolvedValueOnce({
+        user,
+        session: { id: "s-revision", userId: user.id },
+      } as any);
+    }
+
+    authenticate(coachUser);
+    const sent = await app.inject({
+      method: "POST",
+      url: `${coachUrl}/send`,
+      payload: { version: draft.version, approval: true },
+    });
+    expect(sent.statusCode, sent.body).toBe(200);
+
+    authenticate(coachUser);
+    const pending = await app.inject({
+      method: "PUT",
+      url: coachUrl,
+      payload: {
+        version: sent.json().version,
+        approval: true,
+        name: "Treino revisado antes do aceite",
+        workoutDays: validWorkoutDays,
+      },
+    });
+    expect(pending.statusCode, pending.body).toBe(200);
+    expect(pending.json()).toMatchObject({
+      status: "SENT",
+      approvedVersion: pending.json().version,
+    });
+    authenticate(athleteUser);
+    const accepted = await app.inject({
+      method: "POST",
+      url: `${athleteUrl}/accept`,
+    });
+    expect(accepted.statusCode, accepted.body).toBe(200);
+    const planId: string = accepted.json().workoutPlanId;
+    await new ActivateWorkoutPlan().execute({
+      userId: athleteUser.id,
+      workoutPlanId: planId,
+    });
+
+    authenticate(coachUser);
+    const details = await app.inject({ method: "GET", url: coachUrl });
+    expect(details.statusCode, details.body).toBe(200);
+    type EditableDay = (typeof validWorkoutDays)[number] & {
+      id: string;
+      exercises: ((typeof validWorkoutDays)[number]["exercises"][number] & {
+        id: string;
+      })[];
+    };
+    const {
+      version,
+      payload: { workoutDays },
+    } = details.json<{
+      version: number;
+      payload: { workoutDays: EditableDay[] };
+    }>();
+    const [day] = workoutDays;
+    const [exercise, removedExercise] = day.exercises;
+    expect(day.id).toBeDefined();
+    expect(exercise.id).toBeDefined();
+
+    const sessionInput = {
+      userId: athleteUser.id,
+      workoutPlanId: planId,
+      workoutDayId: day.id,
+    };
+    const previousSession = await new StartWorkoutSession().execute(
+      sessionInput,
+    );
+    const revision = {
+      version,
+      approval: true,
+      name: "Treino atualizado",
+      workoutDays: [
+        {
+          ...day,
+          name: "Treino A revisado",
+          exercises: [{ ...exercise, sets: 5 }],
+        },
+      ],
+    };
+    authenticate(coachUser);
+    const updated = await app.inject({
+      method: "PUT",
+      url: coachUrl,
+      payload: revision,
+    });
+    expect(updated.statusCode, updated.body).toBe(200);
+    expect(updated.json()).toMatchObject({
+      status: "ACCEPTED",
+      acceptedWorkoutPlanId: planId,
+      version: version + 1,
+      approvedVersion: version + 1,
+    });
+
+    authenticate(coachUser);
+    const stale = await app.inject({
+      method: "PUT",
+      url: coachUrl,
+      payload: { ...revision, name: "Edição desatualizada" },
+    });
+    expect(stale.statusCode).toBe(409);
+    expect(stale.json().code).toBe("CONCURRENCY_CONFLICT");
+
+    const plan = await prisma.workoutPlan.findUniqueOrThrow({
+      where: { id: planId },
+      include: { workoutDays: { include: { exercises: true } } },
+    });
+    expect(plan).toMatchObject({
+      name: "Treino atualizado",
+      userId: athleteUser.id,
+      isActive: true,
+      workoutDays: [{ id: day.id, exercises: [{ id: exercise.id, sets: 5 }] }],
+    });
+    const historicalExercises = await prisma.sessionExercise.findMany({
+      where: { workoutSessionId: previousSession.userWorkoutSessionId },
+      orderBy: { order: "asc" },
+    });
+    expect(historicalExercises).toMatchObject([
+      { sourceWorkoutExerciseId: exercise.id, plannedSets: exercise.sets },
+      { sourceWorkoutExerciseId: null, plannedSets: removedExercise.sets },
+    ]);
+    await prisma.workoutSession.update({
+      where: { id: previousSession.userWorkoutSessionId },
+      data: { completedAt: new Date() },
+    });
+    const nextSession = await new StartWorkoutSession().execute(sessionInput);
+    expect(nextSession.exercises).toMatchObject([{ plannedSets: 5 }]);
+    await prisma.workoutSession.update({
+      where: { id: nextSession.userWorkoutSessionId },
+      data: { completedAt: new Date() },
+    });
+
+    const archived = await prisma.workoutPrescriptionRevision.findMany({
+      where: { prescriptionId: draft.id },
+      orderBy: { version: "asc" },
+    });
+    expect(archived).toMatchObject([
+      { snapshot: { approvedSnapshot: { name: "Treino original" } } },
+      {
+        snapshot: {
+          approvedSnapshot: { name: "Treino revisado antes do aceite" },
+        },
+      },
+    ]);
   });
 
   it("GET /me/prescriptions/:id — 404 se outro atleta tentar acessar prescrição alheia (IDOR)", async () => {

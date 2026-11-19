@@ -901,6 +901,7 @@ model WorkoutPrescription {
   approvedAt            DateTime?                 @db.Timestamptz()
   approvedVersion       Int?
   approvedSnapshot      Json?
+  revisions             WorkoutPrescriptionRevision[]
   id                    String                    @id @default(uuid())
   coachId               String
   coach                 User                      @relation("CoachPrescriptions", fields: [coachId], references: [id], onDelete: Cascade)
@@ -921,6 +922,17 @@ model WorkoutPrescription {
   @@index([coachId, status])
   @@index([athleteId, status])
   @@index([createdAt])
+}
+
+model WorkoutPrescriptionRevision {
+  prescriptionId String
+  prescription   WorkoutPrescription @relation(fields: [prescriptionId], references: [id], onDelete: Cascade)
+  version        Int
+  approvedAt     DateTime? @db.Timestamptz()
+  snapshot       Json
+  archivedAt     DateTime @default(now()) @db.Timestamptz()
+
+  @@id([prescriptionId, version])
 }
 
 model WorkoutPlanTemplate {

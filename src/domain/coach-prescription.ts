@@ -25,6 +25,7 @@ export interface CoachCommercialContext {
 }
 
 export interface PrescriptionExercisePayload {
+  id?: string;
   name: string;
   order: number;
   sets: number;
@@ -48,6 +49,7 @@ export interface PrescriptionExercisePayload {
 }
 
 export interface PrescriptionDayPayload {
+  id?: string;
   name: string;
   order: number;
   weekDay:

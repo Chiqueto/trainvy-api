@@ -71,6 +71,49 @@ export class GetWorkoutPrescriptionDetails {
       );
     }
 
+    let payload = prescription.payload as unknown as PrescriptionPayload;
+    if (
+      activeCoachLink &&
+      prescription.status === "ACCEPTED" &&
+      prescription.acceptedWorkoutPlanId
+    ) {
+      const acceptedPlan = await prisma.workoutPlan.findFirst({
+        where: {
+          id: prescription.acceptedWorkoutPlanId,
+          userId: prescription.athleteId,
+          deletedAt: null,
+        },
+        select: {
+          workoutDays: {
+            select: {
+              id: true,
+              order: true,
+              exercises: { select: { id: true, order: true } },
+            },
+          },
+        },
+      });
+      if (acceptedPlan && payload?.workoutDays) {
+        payload = {
+          workoutDays: payload.workoutDays.map((day, index) => {
+            const savedDay = acceptedPlan.workoutDays.find(
+              (entry) => entry.order === (day.order ?? index),
+            );
+            return {
+              ...day,
+              id: savedDay?.id,
+              exercises: day.exercises.map((exercise, exerciseIndex) => ({
+                ...exercise,
+                id: savedDay?.exercises.find(
+                  (entry) => entry.order === (exercise.order ?? exerciseIndex),
+                )?.id,
+              })),
+            };
+          }),
+        };
+      }
+    }
+
     return {
       id: prescription.id,
       coachId: prescription.coachId,
@@ -94,7 +137,7 @@ export class GetWorkoutPrescriptionDetails {
       updatedAt: prescription.updatedAt.toISOString(),
       coach: prescription.coach,
       athlete: isCoach ? { ...prescription.athlete, name: activeCoachLink ? prescription.athlete.name : "Vínculo encerrado", email: "", image: null } : prescription.athlete,
-      payload: prescription.payload as unknown as PrescriptionPayload,
+      payload,
     };
   }
 }

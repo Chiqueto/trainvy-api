@@ -4,7 +4,10 @@ import {
   PrescriptionPayload,
 } from "../domain/coach-prescription.js";
 import { resolvePrescriptionCatalogReferences } from "../domain/prescription-catalog.js";
+import type { Prisma } from "../generated/prisma/client.js";
 import { prisma } from "../lib/db.js";
+import { syncAcceptedPrescriptionPlan } from "../domain/sync-accepted-prescription-plan.js";
+import { prescriptionApprovalMode } from "../domain/prescription-approval.js";
 import { advancedPrescription } from "../schemas/advanced-prescription.js";
 import type { TacticalFields } from "../schemas/tactical-builder.js";
 import { GetCommercialContext } from "./GetCommercialContext.js";
@@ -16,7 +19,9 @@ export interface UpdateWorkoutPrescriptionDraftInput {
   name: string;
   notes?: string | null;
   expectedVersion?: number;
+  approval?: true;
   workoutDays: Array<{
+    id?: string;
     name: string;
     order?: number;
     weekDay?:
@@ -31,6 +36,7 @@ export interface UpdateWorkoutPrescriptionDraftInput {
     estimatedDurationInSeconds: number;
     coverImageUrl?: string | null;
     exercises: Array<{
+      id?: string;
       order: number;
       name: string;
       exerciseId?: string | null;
@@ -117,6 +123,18 @@ export class UpdateWorkoutPrescriptionDraft {
             client: tx,
           }),
         );
+        if (dto.approval) {
+          // Older accepted plans can still be editable by the student, who locks the plan first.
+          await tx.$queryRaw`
+            SELECT plan.id
+            FROM "WorkoutPlan" plan
+            JOIN "WorkoutPrescription" p
+              ON p."acceptedWorkoutPlanId" = plan.id AND p."athleteId" = plan."userId"
+            WHERE p.id = ${dto.prescriptionId} AND p."coachId" = ${dto.coachId}
+              AND p.status = 'ACCEPTED'
+            FOR UPDATE OF plan
+          `;
+        }
         // Bloqueio pessimista de linha no PostgreSQL para serializar edições e envios
         await tx.$queryRaw`SELECT id FROM "WorkoutPrescription" WHERE id = ${dto.prescriptionId} FOR UPDATE`;
 
@@ -137,11 +155,23 @@ export class UpdateWorkoutPrescriptionDraft {
           );
         }
 
-        if (prescription.status !== "DRAFT") {
+        const published =
+          prescription.status === "SENT" || prescription.status === "ACCEPTED";
+        if (prescription.status !== "DRAFT" && !published) {
           throw new CoachPrescriptionError(
             "PRESCRIPTION_ALREADY_SENT",
             409,
-            "Apenas rascunhos podem ser editados. Prescrições enviadas ou canceladas são imutáveis.",
+            "Esta prescrição não pode mais ser editada.",
+          );
+        }
+        if (
+          published &&
+          (dto.approval !== true || dto.expectedVersion === undefined)
+        ) {
+          throw new CoachPrescriptionError(
+            "PRESCRIPTION_ALREADY_SENT",
+            409,
+            "Revise e aprove a nova versão da prescrição antes de publicar.",
           );
         }
 
@@ -185,14 +215,14 @@ export class UpdateWorkoutPrescriptionDraft {
         const payload = {
           workoutDays: dto.workoutDays.map((day, index) => ({
             name: day.name.trim(),
-            order: day.order ?? index,
+            order: published ? index : (day.order ?? index),
             weekDay: day.weekDay ?? "MONDAY",
             isRest: day.isRest,
             estimatedDurationInSeconds: day.estimatedDurationInSeconds,
             coverImageUrl: day.coverImageUrl ?? null,
             exercises: (day.isRest ? [] : day.exercises).map((ex, exIndex) => {
               return {
-                order: ex.order ?? exIndex,
+                order: published ? exIndex : (ex.order ?? exIndex),
                 ...catalogReference(ex),
                 sets: ex.sets,
                 warmupSets: ex.warmupSets ?? 0,
@@ -204,12 +234,87 @@ export class UpdateWorkoutPrescriptionDraft {
           })),
         };
 
+        const allowStudentSubstitution =
+          dto.allowStudentSubstitution ?? prescription.allowStudentSubstitution;
+        let approvalFields: Prisma.WorkoutPrescriptionUncheckedUpdateInput = {};
+        if (published) {
+          if (
+            !payload.workoutDays.some(
+              (day) => !day.isRest && day.exercises.length > 0,
+            )
+          )
+            throw new CoachPrescriptionError(
+              "INVALID_PRESCRIPTION_PAYLOAD",
+              400,
+              "Adicione ao menos um treino com exercícios.",
+            );
+          const registration =
+            await tx.professionalRegistration.findUniqueOrThrow({
+              where: { userId: dto.coachId },
+            });
+          const approvedAt = new Date();
+          const prescribedCrefSnapshot =
+            registration.fullName +
+            " — CREF " +
+            registration.cref +
+            "/" +
+            registration.region;
+
+          await tx.workoutPrescriptionRevision.create({
+            data: {
+              prescriptionId: prescription.id,
+              version: prescription.version,
+              approvedAt: prescription.approvedAt,
+              snapshot: {
+                name: prescription.name,
+                notes: prescription.notes,
+                payload: prescription.payload,
+                allowStudentSubstitution: prescription.allowStudentSubstitution,
+                approvedSnapshot: prescription.approvedSnapshot,
+                approvedByUserId: prescription.approvedByUserId,
+                approvedVersion: prescription.approvedVersion,
+                prescribedCrefSnapshot: prescription.prescribedCrefSnapshot,
+              },
+            },
+          });
+          if (prescription.status === "ACCEPTED") {
+            await syncAcceptedPrescriptionPlan({
+              tx,
+              planId: prescription.acceptedWorkoutPlanId,
+              athleteId: prescription.athleteId,
+              coachId: dto.coachId,
+              originType: prescription.originType,
+              days: payload.workoutDays,
+              references: dto.workoutDays,
+              name: trimmedName,
+              allowStudentSubstitution,
+              approvedAt,
+              prescribedCrefSnapshot,
+            });
+          }
+          approvalFields = {
+            prescriptionStatus: "APPROVED_PRESCRIBED",
+            prescribedByProfessionalId: dto.coachId,
+            prescribedCrefSnapshot,
+            humanApprovedAt: approvedAt,
+            approvedByUserId: dto.coachId,
+            approvedAt,
+            approvedVersion: prescription.version + 1,
+            approvedSnapshot: {
+              verificationMode: "VERIFIED",
+              name: trimmedName,
+              notes: dto.notes ?? null,
+              payload,
+              allowStudentSubstitution,
+            },
+          };
+        }
+
         const updated = await tx.workoutPrescription.update({
           where: { id: prescription.id },
           data: {
-            ...(dto.allowStudentSubstitution !== undefined
-              ? { allowStudentSubstitution: dto.allowStudentSubstitution }
-              : {}),
+            ...approvalFields,
+            allowStudentSubstitution,
             name: trimmedName,
             notes: dto.notes ?? null,
             payload,
@@ -234,6 +339,10 @@ export class UpdateWorkoutPrescriptionDraft {
           name: updated.name,
           notes: updated.notes,
           version: updated.version,
+          approvedByUserId: updated.approvedByUserId,
+          approvedAt: updated.approvedAt?.toISOString() ?? null,
+          approvedVersion: updated.approvedVersion,
+          approvalMode: prescriptionApprovalMode(updated),
           acceptedWorkoutPlanId: updated.acceptedWorkoutPlanId,
           sentAt: updated.sentAt?.toISOString() ?? null,
           respondedAt: updated.respondedAt?.toISOString() ?? null,

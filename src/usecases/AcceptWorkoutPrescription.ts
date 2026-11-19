@@ -1,12 +1,9 @@
-import { advancedPrescription } from "../schemas/advanced-prescription.js";
-import { resolveCanonicalExerciseMap } from "../domain/canonical-exercise.js";
+import { buildPrescribedWorkouts } from "../domain/prescribed-workout-data.js";
 import {
   CoachPrescriptionError,
   PrescriptionDayPayload,
   PrescriptionPayload,
 } from "../domain/coach-prescription.js";
-import { sanitizeAndNormalizeAlternatives } from "../domain/exercise-alternatives.js";
-import { WeekDay } from "../generated/prisma/enums.js";
 import { prisma } from "../lib/db.js";
 import { prescriptionApprovalMode } from "../domain/prescription-approval.js";
 import { readProfessionalVerificationPolicy } from "./ProfessionalVerificationPolicy.js";
@@ -144,21 +141,11 @@ export class AcceptWorkoutPrescription {
         };
         const workoutDays = rawPayload.workoutDays ?? [];
 
-        // 5. Resolução canônica de exercícios (isolamento por usuário)
-        const allExerciseNames = workoutDays.flatMap((day) =>
-          day.exercises.flatMap((e) =>
-            [
-              e.name,
-              e.alternative1ExerciseName,
-              e.alternative2ExerciseName,
-            ].filter((n): n is string => !!n && n.trim().length > 0),
-          ),
-        );
-        const canonicalExerciseMap = await resolveCanonicalExerciseMap({
-          userId: athleteId,
-          names: allExerciseNames,
+        const workouts = await buildPrescribedWorkouts(
           tx,
-        });
+          athleteId,
+          workoutDays,
+        );
 
         // 6. Criar o WorkoutPlan de propriedade exclusiva do ATLETA
         // REQUISITO CRÍTICO: isActive = false (nunca auto-ativar, preserva planejamento ativo existente)
@@ -175,61 +162,9 @@ export class AcceptWorkoutPrescription {
             userId: athleteId,
             isActive: false,
             workoutDays: {
-              create: workoutDays.map((workoutDay, index) => ({
-                name: workoutDay.name,
-                order: workoutDay.order ?? index,
-                weekDay: workoutDay.weekDay ?? WeekDay.MONDAY,
-                isRest: workoutDay.isRest,
-                estimatedDurationInSeconds:
-                  workoutDay.estimatedDurationInSeconds,
-                coverImageUrl: workoutDay.coverImageUrl ?? null,
-                exercises: {
-                  create: workoutDay.exercises.map((exercise, exIndex) => {
-                    const resolvedMainId =
-                      exercise.exerciseId ??
-                      canonicalExerciseMap.get(exercise.name) ??
-                      null;
-
-                    const resolvedAlt1Id =
-                      exercise.alternative1ExerciseId ??
-                      (exercise.alternative1ExerciseName
-                        ? canonicalExerciseMap.get(
-                            exercise.alternative1ExerciseName,
-                          )
-                        : null) ??
-                      null;
-
-                    const resolvedAlt2Id =
-                      exercise.alternative2ExerciseId ??
-                      (exercise.alternative2ExerciseName
-                        ? canonicalExerciseMap.get(
-                            exercise.alternative2ExerciseName,
-                          )
-                        : null) ??
-                      null;
-
-                    const { alternative1ExerciseId, alternative2ExerciseId } =
-                      sanitizeAndNormalizeAlternatives({
-                        mainExerciseId: resolvedMainId,
-                        mainExerciseName: exercise.name,
-                        alternative1ExerciseId: resolvedAlt1Id,
-                        alternative2ExerciseId: resolvedAlt2Id,
-                      });
-
-                    return {
-                      order: exercise.order ?? exIndex,
-                      name: exercise.name,
-                      sets: exercise.sets,
-                      warmupSets: exercise.warmupSets ?? 0,
-                      reps: exercise.reps,
-                      ...advancedPrescription(exercise),
-                      restTimeInSeconds: exercise.restTimeInSeconds,
-                      exerciseId: resolvedMainId,
-                      alternative1ExerciseId,
-                      alternative2ExerciseId,
-                    };
-                  }),
-                },
+              create: workouts.map((workout) => ({
+                ...workout.data,
+                exercises: { create: workout.exercises },
               })),
             },
           },

@@ -88,16 +88,25 @@ export const CreatePrescriptionDraftBodySchema = z.object({
 });
 
 export const UpdatePrescriptionDraftBodySchema = z.object({
+  approval: z.literal(true).optional(),
   allowStudentSubstitution: z.boolean().optional(),
   name: z.string().trim().min(1, "Nome do planejamento é obrigatório").max(100),
   notes: z.string().trim().max(1000).optional().nullable(),
   version: z.number().int().positive(),
   workoutDays: z
-    .array(WorkoutDayDraftSchema)
+    .array(
+      WorkoutDayDraftSchema.safeExtend({
+        id: z.uuid().optional(),
+        exercises: z.array(
+          WorkoutExerciseDraftSchema.safeExtend({ id: z.uuid().optional() }),
+        ),
+      }),
+    )
     .min(1, "O planejamento deve conter pelo menos 1 dia"),
 });
 
 export const PrescriptionExerciseItemSchema = z.object({
+  id: z.uuid().optional(),
   ...advancedPrescriptionShape,
   name: z.string(),
   order: z.number(),
@@ -113,6 +122,7 @@ export const PrescriptionExerciseItemSchema = z.object({
 });
 
 export const PrescriptionDayItemSchema = z.object({
+  id: z.uuid().optional(),
   name: z.string(),
   order: z.number(),
   weekDay: z.enum([
