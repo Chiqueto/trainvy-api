@@ -249,3 +249,39 @@ GET /exercises/:exerciseId/media
 - **Componente de Demonstração e Acessibilidade:**
   - `ExerciseMediaPreview` suporta preferência por movimento reduzido (`prefers-reduced-motion`), reinicia estados limpamente ao alternar exercícios e exibe nota sobre posições ilustrativas de referência.
   - `ExerciseExecutionDialog` limpa estados prévios imediatamente para evitar flash de dados do exercício anterior, descarta respostas assíncronas obsoletas e gerencia foco e fechamento acessível.
+
+## Miniaturas 3D no armazenamento S3
+
+As miniaturas dos cards são importadas em WebP. Cada exercício global guarda a URL
+do objeto em `Exercise.thumbnailUrl` e a chave em `Exercise.thumbnailStorageKey`.
+O catálogo fornece um caminho estável da API, que redireciona para uma URL S3
+assinada por cinco minutos. Os buckets podem permanecer privados. A API resolve
+o objeto pela chave e pelas configurações em uso.
+
+Configure no ambiente do backend `EXERCISE_THUMBNAILS_S3_BUCKET`,
+`AWS_ENDPOINT_URL_S3`, `AWS_REGION`, `AWS_ACCESS_KEY_ID` e
+`AWS_SECRET_ACCESS_KEY`. Use `AWS_SESSION_TOKEN` quando houver credenciais
+temporárias. O padrão é endereço com o bucket no caminho, compatível com Neon.
+Defina `EXERCISE_THUMBNAILS_S3_PATH_STYLE=false` para provedores onde o bucket
+fica no host.
+
+Com a migração aplicada e os dois repositórios acessíveis:
+
+```sh
+npm run media:upload-thumbnails
+npm run migrate:deploy
+npm run media:upload-thumbnails -- --apply
+```
+
+O primeiro comando valida as imagens locais. O segundo aplica as migrações
+pendentes. O terceiro envia os objetos e grava as referências no banco depois
+de concluir os uploads. O script usa a pasta `../trainvy-frontend` por padrão e
+aceita o caminho do frontend como argumento.
+Ele usa o UUID do catálogo e uma chave que inclui o hash do arquivo, de forma
+que reexecutar o lote com as mesmas imagens e o mesmo bucket é seguro.
+
+Ao trocar de provedor ou bucket, copie os objetos preservando as chaves ou
+reexecute a importação com a nova configuração. Reimportar atualiza também as
+URLs registradas no banco. As imagens de origem para reimportação ficam em
+`scripts/assets/exercise-thumbnails` no frontend. Os cards buscam as miniaturas 3D
+no S3 e recorrem às ilustrações 2D cadastradas quando disponíveis.

@@ -36,6 +36,7 @@ export interface ExerciseOutputDto {
   ownerUserId: string | null;
   isUnilateral: boolean;
   hasMedia: boolean;
+  thumbnailUrl?: string;
   anatomy?: ExerciseAnatomy | null;
   muscles: Array<{
     id: string;
@@ -90,6 +91,7 @@ export class ListExercises {
         isUnilateral: true,
         anatomyReview: true,
         muscleDetails: true,
+        thumbnailStorageKey: true,
         demonstrations: { where: { ownerUserId: dto.userId }, take: 1 },
         media: {
           where: { isActive: true },
@@ -212,6 +214,10 @@ export class ListExercises {
         ownerUserId: ex.ownerUserId,
         isUnilateral: ex.isUnilateral,
         hasMedia: ex.media.length > 0 || ex.demonstrations.length > 0,
+        thumbnailUrl:
+          ex.ownerUserId === null && ex.thumbnailStorageKey
+            ? `/exercises/${ex.id}/thumbnail?v=${encodeURIComponent(ex.thumbnailStorageKey.split("/").at(-1) ?? "")}`
+            : undefined,
         muscles: ex.muscles,
         anatomy: getExerciseAnatomy(ex.anatomyReview, ex.muscles),
       }),

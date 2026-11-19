@@ -25,6 +25,7 @@ import {
 import { CreateExercise } from "../usecases/CreateExercise.js";
 import { GetExerciseCatalogVersion } from "../usecases/GetExerciseCatalogVersion.js";
 import { GetExerciseMedia } from "../usecases/GetExerciseMedia.js";
+import { GetExerciseThumbnail } from "../usecases/GetExerciseThumbnail.js";
 import { ListExercises } from "../usecases/ListExercises.js";
 import {
   DeleteCustomExercise,
@@ -36,6 +37,36 @@ import { SaveExerciseDemonstration } from "../usecases/SaveExerciseDemonstration
 import { CoachAthleteError } from "../domain/coach-athlete.js";
 
 export const exerciseRoutes: FastifyPluginAsyncZod = async (app) => {
+  app.route({
+    method: "GET",
+    url: "/:exerciseId/thumbnail",
+    schema: {
+      operationId: "getExerciseThumbnail",
+      tags: ["Exercise"],
+      summary: "Redirect to a short-lived URL for a global exercise thumbnail",
+      params: ExerciseMediaParamsSchema,
+      response: { 307: z.null(), 404: ErrorSchema, 500: ErrorSchema },
+    },
+    handler: async (request, reply) => {
+      reply.header("Cache-Control", "no-store");
+      try {
+        const url = await new GetExerciseThumbnail().execute(
+          request.params.exerciseId,
+        );
+        if (url) return reply.redirect(url, 307);
+        return reply.status(404).send({
+          error: "Exercise thumbnail not available",
+          code: "NOT_FOUND",
+        });
+      } catch {
+        request.log.error("Failed to resolve exercise thumbnail");
+        return reply.status(500).send({
+          error: "Internal server error",
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }
+    },
+  });
   app.route({
     method: "PUT",
     url: "/:exerciseId/demonstration",

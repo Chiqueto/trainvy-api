@@ -600,6 +600,10 @@ export const ExerciseResponseSchema = z.object({
   ownerUserId: z.string().nullable(),
   isUnilateral: z.boolean().default(false).optional(),
   hasMedia: z.boolean().default(false),
+  thumbnailUrl: z
+    .string()
+    .optional()
+    .describe("Public API path to the catalog thumbnail"),
   muscles: z.array(ExerciseMuscleResponseSchema).default([]),
   anatomy: ExerciseAnatomySchema.nullable().optional(),
 });

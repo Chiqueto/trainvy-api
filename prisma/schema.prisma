@@ -248,6 +248,8 @@ model Exercise {
   isUnilateral  Boolean  @default(false)
   anatomyReview Json?
   muscleDetails Json?
+  thumbnailUrl String?
+  thumbnailStorageKey String?
   createdAt     DateTime @default(now()) @db.Timestamptz()
   updatedAt     DateTime @updatedAt @db.Timestamptz()
 
