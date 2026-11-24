@@ -26,12 +26,18 @@ export class CompleteSignup {
       const plan = await tx.plan.findUnique({ where: { id: intent.planId } });
       assertSignupPlan(plan, intent.accountType);
       await assertAiPlanSignupAvailable(plan.id, intent.accountType, tx);
+      const isCoach = intent.accountType === "COACH";
+      const trialEndsAt = isCoach
+        ? new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000)
+        : null;
       await tx.subscription.create({
         data: {
           userId,
           planId: plan.id,
-          status: intent.accountType === "ATHLETE" ? "ACTIVE" : "PENDING",
+          status: isCoach ? "TRIALING" : "ACTIVE",
           billingProvider: "NONE",
+          trialStartedAt: isCoach ? now : null,
+          trialEndsAt,
           priceInCentsSnapshot: plan.monthlyPriceInCents,
           currencySnapshot: plan.currency,
         },

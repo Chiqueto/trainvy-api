@@ -118,18 +118,18 @@ describe("Commercial integration (dedicated TEST_DATABASE_URL only)", () => {
       where: { id: p.id },
       data: { monthlyPriceInCents: 4990 },
     });
-    expect(
-      await new GetCommercialContext().execute({ userId: u.id }),
-    ).toMatchObject({
+    const context = await new GetCommercialContext().execute({ userId: u.id });
+    expect(context).toMatchObject({
       accountType: "COACH",
       systemRole: "USER",
       subscription: {
-        status: "PENDING",
+        status: "TRIALING",
         billingProvider: "NONE",
         priceInCentsSnapshot: 3990,
       },
-      entitlements: [],
     });
+    expect(context.subscription?.trialEndsAt).toBeTruthy();
+    expect(context.entitlements.length).toBeGreaterThan(0);
   });
   it("athlete signup is free ACTIVE/NONE and a second intent cannot convert initialized account", async () => {
     const u = await user(),
@@ -262,6 +262,10 @@ describe("Commercial integration (dedicated TEST_DATABASE_URL only)", () => {
     await prisma.user.update({
       where: { id: u.id },
       data: { systemRole: "ADMIN" },
+    });
+    await prisma.subscription.update({
+      where: { userId: u.id },
+      data: { status: "PENDING", trialStartedAt: null, trialEndsAt: null },
     });
     expect(
       (await new GetCommercialContext().execute({ userId: u.id })).entitlements,
