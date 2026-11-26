@@ -42,6 +42,22 @@ export function subscriptionGrantsAccess(
         subscription.trialStartedAt <= now)
     );
   }
+  if (
+    subscription.status === "PAST_DUE" &&
+    subscription.billingProvider === "ASAAS" &&
+    subscription.graceUntil != null &&
+    subscription.graceUntil > now
+  ) {
+    return true;
+  }
+  if (
+    subscription.status === "CANCELED" &&
+    subscription.cancelAtPeriodEnd === true &&
+    subscription.currentPeriodEnd != null &&
+    subscription.currentPeriodEnd > now
+  ) {
+    return true;
+  }
   return (
     subscription.status === "ACTIVE" &&
     (subscription.currentPeriodStart === null ||

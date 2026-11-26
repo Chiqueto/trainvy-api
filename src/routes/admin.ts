@@ -1,21 +1,24 @@
 import type { FastifyRequest } from "fastify";
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import z from "zod";
-import { ListFeatureTermsEvidence } from "../usecases/ListFeatureTermsEvidence.js";
-import { featureKeys } from "../domain/feature-terms.js";
 
+import { featureKeys } from "../domain/feature-terms.js";
 import { AdminError, requireAdmin } from "../lib/require-admin.js";
 import * as s from "../schemas/admin.js";
-import { AdminExerciseCatalog, AdminExerciseMusclesBody, AdminExerciseMusclesResult } from "../schemas/admin-exercises.js";
-import { UpdateAdminExerciseMuscles } from "../usecases/UpdateAdminExerciseMuscles.js";
-import { ErrorSchema } from "../schemas/index.js";
-import { AdminQueries } from "../usecases/AdminQueries.js";
-import { ListAdminExercises } from "../usecases/ListAdminExercises.js";
-import { GetAdminAiUsage } from "../usecases/GetAdminAiUsage.js";
 import {
   AdminAiUsageQuery,
   AdminAiUsageResponse,
 } from "../schemas/admin-ai-usage.js";
+import { AdminExerciseCatalog, AdminExerciseMusclesBody, AdminExerciseMusclesResult } from "../schemas/admin-exercises.js";
+import {
+  AdminAsaasErrorsQuerySchema,
+  AdminAsaasErrorsResponseSchema,
+} from "../schemas/billing.js";
+import { ErrorSchema } from "../schemas/index.js";
+import { AdminQueries } from "../usecases/AdminQueries.js";
+import { GetAdminAiUsage } from "../usecases/GetAdminAiUsage.js";
+import { ListAdminExercises } from "../usecases/ListAdminExercises.js";
+import { ListFeatureTermsEvidence } from "../usecases/ListFeatureTermsEvidence.js";
 import { ManageAdminPlan } from "../usecases/ManageAdminPlan.js";
 import {
   ActivateManualSubscription,
@@ -24,6 +27,7 @@ import {
   ExtendManualTrial,
   GrantManualTrial,
 } from "../usecases/ManualSubscriptions.js";
+import { UpdateAdminExerciseMuscles } from "../usecases/UpdateAdminExerciseMuscles.js";
 
 const errors = {
   400: ErrorSchema,
@@ -324,5 +328,18 @@ export const adminRoutes: FastifyPluginAsyncZod = async (app) => {
         adminUserId: actor(request),
         userId: request.params.userId,
       }),
+  );
+  app.get(
+    "/asaas-errors",
+    {
+      schema: {
+        operationId: "listAdminAsaasErrors",
+        tags: ["Admin"],
+        summary: "List Asaas integration and webhook error logs",
+        querystring: AdminAsaasErrorsQuerySchema,
+        response: response(AdminAsaasErrorsResponseSchema),
+      },
+    },
+    (request) => queries.asaasErrors(actor(request), request.query),
   );
 };

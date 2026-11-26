@@ -6,6 +6,7 @@ import type { Prisma } from "../generated/prisma/client.js";
 import { prisma } from "../lib/db.js";
 import { AdminError, assertAdminUser } from "../lib/require-admin.js";
 import { AdminAuditPage, AdminAuditQuery, AdminSubscriptionsQuery, AdminUsersQuery } from "../schemas/admin.js";
+import { AdminAsaasErrorsQuerySchema } from "../schemas/billing.js";
 import { GetCommercialContext } from "./GetCommercialContext.js";
 
 const identity = { id: true, name: true, email: true, image: true, accountType: true, systemRole: true, accountSetupCompletedAt: true, createdAt: true } satisfies Prisma.UserSelect;
@@ -75,5 +76,25 @@ export class AdminQueries {
       include: { admin: { select: { id: true, name: true } }, targetUser: { select: { id: true, name: true } } }, orderBy: order, take: q.limit + 1 });
     const page = adminPage("audit", rows, q.limit);
     return AdminAuditPage.parse({ ...page, items: page.items.map(row => ({ ...row, createdAt: row.createdAt.toISOString() })) });
+  }
+  async asaasErrors(
+    adminUserId: string,
+    input: z.input<typeof AdminAsaasErrorsQuerySchema>,
+  ) {
+    await assertAdminUser(prisma, adminUserId);
+    const q = AdminAsaasErrorsQuerySchema.parse(input);
+    const items = await prisma.asaasErrorLog.findMany({
+      where: q.processName
+        ? { processName: { contains: q.processName, mode: "insensitive" } }
+        : undefined,
+      orderBy: [{ createdAt: "desc" }],
+      take: q.limit,
+    });
+    return {
+      items: items.map((item) => ({
+        ...item,
+        createdAt: item.createdAt.toISOString(),
+      })),
+    };
   }
 }

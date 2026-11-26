@@ -137,6 +137,7 @@ model User {
   coachPrescriptions         WorkoutPrescription[]   @relation("CoachPrescriptions")
   athletePrescriptions       WorkoutPrescription[]   @relation("AthletePrescriptions")
   coachWorkoutPlanTemplates  WorkoutPlanTemplate[]   @relation("CoachWorkoutPlanTemplates")
+  billingAccessLogs          BillingAccessLog[]
   aiTrainingHistoryAccess    Boolean                 @default(false)
   aiTrainingHistoryConsentAt DateTime?               @db.Timestamptz()
   workoutSetProposals        WorkoutSetProposal[]
@@ -627,6 +628,11 @@ model Plan {
   entitlements        PlanEntitlement[]
   subscriptions       Subscription[]
   signupIntents       SignupIntent[]
+  subscriptionPayments SubscriptionPayment[]
+  upgradesFrom        SubscriptionUpgrade[]   @relation("UpgradeFromPlan")
+  upgradesTarget      SubscriptionUpgrade[]   @relation("UpgradeTargetPlan")
+  downgradesFrom      SubscriptionDowngrade[] @relation("DowngradeFromPlan")
+  downgradesTarget    SubscriptionDowngrade[] @relation("DowngradeTargetPlan")
 }
 
 model PlanEntitlement {
@@ -641,26 +647,47 @@ model PlanEntitlement {
 }
 
 model Subscription {
-  id                     String             @id @default(uuid())
-  userId                 String             @unique
-  user                   User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  planId                 String
-  plan                   Plan               @relation(fields: [planId], references: [id], onDelete: Restrict)
-  status                 SubscriptionStatus
-  billingProvider        BillingProvider    @default(NONE)
-  priceInCentsSnapshot   Int
-  currencySnapshot       String
-  externalSubscriptionId String?
-  trialStartedAt         DateTime?          @db.Timestamptz()
-  trialEndsAt            DateTime?          @db.Timestamptz()
-  currentPeriodStart     DateTime?          @db.Timestamptz()
-  currentPeriodEnd       DateTime?          @db.Timestamptz()
-  canceledAt             DateTime?          @db.Timestamptz()
-  createdAt              DateTime           @default(now()) @db.Timestamptz()
-  updatedAt              DateTime           @updatedAt @db.Timestamptz()
+  id                      String             @id @default(uuid())
+  userId                  String             @unique
+  user                    User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  planId                  String
+  plan                    Plan               @relation(fields: [planId], references: [id], onDelete: Restrict)
+  status                  SubscriptionStatus
+  billingProvider         BillingProvider    @default(NONE)
+  priceInCentsSnapshot    Int
+  currencySnapshot        String
+  externalCustomerId      String?
+  externalSubscriptionId  String?
+  trialStartedAt          DateTime?          @db.Timestamptz()
+  trialEndsAt             DateTime?          @db.Timestamptz()
+  currentPeriodStart      DateTime?          @db.Timestamptz()
+  currentPeriodEnd        DateTime?          @db.Timestamptz()
+  firstPaymentConfirmedAt DateTime?          @db.Timestamptz()
+  paidUntil               DateTime?          @db.Timestamptz()
+  graceUntil              DateTime?          @db.Timestamptz()
+  coolingOffUntil         DateTime?          @db.Timestamptz()
+  nextDueDate             DateTime?          @db.Date
+  cancelAtPeriodEnd       Boolean            @default(false)
+  canceledAt              DateTime?          @db.Timestamptz()
+  blockedAt               DateTime?          @db.Timestamptz()
+  lastSyncedAt            DateTime?          @db.Timestamptz()
+  lastWebhookEventId      String?
+  createdAt               DateTime           @default(now()) @db.Timestamptz()
+  updatedAt               DateTime           @updatedAt @db.Timestamptz()
+
+  payments      SubscriptionPayment[]
+  refunds       SubscriptionRefund[]
+  webhookEvents BillingWebhookEvent[]
+  accessLogs    BillingAccessLog[]
+  upgrades      SubscriptionUpgrade[]
+  downgrades    SubscriptionDowngrade[]
 
   @@unique([billingProvider, externalSubscriptionId])
   @@index([planId])
+  @@index([status])
+  @@index([paidUntil])
+  @@index([graceUntil])
+  @@index([externalCustomerId])
 }
 
 model BillingCustomer {
@@ -674,6 +701,192 @@ model BillingCustomer {
 
   @@unique([userId, provider])
   @@unique([provider, externalCustomerId])
+}
+
+model SubscriptionPayment {
+  id                     String          @id @default(uuid())
+  subscriptionId         String
+  subscription           Subscription    @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  planId                 String?
+  plan                   Plan?           @relation(fields: [planId], references: [id], onDelete: SetNull)
+  provider               BillingProvider @default(ASAAS)
+  providerPaymentId      String?         @unique
+  providerSubscriptionId String?
+  providerCheckoutId     String?
+  status                 String
+  billingType            String?
+  amountInCents          Int
+  netAmountInCents       Int?
+  currency               String          @default("BRL")
+  dueDate                DateTime?       @db.Date
+  paidAt                 DateTime?       @db.Timestamptz()
+  confirmedAt            DateTime?       @db.Timestamptz()
+  receivedAt             DateTime?       @db.Timestamptz()
+  refundedAt             DateTime?       @db.Timestamptz()
+  checkoutUrl            String?
+  invoiceUrl             String?
+  bankSlipUrl            String?
+  pixCopyAndPaste        String?
+  rawPayload             Json?
+  createdAt              DateTime        @default(now()) @db.Timestamptz()
+  updatedAt              DateTime        @updatedAt @db.Timestamptz()
+
+  webhookEvents BillingWebhookEvent[]
+  refunds       SubscriptionRefund[]
+
+  @@index([subscriptionId, createdAt])
+  @@index([providerSubscriptionId])
+  @@index([providerCheckoutId])
+  @@index([status])
+  @@map("subscription_payments")
+}
+
+model BillingWebhookEvent {
+  id                     String               @id @default(uuid())
+  provider               BillingProvider      @default(ASAAS)
+  providerEventId        String?
+  idempotencyKey         String               @unique
+  eventType              String
+  providerPaymentId      String?
+  providerSubscriptionId String?
+  subscriptionId         String?
+  subscription           Subscription?        @relation(fields: [subscriptionId], references: [id], onDelete: SetNull)
+  subscriptionPaymentId  String?
+  subscriptionPayment    SubscriptionPayment? @relation(fields: [subscriptionPaymentId], references: [id], onDelete: SetNull)
+  payload                Json
+  payloadHash            String
+  processingStatus       String
+  errorMessage           String?
+  receivedAt             DateTime             @default(now()) @db.Timestamptz()
+  processedAt            DateTime?            @db.Timestamptz()
+  createdAt              DateTime             @default(now()) @db.Timestamptz()
+  updatedAt              DateTime             @updatedAt @db.Timestamptz()
+
+  @@index([providerEventId])
+  @@index([providerPaymentId])
+  @@index([providerSubscriptionId])
+  @@index([processingStatus, receivedAt])
+  @@map("billing_webhook_events")
+}
+
+model SubscriptionRefund {
+  id                    String               @id @default(uuid())
+  subscriptionId        String
+  subscription          Subscription         @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  subscriptionPaymentId String?
+  subscriptionPayment   SubscriptionPayment? @relation(fields: [subscriptionPaymentId], references: [id], onDelete: SetNull)
+  provider              BillingProvider      @default(ASAAS)
+  providerPaymentId     String?
+  providerRefundId      String?
+  refundType            String
+  status                String
+  reason                String?
+  amountInCents         Int
+  currency              String               @default("BRL")
+  requestedAt           DateTime             @default(now()) @db.Timestamptz()
+  processedAt           DateTime?            @db.Timestamptz()
+  failedAt              DateTime?            @db.Timestamptz()
+  rawPayload            Json?
+  createdAt             DateTime             @default(now()) @db.Timestamptz()
+  updatedAt             DateTime             @updatedAt @db.Timestamptz()
+
+  @@index([subscriptionId, createdAt])
+  @@index([status])
+  @@map("subscription_refunds")
+}
+
+model BillingAccessLog {
+  id                String        @id @default(uuid())
+  subscriptionId    String?
+  subscription      Subscription? @relation(fields: [subscriptionId], references: [id], onDelete: SetNull)
+  userId            String
+  user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  action            String
+  previousStatus    String?
+  newStatus         String?
+  reason            String?
+  source            String
+  sourceReferenceId String?
+  metadata          Json?
+  createdAt         DateTime      @default(now()) @db.Timestamptz()
+
+  @@index([userId, createdAt])
+  @@index([subscriptionId, createdAt])
+  @@map("billing_access_logs")
+}
+
+model SubscriptionUpgrade {
+  id                String       @id @default(uuid())
+  subscriptionId    String
+  subscription      Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  fromPlanId        String
+  fromPlan          Plan         @relation("UpgradeFromPlan", fields: [fromPlanId], references: [id], onDelete: Restrict)
+  targetPlanId      String
+  targetPlan        Plan         @relation("UpgradeTargetPlan", fields: [targetPlanId], references: [id], onDelete: Restrict)
+  differenceInCents Int
+  asaasPaymentId    String?      @unique
+  invoiceUrl        String?
+  externalReference String       @unique
+  status            String
+  errorMessage      String?
+  expiresAt         DateTime     @db.Timestamptz()
+  paidAt            DateTime?    @db.Timestamptz()
+  appliedAt         DateTime?    @db.Timestamptz()
+  cancelledAt       DateTime?    @db.Timestamptz()
+  failedAt          DateTime?    @db.Timestamptz()
+  createdAt         DateTime     @default(now()) @db.Timestamptz()
+  updatedAt         DateTime     @updatedAt @db.Timestamptz()
+
+  @@index([subscriptionId, status])
+  @@index([status, expiresAt])
+  @@map("subscription_upgrades")
+}
+
+model SubscriptionDowngrade {
+  id                     String       @id @default(uuid())
+  subscriptionId         String
+  subscription           Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  fromPlanId             String
+  fromPlan               Plan         @relation("DowngradeFromPlan", fields: [fromPlanId], references: [id], onDelete: Restrict)
+  targetPlanId           String
+  targetPlan             Plan         @relation("DowngradeTargetPlan", fields: [targetPlanId], references: [id], onDelete: Restrict)
+  effectiveAt            DateTime     @db.Timestamptz()
+  status                 String
+  acknowledgedAt         DateTime     @db.Timestamptz()
+  retainedAthleteIds     Json?
+  preparedFuturePayments Json?
+  asaasSyncStatus        String
+  asaasReversalStatus    String?
+  errorMessage           String?
+  cancelledAt            DateTime?    @db.Timestamptz()
+  appliedAt              DateTime?    @db.Timestamptz()
+  createdAt              DateTime     @default(now()) @db.Timestamptz()
+  updatedAt              DateTime     @updatedAt @db.Timestamptz()
+
+  @@index([subscriptionId, status])
+  @@index([status, effectiveAt])
+  @@map("subscription_downgrades")
+}
+
+model AsaasErrorLog {
+  id                 String   @id @default(uuid())
+  processName        String
+  errorType          String
+  httpStatus         Int?
+  shortMessage       String
+  detailedStacktrace String?  @db.Text
+  requestMethod      String?
+  requestPath        String?
+  responseBody       String?  @db.Text
+  userId             String?
+  subscriptionId     String?
+  externalReference  String?
+  createdAt          DateTime @default(now()) @db.Timestamptz()
+
+  @@index([createdAt(sort: Desc)])
+  @@index([processName, createdAt])
+  @@index([userId, createdAt])
+  @@map("asaas_error_logs")
 }
 
 model SignupIntent {

@@ -3,6 +3,10 @@
     {
       "path": "/cron/streak-reminders",
       "schedule": "0 11 * * *"
+    },
+    {
+      "path": "/cron/billing-reconciliation",
+      "schedule": "0 12 * * *"
     }
   ]
 }

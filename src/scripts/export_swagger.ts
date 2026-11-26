@@ -14,6 +14,7 @@ import {
 
 import { adminRoutes } from "../routes/admin.js";
 import { aiRoutes } from "../routes/ai.js";
+import { billingRoutes } from "../routes/billing.js";
 import { coachRoutes } from "../routes/coach.js";
 import { coachPrescriptionRoutes } from "../routes/coach-prescription.js";
 import { coachProgressRoutes } from "../routes/coach-progress.js";
@@ -74,6 +75,7 @@ await app.register(statsRoutes, { prefix: "/stats" });
 await app.register(meRoutes, { prefix: "/me" });
 await app.register(aiRoutes, { prefix: "/ai" });
 await app.register(commercialRoutes);
+await app.register(billingRoutes);
 await app.register(coachRoutes);
 await app.register(professionalVerificationRoutes);
 await app.register(featureTermsRoutes);

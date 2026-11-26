@@ -1,6 +1,7 @@
 import "dotenv/config";
 
 import z from "zod";
+
 import { legalIdentitySchema } from "../domain/legal-identity.js";
 
 const emptyToUndefined = (val: unknown) =>
@@ -56,6 +57,26 @@ const envSchema = legalIdentitySchema.extend({
     z.string().startsWith("mailto:").optional(),
   ),
   CRON_SECRET: z.preprocess(emptyToUndefined, z.string().min(16).optional()),
+  ASAAS_ENVIRONMENT: z.preprocess(
+    (val) =>
+      typeof val === "string" && val.trim() !== ""
+        ? val.trim().toUpperCase()
+        : "SANDBOX",
+    z.enum(["SANDBOX", "PRODUCTION"]),
+  ),
+  ASAAS_API_KEY: z.preprocess(emptyToUndefined, z.string().min(1).optional()),
+  ASAAS_WEBHOOK_TOKEN: z.preprocess(
+    emptyToUndefined,
+    z.string().min(1).optional(),
+  ),
+  ASAAS_USER_AGENT: z.preprocess(
+    emptyToUndefined,
+    z.string().min(1).default("Trainvy"),
+  ),
+  BILLING_CHECKOUT_SUCCESS_URL: z.preprocess(
+    emptyToUndefined,
+    z.url().optional(),
+  ),
 });
 
 const envResult = envSchema.safeParse(process.env);
