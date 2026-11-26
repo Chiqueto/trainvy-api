@@ -323,5 +323,33 @@
         "ace"
       ]
     }
+  },
+  {
+    "id": "9a83be35-3b36-4f1a-8bd3-cfc7cb78f772",
+    "key": "kneeling-push-up",
+    "name": "Flexão de Braços com Joelhos Apoiados",
+    "anatomyFile": "kneeling-push-up-anatomy.json",
+    "migration": "20261126123500_kneeling_push_up",
+    "previous": {
+      "id": "9a83be35-3b36-4f1a-8bd3-cfc7cb78f772",
+      "name": "Flexão de Braços com Joelhos Apoiados",
+      "family": "Musculação tradicional — peito",
+      "groups": [
+        "RESISTANCE",
+        "CALISTHENICS"
+      ],
+      "primary": [
+        "CHEST"
+      ],
+      "secondary": [
+        "TRICEPS",
+        "SHOULDERS",
+        "CORE"
+      ],
+      "sourceIds": [
+        "press",
+        "ace"
+      ]
+    }
   }
 ]

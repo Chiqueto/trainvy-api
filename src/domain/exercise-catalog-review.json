@@ -4020,7 +4020,9 @@
     "secondary": [
       "TRICEPS",
       "SHOULDERS",
-      "CORE"
+      "CORE",
+      "BACK",
+      "FOREARMS"
     ],
     "sourceIds": [
       "press",

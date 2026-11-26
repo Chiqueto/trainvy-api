@@ -1,0 +1,234 @@
+{
+  "version": "2026-11-26.3d.1",
+  "reviewedAt": "2026-11-26T12:35:00.000Z",
+  "variant": "Flexão de braços bilateral no solo com joelhos apoiados, mãos ligeiramente além da largura dos ombros e tronco alinhado.",
+  "aliases": [
+    "flexão de braços com joelhos apoiados",
+    "flexão com joelhos apoiados",
+    "flexão de joelhos",
+    "kneeling push-up",
+    "knee push-up"
+  ],
+  "participants": [
+    {
+      "id": "PECTORALIS_MAJOR",
+      "label": "Peitoral maior",
+      "muscleGroup": "CHEST",
+      "role": "PRIMARY",
+      "aliases": [
+        "peitoral",
+        "peito"
+      ],
+      "regions": [
+        {
+          "id": "CLAVICULAR",
+          "label": "Porção clavicular do peitoral",
+          "aliases": [
+            "peitoral superior"
+          ]
+        },
+        {
+          "id": "STERNOCOSTAL",
+          "label": "Porção esternocostal do peitoral",
+          "aliases": [
+            "peitoral médio e inferior"
+          ]
+        }
+      ],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY",
+        "PUSHUP_LOAD",
+        "PUSHUP_HANDS"
+      ]
+    },
+    {
+      "id": "TRICEPS_BRACHII",
+      "label": "Tríceps braquial",
+      "muscleGroup": "TRICEPS",
+      "role": "SECONDARY",
+      "aliases": [
+        "tríceps"
+      ],
+      "regions": [
+        {
+          "id": "LONG_HEAD",
+          "label": "Cabeça longa do tríceps",
+          "aliases": []
+        },
+        {
+          "id": "LATERAL_HEAD",
+          "label": "Cabeça lateral do tríceps",
+          "aliases": []
+        },
+        {
+          "id": "MEDIAL_HEAD",
+          "label": "Cabeça medial do tríceps",
+          "aliases": []
+        }
+      ],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY",
+        "PUSHUP_HANDS"
+      ]
+    },
+    {
+      "id": "DELTOID_ANTERIOR",
+      "label": "Deltoide anterior",
+      "muscleGroup": "SHOULDERS",
+      "role": "SECONDARY",
+      "aliases": [
+        "ombro anterior"
+      ],
+      "regions": [
+        {
+          "id": "ANTERIOR",
+          "label": "Porção anterior do deltoide",
+          "aliases": []
+        }
+      ],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY",
+        "PUSHUP_LOAD"
+      ]
+    },
+    {
+      "id": "SERRATUS_ANTERIOR",
+      "label": "Serrátil anterior",
+      "muscleGroup": "BACK",
+      "role": "SECONDARY",
+      "aliases": [
+        "serrátil",
+        "controle escapular"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY",
+        "PUSHUP_SCAPULA"
+      ]
+    },
+    {
+      "id": "RECTUS_ABDOMINIS",
+      "label": "Reto abdominal",
+      "muscleGroup": "CORE",
+      "role": "SECONDARY",
+      "aliases": [
+        "abdômen"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY",
+        "PUSHUP_LOAD"
+      ]
+    },
+    {
+      "id": "EXTERNAL_OBLIQUE",
+      "label": "Oblíquo externo",
+      "muscleGroup": "CORE",
+      "role": "SECONDARY",
+      "aliases": [
+        "abdômen",
+        "oblíquos"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY",
+        "PUSHUP_LOAD"
+      ]
+    },
+    {
+      "id": "ERECTOR_SPINAE",
+      "label": "Eretores da coluna",
+      "muscleGroup": "BACK",
+      "role": "SECONDARY",
+      "aliases": [
+        "estabilizadores do tronco"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY"
+      ]
+    },
+    {
+      "id": "FLEXOR_DIGITORUM_SUPERFICIALIS",
+      "label": "Flexor superficial dos dedos",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "punho"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY"
+      ]
+    },
+    {
+      "id": "FLEXOR_CARPI_ULNARIS",
+      "label": "Flexor ulnar do carpo",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "punho"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY"
+      ]
+    },
+    {
+      "id": "EXTENSOR_CARPI_RADIALIS_BREVIS",
+      "label": "Extensor radial curto do carpo",
+      "muscleGroup": "FOREARMS",
+      "role": "SECONDARY",
+      "aliases": [
+        "punho"
+      ],
+      "regions": [],
+      "emphasizedRegionIds": [],
+      "sourceIds": [
+        "ANATOMY"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "ANATOMY",
+      "title": "OpenStax Anatomy and Physiology 2e: Muscles of the Pectoral Girdle and Upper Limbs",
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-5-muscles-of-the-pectoral-girdle-and-upper-limbs",
+      "limitation": "Referência anatômica para ações de ombro, cotovelo, escápula, tronco e punho; não mede EMG desta variação."
+    },
+    {
+      "id": "PUSHUP_LOAD",
+      "title": "Suprak, Dawes e Stephenson (2011) — The effect of position on the percentage of body mass supported during traditional and modified push-up variants",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20179649/",
+      "limitation": "Análise cinética estática das posições alta e baixa comparando flexão tradicional e com joelhos (~49% a 53% da massa corporal nos joelhos vs ~64% a 66% tradicional); não mede EMG ou hipertrofia."
+    },
+    {
+      "id": "PUSHUP_HANDS",
+      "title": "Cogley et al. (2005) — Comparison of muscle activation using various hand positions during the push-up exercise",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/16095413/",
+      "limitation": "EMG aguda de peitoral maior e tríceps em diferentes larguras de mão na flexão tradicional; não avalia diretamente a variante com joelhos nem define amplitude universal."
+    },
+    {
+      "id": "PUSHUP_SCAPULA",
+      "title": "Ludewig et al. (2004) — Relative balance of serratus anterior and upper trapezius muscle activity during push-up exercises",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15002796/",
+      "limitation": "Analisa controle escapular e razão serrátil anterior/trapézio superior em exercícios de flexão; não representa medição de intensidade no avatar."
+    }
+  ],
+  "notes": "Execução ilustrativa com apoio nos joelhos sobre colchonete, tronco alinhado dos joelhos aos ombros e mãos espalmadas ligeiramente além dos ombros. Peitoral maior (porções clavicular e esternocostal) atua como motor primário; tríceps braquial, deltoide anterior, serrátil anterior, estabilizadores do tronco/core e músculos do punho participam de forma secundária. As cores são categorias ilustrativas sem medição de EMG ou intensidade.",
+  "instructions": {
+    "description": "Flexão de braços bilateral no solo com joelhos apoiados, mantendo alinhamento entre joelhos, quadril e ombros.",
+    "setup": "Apoie os joelhos confortavelmente sobre o colchonete e posicione as mãos espalmadas no solo um pouco além da largura dos ombros, com dedos voltados para a frente e abdômen firme.",
+    "execution": "Flexione os cotovelos levando-os para trás em ângulo moderado (~45° em relação ao tronco) e desça o peito de forma controlada em direção ao solo, preservando o alinhamento do quadril. Faça uma pausa breve no ponto baixo e empurre o solo até estender os cotovelos sem travar.",
+    "tips": "Evite deixar a lombar ceder ou elevar demais o quadril durante a subida. As cores indicam participação muscular ilustrativa, sem medição de EMG."
+  }
+}
