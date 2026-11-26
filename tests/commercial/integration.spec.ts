@@ -403,6 +403,13 @@ describe("Commercial integration (dedicated TEST_DATABASE_URL only)", () => {
       ),
       "utf8",
     );
+    const coachPlanUpdate = await readFile(
+      new URL(
+        "../../prisma/migrations/20261126090000_update_coach_plan_limits_and_copy/migration.sql",
+        import.meta.url,
+      ),
+      "utf8",
+    );
     const rollback = new Error("ROLLBACK_FIXTURE");
     try {
       await prisma.$transaction(
@@ -479,6 +486,33 @@ describe("Commercial integration (dedicated TEST_DATABASE_URL only)", () => {
               'SELECT "limitValue" FROM "PlanEntitlement" WHERE "planId" = \'commercial-coach-ai\' AND entitlement = \'MANAGE_ATHLETES\'',
             ),
           ).toEqual([{ limitValue: null }]);
+          for (const statement of coachPlanUpdate
+            .replace(/\bBEGIN;/, "")
+            .replace(/COMMIT;\s*$/, "")
+            .split(";")
+            .filter((s) => s.trim()))
+            await tx.$executeRawUnsafe(statement);
+          expect(
+            await tx.$queryRawUnsafe(
+              'SELECT "limitValue" FROM "PlanEntitlement" WHERE "planId" = \'commercial-coach\' AND entitlement = \'MANAGE_ATHLETES\'',
+            ),
+          ).toEqual([{ limitValue: 10 }]);
+          expect(
+            await tx.$queryRawUnsafe(
+              'SELECT code, description FROM "Plan" WHERE code IN (\'COACH\', \'COACH_AI\') ORDER BY code ASC',
+            ),
+          ).toEqual([
+            {
+              code: "COACH",
+              description:
+                "Até 10 alunos, fichas e modelos de treino, acompanhamento e estatísticas.",
+            },
+            {
+              code: "COACH_AI",
+              description:
+                "Alunos ilimitados, fichas e modelos de treino, acompanhamento e estatísticas.",
+            },
+          ]);
           expect(
             await tx.$queryRawUnsafe(
               'SELECT "priceInCentsSnapshot" FROM "Subscription"',

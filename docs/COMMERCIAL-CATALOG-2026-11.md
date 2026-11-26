@@ -5,7 +5,7 @@ Esta revisão substitui os valores e benefícios históricos do catálogo padrã
 | Plano | Código estável | Mensalidade de catálogo | Alunos |
 | --- | --- | ---: | ---: |
 | Atleta Grátis | ATHLETE_FREE | R$ 0 | Uso pessoal |
-| Personal Essencial | COACH | R$ 19,90 | Até 20 |
+| Personal Essencial | COACH | R$ 19,90 | Até 10 |
 | Personal Pro | COACH_AI | R$ 39,90 | Ilimitados |
 | Internal | INTERNAL | R$ 0, privado | Ilimitados |
 
