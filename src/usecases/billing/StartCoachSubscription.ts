@@ -240,7 +240,7 @@ export class StartCoachSubscription {
       throw new BillingError(
         "ASAAS_CHECKOUT_FAILED",
         502,
-        "Não foi possível criar o checkout de assinatura no Asaas.",
+        "Não foi possível iniciar o pagamento da assinatura. Tente novamente em instantes.",
       );
     }
 
