@@ -351,5 +351,33 @@
         "ace"
       ]
     }
+  },
+  {
+    "id": "64c13c24-240c-44d8-88db-d52af9063792",
+    "key": "elevated-push-up",
+    "name": "Flexão de Braços com Mãos Elevadas",
+    "anatomyFile": "elevated-push-up-anatomy.json",
+    "migration": "20261126133000_elevated_push_up",
+    "previous": {
+      "id": "64c13c24-240c-44d8-88db-d52af9063792",
+      "name": "Flexão de Braços com Mãos Elevadas",
+      "family": "Musculação tradicional — peito",
+      "groups": [
+        "RESISTANCE",
+        "CALISTHENICS"
+      ],
+      "primary": [
+        "CHEST"
+      ],
+      "secondary": [
+        "TRICEPS",
+        "SHOULDERS",
+        "CORE"
+      ],
+      "sourceIds": [
+        "press",
+        "ace"
+      ]
+    }
   }
 ]
