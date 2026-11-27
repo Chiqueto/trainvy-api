@@ -1,5 +1,6 @@
 import { resolveCanonicalExerciseMap } from "../domain/canonical-exercise.js";
 import { sanitizeAndNormalizeAlternatives } from "../domain/exercise-alternatives.js";
+import { assertCanUsePeriodizations } from "../domain/planning-limits.js";
 import { ValidationError } from "../errors/index.js";
 import { WeekDay } from "../generated/prisma/enums.js";
 import { prisma } from "../lib/db.js";
@@ -91,6 +92,8 @@ export class CreatePeriodizationDraftFromAI {
     if (!trimmedName) {
       throw new ValidationError("O nome da periodização é obrigatório.");
     }
+
+    await assertCanUsePeriodizations(prisma, dto.userId);
 
     if (!dto.blocks || !Array.isArray(dto.blocks) || dto.blocks.length === 0) {
       throw new ValidationError(

@@ -1,4 +1,8 @@
-import type { Prisma, Subscription } from "../generated/prisma/client.js";
+import type {
+  BillingCycle,
+  Prisma,
+  Subscription,
+} from "../generated/prisma/client.js";
 import type { AsaasClient, AsaasPaymentDetails } from "../services/AsaasClient.js";
 import { validCpf } from "./compliance.js";
 
@@ -71,6 +75,24 @@ export function addUtcMonths(date: Date, months: number): Date {
 
 export function addUtcDays(date: Date, days: number): Date {
   return new Date(date.getTime() + days * 24 * 60 * 60 * 1000);
+}
+
+export function billingCycleMonths(billingCycle: BillingCycle): number {
+  return billingCycle === "YEARLY" ? 12 : 1;
+}
+
+export function addBillingCycle(date: Date, billingCycle: BillingCycle): Date {
+  return addUtcMonths(date, billingCycleMonths(billingCycle));
+}
+
+export function resolvePlanPriceInCents(
+  plan: { monthlyPriceInCents: number; annualPriceInCents?: number | null },
+  billingCycle: BillingCycle,
+): number | null {
+  if (billingCycle === "YEARLY") {
+    return plan.annualPriceInCents ?? null;
+  }
+  return plan.monthlyPriceInCents;
 }
 
 /**

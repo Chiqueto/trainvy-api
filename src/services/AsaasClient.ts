@@ -198,10 +198,12 @@ export class AsaasClient {
     planName: string;
     planDescription: string | null;
     monthlyPriceInCents: number;
+    billingCycle?: "MONTHLY" | "YEARLY";
     externalReference: string;
     userId: string;
     subscriptionId: string;
   }): Promise<AsaasCheckoutResult | null> {
+    const subscriptionCycle = params.billingCycle ?? "MONTHLY";
     const payload: Record<string, unknown> = {
       name: `Assinatura ${params.planName}`,
       description:
@@ -209,7 +211,7 @@ export class AsaasClient {
       value: centsToReais(params.monthlyPriceInCents),
       billingType: "UNDEFINED",
       chargeType: "RECURRENT",
-      subscriptionCycle: "MONTHLY",
+      subscriptionCycle,
       externalReference: params.externalReference,
       dueDateLimitDays: 3,
     };
@@ -375,14 +377,18 @@ export class AsaasClient {
 
   async updateSubscriptionValue(
     providerSubscriptionId: string,
-    newMonthlyPriceInCents: number,
+    newPriceInCents: number,
     description?: string,
     ctx?: { userId?: string; subscriptionId?: string },
+    billingCycle?: "MONTHLY" | "YEARLY",
   ): Promise<boolean> {
     const payload: Record<string, unknown> = {
-      value: centsToReais(newMonthlyPriceInCents),
+      value: centsToReais(newPriceInCents),
       updatePendingPayments: false,
     };
+    if (billingCycle) {
+      payload.cycle = billingCycle;
+    }
     if (description && description.trim() !== "") {
       payload.description = description;
     }

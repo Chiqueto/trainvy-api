@@ -27,6 +27,7 @@ export class ListPublicPlans {
         name: true,
         description: true,
         monthlyPriceInCents: true,
+        annualPriceInCents: true,
         currency: true,
         entitlements: {
           where: { entitlement: { not: "SOURCE_LIBRARY" } },

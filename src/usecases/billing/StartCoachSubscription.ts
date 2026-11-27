@@ -2,9 +2,11 @@ import {
   BillingError,
   buildSubscriptionCheckoutExternalReference,
   logBillingAccessChange,
+  resolvePlanPriceInCents,
   validCpfOrCnpj,
 } from "../../domain/billing.js";
 import { subscriptionGrantsAccess } from "../../domain/commercial.js";
+import type { BillingCycle } from "../../generated/prisma/enums.js";
 import { prisma } from "../../lib/db.js";
 import { AsaasClient } from "../../services/AsaasClient.js";
 
@@ -12,6 +14,7 @@ export interface StartCoachSubscriptionInput {
   userId: string;
   planCode: string;
   cpfCnpj: string;
+  billingCycle?: BillingCycle;
 }
 
 export class StartCoachSubscription {
@@ -19,6 +22,7 @@ export class StartCoachSubscription {
 
   async execute(input: StartCoachSubscriptionInput) {
     const now = new Date();
+    const billingCycle: BillingCycle = input.billingCycle ?? "MONTHLY";
     const cleanedCpfCnpj = input.cpfCnpj.replace(/\D/g, "");
     if (!validCpfOrCnpj(cleanedCpfCnpj)) {
       throw new BillingError(
@@ -43,11 +47,11 @@ export class StartCoachSubscription {
         "Conclua a configuração inicial da conta antes de assinar.",
       );
     }
-    if (user.accountType !== "COACH") {
+    if (user.accountType !== "COACH" && user.accountType !== "ATHLETE") {
       throw new BillingError(
-        "ONLY_COACHES_ALLOWED",
+        "BILLING_NOT_AVAILABLE",
         403,
-        "Apenas contas de treinador podem contratar planos profissionais.",
+        "Apenas contas de treinador ou atleta podem contratar planos.",
       );
     }
 
@@ -55,37 +59,43 @@ export class StartCoachSubscription {
       where: { code: input.planCode },
       include: { entitlements: true },
     });
+    const cyclePriceInCents = plan
+      ? resolvePlanPriceInCents(plan, billingCycle)
+      : null;
     if (
       !plan ||
       !plan.isActive ||
       !plan.isPublic ||
-      plan.audience !== "COACH" ||
-      plan.monthlyPriceInCents <= 0
+      plan.audience !== user.accountType ||
+      cyclePriceInCents === null ||
+      cyclePriceInCents <= 0
     ) {
       throw new BillingError(
         "INVALID_BILLING_PLAN",
         404,
-        "Plano ativo disponível para assinatura não encontrado.",
+        "Plano ativo ou ciclo de cobrança indisponível para assinatura.",
       );
     }
 
     // Valida limite de alunos do plano escolhido antes do checkout (equivalente ao PlanGatingService do Marca-Lá)
-    const manageAthletesEntitlement = plan.entitlements.find(
-      (e) => e.entitlement === "MANAGE_ATHLETES",
-    );
-    if (
-      manageAthletesEntitlement &&
-      manageAthletesEntitlement.limitValue !== null
-    ) {
-      const activeAthletesCount = await prisma.coachAthlete.count({
-        where: { coachId: user.id, status: "ACTIVE" },
-      });
-      if (activeAthletesCount > manageAthletesEntitlement.limitValue) {
-        throw new BillingError(
-          "PLAN_ATHLETE_LIMIT_EXCEEDED",
-          409,
-          `Você possui ${activeAthletesCount} alunos ativos, mas o plano ${plan.name} permite até ${manageAthletesEntitlement.limitValue}. Desvincule alunos excedentes ou escolha um plano superior.`,
-        );
+    if (user.accountType === "COACH") {
+      const manageAthletesEntitlement = plan.entitlements.find(
+        (e) => e.entitlement === "MANAGE_ATHLETES",
+      );
+      if (
+        manageAthletesEntitlement &&
+        manageAthletesEntitlement.limitValue !== null
+      ) {
+        const activeAthletesCount = await prisma.coachAthlete.count({
+          where: { coachId: user.id, status: "ACTIVE" },
+        });
+        if (activeAthletesCount > manageAthletesEntitlement.limitValue) {
+          throw new BillingError(
+            "PLAN_ATHLETE_LIMIT_EXCEEDED",
+            409,
+            `Você possui ${activeAthletesCount} alunos ativos, mas o plano ${plan.name} permite até ${manageAthletesEntitlement.limitValue}. Desvincule alunos excedentes ou escolha um plano superior.`,
+          );
+        }
       }
     }
 
@@ -117,12 +127,13 @@ export class StartCoachSubscription {
         );
       }
 
-      // Idempotência: retorna checkout pendente aberto para o mesmo plano
+      // Idempotência: retorna checkout pendente aberto para o mesmo plano e ciclo
       const existingPendingPayment =
         await prisma.subscriptionPayment.findFirst({
           where: {
             subscriptionId: existingSub.id,
             planId: plan.id,
+            billingCycle,
             status: { in: ["CREATED", "PENDING"] },
             checkoutUrl: { not: null },
             createdAt: {
@@ -137,10 +148,11 @@ export class StartCoachSubscription {
           subscriptionId: existingSub.id,
           planCode: plan.code,
           planName: plan.name,
+          billingCycle,
           checkoutUrl: existingPendingPayment.checkoutUrl,
           status: existingSub.status,
           reusedExistingCheckout: true,
-          message: "Retornado link de checkout já existente.",
+          message: "Retornado link de pagamento já existente.",
         };
       }
     }
@@ -149,6 +161,7 @@ export class StartCoachSubscription {
       await tx.$queryRaw`SELECT id FROM "user" WHERE id = ${user.id} FOR UPDATE`;
       const current = await tx.subscription.findUnique({
         where: { userId: user.id },
+        include: { plan: true },
       });
 
       const activeTrial =
@@ -157,6 +170,12 @@ export class StartCoachSubscription {
         current.trialEndsAt !== null &&
         current.trialEndsAt > now;
 
+      const activeAthleteFree =
+        current &&
+        user.accountType === "ATHLETE" &&
+        current.plan.code === "ATHLETE_FREE" &&
+        current.status === "ACTIVE";
+
       if (!current) {
         const created = await tx.subscription.create({
           data: {
@@ -164,7 +183,8 @@ export class StartCoachSubscription {
             planId: plan.id,
             status: "PENDING",
             billingProvider: "ASAAS",
-            priceInCentsSnapshot: plan.monthlyPriceInCents,
+            billingCycle,
+            priceInCentsSnapshot: cyclePriceInCents,
             currencySnapshot: plan.currency,
           },
         });
@@ -174,23 +194,23 @@ export class StartCoachSubscription {
           action: "CHECKOUT_STARTED",
           previousStatus: null,
           newStatus: "PENDING",
-          reason: `PLAN_${plan.code}`,
-          source: "COACH_START_SUBSCRIPTION",
+          reason: `PLAN_${plan.code}_${billingCycle}`,
+          source: "START_SUBSCRIPTION",
           sourceReferenceId: created.id,
         });
         return created;
       }
 
-      // Se ainda está em trial válido, preserva TRIALING até a confirmação real do pagamento no webhook
-      if (activeTrial) {
+      // Preserva acesso gratuito ou período de avaliação até a confirmação real do pagamento
+      if (activeTrial || activeAthleteFree) {
         await logBillingAccessChange(tx, {
           subscriptionId: current.id,
           userId: user.id,
           action: "CHECKOUT_STARTED",
           previousStatus: current.status,
           newStatus: current.status,
-          reason: `TRIAL_EARLY_CHECKOUT_${plan.code}`,
-          source: "COACH_START_SUBSCRIPTION",
+          reason: `UPGRADE_CHECKOUT_${plan.code}_${billingCycle}`,
+          source: "START_SUBSCRIPTION",
           sourceReferenceId: current.id,
         });
         return current;
@@ -202,7 +222,8 @@ export class StartCoachSubscription {
           planId: plan.id,
           status: "PENDING",
           billingProvider: "ASAAS",
-          priceInCentsSnapshot: plan.monthlyPriceInCents,
+          billingCycle,
+          priceInCentsSnapshot: cyclePriceInCents,
           currencySnapshot: plan.currency,
           cancelAtPeriodEnd: false,
           canceledAt: null,
@@ -215,8 +236,8 @@ export class StartCoachSubscription {
         action: "CHECKOUT_STARTED",
         previousStatus: current.status,
         newStatus: "PENDING",
-        reason: `PLAN_${plan.code}`,
-        source: "COACH_START_SUBSCRIPTION",
+        reason: `PLAN_${plan.code}_${billingCycle}`,
+        source: "START_SUBSCRIPTION",
         sourceReferenceId: updated.id,
       });
       return updated;
@@ -228,9 +249,10 @@ export class StartCoachSubscription {
     );
 
     const checkoutResult = await this.asaasClient.createSubscriptionCheckout({
-      planName: plan.name,
+      planName: billingCycle === "YEARLY" ? `${plan.name} (Anual)` : plan.name,
       planDescription: plan.description,
-      monthlyPriceInCents: plan.monthlyPriceInCents,
+      monthlyPriceInCents: cyclePriceInCents,
+      billingCycle,
       externalReference,
       userId: user.id,
       subscriptionId: subscription.id,
@@ -248,11 +270,12 @@ export class StartCoachSubscription {
       data: {
         subscriptionId: subscription.id,
         planId: plan.id,
+        billingCycle,
         provider: "ASAAS",
         providerCheckoutId: checkoutResult.checkoutId,
         status: "CREATED",
         billingType: "UNDEFINED",
-        amountInCents: plan.monthlyPriceInCents,
+        amountInCents: cyclePriceInCents,
         currency: plan.currency,
         checkoutUrl: checkoutResult.url,
       },
@@ -262,10 +285,11 @@ export class StartCoachSubscription {
       subscriptionId: subscription.id,
       planCode: plan.code,
       planName: plan.name,
+      billingCycle,
       checkoutUrl: checkoutResult.url,
       status: subscription.status,
       reusedExistingCheckout: false,
-      message: "Checkout de assinatura criado com sucesso.",
+      message: "Link de pagamento da assinatura criado com sucesso.",
     };
   }
 }

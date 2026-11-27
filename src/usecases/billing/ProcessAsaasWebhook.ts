@@ -1,13 +1,16 @@
 import { createHash, timingSafeEqual } from "node:crypto";
 
 import {
+  addBillingCycle,
   addUtcDays,
   addUtcMonths,
   logBillingAccessChange,
   parseDueDateUtc,
   parseSubscriptionCheckoutExternalReference,
+  resolvePlanPriceInCents,
 } from "../../domain/billing.js";
 import type { Prisma } from "../../generated/prisma/client.js";
+import type { BillingCycle } from "../../generated/prisma/enums.js";
 import { prisma } from "../../lib/db.js";
 import { AsaasClient, reaisToCents } from "../../services/AsaasClient.js";
 import { logAsaasError } from "../../services/AsaasErrorLogger.js";
@@ -328,6 +331,7 @@ export class ProcessAsaasWebhook {
           data: {
             subscriptionId: sub.id,
             planId: parsedRef?.planId ?? sub.planId,
+            billingCycle: sub.billingCycle,
             provider: "ASAAS",
             providerPaymentId: payload.id ?? null,
             providerSubscriptionId: payload.subscription ?? null,
@@ -378,8 +382,11 @@ export class ProcessAsaasWebhook {
             userId: sub.userId,
             type: "BILLING_PAYMENT_REGULARIZED",
             title: "Pagamento regularizado",
-            body: "Sua assinatura profissional Trainvy foi regularizada e segue ativa.",
-            url: "/personal/assinatura",
+            body: "Sua assinatura Trainvy foi regularizada e segue ativa.",
+            url:
+              sub.plan.audience === "ATHLETE"
+                ? "/assinatura"
+                : "/personal/assinatura",
           },
           tx,
         );
@@ -579,7 +586,11 @@ export class ProcessAsaasWebhook {
     params: {
       event: string;
       sub: Prisma.SubscriptionGetPayload<{ include: { plan: true } }>;
-      paymentRecord: { id: string; planId: string | null } | null;
+      paymentRecord: {
+        id: string;
+        planId: string | null;
+        billingCycle?: BillingCycle;
+      } | null;
       payload: AsaasWebhookPaymentPayload | null;
       webhookEventId: string;
       now: Date;
@@ -604,6 +615,12 @@ export class ProcessAsaasWebhook {
           targetPlanId !== sub.planId
             ? await tx.plan.findUnique({ where: { id: targetPlanId } })
             : sub.plan;
+        const targetCycle: BillingCycle =
+          paymentRecord?.billingCycle ?? sub.billingCycle;
+        const cyclePriceInCents = targetPlan
+          ? (resolvePlanPriceInCents(targetPlan, targetCycle) ??
+            sub.priceInCentsSnapshot)
+          : sub.priceInCentsSnapshot;
 
         if (payload?.customer) {
           await tx.billingCustomer.upsert({
@@ -620,16 +637,29 @@ export class ProcessAsaasWebhook {
         }
 
         const dueDate = parseDueDateUtc(payload?.dueDate);
+        const fallbackPeriodEnd =
+          targetCycle === "YEARLY"
+            ? addUtcDays(now, 365)
+            : addUtcDays(now, 30);
         const candidatePaidUntil = dueDate
-          ? addUtcMonths(dueDate, 1)
-          : addUtcDays(now, 30);
+          ? addBillingCycle(dueDate, targetCycle)
+          : fallbackPeriodEnd;
         const paidUntil =
-          candidatePaidUntil > now ? candidatePaidUntil : addUtcDays(now, 30);
+          candidatePaidUntil > now ? candidatePaidUntil : fallbackPeriodEnd;
         const graceUntil = addUtcDays(paidUntil, 3);
         const currentPeriodStart = dueDate && dueDate <= now ? dueDate : now;
         const nextDueDate = dueDate
-          ? addUtcMonths(dueDate, 1)
-          : addUtcMonths(new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())), 1);
+          ? addBillingCycle(dueDate, targetCycle)
+          : addBillingCycle(
+              new Date(
+                Date.UTC(
+                  now.getUTCFullYear(),
+                  now.getUTCMonth(),
+                  now.getUTCDate(),
+                ),
+              ),
+              targetCycle,
+            );
         const firstConfirmed = sub.firstPaymentConfirmedAt ?? now;
         const coolingOffUntil =
           sub.coolingOffUntil ?? addUtcDays(firstConfirmed, 7);
@@ -638,8 +668,8 @@ export class ProcessAsaasWebhook {
           where: { id: sub.id },
           data: {
             planId: targetPlan?.id ?? sub.planId,
-            priceInCentsSnapshot:
-              targetPlan?.monthlyPriceInCents ?? sub.priceInCentsSnapshot,
+            billingCycle: targetCycle,
+            priceInCentsSnapshot: cyclePriceInCents,
             currencySnapshot: targetPlan?.currency ?? sub.currencySnapshot,
             billingProvider: "ASAAS",
             status: "ACTIVE",
@@ -672,15 +702,20 @@ export class ProcessAsaasWebhook {
           sourceReferenceId: webhookEventId,
         });
 
+        const billingUrl =
+          targetPlan?.audience === "ATHLETE"
+            ? "/assinatura"
+            : "/personal/assinatura";
+
         return {
           applied: true,
           notification:
-            prevStatus !== "ACTIVE"
+            prevStatus !== "ACTIVE" || targetPlan?.id !== sub.planId
               ? {
                   type: "BILLING_PAYMENT_CONFIRMED",
                   title: "Assinatura ativa",
-                  body: `Seu plano ${targetPlan?.name ?? "profissional"} foi confirmado e já está ativo.`,
-                  url: "/personal/assinatura",
+                  body: `Seu plano ${targetPlan?.name ?? ""} foi confirmado e já está ativo.`,
+                  url: billingUrl,
                 }
               : undefined,
         };
@@ -720,8 +755,11 @@ export class ProcessAsaasWebhook {
           notification: {
             type: "BILLING_PAYMENT_OVERDUE",
             title: "Pagamento em atraso",
-            body: "Identificamos uma cobrança vencida na sua assinatura. Regularize para manter sua área profissional ativa.",
-            url: "/personal/assinatura",
+            body: "Identificamos uma cobrança vencida na sua assinatura. Regularize para manter seu plano ativo.",
+            url:
+              sub.plan.audience === "ATHLETE"
+                ? "/assinatura"
+                : "/personal/assinatura",
           },
         };
       }

@@ -50,7 +50,7 @@ export const AdminEntitlement = z.strictObject({
 export const AdminEntitlementsBody = z.strictObject({
   entitlements: z
     .array(AdminEntitlement)
-    .max(8)
+    .max(15)
     .refine(
       (v) => new Set(v.map((e) => e.entitlement)).size === v.length,
       "Duplicate entitlements",
@@ -71,18 +71,18 @@ export const AdminCreatePlan = z
     description: z.string().trim().max(1000).nullable().optional(),
     audience: z.enum(PlanAudience),
     monthlyPriceInCents: z.number().int().min(0).max(2147483647),
+    annualPriceInCents: z.number().int().min(0).max(2147483647).nullable().optional(),
     isPublic: z.boolean().default(false),
     isActive: z.boolean().default(true),
     sortOrder: z.number().int().min(0).max(2147483647).default(0),
     entitlements: AdminEntitlementsBody.shape.entitlements,
   })
   .superRefine((value, ctx) => {
-    if (value.isPublic && value.audience !== "COACH")
+    if (value.isPublic && value.audience === "INTERNAL")
       ctx.addIssue({
         code: "custom",
         path: ["isPublic"],
-        message:
-          "Novos planos públicos devem ser destinados a treinadores. Planos internos e adicionais de atleta são de atribuição manual nesta fase.",
+        message: "Planos internos devem permanecer privados.",
       });
   });
 export const AdminPlanPatch = z
@@ -90,6 +90,7 @@ export const AdminPlanPatch = z
     name: z.string().trim().min(1).max(120).optional(),
     description: z.string().max(1000).nullable().optional(),
     monthlyPriceInCents: z.number().int().min(0).max(2147483647).optional(),
+    annualPriceInCents: z.number().int().min(0).max(2147483647).nullable().optional(),
     isPublic: z.boolean().optional(),
     isActive: z.boolean().optional(),
     sortOrder: z.number().int().min(0).max(2147483647).optional(),
@@ -137,6 +138,7 @@ export const AdminPlan = z.object({
   description: z.string().nullable(),
   audience: z.enum(PlanAudience),
   monthlyPriceInCents: z.number().int(),
+  annualPriceInCents: z.number().int().nullable(),
   currency: z.string(),
   isPublic: z.boolean(),
   isActive: z.boolean(),

@@ -3,6 +3,7 @@ import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
 
+import { PlanLimitError } from "../domain/planning-limits.js";
 import {
   ConflictError,
   NotFoundError,
@@ -56,6 +57,7 @@ export const periodizationRoutes = async (app: FastifyInstance) => {
         201: PeriodizationResponseSchema,
         400: ErrorSchema,
         401: ErrorSchema,
+        403: ErrorSchema,
         500: ErrorSchema,
       },
     },
@@ -81,6 +83,12 @@ export const periodizationRoutes = async (app: FastifyInstance) => {
 
         return reply.status(201).send(result);
       } catch (error) {
+        if (error instanceof PlanLimitError) {
+          return reply.status(403).send({
+            error: error.message,
+            code: error.code,
+          });
+        }
         if (error instanceof ValidationError) {
           return reply.status(400).send({
             error: error.message,
@@ -323,6 +331,7 @@ export const periodizationRoutes = async (app: FastifyInstance) => {
         201: PeriodizationPlanDetailResponseSchema,
         400: ErrorSchema,
         401: ErrorSchema,
+        403: ErrorSchema,
         404: ErrorSchema,
         409: ErrorSchema,
         500: ErrorSchema,
@@ -352,6 +361,12 @@ export const periodizationRoutes = async (app: FastifyInstance) => {
 
         return reply.status(201).send(result);
       } catch (error) {
+        if (error instanceof PlanLimitError) {
+          return reply.status(403).send({
+            error: error.message,
+            code: error.code,
+          });
+        }
         if (error instanceof NotFoundError) {
           return reply.status(404).send({
             error: error.message,
@@ -393,6 +408,7 @@ export const periodizationRoutes = async (app: FastifyInstance) => {
         201: CreateWorkoutPlanInPeriodizationResponseSchema,
         400: ErrorSchema,
         401: ErrorSchema,
+        403: ErrorSchema,
         404: ErrorSchema,
         409: ErrorSchema,
         500: ErrorSchema,
@@ -423,6 +439,12 @@ export const periodizationRoutes = async (app: FastifyInstance) => {
 
         return reply.status(201).send(result);
       } catch (error) {
+        if (error instanceof PlanLimitError) {
+          return reply.status(403).send({
+            error: error.message,
+            code: error.code,
+          });
+        }
         if (error instanceof NotFoundError) {
           return reply.status(404).send({
             error: error.message,

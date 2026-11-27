@@ -3,6 +3,7 @@ import type { FastifyBaseLogger, FastifyReply } from "fastify";
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import z from "zod";
 
+import { PlanLimitError } from "../domain/planning-limits.js";
 import {
   BadRequestError,
   ConflictError,
@@ -27,6 +28,8 @@ function editError(
   reply: FastifyReply,
   entity: "plano" | "treino",
 ) {
+  if (error instanceof PlanLimitError)
+    return reply.status(403).send({ error: error.message, code: error.code });
   if (error instanceof NotFoundError)
     return reply.status(404).send({ error: error.message, code: error.code });
   if (error instanceof ConflictError)
@@ -52,6 +55,7 @@ export const workoutEditRoutes: FastifyPluginAsyncZod = async (app) => {
   const errors = {
     400: ErrorSchema,
     401: ErrorSchema,
+    403: ErrorSchema,
     404: ErrorSchema,
     409: ErrorSchema,
     500: ErrorSchema,

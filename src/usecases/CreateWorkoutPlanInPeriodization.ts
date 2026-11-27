@@ -1,6 +1,11 @@
 import { resolveCanonicalExerciseMap } from "../domain/canonical-exercise.js";
 import { normalizeAndValidateAlternatives } from "../domain/exercise-alternatives.js";
 import {
+  assertCanCreateSelfWorkoutPlan,
+  assertCanUsePeriodizations,
+  countTrainingDays,
+} from "../domain/planning-limits.js";
+import {
   NotFoundError,
   PeriodizationCompletedError,
   ValidationError,
@@ -121,6 +126,13 @@ export class CreateWorkoutPlanInPeriodization {
     }
 
     return await prisma.$transaction(async (tx) => {
+      await assertCanUsePeriodizations(tx, dto.userId);
+      await assertCanCreateSelfWorkoutPlan(
+        tx,
+        dto.userId,
+        countTrainingDays(dto.workoutDays),
+      );
+
       const periodization = await tx.periodization.findFirst({
         where: {
           id: dto.periodizationId,

@@ -1,3 +1,4 @@
+import { assertCanUsePeriodizations } from "../domain/planning-limits.js";
 import {
   ActivePlanCannotBeAttachedError,
   NotFoundError,
@@ -38,6 +39,8 @@ interface OutputDto {
 
 export class AddWorkoutPlanToPeriodization {
   async execute(dto: InputDto): Promise<OutputDto> {
+    await assertCanUsePeriodizations(prisma, dto.userId);
+
     const periodization = await prisma.periodization.findFirst({
       where: {
         id: dto.periodizationId,

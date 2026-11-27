@@ -2,6 +2,7 @@ import {
   CommercialError,
   subscriptionGrantsAccess,
 } from "../domain/commercial.js";
+import { resolveAthleteFallbackFreeEntitlements } from "../domain/planning-limits.js";
 import { hasProfessionalAccess } from "../domain/professional-verification.js";
 import { Prisma } from "../generated/prisma/client.js";
 import { isConfiguredAdminEmail } from "../lib/admin-config.js";
@@ -57,6 +58,16 @@ export class GetCommercialContext {
       subscription &&
       plan &&
       subscriptionGrantsAccess(subscription, now);
+    const entitlements = granted
+      ? plan.entitlements.map((e) => ({
+          key: e.entitlement,
+          limitValue: e.limitValue,
+        }))
+      : user.accountSetupCompletedAt !== null &&
+          subscription != null &&
+          user.accountType === "ATHLETE"
+        ? await resolveAthleteFallbackFreeEntitlements(client)
+        : [];
     return {
       accountType: user.accountType,
       crefVerificationRequired: false,
@@ -73,6 +84,7 @@ export class GetCommercialContext {
         ? {
             status: subscription.status,
             billingProvider: subscription.billingProvider,
+            billingCycle: subscription.billingCycle,
             trialEndsAt: subscription.trialEndsAt?.toISOString() ?? null,
             currentPeriodEnd:
               subscription.currentPeriodEnd?.toISOString() ?? null,
@@ -80,12 +92,7 @@ export class GetCommercialContext {
             currencySnapshot: subscription.currencySnapshot,
           }
         : null,
-      entitlements: granted
-        ? plan.entitlements.map((e) => ({
-            key: e.entitlement,
-            limitValue: e.limitValue,
-          }))
-        : [],
+      entitlements,
     };
   }
 }

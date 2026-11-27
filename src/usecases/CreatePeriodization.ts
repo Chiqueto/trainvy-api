@@ -1,3 +1,4 @@
+import { assertCanUsePeriodizations } from "../domain/planning-limits.js";
 import { ValidationError } from "../errors/index.js";
 import { prisma } from "../lib/db.js";
 import { derivePeriodizationStatus } from "../lib/periodization.js";
@@ -28,6 +29,8 @@ export class CreatePeriodization {
     if (!trimmedName) {
       throw new ValidationError("O nome da periodização é obrigatório.");
     }
+
+    await assertCanUsePeriodizations(prisma, dto.userId);
 
     const periodization = await prisma.periodization.create({
       data: {

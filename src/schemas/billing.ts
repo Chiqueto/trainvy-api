@@ -1,6 +1,7 @@
 import z from "zod";
 
 import {
+  BillingCycle,
   BillingProvider,
   EntitlementKey,
   SubscriptionStatus,
@@ -10,12 +11,14 @@ import { IsoTimestamp } from "./iso-timestamp.js";
 export const StartCoachSubscriptionBodySchema = z.strictObject({
   planCode: z.string().trim().min(1).max(80),
   cpfCnpj: z.string().trim().min(11).max(20),
+  billingCycle: z.enum(BillingCycle).default("MONTHLY"),
 });
 
 export const StartCoachSubscriptionResponseSchema = z.object({
   subscriptionId: z.string(),
   planCode: z.string(),
   planName: z.string(),
+  billingCycle: z.enum(BillingCycle),
   checkoutUrl: z.string(),
   status: z.enum(SubscriptionStatus),
   reusedExistingCheckout: z.boolean(),
@@ -40,6 +43,7 @@ export const CancelCoachSubscriptionResponseSchema = z.object({
 
 export const UpgradeCoachSubscriptionBodySchema = z.strictObject({
   planCode: z.string().trim().min(1).max(80),
+  billingCycle: z.enum(BillingCycle).optional(),
 });
 
 export const UpgradeCoachSubscriptionResponseSchema = z.object({
@@ -50,6 +54,8 @@ export const UpgradeCoachSubscriptionResponseSchema = z.object({
   fromPlanCode: z.string(),
   targetPlanCode: z.string(),
   targetPlanName: z.string(),
+  fromBillingCycle: z.enum(BillingCycle),
+  targetBillingCycle: z.enum(BillingCycle),
   status: z.string(),
   message: z.string(),
 });
@@ -64,6 +70,8 @@ export const PendingUpgradeResponseSchema = z
     fromPlanName: z.string(),
     targetPlanCode: z.string(),
     targetPlanName: z.string(),
+    fromBillingCycle: z.enum(BillingCycle),
+    targetBillingCycle: z.enum(BillingCycle),
     status: z.string(),
     createdAt: IsoTimestamp,
     expiresAt: IsoTimestamp,
@@ -72,12 +80,14 @@ export const PendingUpgradeResponseSchema = z
 
 export const DowngradePreviewBodySchema = z.strictObject({
   planCode: z.string().trim().min(1).max(80),
+  billingCycle: z.enum(BillingCycle).optional(),
 });
 
 export const DowngradePlanSummarySchema = z.object({
   code: z.string(),
   name: z.string(),
   monthlyPriceInCents: z.number().int(),
+  annualPriceInCents: z.number().int().nullable(),
 });
 
 export const DowngradePreviewResponseSchema = z.object({
@@ -103,6 +113,7 @@ export const DowngradePreviewResponseSchema = z.object({
 
 export const ScheduleDowngradeBodySchema = z.strictObject({
   planCode: z.string().trim().min(1).max(80),
+  billingCycle: z.enum(BillingCycle).optional(),
   retainedAthleteIds: z.array(z.string().min(1)).max(500).optional(),
   acknowledgeExcessAthletes: z.boolean().optional(),
 });
@@ -111,6 +122,8 @@ export const ScheduleDowngradeResponseSchema = z.object({
   downgradeId: z.string(),
   targetPlanCode: z.string(),
   targetPlanName: z.string(),
+  fromBillingCycle: z.enum(BillingCycle),
+  targetBillingCycle: z.enum(BillingCycle),
   effectiveAt: IsoTimestamp,
   status: z.string(),
   message: z.string(),
@@ -123,6 +136,8 @@ export const PendingDowngradeResponseSchema = z
     fromPlanName: z.string(),
     targetPlanCode: z.string(),
     targetPlanName: z.string(),
+    fromBillingCycle: z.enum(BillingCycle),
+    targetBillingCycle: z.enum(BillingCycle),
     effectiveAt: IsoTimestamp,
     status: z.string(),
     asaasSyncStatus: z.string(),
@@ -147,6 +162,7 @@ export const CoachBillingOverviewResponseSchema = z.object({
       currency: z.string(),
       status: z.enum(SubscriptionStatus),
       billingProvider: z.enum(BillingProvider),
+      billingCycle: z.enum(BillingCycle),
       trialEndsAt: IsoTimestamp.nullable(),
       currentPeriodStart: IsoTimestamp.nullable(),
       currentPeriodEnd: IsoTimestamp.nullable(),
@@ -165,6 +181,7 @@ export const CoachBillingOverviewResponseSchema = z.object({
       id: z.string(),
       status: z.string(),
       billingType: z.string().nullable(),
+      billingCycle: z.enum(BillingCycle),
       amountInCents: z.number().int(),
       netAmountInCents: z.number().int().nullable(),
       currency: z.string(),
@@ -197,6 +214,7 @@ export const CoachBillingOverviewResponseSchema = z.object({
       name: z.string(),
       description: z.string().nullable(),
       monthlyPriceInCents: z.number().int(),
+      annualPriceInCents: z.number().int().nullable(),
       currency: z.string(),
       entitlements: z.array(
         z.object({

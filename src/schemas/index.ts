@@ -916,6 +916,7 @@ export const PlanningWorkoutPlanSummarySchema = z.object({
   id: z.uuid(),
   name: z.string(),
   isActive: z.boolean(),
+  isPrescribedByCoach: z.boolean(),
   workoutDaysCount: z.number().int().min(0),
   createdAt: z.string(),
   periodization: PlanningWorkoutPlanPeriodizationSummarySchema.nullable(),

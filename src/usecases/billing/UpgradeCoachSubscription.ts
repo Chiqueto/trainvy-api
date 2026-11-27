@@ -2,12 +2,15 @@ import { randomUUID } from "node:crypto";
 
 import {
   addUtcDays,
+  addUtcMonths,
   BillingError,
   CANCELLED_PAYMENT_STATUSES,
   hasPendingBillingTransition,
   logBillingAccessChange,
   PAID_PAYMENT_STATUSES,
+  resolvePlanPriceInCents,
 } from "../../domain/billing.js";
+import type { BillingCycle } from "../../generated/prisma/enums.js";
 import { prisma } from "../../lib/db.js";
 import { AsaasClient } from "../../services/AsaasClient.js";
 
@@ -35,6 +38,10 @@ export async function applyPaidUpgradePayment(
       return { cancelled: true as const, upgrade };
     }
 
+    const resolvedTargetPrice =
+      resolvePlanPriceInCents(upgrade.targetPlan, upgrade.targetBillingCycle) ??
+      upgrade.targetPlan.monthlyPriceInCents;
+
     if (
       ["PENDING_PAYMENT", "EXPIRED", "FAILED"].includes(upgrade.status)
     ) {
@@ -43,12 +50,28 @@ export async function applyPaidUpgradePayment(
         data: { paidAt: now },
       });
 
+      const switchedToYearly =
+        upgrade.fromBillingCycle === "MONTHLY" &&
+        upgrade.targetBillingCycle === "YEARLY";
+      const extendedPeriodEnd = switchedToYearly
+        ? addUtcMonths(upgrade.subscription.currentPeriodStart ?? now, 12)
+        : undefined;
+
       await tx.subscription.update({
         where: { id: upgrade.subscriptionId },
         data: {
           planId: upgrade.targetPlanId,
-          priceInCentsSnapshot: upgrade.targetPlan.monthlyPriceInCents,
+          billingCycle: upgrade.targetBillingCycle,
+          priceInCentsSnapshot: resolvedTargetPrice,
           currencySnapshot: upgrade.targetPlan.currency,
+          ...(extendedPeriodEnd
+            ? {
+                currentPeriodEnd: extendedPeriodEnd,
+                paidUntil: extendedPeriodEnd,
+                graceUntil: addUtcDays(extendedPeriodEnd, 3),
+                nextDueDate: extendedPeriodEnd,
+              }
+            : {}),
         },
       });
 
@@ -56,8 +79,8 @@ export async function applyPaidUpgradePayment(
         subscriptionId: upgrade.subscriptionId,
         userId: upgrade.subscription.userId,
         action: "SUBSCRIPTION_PLAN_CHANGED",
-        previousStatus: upgrade.fromPlanId,
-        newStatus: upgrade.targetPlanId,
+        previousStatus: `${upgrade.fromPlanId}:${upgrade.fromBillingCycle}`,
+        newStatus: `${upgrade.targetPlanId}:${upgrade.targetBillingCycle}`,
         reason: `PLAN_UPGRADE:${event}`,
         source: "ASAAS_BILLING_WEBHOOK",
         sourceReferenceId: upgrade.asaasPaymentId ?? upgrade.id,
@@ -68,22 +91,26 @@ export async function applyPaidUpgradePayment(
       alreadyDone: false as const,
       cancelled: false as const,
       upgrade,
+      resolvedTargetPrice,
     };
   });
 
   if (!prep || prep.alreadyDone || prep.cancelled) return;
 
-  const { upgrade } = prep;
+  const { upgrade, resolvedTargetPrice } = prep;
   const externalSubId = upgrade.subscription.externalSubscriptionId;
   const synced = externalSubId
     ? await asaasClient.updateSubscriptionValue(
         externalSubId,
-        upgrade.targetPlan.monthlyPriceInCents,
-        `Assinatura ${upgrade.targetPlan.name}`,
+        resolvedTargetPrice,
+        upgrade.targetBillingCycle === "YEARLY"
+          ? `Assinatura ${upgrade.targetPlan.name} (Anual)`
+          : `Assinatura ${upgrade.targetPlan.name}`,
         {
           userId: upgrade.subscription.userId,
           subscriptionId: upgrade.subscriptionId,
         },
+        upgrade.targetBillingCycle,
       )
     : false;
 
@@ -98,7 +125,7 @@ export async function applyPaidUpgradePayment(
       : {
           status: "PAID_PENDING_PROVIDER_SYNC",
           errorMessage:
-            "Pagamento confirmado e plano liberado, mas falhou a sincronização do valor recorrente no Asaas.",
+            "Pagamento confirmado e plano liberado, mas falhou a sincronização do valor recorrente.",
         },
   });
 }
@@ -106,7 +133,11 @@ export async function applyPaidUpgradePayment(
 export class UpgradeCoachSubscription {
   constructor(private readonly asaasClient = new AsaasClient()) {}
 
-  async initiate(input: { userId: string; planCode: string }) {
+  async initiate(input: {
+    userId: string;
+    planCode: string;
+    billingCycle?: BillingCycle;
+  }) {
     const now = new Date();
     const subscription = await prisma.subscription.findUnique({
       where: { userId: input.userId },
@@ -127,7 +158,7 @@ export class UpgradeCoachSubscription {
       throw new BillingError(
         "UPGRADE_REQUIRES_ACTIVE_ASAAS",
         400,
-        "Upgrade imediato é permitido apenas para assinaturas Asaas ativas.",
+        "Upgrade imediato é permitido apenas para assinaturas ativas.",
       );
     }
     if (
@@ -141,6 +172,9 @@ export class UpgradeCoachSubscription {
       );
     }
 
+    const targetCycle: BillingCycle =
+      input.billingCycle ?? subscription.billingCycle;
+
     const targetPlan = await prisma.plan.findUnique({
       where: { code: input.planCode },
     });
@@ -148,7 +182,7 @@ export class UpgradeCoachSubscription {
       !targetPlan ||
       !targetPlan.isActive ||
       !targetPlan.isPublic ||
-      targetPlan.audience !== "COACH"
+      targetPlan.audience !== subscription.plan.audience
     ) {
       throw new BillingError(
         "TARGET_PLAN_NOT_FOUND",
@@ -156,18 +190,33 @@ export class UpgradeCoachSubscription {
         "Plano destino ativo não encontrado.",
       );
     }
-    if (targetPlan.code === subscription.plan.code) {
+    if (
+      targetPlan.code === subscription.plan.code &&
+      targetCycle === subscription.billingCycle
+    ) {
       throw new BillingError(
         "SAME_PLAN",
         400,
-        "Você já está utilizando este plano.",
+        "Você já está utilizando este plano e ciclo.",
       );
     }
-    if (targetPlan.monthlyPriceInCents <= subscription.plan.monthlyPriceInCents) {
+
+    const currentPrice =
+      resolvePlanPriceInCents(subscription.plan, subscription.billingCycle) ??
+      subscription.priceInCentsSnapshot;
+    const targetPrice = resolvePlanPriceInCents(targetPlan, targetCycle);
+    if (targetPrice === null || targetPrice <= 0) {
+      throw new BillingError(
+        "TARGET_PLAN_NOT_FOUND",
+        404,
+        "Ciclo de cobrança indisponível para o plano selecionado.",
+      );
+    }
+    if (targetPrice <= currentPrice) {
       throw new BillingError(
         "NOT_AN_UPGRADE",
         400,
-        "O plano escolhido não é superior ao plano atual. Para planos menores, utilize o agendamento de downgrade.",
+        "O plano ou ciclo escolhido não possui valor superior ao atual. Para opções menores, utilize o agendamento de alteração.",
       );
     }
 
@@ -181,7 +230,11 @@ export class UpgradeCoachSubscription {
     });
 
     if (activeExisting) {
-      return this.resumeExistingUpgrade(activeExisting, targetPlan.code);
+      return this.resumeExistingUpgrade(
+        activeExisting,
+        targetPlan.code,
+        targetCycle,
+      );
     }
 
     const upgradeId = randomUUID();
@@ -203,7 +256,7 @@ export class UpgradeCoachSubscription {
         throw new BillingError(
           "UPGRADE_REQUIRES_ACTIVE_ASAAS",
           400,
-          "Upgrade é permitido apenas para assinaturas Asaas ativas.",
+          "Upgrade é permitido apenas para assinaturas ativas.",
         );
       }
 
@@ -227,13 +280,15 @@ export class UpgradeCoachSubscription {
         );
       }
 
-      const differenceInCents =
-        targetPlan.monthlyPriceInCents - locked.plan.monthlyPriceInCents;
+      const lockedCurrentPrice =
+        resolvePlanPriceInCents(locked.plan, locked.billingCycle) ??
+        locked.priceInCentsSnapshot;
+      const differenceInCents = targetPrice - lockedCurrentPrice;
       if (differenceInCents <= 0) {
         throw new BillingError(
           "NOT_AN_UPGRADE",
           400,
-          "O plano escolhido não é superior ao plano atual.",
+          "O plano ou ciclo escolhido não é superior ao atual.",
         );
       }
 
@@ -243,6 +298,8 @@ export class UpgradeCoachSubscription {
           subscriptionId: locked.id,
           fromPlanId: locked.planId,
           targetPlanId: targetPlan.id,
+          fromBillingCycle: locked.billingCycle,
+          targetBillingCycle: targetCycle,
           differenceInCents,
           externalReference,
           status: "PENDING_PAYMENT",
@@ -255,14 +312,21 @@ export class UpgradeCoachSubscription {
     });
 
     if (!reservation.created) {
-      return this.resumeExistingUpgrade(reservation.upgrade, targetPlan.code);
+      return this.resumeExistingUpgrade(
+        reservation.upgrade,
+        targetPlan.code,
+        targetCycle,
+      );
     }
 
     try {
       const paymentResult = await this.asaasClient.createOneTimePayment({
         customerId: subscription.externalCustomerId,
         amountInCents: reservation.upgrade.differenceInCents,
-        description: `Upgrade de plano para ${targetPlan.name}`,
+        description:
+          targetCycle === "YEARLY"
+            ? `Upgrade de plano para ${targetPlan.name} (Anual)`
+            : `Upgrade de plano para ${targetPlan.name}`,
         externalReference,
         dueDateLimitDays: 3,
         userId: subscription.userId,
@@ -292,7 +356,7 @@ export class UpgradeCoachSubscription {
       });
       return this.toResponse(
         reservation.upgrade,
-        "Solicitação de upgrade registrada. A cobrança está sendo conciliada com o Asaas.",
+        "Solicitação de upgrade registrada. A cobrança está sendo conciliada.",
       );
     }
   }
@@ -304,14 +368,20 @@ export class UpgradeCoachSubscription {
       asaasPaymentId: string | null;
       invoiceUrl: string | null;
       differenceInCents: number;
+      fromBillingCycle: BillingCycle;
+      targetBillingCycle: BillingCycle;
       externalReference: string;
       status: string;
       fromPlan: { code: string };
       targetPlan: { code: string; name: string };
     },
     requestedPlanCode: string,
+    requestedBillingCycle: BillingCycle,
   ) {
-    if (existing.targetPlan.code !== requestedPlanCode) {
+    if (
+      existing.targetPlan.code !== requestedPlanCode ||
+      existing.targetBillingCycle !== requestedBillingCycle
+    ) {
       throw new BillingError(
         "UPGRADE_ALREADY_PENDING",
         409,
@@ -390,6 +460,8 @@ export class UpgradeCoachSubscription {
       fromPlanName: u.fromPlan.name,
       targetPlanCode: u.targetPlan.code,
       targetPlanName: u.targetPlan.name,
+      fromBillingCycle: u.fromBillingCycle,
+      targetBillingCycle: u.targetBillingCycle,
       status: u.status,
       createdAt: u.createdAt.toISOString(),
       expiresAt: u.expiresAt.toISOString(),
@@ -470,7 +542,7 @@ export class UpgradeCoachSubscription {
           throw new BillingError(
             "ASAAS_CANCELLATION_FAILED",
             409,
-            "Não foi possível confirmar o cancelamento da cobrança no Asaas.",
+            "Não foi possível confirmar o cancelamento da cobrança.",
           );
         }
       }
@@ -490,6 +562,8 @@ export class UpgradeCoachSubscription {
       asaasPaymentId: string | null;
       invoiceUrl: string | null;
       differenceInCents: number;
+      fromBillingCycle: BillingCycle;
+      targetBillingCycle: BillingCycle;
       status: string;
       fromPlan: { code: string };
       targetPlan: { code: string; name: string };
@@ -504,6 +578,8 @@ export class UpgradeCoachSubscription {
       fromPlanCode: upgrade.fromPlan.code,
       targetPlanCode: upgrade.targetPlan.code,
       targetPlanName: upgrade.targetPlan.name,
+      fromBillingCycle: upgrade.fromBillingCycle,
+      targetBillingCycle: upgrade.targetBillingCycle,
       status: upgrade.status,
       message,
     };

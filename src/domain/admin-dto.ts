@@ -3,7 +3,7 @@ import { subscriptionGrantsAccess } from "./commercial.js";
 
 export function planDTO(p: Plan & { entitlements: PlanEntitlement[] }) {
   return { id: p.id, code: p.code, name: p.name, description: p.description, audience: p.audience,
-    monthlyPriceInCents: p.monthlyPriceInCents, currency: p.currency, isActive: p.isActive,
+    monthlyPriceInCents: p.monthlyPriceInCents, annualPriceInCents: p.annualPriceInCents, currency: p.currency, isActive: p.isActive,
     isPublic: p.isPublic, sortOrder: p.sortOrder,
     entitlements: p.entitlements.map(e => ({ entitlement: e.entitlement, limitValue: e.limitValue })) };
 }

@@ -601,6 +601,11 @@ enum BillingProvider {
   ASAAS
 }
 
+enum BillingCycle {
+  MONTHLY
+  YEARLY
+}
+
 enum EntitlementKey {
   COACH_DASHBOARD
   MANAGE_ATHLETES
@@ -610,6 +615,9 @@ enum EntitlementKey {
   AI_CHAT
   AI_PLAN_GENERATION
   SOURCE_LIBRARY
+  WORKOUT_PLAN_LIMIT
+  WORKOUT_DAY_LIMIT
+  PERIODIZATIONS
 }
 
 model Plan {
@@ -619,6 +627,7 @@ model Plan {
   description         String?
   audience            PlanAudience
   monthlyPriceInCents Int
+  annualPriceInCents  Int?
   currency            String            @default("BRL")
   isPublic            Boolean           @default(false)
   isActive            Boolean           @default(true)
@@ -654,6 +663,7 @@ model Subscription {
   plan                    Plan               @relation(fields: [planId], references: [id], onDelete: Restrict)
   status                  SubscriptionStatus
   billingProvider         BillingProvider    @default(NONE)
+  billingCycle            BillingCycle       @default(MONTHLY)
   priceInCentsSnapshot    Int
   currencySnapshot        String
   externalCustomerId      String?
@@ -713,6 +723,7 @@ model SubscriptionPayment {
   providerPaymentId      String?         @unique
   providerSubscriptionId String?
   providerCheckoutId     String?
+  billingCycle           BillingCycle    @default(MONTHLY)
   status                 String
   billingType            String?
   amountInCents          Int
@@ -823,6 +834,8 @@ model SubscriptionUpgrade {
   fromPlan          Plan         @relation("UpgradeFromPlan", fields: [fromPlanId], references: [id], onDelete: Restrict)
   targetPlanId      String
   targetPlan        Plan         @relation("UpgradeTargetPlan", fields: [targetPlanId], references: [id], onDelete: Restrict)
+  fromBillingCycle  BillingCycle @default(MONTHLY)
+  targetBillingCycle BillingCycle @default(MONTHLY)
   differenceInCents Int
   asaasPaymentId    String?      @unique
   invoiceUrl        String?
@@ -850,6 +863,8 @@ model SubscriptionDowngrade {
   fromPlan               Plan         @relation("DowngradeFromPlan", fields: [fromPlanId], references: [id], onDelete: Restrict)
   targetPlanId           String
   targetPlan             Plan         @relation("DowngradeTargetPlan", fields: [targetPlanId], references: [id], onDelete: Restrict)
+  fromBillingCycle       BillingCycle @default(MONTHLY)
+  targetBillingCycle     BillingCycle @default(MONTHLY)
   effectiveAt            DateTime     @db.Timestamptz()
   status                 String
   acknowledgedAt         DateTime     @db.Timestamptz()

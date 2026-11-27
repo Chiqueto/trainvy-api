@@ -32,7 +32,7 @@ async function user() {
   const id = randomUUID();
   userIds.push(id);
   await prisma.user.create({
-    data: { id, name: "Builder test", email: `${id}@example.test` },
+    data: { id, name: "Builder test", email: `${id}@example.test`, accountType: "COACH" },
   });
   return id;
 }

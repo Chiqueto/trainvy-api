@@ -3,6 +3,10 @@ import z from "zod";
 import { resolveCanonicalExerciseMap } from "../domain/canonical-exercise.js";
 import { normalizeAndValidateAlternatives } from "../domain/exercise-alternatives.js";
 import {
+  assertCanEditSelfWorkoutPlanDays,
+  countTrainingDays,
+} from "../domain/planning-limits.js";
+import {
   BadRequestError,
   ConflictError,
   NotFoundError,
@@ -117,6 +121,20 @@ export class EditWorkoutPlan {
           "dayId" in edit
             ? [{ ...edit.day, id: edit.dayId }]
             : edit.workoutDays;
+        const nextTrainingDays =
+          "dayId" in edit
+            ? countTrainingDays(
+                plan.workoutDays.map((d) =>
+                  d.id === edit.dayId ? { isRest: edit.day.isRest } : d,
+                ),
+              )
+            : countTrainingDays(edit.workoutDays);
+        await assertCanEditSelfWorkoutPlanDays(
+          tx,
+          userId,
+          plan,
+          nextTrainingDays,
+        );
 
         if (
           await tx.workoutSession.findFirst({

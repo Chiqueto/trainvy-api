@@ -2,6 +2,7 @@ import z from "zod";
 
 import {
   AccountType,
+  BillingCycle,
   BillingProvider,
   EntitlementKey,
   SubscriptionStatus,
@@ -28,6 +29,7 @@ export const PublicPlanSchema = z.object({
   name: z.string(),
   description: z.string().nullable(),
   monthlyPriceInCents: z.number().int().nonnegative(),
+  annualPriceInCents: z.number().int().nonnegative().nullable(),
   currency: z.string(),
   entitlements: z.array(
     z.object({
@@ -54,6 +56,7 @@ export const CommercialContextSchema = z.object({
     .object({
       status: z.enum(SubscriptionStatus),
       billingProvider: z.enum(BillingProvider),
+      billingCycle: z.enum(BillingCycle),
       trialEndsAt: IsoTimestamp.nullable(),
       currentPeriodEnd: IsoTimestamp.nullable(),
       priceInCentsSnapshot: z.number().int(),

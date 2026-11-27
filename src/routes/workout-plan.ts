@@ -2,6 +2,7 @@ import { fromNodeHeaders } from "better-auth/node";
 import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 
+import { PlanLimitError } from "../domain/planning-limits.js";
 import { ConflictError, NotFoundError } from "../errors/index.js";
 import { WorkoutPlanNotActiveError } from "../errors/index.js";
 import { auth } from "../lib/auth.js";
@@ -194,6 +195,7 @@ export const WorkoutPlanRoutes = async (app: FastifyInstance) => {
         201: WorkoutPlanSchema,
         400: ErrorSchema,
         401: ErrorSchema,
+        403: ErrorSchema,
         404: ErrorSchema,
         409: ErrorSchema,
         500: ErrorSchema,
@@ -221,6 +223,13 @@ export const WorkoutPlanRoutes = async (app: FastifyInstance) => {
 
         return reply.status(201).send(result);
       } catch (error) {
+        if (error instanceof PlanLimitError) {
+          return reply.status(403).send({
+            error: error.message,
+            code: error.code,
+          });
+        }
+
         if (error instanceof NotFoundError) {
           return reply.status(404).send({
             error: error.message,
@@ -426,6 +435,7 @@ export const WorkoutPlanRoutes = async (app: FastifyInstance) => {
         201: WorkoutPlanSchema,
         400: ErrorSchema,
         401: ErrorSchema,
+        403: ErrorSchema,
         404: ErrorSchema,
         409: ErrorSchema,
         500: ErrorSchema,
@@ -452,6 +462,13 @@ export const WorkoutPlanRoutes = async (app: FastifyInstance) => {
 
         return reply.status(201).send(result);
       } catch (error) {
+        if (error instanceof PlanLimitError) {
+          return reply.status(403).send({
+            error: error.message,
+            code: error.code,
+          });
+        }
+
         if (error instanceof NotFoundError) {
           return reply.status(404).send({
             error: error.message,

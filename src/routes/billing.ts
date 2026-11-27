@@ -134,6 +134,7 @@ export const billingRoutes: FastifyPluginAsyncZod = async (app) => {
           userId,
           planCode: request.body.planCode,
           cpfCnpj: request.body.cpfCnpj,
+          billingCycle: request.body.billingCycle,
         });
       } catch (error) {
         return fail(error, request, reply);
@@ -192,6 +193,7 @@ export const billingRoutes: FastifyPluginAsyncZod = async (app) => {
         return await new UpgradeCoachSubscription().initiate({
           userId,
           planCode: request.body.planCode,
+          billingCycle: request.body.billingCycle,
         });
       } catch (error) {
         return fail(error, request, reply);
@@ -262,6 +264,7 @@ export const billingRoutes: FastifyPluginAsyncZod = async (app) => {
         return await new DowngradeCoachSubscription().preview({
           userId,
           planCode: request.body.planCode,
+          billingCycle: request.body.billingCycle,
         });
       } catch (error) {
         return fail(error, request, reply);
@@ -288,6 +291,7 @@ export const billingRoutes: FastifyPluginAsyncZod = async (app) => {
         return await new DowngradeCoachSubscription().schedule({
           userId,
           planCode: request.body.planCode,
+          billingCycle: request.body.billingCycle,
           retainedAthleteIds: request.body.retainedAthleteIds,
           acknowledgeExcessAthletes: request.body.acknowledgeExcessAthletes,
         });

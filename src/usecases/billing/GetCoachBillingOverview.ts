@@ -29,16 +29,20 @@ export class GetCoachBillingOverview {
     if (!user || user.deletedAt) {
       throw new BillingError("USER_NOT_FOUND", 404, "Usuário não encontrado.");
     }
-    if (user.accountType !== "COACH") {
+    if (user.accountType !== "COACH" && user.accountType !== "ATHLETE") {
       throw new BillingError(
-        "ONLY_COACHES_ALLOWED",
+        "BILLING_NOT_AVAILABLE",
         403,
-        "Apenas contas de treinador possuem faturamento profissional.",
+        "Faturamento disponível apenas para contas de treinador ou atleta.",
       );
     }
 
     const plans = await prisma.plan.findMany({
-      where: { audience: "COACH", isPublic: true, isActive: true },
+      where: {
+        audience: user.accountType,
+        isPublic: true,
+        isActive: true,
+      },
       include: { entitlements: { orderBy: { entitlement: "asc" } } },
       orderBy: [{ sortOrder: "asc" }, { monthlyPriceInCents: "asc" }],
     });
@@ -71,6 +75,7 @@ export class GetCoachBillingOverview {
             currency: sub.currencySnapshot,
             status: sub.status,
             billingProvider: sub.billingProvider,
+            billingCycle: sub.billingCycle,
             trialEndsAt: sub.trialEndsAt?.toISOString() ?? null,
             currentPeriodStart: sub.currentPeriodStart?.toISOString() ?? null,
             currentPeriodEnd: sub.currentPeriodEnd?.toISOString() ?? null,
@@ -90,6 +95,7 @@ export class GetCoachBillingOverview {
         id: p.id,
         status: p.status,
         billingType: p.billingType,
+        billingCycle: p.billingCycle,
         amountInCents: p.amountInCents,
         netAmountInCents: p.netAmountInCents,
         currency: p.currency,
@@ -118,6 +124,7 @@ export class GetCoachBillingOverview {
         name: p.name,
         description: p.description,
         monthlyPriceInCents: p.monthlyPriceInCents,
+        annualPriceInCents: p.annualPriceInCents,
         currency: p.currency,
         entitlements: p.entitlements.map((e) => ({
           entitlement: e.entitlement,

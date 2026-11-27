@@ -7,8 +7,10 @@ import {
   isPaymentFutureAndEditable,
   logBillingAccessChange,
   resolveEffectiveBillingCycleEnd,
+  resolvePlanPriceInCents,
 } from "../../domain/billing.js";
 import type { Prisma } from "../../generated/prisma/client.js";
+import type { BillingCycle } from "../../generated/prisma/enums.js";
 import { prisma } from "../../lib/db.js";
 import { AsaasClient, reaisToCents } from "../../services/AsaasClient.js";
 
@@ -21,7 +23,11 @@ export interface PreparedFuturePayment {
 export class DowngradeCoachSubscription {
   constructor(private readonly asaasClient = new AsaasClient()) {}
 
-  async preview(input: { userId: string; planCode: string }) {
+  async preview(input: {
+    userId: string;
+    planCode: string;
+    billingCycle?: BillingCycle;
+  }) {
     const subscription = await prisma.subscription.findUnique({
       where: { userId: input.userId },
       include: { plan: { include: { entitlements: true } } },
@@ -40,20 +46,27 @@ export class DowngradeCoachSubscription {
       throw new BillingError(
         "DOWNGRADE_REQUIRES_ACTIVE_ASAAS",
         400,
-        "Downgrade programado é permitido apenas para assinaturas Asaas ativas.",
+        "Alteração programada é permitida apenas para assinaturas ativas.",
       );
     }
+
+    const targetCycle: BillingCycle =
+      input.billingCycle ?? subscription.billingCycle;
 
     const targetPlan = await prisma.plan.findUnique({
       where: { code: input.planCode },
       include: { entitlements: true },
     });
+    const targetPrice = targetPlan
+      ? resolvePlanPriceInCents(targetPlan, targetCycle)
+      : null;
     if (
       !targetPlan ||
       !targetPlan.isActive ||
       !targetPlan.isPublic ||
-      targetPlan.audience !== "COACH" ||
-      targetPlan.monthlyPriceInCents <= 0
+      targetPlan.audience !== subscription.plan.audience ||
+      targetPrice === null ||
+      targetPrice <= 0
     ) {
       throw new BillingError(
         "TARGET_PLAN_NOT_FOUND",
@@ -61,18 +74,24 @@ export class DowngradeCoachSubscription {
         "Plano destino ativo não encontrado.",
       );
     }
-    if (targetPlan.code === subscription.plan.code) {
+    if (
+      targetPlan.code === subscription.plan.code &&
+      targetCycle === subscription.billingCycle
+    ) {
       throw new BillingError(
         "SAME_PLAN",
         400,
-        "Você já está utilizando este plano.",
+        "Você já está utilizando este plano e ciclo.",
       );
     }
-    if (targetPlan.monthlyPriceInCents >= subscription.plan.monthlyPriceInCents) {
+    const currentPrice =
+      resolvePlanPriceInCents(subscription.plan, subscription.billingCycle) ??
+      subscription.priceInCentsSnapshot;
+    if (targetPrice >= currentPrice) {
       throw new BillingError(
         "NOT_A_DOWNGRADE",
         400,
-        "O plano escolhido não é inferior ao plano atual. Para planos superiores, utilize o fluxo de upgrade.",
+        "O plano ou ciclo escolhido não é inferior ao atual. Para opções superiores, utilize a troca imediata.",
       );
     }
 
@@ -85,24 +104,29 @@ export class DowngradeCoachSubscription {
       subscription.id,
     );
 
-    const activeLinks = await prisma.coachAthlete.findMany({
-      where: { coachId: input.userId, status: "ACTIVE" },
-      include: {
-        athlete: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            isManagedProfile: true,
+    const isCoachAudience = targetPlan.audience === "COACH";
+    const activeLinks = isCoachAudience
+      ? await prisma.coachAthlete.findMany({
+          where: { coachId: input.userId, status: "ACTIVE" },
+          include: {
+            athlete: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                isManagedProfile: true,
+              },
+            },
           },
-        },
-      },
-      orderBy: { createdAt: "asc" },
-    });
+          orderBy: { createdAt: "asc" },
+        })
+      : [];
 
-    const manageEnt = targetPlan.entitlements.find(
-      (e) => e.entitlement === "MANAGE_ATHLETES",
-    );
+    const manageEnt = isCoachAudience
+      ? targetPlan.entitlements.find(
+          (e) => e.entitlement === "MANAGE_ATHLETES",
+        )
+      : undefined;
     const targetAthleteLimit = manageEnt?.limitValue ?? null;
     const excessAthletesCount =
       targetAthleteLimit !== null && activeLinks.length > targetAthleteLimit
@@ -115,11 +139,13 @@ export class DowngradeCoachSubscription {
         code: subscription.plan.code,
         name: subscription.plan.name,
         monthlyPriceInCents: subscription.plan.monthlyPriceInCents,
+        annualPriceInCents: subscription.plan.annualPriceInCents,
       },
       targetPlan: {
         code: targetPlan.code,
         name: targetPlan.name,
         monthlyPriceInCents: targetPlan.monthlyPriceInCents,
+        annualPriceInCents: targetPlan.annualPriceInCents,
       },
       targetAthleteLimit,
       activeAthletesCount: activeLinks.length,
@@ -134,7 +160,7 @@ export class DowngradeCoachSubscription {
       })),
       hasPendingTransition,
       pendingTransitionMessage: hasPendingTransition
-        ? "Existe uma transição de plano ou sincronização financeira pendente com o provedor de pagamentos."
+        ? "Existe uma transição de plano ou sincronização financeira pendente."
         : null,
     };
   }
@@ -142,6 +168,7 @@ export class DowngradeCoachSubscription {
   async schedule(input: {
     userId: string;
     planCode: string;
+    billingCycle?: BillingCycle;
     retainedAthleteIds?: string[];
     acknowledgeExcessAthletes?: boolean;
   }) {
@@ -164,7 +191,7 @@ export class DowngradeCoachSubscription {
       throw new BillingError(
         "DOWNGRADE_REQUIRES_ACTIVE_ASAAS",
         400,
-        "Downgrade programado é permitido apenas para assinaturas Asaas ativas.",
+        "Alteração programada é permitida apenas para assinaturas ativas.",
       );
     }
     if (
@@ -182,20 +209,27 @@ export class DowngradeCoachSubscription {
       throw new BillingError(
         "PENDING_BILLING_TRANSITION",
         409,
-        "Existe uma transição de plano ou sincronização financeira pendente com o provedor.",
+        "Existe uma transição de plano ou sincronização financeira pendente.",
       );
     }
+
+    const targetCycle: BillingCycle =
+      input.billingCycle ?? subscription.billingCycle;
 
     const targetPlan = await prisma.plan.findUnique({
       where: { code: input.planCode },
       include: { entitlements: true },
     });
+    const targetPrice = targetPlan
+      ? resolvePlanPriceInCents(targetPlan, targetCycle)
+      : null;
     if (
       !targetPlan ||
       !targetPlan.isActive ||
       !targetPlan.isPublic ||
-      targetPlan.audience !== "COACH" ||
-      targetPlan.monthlyPriceInCents <= 0
+      targetPlan.audience !== subscription.plan.audience ||
+      targetPrice === null ||
+      targetPrice <= 0
     ) {
       throw new BillingError(
         "TARGET_PLAN_NOT_FOUND",
@@ -203,18 +237,24 @@ export class DowngradeCoachSubscription {
         "Plano destino ativo não encontrado.",
       );
     }
-    if (targetPlan.code === subscription.plan.code) {
+    if (
+      targetPlan.code === subscription.plan.code &&
+      targetCycle === subscription.billingCycle
+    ) {
       throw new BillingError(
         "SAME_PLAN",
         400,
-        "Você já está neste plano.",
+        "Você já está neste plano e ciclo.",
       );
     }
-    if (targetPlan.monthlyPriceInCents >= subscription.plan.monthlyPriceInCents) {
+    const currentPrice =
+      resolvePlanPriceInCents(subscription.plan, subscription.billingCycle) ??
+      subscription.priceInCentsSnapshot;
+    if (targetPrice >= currentPrice) {
       throw new BillingError(
         "NOT_A_DOWNGRADE",
         400,
-        "O plano escolhido não é inferior ao plano atual.",
+        "O plano ou ciclo escolhido não é inferior ao atual.",
       );
     }
 
@@ -224,15 +264,18 @@ export class DowngradeCoachSubscription {
       now,
     );
 
-    const activeLinks = await prisma.coachAthlete.findMany({
-      where: { coachId: input.userId, status: "ACTIVE" },
-      select: { athleteId: true },
-    });
+    const isCoachAudience = targetPlan.audience === "COACH";
+    const activeLinks = isCoachAudience
+      ? await prisma.coachAthlete.findMany({
+          where: { coachId: input.userId, status: "ACTIVE" },
+          select: { athleteId: true },
+        })
+      : [];
     const validAthleteIds = new Set(activeLinks.map((l) => l.athleteId));
 
-    const retainedAthleteIds = Array.from(
-      new Set(input.retainedAthleteIds ?? []),
-    );
+    const retainedAthleteIds = isCoachAudience
+      ? Array.from(new Set(input.retainedAthleteIds ?? []))
+      : [];
     for (const athleteId of retainedAthleteIds) {
       if (!validAthleteIds.has(athleteId)) {
         throw new BillingError(
@@ -243,9 +286,11 @@ export class DowngradeCoachSubscription {
       }
     }
 
-    const targetAthleteLimit =
-      targetPlan.entitlements.find((e) => e.entitlement === "MANAGE_ATHLETES")
-        ?.limitValue ?? null;
+    const targetAthleteLimit = isCoachAudience
+      ? (targetPlan.entitlements.find(
+          (e) => e.entitlement === "MANAGE_ATHLETES",
+        )?.limitValue ?? null)
+      : null;
 
     if (
       targetAthleteLimit !== null &&
@@ -270,7 +315,7 @@ export class DowngradeCoachSubscription {
       );
     }
 
-    // Fase 1 Saga: snapshot prévio de cobranças futuras no Asaas
+    // Fase 1 Saga: snapshot prévio de cobranças futuras
     const initialPreparedPayments: PreparedFuturePayment[] = [];
     const asaasPayments = await this.asaasClient.listPaymentsBySubscription(
       subscription.externalSubscriptionId,
@@ -280,9 +325,8 @@ export class DowngradeCoachSubscription {
       if (isPaymentFutureAndEditable(p, effectiveAt)) {
         initialPreparedPayments.push({
           paymentId: p.id,
-          originalAmountInCents:
-            reaisToCents(p.value) ?? subscription.plan.monthlyPriceInCents,
-          preparedAmountInCents: targetPlan.monthlyPriceInCents,
+          originalAmountInCents: reaisToCents(p.value) ?? currentPrice,
+          preparedAmountInCents: targetPrice,
         });
       }
     }
@@ -304,6 +348,8 @@ export class DowngradeCoachSubscription {
           subscriptionId: subscription.id,
           fromPlanId: subscription.planId,
           targetPlanId: targetPlan.id,
+          fromBillingCycle: subscription.billingCycle,
+          targetBillingCycle: targetCycle,
           effectiveAt,
           status: "SCHEDULED",
           acknowledgedAt: now,
@@ -315,16 +361,17 @@ export class DowngradeCoachSubscription {
       });
     });
 
-    // Fase 2 Saga: sincroniza alteração de recorrência e cobranças futuras no Asaas
     await this.executeAsaasSync(downgradeId);
 
     return {
       downgradeId,
       targetPlanCode: targetPlan.code,
       targetPlanName: targetPlan.name,
+      fromBillingCycle: subscription.billingCycle,
+      targetBillingCycle: targetCycle,
       effectiveAt: effectiveAt.toISOString(),
       status: "SCHEDULED",
-      message: `Downgrade agendado com sucesso para ${formatDateBr(effectiveAt)}.`,
+      message: `Alteração agendada com sucesso para ${formatDateBr(effectiveAt)}.`,
     };
   }
 
@@ -361,11 +408,20 @@ export class DowngradeCoachSubscription {
       subscriptionId: downgrade.subscriptionId,
     };
 
+    const targetCyclePrice =
+      resolvePlanPriceInCents(
+        downgrade.targetPlan,
+        downgrade.targetBillingCycle,
+      ) ?? downgrade.targetPlan.monthlyPriceInCents;
+
     const subUpdated = await this.asaasClient.updateSubscriptionValue(
       externalSubId,
-      downgrade.targetPlan.monthlyPriceInCents,
-      `Assinatura alterada para ${downgrade.targetPlan.name}`,
+      targetCyclePrice,
+      downgrade.targetBillingCycle === "YEARLY"
+        ? `Assinatura alterada para ${downgrade.targetPlan.name} (Anual)`
+        : `Assinatura alterada para ${downgrade.targetPlan.name}`,
       ctx,
+      downgrade.targetBillingCycle,
     );
 
     if (!subUpdated) {
@@ -399,9 +455,8 @@ export class DowngradeCoachSubscription {
       ) {
         snapshotMap.set(p.id, {
           paymentId: p.id,
-          originalAmountInCents:
-            reaisToCents(p.value) ?? downgrade.targetPlan.monthlyPriceInCents,
-          preparedAmountInCents: downgrade.targetPlan.monthlyPriceInCents,
+          originalAmountInCents: reaisToCents(p.value) ?? targetCyclePrice,
+          preparedAmountInCents: targetCyclePrice,
         });
         snapshotModified = true;
       }
@@ -464,11 +519,18 @@ export class DowngradeCoachSubscription {
       subscriptionId: downgrade.subscriptionId,
     };
 
+    const fromCyclePrice =
+      resolvePlanPriceInCents(
+        downgrade.fromPlan,
+        downgrade.fromBillingCycle,
+      ) ?? downgrade.fromPlan.monthlyPriceInCents;
+
     const subRestored = await this.asaasClient.updateSubscriptionValue(
       externalSubId,
-      downgrade.fromPlan.monthlyPriceInCents,
+      fromCyclePrice,
       `Assinatura restaurada para ${downgrade.fromPlan.name}`,
       ctx,
+      downgrade.fromBillingCycle,
     );
 
     const payments = await this.asaasClient.listPaymentsBySubscription(
@@ -487,8 +549,7 @@ export class DowngradeCoachSubscription {
     for (const p of payments) {
       if (isPaymentFutureAndEditable(p, downgrade.effectiveAt)) {
         const targetCents =
-          snapshotMap.get(p.id)?.originalAmountInCents ??
-          downgrade.fromPlan.monthlyPriceInCents;
+          snapshotMap.get(p.id)?.originalAmountInCents ?? fromCyclePrice;
         const currentCents = reaisToCents(p.value);
         if (currentCents === null || currentCents !== targetCents) {
           const ok = await this.asaasClient.updatePaymentValue(
@@ -569,19 +630,26 @@ export class DowngradeCoachSubscription {
         return { applySync: false };
       }
 
+      const resolvedTargetPrice =
+        resolvePlanPriceInCents(dg.targetPlan, dg.targetBillingCycle) ??
+        dg.targetPlan.monthlyPriceInCents;
+
       await tx.subscription.update({
         where: { id: dg.subscriptionId },
         data: {
           planId: dg.targetPlanId,
-          priceInCentsSnapshot: dg.targetPlan.monthlyPriceInCents,
+          billingCycle: dg.targetBillingCycle,
+          priceInCentsSnapshot: resolvedTargetPrice,
           currencySnapshot: dg.targetPlan.currency,
         },
       });
 
       const limit =
-        dg.targetPlan.entitlements.find(
-          (e) => e.entitlement === "MANAGE_ATHLETES",
-        )?.limitValue ?? null;
+        dg.targetPlan.audience === "COACH"
+          ? (dg.targetPlan.entitlements.find(
+              (e) => e.entitlement === "MANAGE_ATHLETES",
+            )?.limitValue ?? null)
+          : null;
 
       if (limit !== null) {
         const retained = new Set(
@@ -665,6 +733,8 @@ export class DowngradeCoachSubscription {
       fromPlanName: dg.fromPlan.name,
       targetPlanCode: dg.targetPlan.code,
       targetPlanName: dg.targetPlan.name,
+      fromBillingCycle: dg.fromBillingCycle,
+      targetBillingCycle: dg.targetBillingCycle,
       effectiveAt: dg.effectiveAt.toISOString(),
       status: dg.status,
       asaasSyncStatus: dg.asaasSyncStatus,

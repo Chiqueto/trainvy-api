@@ -1,3 +1,4 @@
+import { isCoachPrescribedWorkoutPlan } from "../domain/planning-limits.js";
 import { InconsistentPlanningStateError } from "../errors/index.js";
 import { prisma } from "../lib/db.js";
 import { derivePeriodizationStatus } from "../lib/periodization.js";
@@ -10,6 +11,7 @@ export interface PlanningWorkoutPlanSummaryDto {
   id: string;
   name: string;
   isActive: boolean;
+  isPrescribedByCoach: boolean;
   workoutDaysCount: number;
   createdAt: string;
   periodization: {
@@ -169,6 +171,7 @@ export class GetPlanningOverview {
         id: wp.id,
         name: wp.name,
         isActive: wp.isActive,
+        isPrescribedByCoach: isCoachPrescribedWorkoutPlan(wp),
         workoutDaysCount: wp._count.workoutDays,
         createdAt: wp.createdAt.toISOString(),
         periodization: periodizationContext,

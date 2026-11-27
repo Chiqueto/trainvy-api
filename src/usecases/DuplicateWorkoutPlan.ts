@@ -1,3 +1,7 @@
+import {
+  assertCanCreateSelfWorkoutPlan,
+  countTrainingDays,
+} from "../domain/planning-limits.js";
 import { NotFoundError } from "../errors/index.js";
 import { WeekDay } from "../generated/prisma/enums.js";
 import { prisma } from "../lib/db.js";
@@ -69,6 +73,12 @@ export class DuplicateWorkoutPlan {
       ) {
         throw new NotFoundError("Workout plan not found");
       }
+
+      await assertCanCreateSelfWorkoutPlan(
+        tx,
+        dto.userId,
+        countTrainingDays(original.workoutDays),
+      );
 
       const targetName =
         dto.name && dto.name.trim().length > 0

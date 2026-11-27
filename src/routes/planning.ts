@@ -8,6 +8,7 @@ import z from "zod";
 
 import { AiAccessError } from "../domain/ai-access.js";
 import { CoachAthleteError } from "../domain/coach-athlete.js";
+import { PlanLimitError } from "../domain/planning-limits.js";
 import { verifyImportPreview } from "../domain/workout-import.js";
 import { AiRateLimitError } from "../errors/index.js";
 import { ConflictError, NotFoundError } from "../errors/index.js";
@@ -81,6 +82,8 @@ export const planningRoutes = async (app: FastifyInstance) => {
         });
         return reply.status(201).send({ id: result.id });
       } catch (e) {
+        if (e instanceof PlanLimitError)
+          return reply.status(403).send({ error: e.message, code: e.code });
         if (e instanceof CoachAthleteError)
           return reply
             .status(e.status)
