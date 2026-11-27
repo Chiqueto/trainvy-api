@@ -38,7 +38,7 @@ describe("CreateWorkoutPlan Integration Tests", () => {
   ];
 
   it("Cenário 1 — Isolamento entre usuários: criação de plano para Usuário A não desativa plano do Usuário B", async () => {
-    const userA = await createTestUser({ name: "Usuário A" });
+    const userA = await createTestUser({ name: "Usuário A", pro: true });
     const userB = await createTestUser({ name: "Usuário B" });
     createdUserIds.push(userA.id, userB.id);
 
@@ -83,7 +83,7 @@ describe("CreateWorkoutPlan Integration Tests", () => {
   });
 
   it("Cenário 2 — Rotação de plano do mesmo usuário: apenas um plano permanece ativo após criar novo", async () => {
-    const userA = await createTestUser({ name: "Usuário A" });
+    const userA = await createTestUser({ name: "Usuário A", pro: true });
     createdUserIds.push(userA.id);
 
     // Preparar plano ativo A1
@@ -123,7 +123,7 @@ describe("CreateWorkoutPlan Integration Tests", () => {
   });
 
   it("Cenário 3 — Criação com activate: false não desativa o plano ativo atual e cria o novo inativo", async () => {
-    const userA = await createTestUser({ name: "Usuário A" });
+    const userA = await createTestUser({ name: "Usuário A", pro: true });
     createdUserIds.push(userA.id);
 
     // Preparar plano ativo A1
@@ -165,7 +165,7 @@ describe("CreateWorkoutPlan Integration Tests", () => {
   });
 
   it("Cenário 4 — Criação com activate: true explícito desativa o plano ativo atual e ativa o novo", async () => {
-    const userA = await createTestUser({ name: "Usuário A" });
+    const userA = await createTestUser({ name: "Usuário A", pro: true });
     createdUserIds.push(userA.id);
 
     const planA1 = await createTestWorkoutPlan(userA.id, {

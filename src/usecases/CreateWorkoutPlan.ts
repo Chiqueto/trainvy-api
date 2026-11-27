@@ -95,6 +95,16 @@ export class CreateWorkoutPlan {
     try {
       return await prisma.$transaction(
         async (tx) => {
+          if (dto.importPreviewHash) {
+            const duplicateImport = await tx.workoutPlan.findFirst({
+              where: { importPreviewHash: dto.importPreviewHash },
+              select: { id: true },
+            });
+            if (duplicateImport) {
+              throw new ConflictError("Esta importação já foi confirmada.");
+            }
+          }
+
           await assertCanCreateSelfWorkoutPlan(
             tx,
             dto.userId,

@@ -293,6 +293,10 @@ describe("Professional verification, approval and personal imports", () => {
       workoutDays: days,
     });
     expect(plan.id).toBeTruthy();
+    await prisma.workoutPlan.update({
+      where: { id: plan.id },
+      data: { deletedAt: new Date() },
+    });
   });
   it("does not expose another athlete's prescription", async () => {
     const d = await draft();

@@ -1,19 +1,87 @@
-import { SetType, WeekDay, WorkoutSessionOrigin } from "../../src/generated/prisma/enums.js";
+import {
+  AccountType,
+  SetType,
+  WeekDay,
+  WorkoutSessionOrigin,
+} from "../../src/generated/prisma/enums.js";
 import { prisma } from "../../src/lib/db.js";
+
+async function ensureTestAthleteProPlanId(): Promise<string> {
+  const plan = await prisma.plan.upsert({
+    where: { code: "ATHLETE_PRO" },
+    create: {
+      id: "commercial-athlete-pro",
+      code: "ATHLETE_PRO",
+      name: "Atleta Pro",
+      description:
+        "Planos próprios ilimitados, treinos ilimitados por ficha e periodizações completas.",
+      audience: "ATHLETE",
+      monthlyPriceInCents: 990,
+      annualPriceInCents: 9990,
+      currency: "BRL",
+      isPublic: true,
+      isActive: true,
+      sortOrder: 2,
+    },
+    update: {},
+    select: { id: true },
+  });
+
+  for (const entitlement of [
+    "ADVANCED_STATS",
+    "WORKOUT_PLAN_LIMIT",
+    "WORKOUT_DAY_LIMIT",
+    "PERIODIZATIONS",
+  ] as const) {
+    await prisma.planEntitlement.upsert({
+      where: {
+        planId_entitlement: { planId: plan.id, entitlement },
+      },
+      create: {
+        id: `${plan.id}-${entitlement}`,
+        planId: plan.id,
+        entitlement,
+        limitValue: null,
+      },
+      update: { limitValue: null },
+    });
+  }
+
+  return plan.id;
+}
 
 export async function createTestUser(override?: {
   id?: string;
   name?: string;
   email?: string;
+  accountType?: AccountType;
+  pro?: boolean;
 }) {
   const uniqueId = crypto.randomUUID();
-  return prisma.user.create({
+  const user = await prisma.user.create({
     data: {
       id: override?.id ?? uniqueId,
       name: override?.name ?? `Test User ${uniqueId.slice(0, 8)}`,
       email: override?.email ?? `test-${uniqueId}@fitai.test`,
+      accountType: override?.accountType ?? "ATHLETE",
     },
   });
+
+  if (override?.pro) {
+    const planId = await ensureTestAthleteProPlanId();
+    await prisma.subscription.create({
+      data: {
+        userId: user.id,
+        planId,
+        status: "ACTIVE",
+        billingProvider: "MANUAL",
+        priceInCentsSnapshot: 990,
+        currencySnapshot: "BRL",
+      },
+    });
+  }
+
+  return user;
 }
 
 export async function createTestWorkoutPlan(

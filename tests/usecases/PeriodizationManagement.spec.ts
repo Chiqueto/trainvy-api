@@ -35,11 +35,13 @@ import {
   cleanupTestUsers,
   createTestPeriodization,
   createTestPeriodizationPlan,
-  createTestUser,
+  createTestUser as createBaseTestUser,
   createTestWorkoutDay,
   createTestWorkoutExercise,
   createTestWorkoutPlan,
 } from "../helpers/test-db.js";
+
+const createTestUser = () => createBaseTestUser({ pro: true });
 
 describe("Periodization Composition & Management (Task 2.3A)", () => {
   let app: FastifyInstance;

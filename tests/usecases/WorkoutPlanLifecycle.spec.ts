@@ -428,7 +428,7 @@ describe("WorkoutPlan Lifecycle & Duplication (Task 2.2)", () => {
 
   describe("DuplicateWorkoutPlan", () => {
     it("15. Duplica plano completo, copiando WorkoutDays, WorkoutExercises e preservando canonical exerciseId", async () => {
-      const user = await createTestUser();
+      const user = await createTestUser({ pro: true });
       testUserIds.push(user.id);
 
       const canonicalExercise = await createTestExercise({
@@ -492,7 +492,7 @@ describe("WorkoutPlan Lifecycle & Duplication (Task 2.2)", () => {
     });
 
     it("16. Nome padrão é '{nome original} - Cópia' quando não informado", async () => {
-      const user = await createTestUser();
+      const user = await createTestUser({ pro: true });
       testUserIds.push(user.id);
 
       const originalPlan = await createTestWorkoutPlan(user.id, {
@@ -509,7 +509,7 @@ describe("WorkoutPlan Lifecycle & Duplication (Task 2.2)", () => {
     });
 
     it("17. Cópia não duplica sessões de treino nem pertence a Periodization", async () => {
-      const user = await createTestUser();
+      const user = await createTestUser({ pro: true });
       testUserIds.push(user.id);
 
       const per = await createTestPeriodization(user.id, { name: "Periodização" });
@@ -639,7 +639,7 @@ describe("WorkoutPlan Lifecycle & Duplication (Task 2.2)", () => {
     });
 
     it("21. POST /:id/duplicate retorna 201 com novo plano completo", async () => {
-      const user = await createTestUser();
+      const user = await createTestUser({ pro: true });
       testUserIds.push(user.id);
 
       const plan = await createTestWorkoutPlan(user.id, {

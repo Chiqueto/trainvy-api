@@ -40,7 +40,7 @@ describe("Periodization Persistence & Domain Invariants (Task 2.1B)", () => {
   ];
 
   it("1. Criar plano com comportamento legado (activate omitido) cria ativo e desativa plano anterior", async () => {
-    const user = await createTestUser();
+    const user = await createTestUser({ pro: true });
     createdUserIds.push(user.id);
 
     const plan1 = await createTestWorkoutPlan(user.id, {
@@ -67,7 +67,7 @@ describe("Periodization Persistence & Domain Invariants (Task 2.1B)", () => {
   });
 
   it("2. Criar plano com activate: true desativa plano atual e ativa o novo", async () => {
-    const user = await createTestUser();
+    const user = await createTestUser({ pro: true });
     createdUserIds.push(user.id);
 
     const plan1 = await createTestWorkoutPlan(user.id, {
@@ -109,7 +109,7 @@ describe("Periodization Persistence & Domain Invariants (Task 2.1B)", () => {
   });
 
   it("4. activate: false não desativa o plano ativo atual", async () => {
-    const user = await createTestUser();
+    const user = await createTestUser({ pro: true });
     createdUserIds.push(user.id);
 
     const planActive = await createTestWorkoutPlan(user.id, {

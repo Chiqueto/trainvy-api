@@ -46,8 +46,8 @@ import {
 
 const users: string[] = [],
   plans: string[] = [];
-async function user(admin = false) {
-  const u = await createTestUser();
+async function user(admin = false, pro = false) {
+  const u = await createTestUser({ pro });
   await acceptTestHealthConsent(u.id);
   users.push(u.id);
   if (admin)
@@ -326,7 +326,7 @@ describe("Optional sports profile and body fat", () => {
 
 describe("Advanced prescriptions stay separate from performed sets", () => {
   it("preserves optional targets across creation, duplication, sessions, historical snapshots and legacy edits", async () => {
-    const owner = await user();
+    const owner = await user(false, true);
     const plan = await new CreateWorkoutPlan().execute({
       userId: owner.id,
       name: "Plano",
@@ -428,7 +428,7 @@ describe("Advanced prescriptions stay separate from performed sets", () => {
     expect(history.exercises[0].planned).toMatchObject(targets);
   });
   it("stores targets in periodization plans and rejects inverted or partial ranges by HTTP", async () => {
-    const owner = await user();
+    const owner = await user(false, true);
     login(owner);
     const periodization = await createTestPeriodization(owner.id);
     const block = await new CreateWorkoutPlanInPeriodization().execute({
