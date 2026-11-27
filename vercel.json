@@ -6,7 +6,7 @@
     },
     {
       "path": "/cron/billing-reconciliation",
-      "schedule": "0 12 * * *"
+      "schedule": "0 7 * * *"
     }
   ]
 }
